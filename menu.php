@@ -15,12 +15,15 @@
         <menu class="menu-principal">
             <div class="menu-paginas">
                 <p class="title-menu">Menu</p>
-                <button class="btn-menu botoes"><img id="icon-casa" src="./images/icon-casa.png" alt="Icon Casa">Página Inicial</button>
-                <button class="btn-menu botoes"><img id="icon-ferramenta" src="./images/icon-ferramenta.png" alt="Icon Ferramentas">Chamados</button>
+                <button class="btn-menu botoes btn-pg-inicial"><img id="icon-casa" src="./images/icon-casa.png" alt="Icon Casa">Home</button>
+                <button class="btn-menu botoes"><img id="icon-ferramenta" src="./images/icon-computador.png" alt="Icon Ferramentas">Cadastro de Bens</button>
+                <button class="btn-menu botoes"><img id="icon-ferramenta" src="./images/usuario.png" alt="Icon Ferramentas">Cadastro de Usuários</button>
+
                 <div class="centralizar-linha"><hr></div>
                 <p class="title-menu">Administração</p>
-                <button class="btn-menu botoes"><img id="icon-usuario" src="./images/usuario.png" alt="Icon Usuario">Usuários</button>
-                <button class="btn-menu botoes unidades"><img id="icon-unidades" src="./images/unidades.png" alt="Icon Unidades">Unidades</button>
+                <button class="btn-menu botoes"><img id="icon-ferramenta" src="./images/icon-lista.png" alt="Icon Ferramentas">Listar/Movimentar Bens</button>
+                <button class="btn-menu botoes"><img id="icon-ferramenta" src="./images/icon-usuarios.png" alt="Icon Ferramentas">Listar Usuários</button>
+                <button class="btn-menu botoes"><img id="icon-usuario" src="./images/icon-dashboard.png" alt="Icon Usuario">Dashboard</button>
             </div>
             <div class="info-usuario">
                 <h3 class="nome-usuario">João Costa</h3>

@@ -8,7 +8,7 @@
 </head>
 <body>
     <main class="container">
-        <form class="login">
+        <form class="login" action="menu.php">
             <img src="./images/logo.jpg" class="logo" alt="Logo">
             <div class="input-box first">
                 <img src="./images/usuario.png" class="input-img" id="logo-usuario" alt="Usuario">
@@ -18,7 +18,7 @@
                 <img src="./images/chave.png" class="input-img" id="chave" alt="Chave">
                 <input type="password" name="senha" id="senha" class="text-pass" placeholder="Senha de rede">
             </div>
-            <button type="submit"  class="btn-login">Entrar</button>
+            <input type="submit" name="submit" class="btn-login" value="Entrar" id="button">
         </form>
     </main>
 </body>
