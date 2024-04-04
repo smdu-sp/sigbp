@@ -14,12 +14,12 @@ body {
     grid-template-columns: 17.1% 83%;
 }
 
-.cadastro-bens {
+.movimentacao {
     padding: 48px 200px;
     background-color: #dde7ee1b;
 }
 
-.title-cad {
+.title-mov {
     font-family:'Poppins', sans-serif;
     font-weight: 400;
     margin-bottom: 16px;
@@ -31,25 +31,32 @@ hr {
     margin: 16px 0px 24px;
 }
 
-.input-cadastro {
+.subtitle-mov {
+    font-size: 20px;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 16px;
+    font-weight: 400;
+}
+
+.input-mov {
     display: flex;
     flex-direction: column;
     margin-bottom: 16px;
 }
 
-.input-box {
+.box-mov {
     display: grid;
     grid-template-columns: 50% 50%;
 }
 
-.input-cadastro > label {
+.input-mov > label {
     font-size: 14px;
     font-family: 'Roboto', sans-serif;
     margin-bottom: 8px;
     color: #000000;
 }
 
-.input-cadastro > input, select {
+.input-mov > input, select {
     width: 95%;
     padding: 6px 12px;
     line-height: 20px;
@@ -66,7 +73,7 @@ hr {
     padding: 6px 36px 6px 12px;
 }
 
-.btn-cad {
+.btn-mov {
     color: #FFFFFF;
     background-color: #3445b4;
     padding: 6px 12px;

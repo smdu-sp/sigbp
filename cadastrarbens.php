@@ -22,7 +22,7 @@
                 </div>
                 <div class="input-cadastro">
                     <label for="tipo">Tipo:</label>
-                    <select name="tipo" id="tipo">
+                    <select name="tipo" id="tipo" required>
                         <option value="Selecionar" hidden="hidden" selected>Selecionar</option>
                         <option value="AMPLIFICADOR">AMPLIFICADOR</option>
                         <option value="ANTENA PARABÓLICA">ANTENA PARABÓLICA</option>
@@ -104,11 +104,11 @@
             <div class="input-box">
                 <div class="input-cadastro">
                     <label for="numSerie">Número de Série:</label>
-                    <input type="text" name="numSerie" id="numSerie">
+                    <input type="text" name="numSerie" id="numSerie" required>
                 </div>
                 <div class="input-cadastro">
                     <label for="localizacao">Localização:</label>
-                    <select name="localizacao" id="localizacao">
+                    <select name="localizacao" id="localizacao" required>
                         <option value="Selecionar" hidden="hidden" selected>Selecionar</option>
                         <option value="ASCOM">ASCOM</option>
                         <option value="ATAJ">ATAJ</option>
@@ -180,7 +180,7 @@
             <div class="input-box">
                 <div class="input-cadastro">
                     <label for="status">Status:</label>
-                    <select name="status" id="status">
+                    <select name="status" id="status" required>
                         <option value="Selecionar" hidden="hidden">Selecionar</option>
                         <option value="Ativo">Ativo</option>
                         <option value="Baixado">Baixado</option>
