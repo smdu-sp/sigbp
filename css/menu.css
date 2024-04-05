@@ -8,14 +8,10 @@
     font-family: 'Lato', sans-serif;
 }
 
-body {
-    position: fixed;
-}
-
-.container {
-    width: 100%;
-    height: 100vh;
+.conteudo_menu {
     display: flex;
+    position: fixed;
+    background-color: transparent;
 }
 
 .menu-logout{
@@ -170,4 +166,8 @@ hr {
     background-color:#CDDAFC;
     border-radius: 15px;
     padding: 2px 5px;
+}
+
+.seila {
+    margin-right: 400px;
 }

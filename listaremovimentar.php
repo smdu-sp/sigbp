@@ -25,12 +25,17 @@ include_once('header.php');
                 <tr>
                     <th scope="col">Nº Patrimônio</th>
                     <th scope="col">Nome</th>
-                    <th scope="col">Descrição do Bem</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Desc. SBPM</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Núm. de Série</th>
                     <th scope="col">Localização</th>
                     <th scope="col">Servidor</th>
-                    <th scope="col">Responsável</th>
+                    <th scope="col">Num. Processo</th>
                     <th scope="col">CIMBPM</th>
-                    <th scope="col">Data</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
