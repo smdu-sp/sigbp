@@ -20,7 +20,7 @@
     ?>
     <div class="container p-4 p-md-5 pt-5 conteudo">
         <h4 class="mb-3">Cadastro de bens</h4>
-        <hr class="mb-4 w">
+        <hr class="mb-4 w" style="opacity: 1;">
         <form method="POST" action="cadastraitem.php">
             <div class="row">
                 <div class="col-md-6 mb-3">

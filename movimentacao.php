@@ -21,7 +21,7 @@ include_once('header.php');
     ?>
     <div class="container p-4 p-md-5 pt-5 conteudo">
         <h4 class="mb-3">Movimentação</h4>
-        <hr class="mb-4 w">
+        <hr class="mb-4 w" style="opacity: 1;">
         <h5 class="mb-3">Dados do Item</h4>
             <form method="POST" action="cadastraitem.php">
                 <div class="row">
@@ -65,7 +65,7 @@ include_once('header.php');
                     </div>
                 </div>
                 <h5 class="mb-3">Dados da Transferência</h4>
-                <hr class="mb-4 w">
+                <hr class="mb-4 w" style="opacity: 1;">
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="nomeServidor" class="form-label text-muted">Nome do Servidor:</label>

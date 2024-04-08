@@ -20,7 +20,7 @@
     ?>
     <div class="container p-4 p-md-5 pt-5 conteudo">
         <h4 class="mb-3">Cadastro de Usuários</h4>
-        <hr class="mb-4 w">
+        <hr class="mb-4 w" style="opacity: 1;">
         <form method="POST" action="cadastraitem.php">
             <div class="row">
                 <div class="col-md-6 mb-3">
@@ -36,14 +36,18 @@
                 <div class="col-md-6 mb-3">
                     <label for="permissao" class="form-label text-muted">Permissão:</label>
                     <select class="form-select" id="localNovo" required name="localNovo" required>
-                        <option value="Selecionar">Selecionar</option>
+                    <option value="Selecionar" hidden="hidden">Selecionar</option>
                         <option value="Administrador">Administrador</option>
-                        <option value="Status">Status:</option>
+                        <option value="pontoFocal">Ponto Focal</option>
                         </select>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="status" class="form-label text-muted">Nome do computador:</label>
-                    <input type="text" class="form-control" id="status" name="status">
+                    <label for="status" class="form-label text-muted">Status:</label>
+                    <select class="form-select" id="localNovo" required name="localNovo" required>
+                        <option value="Selecionar" hidden="hidden">Selecionar</option>
+                        <option value="Administrador">Ativo</option>
+                        <option value="pontoFocal">Desativado</option>
+                    </select>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary" name="salvar">Salvar</button>

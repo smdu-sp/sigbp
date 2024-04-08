@@ -85,6 +85,8 @@
 
 .botoes:hover {
     background-color: #F0F4F8;
+    text-decoration: none;
+    color: #000000;
 }
 
 .title-menu {
@@ -99,9 +101,11 @@
 }
 
 #icon-casa,
-#icon-ferramenta, 
+#icon-computador, 
 #icon-usuario, 
-#icon-unidades {
+#icon-lista, 
+#icon-termo,
+#icon-dashboard {
     width: 17.5px;
     margin-right: 15px;
 }
@@ -168,6 +172,3 @@ hr {
     padding: 2px 5px;
 }
 
-.seila {
-    margin-right: 400px;
-}
