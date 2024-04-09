@@ -12,7 +12,9 @@
     display: flex;
     position: fixed;
     background-color: transparent;
+    height: 100vh;
 }
+
 
 .menu-logout{
     width: 70px;
@@ -53,6 +55,7 @@
     flex-direction: column;
     justify-content: space-between;
     border-right: 1px solid #DDDFE2;
+    height: 100vh;
 }
 
 .menu-paginas {
@@ -172,3 +175,32 @@ hr {
     padding: 2px 5px;
 }
 
+.menu-button {
+    display: none;
+}
+
+@media (max-width: 1200px) {
+    .menu-principal {
+        position: fixed;
+        top: 0;
+        left: -187px;
+        z-index: 999999 !important;
+        transition: all 1s ease;
+    }
+
+    .menu-logout {
+        z-index: 1000000 !important;
+    }
+
+    .aparecer {
+        left: 70px !important;
+    }
+
+    .conteudo {
+        margin-left: 75px;
+    }
+
+    .menu-button {
+        display: block;
+    }
+}

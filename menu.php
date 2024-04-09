@@ -1,13 +1,20 @@
 <?php
+    @session_start();
     include_once('header.php');
 ?>
+<style>
+
+</style>
 <body>
     <div class="conteudo_menu">
         <nav class="menu-logout">
-            <img class="img-menu logocdsp" id="logocdsp" src="./images/logo-cdsp.png" alt="Logo Cidade de São Paulo">
+            <div>
+                <img class="img-menu menu-button" onclick="menu()" src="./images/icon-menu.png" alt="Menu">
+                <a href="./home.php"><img class="img-menu logocdsp" id="logocdsp" src="./images/logo-cdsp.png" alt="Logo Cidade de São Paulo"></a>
+            </div>
             <a href="login.php"><img class="img-menu logout" id="logout" src="./images/logout.png" alt=""></a>
         </nav>
-        <div class="menu-principal">
+        <div class="menu-principal" id="menuPrincipal">
             <div class="menu-paginas">
                 <p class="title-menu">Menu</p>
                 <a href="./home.php" class="btn-menu botoes btn-pg-inicial"><img id="icon-casa" src="./images/icon-casa.png" alt="Icon Casa">Home</a>
@@ -23,15 +30,16 @@
                 <a href="#" class="btn-menu botoes"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">Dashboard</a>
             </div>
             <div class="info-usuario">
-                <h3 class="nome-usuario">João Costa</h3>
-                <p class="email-usuario">jvcosta@prefeitura.sp.gov.br</p>
-                <div class="informacao-adicional">
-                    <div class="atic">ATIC</div>
-                    <div class="desenvolvedor">Desenvolvedor</div>
-                </div>
+                <h3 class="nome-usuario"><?php echo $_SESSION['SesNome'] ?></h3>
+                <p class="email-usuario"><?php echo $_SESSION['SesE-mail'] ?></p>
             </div>
         </div>
     </div>
 </body>
-
+<script>
+    function menu() {
+        let menuPrincipal = document.getElementById('menuPrincipal');
+        menuPrincipal.classList.toggle('aparecer');
+    }
+</script>
 </html>

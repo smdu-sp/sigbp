@@ -4,7 +4,8 @@ include_once('header.php');
 <style>
     .large-2 {
         overflow-y: auto;
-        height: 730px;
+        height: 650px;
+        margin-bottom: 30px;
     }
 
     .large-2::-webkit-scrollbar-track {
@@ -19,18 +20,18 @@ include_once('header.php');
 
     .large-2::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        background-color: #212529;
+        background-color: #CFE2FF;
         border: none;
         height: 10px;
-    }
+    } 
 </style>
 
 <body>
     <?php
     include_once('menu.php');
     ?>
-    <div class="container p-2 pt-5 conteudo" style="margin-left: 340px;">
-        <div style="width: 1500px; margin-left: 20px;">
+    <div class="container p-2 pt-5 conteudo" style="margin-left: 350px;" >
+        <div style="width: 1530px;">
             <p class="mb-1">
                 Digite algo no campo de entrada para pesquisar na tabela:
             </p>
@@ -39,7 +40,7 @@ include_once('header.php');
             <p class="mb-1 text-muted">Últimas movimentações</p>
             <div class="large-2">
                 <table class="table">
-                    <thead class="table-dark">
+                    <thead class="table-primary">
                         <tr>
                             <th>Nº Patrimônio</th>
                             <th>Nome</th>
@@ -47,134 +48,283 @@ include_once('header.php');
                             <th>Localização</th>
                             <th>Servidor</th>
                             <th>Responsável</th>
-                            <th>CIMBPM</th>
+                            <th>CIMBPM:</th>
                             <th>Data</th>
                         </tr>
                     </thead>
-                    <tbody id="myTable">
+                    <tbody id="myTable" class="large-2">
                         <tr>
-                            <td>001-052218428-5</td>
-                            <td>SELGBC5032</td>
-                            <td class="small">MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
+                            <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
                             <td>ATIC</td>
-                            <td>Vinicius de Oliveira Giuliani</td>
-                            <td>Juliette Maria Alfonso Frederico</td>
-                            <td>001.001940/2024</td>
-                            <td>2024-04-08 09:43:45</td>
                         </tr>
                         <tr>
-                            <td>001-052257897-6</td>
-                            <td>SELGBC3349</td>
-                            <td class="small">MICROCOMPUTADOR DELL Modelo:OPTIPLEX 7070</td>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
                             <td>ATIC</td>
-                            <td>ATIC</td>
-                            <td>Juliette Maria Alfonso Frederico</td>
-                            <td>001.006390/2024</td>
-                            <td>2024-04-08 09:24:55</td>
                         </tr>
                         <tr>
-                            <td>001-052422224-9</td>
-                            <td>SMDUGBC0096 </td>
-                            <td class="small">MICROCOMPUTADOR DELL Modelo:OPTIPLEX 7070</td>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
                             <td>ATIC</td>
-                            <td>ATIC</td>
-                            <td>Juliette Maria Alfonso Frederico</td>
-                            <td>001.006390/2024</td>
-                            <td>2024-04-08 09:20:56</td>
                         </tr>
                         <tr>
-                            <td>001-053259699-3</td>
-                            <td>95</td>
-                            <td class="small">Outros WEBCAM FULL HD 1080P Modelo:WEBCAM FULL HD 1080P</td>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
                             <td>ATIC</td>
-                            <td>ATIC</td>
-                            <td>Juliette Maria Alfonso Frederico</td>
-                            <td>BAIXA - 001.006327/2022</td>
-                            <td>2024-04-05 14:58:17</td>
                         </tr>
                         <tr>
-                            <td>001-052218428-5</td>
-                            <td>SELGBC5032</td>
-                            <td class="small">MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
                             <td>ATIC</td>
-                            <td>Vinicius de Oliveira Giuliani</td>
-                            <td>Juliette Maria Alfonso Frederico</td>
-                            <td>001.001940/2024</td>
-                            <td>2024-04-08 09:43:45</td>
                         </tr>
                         <tr>
-                            <td>001-052218428-5</td>
-                            <td>SELGBC5032</td>
-                            <td class="small">MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
                             <td>ATIC</td>
-                            <td>Vinicius de Oliveira Giuliani</td>
-                            <td>Juliette Maria Alfonso Frederico</td>
-                            <td>001.001940/2024</td>
-                            <td>2024-04-08 09:43:45</td>
                         </tr>
                         <tr>
-                            <td>001-052218428-5</td>
-                            <td>SELGBC5032</td>
-                            <td class="small">MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
                             <td>ATIC</td>
-                            <td>Vinicius de Oliveira Giuliani</td>
-                            <td>Juliette Maria Alfonso Frederico</td>
-                            <td>001.001940/2024</td>
-                            <td>2024-04-08 09:43:45</td>
                         </tr>
                         <tr>
-                            <td>001-052218428-5</td>
-                            <td>SELGBC5032</td>
-                            <td class="small">MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
                             <td>ATIC</td>
-                            <td>Vinicius de Oliveira Giuliani</td>
-                            <td>Juliette Maria Alfonso Frederico</td>
-                            <td>001.001940/2024</td>
-                            <td>2024-04-08 09:43:45</td>
                         </tr>
                         <tr>
-                            <td>001-052218428-5</td>
-                            <td>SELGBC5032</td>
-                            <td class="small">MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
                             <td>ATIC</td>
-                            <td>Vinicius de Oliveira Giuliani</td>
-                            <td>Juliette Maria Alfonso Frederico</td>
-                            <td>001.001940/2024</td>
-                            <td>2024-04-08 09:43:45</td>
                         </tr>
                         <tr>
-                            <td>001-052218428-5</td>
-                            <td>SELGBC5032</td>
-                            <td class="small">MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
                             <td>ATIC</td>
-                            <td>Vinicius de Oliveira Giuliani</td>
-                            <td>Juliette Maria Alfonso Frederico</td>
-                            <td>001.001940/2024</td>
-                            <td>2024-04-08 09:43:45</td>
                         </tr>
                         <tr>
-                            <td>001-052218428-5</td>
-                            <td>SELGBC5032</td>
-                            <td class="small">MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
                             <td>ATIC</td>
-                            <td>Vinicius de Oliveira Giuliani</td>
-                            <td>Juliette Maria Alfonso Frederico</td>
-                            <td>001.001940/2024</td>
-                            <td>2024-04-08 09:43:45</td>
                         </tr>
                         <tr>
-                            <td>001-052218428-5</td>
-                            <td>SELGBC5032</td>
-                            <td class="small">MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
                             <td>ATIC</td>
-                            <td>Vinicius de Oliveira Giuliani</td>
-                            <td>Juliette Maria Alfonso Frederico</td>
-                            <td>001.001940/2024</td>
-                            <td>2024-04-08 09:43:45</td>
                         </tr>
+                        <tr>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
+                            <td>ATIC</td>
+                        </tr>
+                        <tr>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
+                            <td>ATIC</td>
+                        </tr>
+                        <tr>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
+                            <td>ATIC</td>
+                        </tr>
+                        <tr>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
+                            <td>ATIC</td>
+                        </tr>
+                        <tr>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
+                            <td>ATIC</td>
+                        </tr>
+                        <tr>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
+                            <td>ATIC</td>
+                        </tr>
+                        <tr>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
+                            <td>ATIC</td>
+                        </tr>
+                        <tr>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
+                            <td>ATIC</td>
+                        </tr>
+                        <tr>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
+                            <td>ATIC</td>
+                        </tr>
+                        <tr>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
+                            <td>ATIC</td>
+                        </tr>
+                        <tr>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
+                            <td>ATIC</td>
+                        </tr>
+                        <tr>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
+                            <td>ATIC</td>
+                        </tr>
+                        <tr>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
+                            <td>ATIC</td>
+                        </tr>
+                        <tr>
+                        <td>001-052209414-6</td>
+                            <td>SELGBC321</td>
+                            <td>DELL</td>
+                            <td>MICROCOMPUTADOR</td>
+                            <td>N.A.</td>
+                            <td>OPTIPLEX 5070</td>
+                            <td>CORINTHIANS</td>
+                            <td>ATIC</td>
+                        </tr>
+
                     </tbody>
                 </table>
             </div>
+            <ul class="pagination ml-2 mt-2">
+                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">Anterior</a></li>
+                <li class="page-item active" onclick="ativar(this)"><a class="page-link" href="#">1</a></li>
+                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">2</a></li>
+                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">3</a></li>
+                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">4</a></li>
+                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">Próxima</a></li>
+            </ul>
         </div>
     </div>
 
@@ -187,6 +337,23 @@ include_once('header.php');
                 });
             });
         });
+
+        $(document).ready(function() {
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        const ativar = (elemento) => {
+            let itens = document.getElementsByClassName("page-item");
+            for (i = 0; i < itens.length; i++) {
+                itens[i].classList.remove("active");
+            }
+            elemento.classList.add("active");
+        }
     </script>
 
 </body>

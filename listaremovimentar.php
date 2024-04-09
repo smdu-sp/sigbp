@@ -4,7 +4,8 @@ include_once('header.php');
 <style>
     .large-2 {
         overflow-y: auto;
-        height: 730px;
+        height: 650px;
+        margin-bottom: 30px;
     }
 
     .large-2::-webkit-scrollbar-track {
@@ -19,7 +20,7 @@ include_once('header.php');
 
     .large-2::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        background-color: #212529;
+        background-color: #CFE2FF;
         border: none;
         height: 10px;
     }
@@ -39,7 +40,7 @@ include_once('header.php');
             <p class="mb-1 text-muted">Últimas movimentações</p>
             <div class="large-2">
                 <table class="table">
-                    <thead class="table-dark">
+                    <thead class="table-primary">
                         <tr>
                             <th>Nº Patrimônio</th>
                             <th>Nome</th>
@@ -56,7 +57,7 @@ include_once('header.php');
                             <th>Ações</th>
                         </tr>
                     </thead>
-                    <tbody id="myTable">
+                    <tbody id="myTable" class="large-2">
                         <tr>
                             <td>001-052209414-6</td>
                             <td>SELGBC321</td>
@@ -529,6 +530,14 @@ include_once('header.php');
                     </tbody>
                 </table>
             </div>
+            <ul class="pagination ml-2 mt-2">
+                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">Anterior</a></li>
+                <li class="page-item active" onclick="ativar(this)"><a class="page-link" href="#">1</a></li>
+                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">2</a></li>
+                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">3</a></li>
+                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">4</a></li>
+                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">Próxima</a></li>
+            </ul>
         </div>
     </div>
 
@@ -541,6 +550,23 @@ include_once('header.php');
                 });
             });
         });
+
+        $(document).ready(function() {
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
+        const ativar = (elemento) => {
+            let itens = document.getElementsByClassName("page-item");
+            for (i = 0; i < itens.length; i++) {
+                itens[i].classList.remove("active");
+            }
+            elemento.classList.add("active");
+        }
     </script>
 
 </body>
