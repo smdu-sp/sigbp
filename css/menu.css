@@ -8,6 +8,11 @@
     font-family: 'Lato', sans-serif;
 }
 
+body {
+    display: flex;
+    min-height: 100vh;
+}
+
 .conteudo_menu {
     display: flex;
     position: fixed;
@@ -179,28 +184,37 @@ hr {
     display: none;
 }
 
-@media (max-width: 1200px) {
+.box-btn-voltar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.seta-voltar {
+    width: 40px;
+    height: 40px;
+}
+
+@media (max-width: 1300px) {
+
     .menu-principal {
         position: fixed;
         top: 0;
         left: -187px;
-        z-index: 999999 !important;
-        transition: all 1s ease;
+        z-index: 9 !important;
+        transition: all 0.5s ease;
     }
 
     .menu-logout {
-        z-index: 1000000 !important;
+        z-index: 10 !important;
     }
 
     .aparecer {
         left: 70px !important;
     }
 
-    .conteudo {
-        margin-left: 75px;
-    }
-
     .menu-button {
         display: block;
+        cursor: pointer;
     }
+
 }

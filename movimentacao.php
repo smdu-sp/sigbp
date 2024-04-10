@@ -2,25 +2,17 @@
 include_once('header.php');
 ?>
 <style>
-    body {
-        background-color: #dde7ee1b;
-    }
-
-    hr {
-        width: 100%;
-    }
-
-    .conteudo {
-        margin-left: 24%;
-    }
 </style>
 
 <body>
     <?php
     include_once('menu.php');
     ?>
-    <div class="container p-4 p-md-5 pt-5 conteudo">
+    <div class="p-4 p-md-5 pt-5 conteudo">
+        <div>
         <h4 class="mb-3">Movimentação</h4>
+
+        </div>
         <hr class="mb-4 w" style="opacity: 1;">
         <h5 class="mb-3">Dados do Item</h4>
             <form method="POST" action="cadastraitem.php">
@@ -142,8 +134,12 @@ include_once('header.php');
                         <input type="text" class="form-control" id="login" name="login">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary" name="salvar">Salvar</button>
+                <div class="box-btn-voltar">
+                    <button type="submit" class="btn btn-primary" name="salvar">Salvar</button>
+                    <a href="./listaremovimentar.php"><img src="./images/seta-voltar.png" alt="seta-sair" class="seta-voltar"></a>
+                </div>
             </form>
+            <div class="hide" id="modal"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

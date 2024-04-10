@@ -2,11 +2,8 @@
     @session_start();
     include_once('header.php');
 ?>
-<style>
-
-</style>
 <body>
-    <div class="conteudo_menu">
+    <div class="conteudo_menu z-3">
         <nav class="menu-logout">
             <div>
                 <img class="img-menu menu-button" onclick="menu()" src="./images/icon-menu.png" alt="Menu">
@@ -37,9 +34,21 @@
     </div>
 </body>
 <script>
-    function menu() {
-        let menuPrincipal = document.getElementById('menuPrincipal');
-        menuPrincipal.classList.toggle('aparecer');
-    }
+        const toggleModal = () => {
+            const modal = document.querySelector('#modal');
+            modal.classList.toggle("hide");
+        }
+
+        function menu() {
+            let menuPrincipal = document.getElementById('menuPrincipal');
+            menuPrincipal.classList.toggle("aparecer");
+            menuPrincipal.style.backgroundColor = "#fff";
+            toggleModal();
+        }
+
+        function fecharMenu() {
+            menuPrincipal.classList.remove("aparecer");
+            modal.classList.add("hide");
+        }
 </script>
 </html>

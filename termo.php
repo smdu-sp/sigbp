@@ -2,24 +2,13 @@
 include_once('header.php');
 ?>
 <style>
-    body {
-        background-color: #dde7ee1b;
-    }
-
-    hr {
-        width: 100%;
-    }
-
-    .conteudo {
-        margin-left: 24%;
-    }
 </style>
 
 <body>
     <?php
     include_once('menu.php');
     ?>
-    <div class="container p-4 p-md-5 pt-5 conteudo">
+    <div class="p-4 p-md-5 pt-5 conteudo">
         <h4 class="mb-3">Termo de Entrega/Retirada</h4>
         <hr class="mb-4 w" style="opacity: 1;">
         <form method="POST" action="cadastraitem.php">
@@ -180,6 +169,7 @@ include_once('header.php');
             </div>
             <button type="submit" class="btn btn-primary mb-4" name="salvar">Baixar o Termo</button>
         </form>
+        <div class="hide" id="modal"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

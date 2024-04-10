@@ -1,25 +1,15 @@
 <?php
-    include_once('header.php');
+include_once('header.php');
 ?>
 <style>
-    body {
-        background-color: #dde7ee1b;
-    }
-    hr {
-        width: 100%;
-    }
-
-    .conteudo {
-        margin-left: 24%;
-    }
 </style>
 
 <body>
     <?php
     include_once('menu.php');
     ?>
-    <div class="container p-4 p-md-5 pt-5 conteudo">
-        <h4 class="mb-3">Alteração de bens</h4>
+    <div class="p-5 p-md-5 pt-5 conteudo">
+        <h3 class="mb-3">Alteração de bens</h3>
         <hr class="mb-4 w" style="opacity: 1;">
         <form method="POST" action="cadastraitem.php">
             <div class="row">
@@ -30,7 +20,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="tipo" class="form-label text-muted">Tipo:</label>
                     <select class="form-select" name="tipo" id="tipo" required>
-                        <option value="Selecionar" hidden="hidden" >Selecionar</option>
+                        <option value="Selecionar" hidden="hidden">Selecionar</option>
                         <option value="AMPLIFICADOR">AMPLIFICADOR</option>
                         <option value="ANTENA PARABÓLICA">ANTENA PARABÓLICA</option>
                         <option value="AP TELEFONICO DIGITAL">AP TELEFONICO DIGITAL</option>
@@ -149,7 +139,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 mb-4">
                     <label for="status" class="form-label text-muted">Status:</label>
                     <select class="form-select" id="status" required name="status" required>
                         <option value="Selecionar" hidden="hidden">Selecionar</option>
@@ -162,7 +152,10 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" name="salvar">Salvar</button>
+            <div class="box-btn-voltar">
+                <button type="submit" class="btn btn-primary" name="salvar">Salvar</button>
+                <a href="./listaremovimentar.php"><img src="./images/seta-voltar.png" alt="seta-sair" class="seta-voltar"></a>
+            </div>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
