@@ -183,7 +183,7 @@ include_once('header.php');
                 </tbody>
             </table>
         </div>
-        <!-- <div class="z-0">
+            <div>
                 <ul class="pagination ml-2 mt-2 " >
                     <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">Anterior</a></li>
                     <li class="page-item active" onclick="ativar(this)"><a class="page-link" href="#">1</a></li>
@@ -192,7 +192,7 @@ include_once('header.php');
                     <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">4</a></li>
                     <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">Próxima</a></li>
                 </ul>
-            </div> -->
+            </div>
         <div class="hide" id="modal"></div>
     </div>
 </body>

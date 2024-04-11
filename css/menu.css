@@ -180,18 +180,136 @@ hr {
     padding: 2px 5px;
 }
 
+.itemAdicionado {
+    border: 1px solid #DDDFE2;
+}
+
 .menu-button {
+    margin-left: 1px;
+    width: 36px;
     display: none;
+}
+
+.menu-button:hover {
+    background-color: #F0F4F8;
+    border-radius: 5px;
+    margin-right: 10px;
 }
 
 .box-btn-voltar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .seta-voltar {
     width: 40px;
     height: 40px;
+}
+
+#tooltip {
+    position: relative;
+    cursor: pointer;
+}
+
+#tooltipText {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-42%);
+    background-color: gray;
+    color: #FFF;
+    white-space: nowrap;
+    padding: 3px 6px;
+    border-radius: 5px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opactiy 0.5s ease;
+    font-size: 14px;
+}
+
+#tooltipText::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    border: 6px solid;
+    border-color: gray #0000 #0000 #0000;
+}
+
+#tooltip:hover #tooltipText {
+    top: -110%;
+    visibility: visible;
+    opacity: 1;
+}
+
+.container-msg-logout {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-left: 550px;
+}
+  
+.msg-sair {
+    width: 320px;
+    height: 150px;
+    background-color: #104EEF;
+    color: #fff;
+    border-radius: 8px;
+    padding: 20px 35px 20px 20px;
+    margin-top: 20px;
+    animation: msg-sair 1s ease;
+}
+  
+.msg {
+    display: none;
+}
+  
+@keyframes msg-sair {
+    from {
+        transform: translateY(-100%);
+    }
+  
+    to {
+        transform: translateY(0);
+    }
+}
+  
+.msg-sair > h2 {
+    font-size: 20px;
+    font-family: 'Lato', sans-serif;
+    font-weight: bolder;
+}
+  
+.msg-sair > p {
+    font-size: 18px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    margin: 10px 0px 18px;
+}
+  
+.btn-msg-sair {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Lato', sans-serif;
+    padding: 8px 16px;
+    color: white;
+    background-color: #104EEF;
+    border: 1px solid #4B7AF3;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-msg-sair:hover {
+    text-decoration: none;
+}
+  
+.btn-msg-sair.sim {
+    background-color: #fff;
+    color: #104EEF;
+    margin-right: 5px;
 }
 
 @media (max-width: 1300px) {

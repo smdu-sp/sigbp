@@ -22,7 +22,11 @@ include_once('header.php');
                     <input type="text" class="form-control" id="descBem" name="descBem">
                 </div>
             </div>
-            <button type="submit" class="btn btn-success mb-4" name="salvar">Adicionar Item</button>
+            <div>
+                <p class="mb-1">Itens Adicionados/Descrição do Bem</p>
+                <textarea class="itemAdicionado mb-3" name="itemAdicionado" id="itemAdicionado" cols="180" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success mb-3" name="salvar">Adicionar Item</button>
             <h6 class="mb-3">Entregue em:</h6>
             <hr class="mb-4 w" style="opacity: 1;">
             <div class="row">

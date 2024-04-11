@@ -136,7 +136,7 @@ include_once('header.php');
                 </div>
                 <div class="box-btn-voltar">
                     <button type="submit" class="btn btn-primary" name="salvar">Salvar</button>
-                    <a href="./listaremovimentar.php"><img src="./images/seta-voltar.png" alt="seta-sair" class="seta-voltar"></a>
+                    <a href="./listaremovimentar.php"><img src="./images/icon-voltar.png" alt="seta-sair" class="seta-voltar"></a>
                 </div>
             </form>
             <div class="hide" id="modal"></div>
