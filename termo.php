@@ -13,18 +13,20 @@ include_once('header.php');
         <hr class="mb-4 w" style="opacity: 1;">
         <form method="POST" action="cadastraitem.php">
             <div class="row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 mb-2">
                     <label for="numPatriSerie" class="form-label text-muted">Nº Patrimonial/Nº de Série:</label>
                     <input type="text" class="form-control" id="numPatriSerie" name="numPatriSerie">
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 mb-2">
                     <label for="descBem" class="form-label text-muted">Descrição do Bem:</label>
                     <input type="text" class="form-control" id="descBem" name="descBem">
                 </div>
             </div>
             <div>
-                <p class="mb-1">Itens Adicionados/Descrição do Bem</p>
-                <textarea class="itemAdicionado mb-3" name="itemAdicionado" id="itemAdicionado" cols="180" rows="3"></textarea>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1" class="text-muted">Itens Adicionados/Descrição do Bem</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
             </div>
             <button type="submit" class="btn btn-success mb-3" name="salvar">Adicionar Item</button>
             <h6 class="mb-3">Entregue em:</h6>

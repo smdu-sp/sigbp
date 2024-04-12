@@ -14,7 +14,7 @@ include_once('header.php');
 
     .large-2::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        background-color: #CFE2FF;
+        background-color: #E2E3E5;
         border: none;
         height: 10px;
     }
@@ -69,7 +69,7 @@ include_once('header.php');
             <p class="mb-1 text-muted">Últimas movimentações</p>
             <div class="large-2">
                 <table class="table">
-                    <thead class="table-primary">
+                    <thead class="table-secondary">
                         <tr>
                             <th>Nº Patrimônio</th>
                             <th>Nome</th>
@@ -95,132 +95,6 @@ include_once('header.php');
                             <td>N.A.</td>
                             <td>OPTIPLEX 5070</td>
                             <td>CORINTHIANS</td>
-                            <td>ATIC</td>
-                            <td>atic</td>
-                            <td>SEL/ COMPRA 6066.2020/0000628-4</td>
-                            <td>001.004639/2023</td>
-                            <td>Ativo</td>
-                            <td>
-                                <a href="./movimentacao.php"><img src="./images/icon-seta.png" alt="Seta"></a>
-                                <a href=".//alteracaodebens.php"><img src="./images/icon-lapis.png" alt="Seta"></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>001-052209414-6</td>
-                            <td>SELGBC321</td>
-                            <td>DELL</td>
-                            <td>MICROCOMPUTADOR</td>
-                            <td>N.A.</td>
-                            <td>OPTIPLEX 5070</td>
-                            <td>CQW8423</td>
-                            <td>ATIC</td>
-                            <td>atic</td>
-                            <td>SEL/ COMPRA 6066.2020/0000628-4</td>
-                            <td>001.004639/2023</td>
-                            <td>Ativo</td>
-                            <td>
-                                <a href="./movimentacao.php"><img src="./images/icon-seta.png" alt="Seta"></a>
-                                <a href=".//alteracaodebens.php"><img src="./images/icon-lapis.png" alt="Seta"></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>001-052209414-6</td>
-                            <td>SELGBC321</td>
-                            <td>DELL</td>
-                            <td>MICROCOMPUTADOR</td>
-                            <td>N.A.</td>
-                            <td>OPTIPLEX 5070</td>
-                            <td>CQW8423</td>
-                            <td>ATIC</td>
-                            <td>atic</td>
-                            <td>SEL/ COMPRA 6066.2020/0000628-4</td>
-                            <td>001.004639/2023</td>
-                            <td>Ativo</td>
-                            <td>
-                                <a href="./movimentacao.php"><img src="./images/icon-seta.png" alt="Seta"></a>
-                                <a href=".//alteracaodebens.php"><img src="./images/icon-lapis.png" alt="Seta"></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>001-052209414-6</td>
-                            <td>SELGBC321</td>
-                            <td>DELL</td>
-                            <td>MICROCOMPUTADOR</td>
-                            <td>N.A.</td>
-                            <td>OPTIPLEX 5070</td>
-                            <td>CQW8423</td>
-                            <td>ATIC</td>
-                            <td>atic</td>
-                            <td>SEL/ COMPRA 6066.2020/0000628-4</td>
-                            <td>001.004639/2023</td>
-                            <td>Ativo</td>
-                            <td>
-                                <a href="./movimentacao.php"><img src="./images/icon-seta.png" alt="Seta"></a>
-                                <a href=".//alteracaodebens.php"><img src="./images/icon-lapis.png" alt="Seta"></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>001-052209414-6</td>
-                            <td>SELGBC321</td>
-                            <td>DELL</td>
-                            <td>MICROCOMPUTADOR</td>
-                            <td>N.A.</td>
-                            <td>OPTIPLEX 5070</td>
-                            <td>CQW8423</td>
-                            <td>ATIC</td>
-                            <td>atic</td>
-                            <td>SEL/ COMPRA 6066.2020/0000628-4</td>
-                            <td>001.004639/2023</td>
-                            <td>Ativo</td>
-                            <td>
-                                <a href="./movimentacao.php"><img src="./images/icon-seta.png" alt="Seta"></a>
-                                <a href=".//alteracaodebens.php"><img src="./images/icon-lapis.png" alt="Seta"></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>001-052209414-6</td>
-                            <td>SELGBC321</td>
-                            <td>DELL</td>
-                            <td>MICROCOMPUTADOR</td>
-                            <td>N.A.</td>
-                            <td>OPTIPLEX 5070</td>
-                            <td>CQW8423</td>
-                            <td>ATIC</td>
-                            <td>atic</td>
-                            <td>SEL/ COMPRA 6066.2020/0000628-4</td>
-                            <td>001.004639/2023</td>
-                            <td>Ativo</td>
-                            <td>
-                                <a href="./movimentacao.php"><img src="./images/icon-seta.png" alt="Seta"></a>
-                                <a href=".//alteracaodebens.php"><img src="./images/icon-lapis.png" alt="Seta"></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>001-052209414-6</td>
-                            <td>SELGBC321</td>
-                            <td>DELL</td>
-                            <td>MICROCOMPUTADOR</td>
-                            <td>N.A.</td>
-                            <td>OPTIPLEX 5070</td>
-                            <td>CQW8423</td>
-                            <td>ATIC</td>
-                            <td>atic</td>
-                            <td>SEL/ COMPRA 6066.2020/0000628-4</td>
-                            <td>001.004639/2023</td>
-                            <td>Ativo</td>
-                            <td>
-                                <a href="./movimentacao.php"><img src="./images/icon-seta.png" alt="Seta"></a>
-                                <a href=".//alteracaodebens.php"><img src="./images/icon-lapis.png" alt="Seta"></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>001-052209414-6</td>
-                            <td>SELGBC321</td>
-                            <td>DELL</td>
-                            <td>MICROCOMPUTADOR</td>
-                            <td>N.A.</td>
-                            <td>OPTIPLEX 5070</td>
-                            <td>CQW8423</td>
                             <td>ATIC</td>
                             <td>atic</td>
                             <td>SEL/ COMPRA 6066.2020/0000628-4</td>

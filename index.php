@@ -24,7 +24,7 @@
      
         mysqli_set_charset($conn, "utf8");
      
-        $buscar_cadastros = "SELECT permissao, status_user FROM usuarios WHERE `login`='" . strtolower($inicial) . "';";
+        $buscar_cadastros = "SELECT permissao, statususer FROM usuarios WHERE `usuario`='" . strtolower($inicial) . "';";
         $query_cadastros = mysqli_query($conn, $buscar_cadastros);
      
         if (mysqli_num_rows($query_cadastros) != 1) {

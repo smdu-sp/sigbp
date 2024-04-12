@@ -1,5 +1,14 @@
 <?php
+session_start();
+include_once('./conexoes/config.php');
 include_once('header.php');
+
+$sql = "SELECT * FROM "
+
+// if($_SESSION['Perm'] == 1) {
+//     echo '<script>alert("Usuario invalido!");</script>';
+//     return;
+// }
 ?>
 <style>
 
@@ -15,7 +24,7 @@ include_once('header.php');
 
     .large-2::-webkit-scrollbar-thumb {
         border-radius: 10px;
-        background-color: #CFE2FF;
+        background-color: #E2E3E5;
         border: none;
         height: 10px;
     }
@@ -36,8 +45,13 @@ include_once('header.php');
 <body>
     <?php
     include_once('menu.php');
+
+    // if($_SESSION['Perm'] == 1) {
+    //     echo '<script>alert("Usuario invalido!");</script>';
+    //     return;
+    // }
     ?>
-    <div class="p-2 pt-5 conteudo " onclick="fecharMenu()">
+    <div class="p-2 pt-5 conteudo ">
         
         <p class="mb-1">
             Digite algo no campo de entrada para pesquisar na tabela:
@@ -45,9 +59,9 @@ include_once('header.php');
         <input class="form-control mb-3 input-filtro" id="myInput" type="text" placeholder="Procurar...">
         <br>
         <p class="mb-1 text-muted">Últimas movimentações</p>
-        <div class="large-2">
+        <div>
             <table class="table">
-                <thead class="table-primary">
+                <thead class="table-secondary">
                     <tr>
                         <th>Nº Patrimônio</th>
                         <th>Nome</th>
@@ -61,124 +75,14 @@ include_once('header.php');
                 </thead>
                 <tbody id="myTable" class="large-2">
                     <tr>
-                        <td>001-052218428-5</td>
-                        <td>SELGBC5032</td>
-                        <td>MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
-                        <td>ATIC</td>
-                        <td>Vinicius de Oliveira Giuliani</td>
-                        <td>Juliette Maria Alfonso Frederico</td>
-                        <td>001.001940/2024</td>
-                        <td>2024-04-08 09:43:45</td>
-                    </tr>
-                    <tr>
-                        <td>001-052218428-5</td>
-                        <td>SELGBC5032</td>
-                        <td>MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
-                        <td>ATIC</td>
-                        <td>Vinicius de Oliveira Giuliani</td>
-                        <td>Juliette Maria Alfonso Frederico</td>
-                        <td>001.001940/2024</td>
-                        <td>2024-04-08 09:43:45</td>
-                    </tr>
-                    <tr>
-                        <td>001-052218428-5</td>
-                        <td>SELGBC5032</td>
-                        <td>MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
-                        <td>ATIC</td>
-                        <td>Vinicius de Oliveira Giuliani</td>
-                        <td>Juliette Maria Alfonso Frederico</td>
-                        <td>001.001940/2024</td>
-                        <td>2024-04-08 09:43:45</td>
-                    </tr>
-                    <tr>
-                        <td>001-052218428-5</td>
-                        <td>SELGBC5032</td>
-                        <td>MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
-                        <td>ATIC</td>
-                        <td>Vinicius de Oliveira Giuliani</td>
-                        <td>Juliette Maria Alfonso Frederico</td>
-                        <td>001.001940/2024</td>
-                        <td>2024-04-08 09:43:45</td>
-                    </tr>
-                    <tr>
-                        <td>001-052218428-5</td>
-                        <td>SELGBC5032</td>
-                        <td>MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
-                        <td>ATIC</td>
-                        <td>Vinicius de Oliveira Giuliani</td>
-                        <td>Juliette Maria Alfonso Frederico</td>
-                        <td>001.001940/2024</td>
-                        <td>2024-04-08 09:43:45</td>
-                    </tr>
-                    <tr>
-                        <td>001-052218428-5</td>
-                        <td>SELGBC5032</td>
-                        <td>MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
-                        <td>ATIC</td>
-                        <td>Vinicius de Oliveira Giuliani</td>
-                        <td>Juliette Maria Alfonso Frederico</td>
-                        <td>001.001940/2024</td>
-                        <td>2024-04-08 09:43:45</td>
-                    </tr>
-                    <tr>
-                        <td>001-052218428-5</td>
-                        <td>SELGBC5032</td>
-                        <td>MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
-                        <td>ATIC</td>
-                        <td>Vinicius de Oliveira Giuliani</td>
-                        <td>Juliette Maria Alfonso Frederico</td>
-                        <td>001.001940/2024</td>
-                        <td>2024-04-08 09:43:45</td>
-                    </tr>
-                    <tr>
-                        <td>001-052218428-5</td>
-                        <td>SELGBC5032</td>
-                        <td>MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
-                        <td>ATIC</td>
-                        <td>Vinicius de Oliveira Giuliani</td>
-                        <td>Juliette Maria Alfonso Frederico</td>
-                        <td>001.001940/2024</td>
-                        <td>2024-04-08 09:43:45</td>
-                    </tr>
-                    <tr>
-                        <td>001-052218428-5</td>
-                        <td>SELGBC5032</td>
-                        <td>MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
-                        <td>ATIC</td>
-                        <td>Vinicius de Oliveira Giuliani</td>
-                        <td>Juliette Maria Alfonso Frederico</td>
-                        <td>001.001940/2024</td>
-                        <td>2024-04-08 09:43:45</td>
-                    </tr>
-                    <tr>
-                        <td>001-052218428-5</td>
-                        <td>SELGBC5032</td>
-                        <td>MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
-                        <td>ATIC</td>
-                        <td>Vinicius de Oliveira Giuliani</td>
-                        <td>Juliette Maria Alfonso Frederico</td>
-                        <td>001.001940/2024</td>
-                        <td>2024-04-08 09:43:45</td>
-                    </tr>
-                    <tr>
-                        <td>001-052218428-5</td>
-                        <td>SELGBC5032</td>
-                        <td>MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
-                        <td>ATIC</td>
-                        <td>Vinicius de Oliveira Giuliani</td>
-                        <td>Juliette Maria Alfonso Frederico</td>
-                        <td>001.001940/2024</td>
-                        <td>2024-04-08 09:43:45</td>
-                    </tr>
-                    <tr>
-                        <td>001-052218428-5</td>
-                        <td>SELGBC5032</td>
-                        <td>MICROCOMPUTADOR Lenovo Modelo:THINKCENTRE M920Q</td>
-                        <td>ATIC</td>
-                        <td>Vinicius de Oliveira Giuliani</td>
-                        <td>Juliette Maria Alfonso Frederico</td>
-                        <td>001.001940/2024</td>
-                        <td>2024-04-08 09:43:45</td>
+                        <td>#</td>
+                        <td>#</td>
+                        <td>#</td>
+                        <td>#</td>
+                        <td>#</td>
+                        <td>#</td>
+                        <td>#</td>
+                        <td>#</td>
                     </tr>
                 </tbody>
             </table>

@@ -46,3 +46,9 @@ function fecharMsg() {
   msgSair.style.display = "none";
 }
 
+const dominio = window.location.pathname;
+let botao = document.getElementById('botaoHome');
+if (dominio == "//cadastrarbens.php") {
+  console.log(botao);
+  botao.style.backgroundColor = "#000"
+}

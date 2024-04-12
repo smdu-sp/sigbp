@@ -18,17 +18,17 @@ include_once('header.php');
         <div class="menu-principal" id="menuPrincipal">
             <div class="menu-paginas">
                 <p class="title-menu">Menu</p>
-                <a href="./home.php" id="botao1" onclick="botaoClicado(botao1)" class="btn-menu botoes botoes-home"><img id="icon-casa" src="./images/icon-casa.png" alt="Icon Casa">Home</a>
-                <a href="./cadastrarbens.php" id="botao2" onclick="botaoClicado(botao2)" class="btn-menu botoes"><img id="icon-computador" src="./images/icon-computador.png" alt="Icon Computador">Cadastro de Bens</a>
-                <a href="./cadastrodeusuario.php" id="botao3" onclick="botaoClicado(botao3)" class="btn-menu botoes"><img id="icon-usuario" src="./images/usuario.png" alt="Icon Usuario">Cadastro de Usuários</a>
+                <a href="./home.php" id="botaoHome" class="btn-menu botoes"><img id="icon-casa" src="./images/icon-casa.png" alt="Icon Casa">Home</a>
+                <a href="./cadastrarbens.php" id="botao2" class="btn-menu botoes"><img id="icon-computador" src="./images/icon-computador.png" alt="Icon Computador">Cadastro de Bens</a>
+                <a href="./cadastrodeusuario.php" id="botao3" class="btn-menu botoes"><img id="icon-usuario" src="./images/usuario.png" alt="Icon Usuario">Cadastro de Usuários</a>
 
                 <div class="centralizar-linha">
                     <hr style="opacity: 1;">
                 </div>
                 <p class="title-menu">Administração</p>
-                <a href="./listaremovimentar.php" id="botao4" onclick="botaoClicado(botao4)" class="btn-menu botoes"><img id="icon-lista" src="./images/icon-lista.png" alt="Icon Lista">Listar/Movimentar Bens</a>
-                <a href="./termo.php" id="botao5" onclick="botaoClicado(botao5)" class="btn-menu botoes"><img id="icon-termo" src="./images/icon-termo.png" alt="Icon Ferramentas">Termo Entrega/Retirada</a>
-                <a href="#" id="botao6" onclick="botaoClicado(botao5)" class="btn-menu botoes"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">Dashboard</a>
+                <a href="./listaremovimentar.php" id="botao4" class="btn-menu botoes"><img id="icon-lista" src="./images/icon-lista.png" alt="Icon Lista">Listar/Movimentar Bens</a>
+                <a href="./termo.php" id="botao5" class="btn-menu botoes"><img id="icon-termo" src="./images/icon-termo.png" alt="Icon Ferramentas">Termo Entrega/Retirada</a>
+                <a href="#" id="botao6" class="btn-menu botoes"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">Dashboard</a>
             </div>
             <div class="info-usuario">
                 <h3 class="nome-usuario"><?php echo $_SESSION['SesNome'] ?></h3>
@@ -46,6 +46,14 @@ include_once('header.php');
             </div>
         </div>
     </div>
+    <script>
+        const dominio = window.location.pathname;
+        let botao = document.getElementById('botaoHome');
+        if (dominio == "//cadastrarbens.php") {
+            console.log(botao);
+            botao.style.backgroundColor = "#000"
+        }
+    </script>
 </body>
 
 </html>
