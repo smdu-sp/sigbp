@@ -47,14 +47,10 @@ function fecharMsg() {
 }
 
 // MOSTRAR ITENS ADICIONADOS NO TERMO
-let nPatriSerie = document.getElementById('numPatriSerie').value;
-let descBem = document.getElementById('descBem').value;
-let textArea = document.getElementById('exampleFormControlTextarea1');
-
 function adicionarItem() {
   let nPatriSerie = document.getElementById('numPatriSerie').value;
-  let textArea = document.getElementById('exampleFormControlTextarea1');
-  document.getElementById('exampleFormControlTextarea1').value = nPatriSerie  + '/n';
-}
+  let descBem = document.getElementById('descBem').value;
+  document.getElementById('textareaid').value += nPatriSerie + ' / ' + descBem ;
 
+}
 

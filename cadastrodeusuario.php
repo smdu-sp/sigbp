@@ -1,5 +1,16 @@
 <?php
+include_once('./conexoes/config.php');
 include_once('header.php');
+
+if (isset($_POST['submit'])) {
+    $usuario = $_POST['loginRede'];
+    $nome = $_POST['nome'];
+    $permissao = $_POST['permissao'];
+    $status = $_POST['status'];
+
+    $result = mysqli_query($conexao, "INSERT INTO usuarios(usuario, nome, permissao, statususer) VALUES ('$usuario', '$nome', '$permissao', '$status')");
+}
+
 ?>
 
 <body>
@@ -8,12 +19,12 @@ include_once('header.php');
     ?>
     <div class="p-4 p-md-5 pt-5 conteudo">
         <h3 class="mb-5">Cadastro de Usuários</h3>
-        <form method="POST" action="cadastraitem.php">
+        <form method="POST" action="cadastrodeusuario.php">
             <div class="row">
                 <div class="col-md-13 mb-1">
                     <label for="usuarioCadastro" class="form-label text-muted">Login de rede</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Buscar por login de rede" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <input type="text" name="loginRede" class="form-control" placeholder="Buscar por login de rede" aria-label="Recipient's username" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary " type="button">Buscar</button>
                         </div>
@@ -23,7 +34,7 @@ include_once('header.php');
                 <div class="col-md-13 mb-1">
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label text-muted">Nome</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nome">
+                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nome" name="nome">
                     </div>
                 </div>
                 <hr style="opacity: 1; width: 97%; margin-left: 12px" class="mb-2">
@@ -31,7 +42,7 @@ include_once('header.php');
                     <label for="usuarioCadastro" class="form-label text-muted">Permissão</label>
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-cracha.png" alt="" class="imgCadastro"></div>
-                        <select class="form-select" aria-label="Filter select">
+                        <select class="form-select" aria-label="Filter select" name="permissao">
                             <option value="Usuário" selected>Usuário</option>
                             <option value="Desenvolvedor">Desenvolvedor</option>
                             <option value="Administrador">Administrador</option>
@@ -44,7 +55,7 @@ include_once('header.php');
                     <label for="usuarioCadastro" class="form-label text-muted">Unidade</label>
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/unidades.png" alt="" class="imgCadastro"></div>
-                        <select class="form-select">
+                        <select class="form-select" name="unidade">
                             <option value="Selecionar" hidden="hidden">Selecionar</option>
                             <option value="ASCOM">ASCOM</option>
                             <option value="ATAJ">ATAJ</option>
@@ -98,13 +109,29 @@ include_once('header.php');
                     </div>
                 </div>
                 <hr style="opacity: 1; width: 97%; margin-left: 12px" class="mb-2">
+                <div class="col-md-12 mb-3">
+                    <label for="usuarioCadastro" class="form-label text-muted">Status</label>
+                    <div class="input-group">
+                        <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-status.png" alt="" class="imgCadastro"></div>
+                        <select class="form-select" name="status">
+                            <option value="Selecionar" hidden="hidden">Selecionar</option>
+                            <option value="Ativo">Ativo</option>
+                            <option value="Baixado">Baixado</option>
+                            <option value="Para Doação">Para Doação</option>
+                            <option value="Ativo">Para Descarte</option>
+                            <option value="Ativo">Doado</option>
+                            <option value="Descartado">Descartado</option>
+                        </select>
+                    </div>
+                </div>
+                <hr style="opacity: 1; width: 97%; margin-left: 12px" class="mb-2">
                 <div class="mb-3">
                     <label for="usuarioCadastro" class="form-label text-muted">Email</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="email">
                 </div>
                 <div class="d-flex flex-row-reverse">
-                    <input type="submit" class="btn btn-primary ml-2 pe-auto" name="salvar" value="Enviar"></input>
-                    <input type="submit" class="btn btn-light pe-auto" name="salvar" value="Cancelar"></input>
+                    <input type="submit" class="btn btn-primary ml-2 pe-auto" name="submit" value="Cadastrar"></input>
+                    <input type="button" class="btn btn-light pe-auto" name="salvar" value="Cancelar"></input>
                 </div>
         </form>
         <div class="hide" id="modal"></div>

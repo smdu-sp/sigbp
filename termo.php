@@ -23,7 +23,7 @@ include_once('header.php');
             <div>
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1" class="text-muted">Itens Adicionados/Descrição do Bem</label>
-                    <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" disabled></textarea>
+                    <textarea class="form-control" id="textareaid" cols="3" rows="3" wrap="hard" disabled></textarea>
                 </div>
             </div>
             <button type="button" class="btn btn-success mb-3" name="salvar" onclick="adicionarItem()">Adicionar Item</button>
