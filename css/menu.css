@@ -330,6 +330,18 @@ hr {
     width: 25px;
 }
 
+.rf {
+    background-color: #CDDAFC;
+    font-weight: 500;
+    border-radius: 50px;
+}
+
+.rf > p {
+    margin-top: 1px;
+    padding: 2px 8px 0px 8px;
+    font-size: 12px;
+}
+
 
 @media (max-width: 1300px) {
 

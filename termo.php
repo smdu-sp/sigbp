@@ -23,10 +23,10 @@ include_once('header.php');
             <div>
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1" class="text-muted">Itens Adicionados/Descrição do Bem</label>
-                    <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" disabled>SEILA</textarea>
+                    <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" disabled></textarea>
                 </div>
             </div>
-            <button class="btn btn-success mb-3" name="salvar">Adicionar Item</button>
+            <button type="button" class="btn btn-success mb-3" name="salvar" onclick="adicionarItem()">Adicionar Item</button>
             <h6 class="mb-3">Entregue em:</h6>
             <hr class="mb-4 w" style="opacity: 1;">
             <div class="row">

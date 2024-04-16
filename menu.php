@@ -31,8 +31,14 @@ include_once('header.php');
                 <a href="#" id="botao6" class="btn-menu botoes"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">Dashboard</a>
             </div>
             <div class="info-usuario">
-                <h3 class="nome-usuario"><?php echo $_SESSION['SesNome'] ?></h3>
+                <h3 class="nome-usuario"><?php 
+                $nome = explode(' ', $_SESSION['SesNome']);
+                echo $nome[0] . " " . end($nome);
+                ?></h3>
                 <p class="email-usuario"><?php echo $_SESSION['SesE-mail'] ?></p>
+                <div class="rf">
+                    <p class="email-usuario"><?php echo $_SESSION['SesID'] ?></p>
+                </div>
             </div>
         </div>
         <div class="container-msg-logout">

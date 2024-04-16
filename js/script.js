@@ -45,3 +45,16 @@ function fecharMsg() {
   let msgSair = document.getElementById("box-sair");
   msgSair.style.display = "none";
 }
+
+// MOSTRAR ITENS ADICIONADOS NO TERMO
+let nPatriSerie = document.getElementById('numPatriSerie').value;
+let descBem = document.getElementById('descBem').value;
+let textArea = document.getElementById('exampleFormControlTextarea1');
+
+function adicionarItem() {
+  let nPatriSerie = document.getElementById('numPatriSerie').value;
+  let textArea = document.getElementById('exampleFormControlTextarea1');
+  document.getElementById('exampleFormControlTextarea1').value = nPatriSerie  + '/n';
+}
+
+
