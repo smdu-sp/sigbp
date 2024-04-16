@@ -20,14 +20,14 @@ include_once('header.php');
                 <p class="title-menu">Menu</p>
                 <a href="./home.php" id="botaoHome" class="btn-menu botoes"><img id="icon-casa" src="./images/icon-casa.png" alt="Icon Casa">Home</a>
                 <a href="./cadastrarbens.php" id="botao2" class="btn-menu botoes"><img id="icon-computador" src="./images/icon-computador.png" alt="Icon Computador">Cadastro de Bens</a>
-                <a href="./cadastrodeusuario.php" id="botao3" class="btn-menu botoes"><img id="icon-usuario" src="./images/usuario.png" alt="Icon Usuario">Cadastro de Usuários</a>
-
+                <a href="./termo.php" id="botao5" class="btn-menu botoes"><img id="icon-termo" src="./images/icon-termo.png" alt="Icon Ferramentas">Termo Entrega/Retirada</a>
+                
                 <div class="centralizar-linha">
                     <hr style="opacity: 1;">
                 </div>
                 <p class="title-menu">Administração</p>
                 <a href="./listaremovimentar.php" id="botao4" class="btn-menu botoes"><img id="icon-lista" src="./images/icon-lista.png" alt="Icon Lista">Listar/Movimentar Bens</a>
-                <a href="./termo.php" id="botao5" class="btn-menu botoes"><img id="icon-termo" src="./images/icon-termo.png" alt="Icon Ferramentas">Termo Entrega/Retirada</a>
+                <a href="./cadastrodeusuario.php" id="botao3" class="btn-menu botoes"><img id="icon-usuario" src="./images/usuario.png" alt="Icon Usuario">Cadastro de Usuários</a>
                 <a href="#" id="botao6" class="btn-menu botoes"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">Dashboard</a>
             </div>
             <div class="info-usuario">
@@ -46,14 +46,6 @@ include_once('header.php');
             </div>
         </div>
     </div>
-    <script>
-        const dominio = window.location.pathname;
-        let botao = document.getElementById('botaoHome');
-        if (dominio == "//cadastrarbens.php") {
-            console.log(botao);
-            botao.style.backgroundColor = "#000"
-        }
-    </script>
 </body>
 
 </html>

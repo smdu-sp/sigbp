@@ -1,8 +1,6 @@
 <?php
 include_once('header.php');
 ?>
-<style>
-</style>
 
 <body>
     <?php
@@ -25,10 +23,10 @@ include_once('header.php');
             <div>
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1" class="text-muted">Itens Adicionados/Descrição do Bem</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" disabled>SEILA</textarea>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success mb-3" name="salvar">Adicionar Item</button>
+            <button class="btn btn-success mb-3" name="salvar">Adicionar Item</button>
             <h6 class="mb-3">Entregue em:</h6>
             <hr class="mb-4 w" style="opacity: 1;">
             <div class="row">
@@ -105,7 +103,7 @@ include_once('header.php');
             <hr class="mb-4 w" style="opacity: 1;">
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="dataRecebimento" class="form-label text-muted">Data da Recebimento::</label>
+                    <label for="dataRecebimento" class="form-label text-muted">Data da Recebimento:</label>
                     <input type="text" class="form-control" id="dataRecebimento" name="dataRecebimento">
                 </div>
                 <div class="col-md-6 mb-3">

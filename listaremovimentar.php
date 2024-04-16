@@ -88,18 +88,18 @@ include_once('header.php');
                     </thead>
                     <tbody id="myTable" class="large-2">
                         <tr>
-                            <td>001-052209414-6</td>
-                            <td>SELGBC321</td>
-                            <td>DELL</td>
-                            <td>MICROCOMPUTADOR</td>
-                            <td>N.A.</td>
-                            <td>OPTIPLEX 5070</td>
-                            <td>CORINTHIANS</td>
-                            <td>ATIC</td>
-                            <td>atic</td>
-                            <td>SEL/ COMPRA 6066.2020/0000628-4</td>
-                            <td>001.004639/2023</td>
-                            <td>Ativo</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
+                            <td>#</td>
                             <td>
                                 <a href="./movimentacao.php"><img src="./images/icon-seta.png" alt="Seta"></a>
                                 <a href=".//alteracaodebens.php"><img src="./images/icon-lapis.png" alt="Seta"></a>

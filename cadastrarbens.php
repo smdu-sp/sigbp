@@ -1,7 +1,25 @@
 <?php
-    session_start();
+    // session_start();
+    include_once('./conexoes/config.php');
     include_once('header.php');
-?>
+    
+    if(isset($_POST['submit'])) {
+        $patrimonio = $_POST['numPatrimonio'];
+        $tipo = $_POST['tipo'];
+        $marca = $_POST['marca'];
+        $modelo = $_POST['modelo'];
+        $numserie = $_POST['numSerie'];
+        $localizacao = $_POST['localNovo'];
+        $servidor = $_POST['nomeServidor'];
+        $numprocesso = $_POST['numprocesso'];
+        $nome = $_POST['nomeComputador'];
+        $statusitem = $_POST['status'];
+        
+        $result = mysqli_query($conexao, "INSERT INTO item(patrimonio, tipo, numserie, marca, modelo, localizacao, servidor, numprocesso, nome, statusitem) 
+        VALUES ('$patrimonio', '$tipo', '$numserie', '$marca', '$modelo', '$localizacao', '$servidor', '$numprocesso', '$nome', '$statusitem')");
+    }
+    
+    ?>
 <body>
     <?php
     include_once('menu.php');
@@ -9,7 +27,7 @@
     <div class=" p-4 p-md-5 pt-5 conteudo">
         <h3 class="mb-3">Cadastro de bens</h3>
         <hr class="mb-4 w" style="opacity: 1;">
-        <form method="POST" action="cadastraitem.php">
+        <form  action="cadastrarbens.php" method="POST">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numPatrimonio" class="form-label text-muted">Número do Patrimônio PMSP:</label>
@@ -103,7 +121,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="localNovo" class="form-label text-muted">Localização:</label>
-                    <select class="form-select" id="localNovo" required name="localNovo" required>
+                    <select class="form-select" id="localNovo" name="localNovo" required>
                         <option value="Selecionar" hidden="hidden">Selecionar</option>
                         <option value="ASCOM">ASCOM</option>
                         <option value="ATAJ">ATAJ</option>
@@ -175,7 +193,7 @@
             <div class="row">
                 <div class="col-md-6 mb-4">
                     <label for="status" class="form-label text-muted">Status:</label>
-                    <select class="form-select" id="status" required name="status" required>
+                    <select class="form-select" id="status" name="status" required>
                         <option value="Selecionar" hidden="hidden">Selecionar</option>
                         <option value="Ativo">Ativo</option>
                         <option value="Baixado">Baixado</option>
@@ -186,8 +204,7 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" name="salvar">Salvar</button>
-        </form>
+            <input type="submit" class="btn btn-primary" name="submit" value="Cadastrar"></input>
         <div class="hide" id="modal"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
