@@ -3,15 +3,12 @@ session_start();
 include_once('./conexoes/config.php');
 include_once('header.php');
 
-$sql = "SELECT * FROM "
-
 // if($_SESSION['Perm'] == 1) {
 //     echo '<script>alert("Usuario invalido!");</script>';
 //     return;
 // }
 ?>
 <style>
-
     .large-2::-webkit-scrollbar-track {
         border: 1px solid #fff;
         padding: 2px 0;
@@ -34,12 +31,17 @@ $sql = "SELECT * FROM "
         width: 81%;
     }
 
-    @media (max-width: 1300px) {
-    .conteudo {
-        margin-left: 75px;
-        width: 90%;
+    .icon-carrossel {
+        width: 17px;
     }
-}
+
+
+    @media (max-width: 1300px) {
+        .conteudo {
+            margin-left: 75px;
+            width: 90%;
+        }
+    }
 </style>
 
 <body>
@@ -51,9 +53,9 @@ $sql = "SELECT * FROM "
     //     return;
     // }
     ?>
-    <div class="p-2 pt-5 conteudo ">
-        
-        <p class="mb-1">
+    <div class="p-2 pt-4 conteudo ">
+        <a href="./home.php" class="mb-3"><img src="./images/icon-casa-carrossel.png" class="icon-carrossel" alt=""></a>
+        <p class="mb-1 mt-3">
             Digite algo no campo de entrada para pesquisar na tabela:
         </p>
         <input class="form-control mb-3 input-filtro" id="myInput" type="text" placeholder="Procurar...">
@@ -87,18 +89,20 @@ $sql = "SELECT * FROM "
                 </tbody>
             </table>
         </div>
-            <div>
-                <ul class="pagination ml-2 mt-2 " >
-                    <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">Anterior</a></li>
-                    <li class="page-item active" onclick="ativar(this)"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">Próxima</a></li>
-                </ul>
-            </div>
+        <div>
+            <ul class="pagination ml-2 mt-2 ">
+                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">Anterior</a></li>
+                <li class="page-item active" onclick="ativar(this)"><a class="page-link" href="#">1</a></li>
+                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">2</a></li>
+                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">3</a></li>
+                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">4</a></li>
+                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">Próxima</a></li>
+            </ul>
+        </div>
         <div class="hide" id="modal"></div>
     </div>
 </body>
 
 </html>
+
+

@@ -50,7 +50,9 @@ function fecharMsg() {
 function adicionarItem() {
   let nPatriSerie = document.getElementById('numPatriSerie').value;
   let descBem = document.getElementById('descBem').value;
-  document.getElementById('textareaid').value += nPatriSerie + ' / ' + descBem ;
-
+  if(nPatriSerie != '' && descBem != '') {
+    document.getElementById('textareaid').value += "Item " + ': '+ nPatriSerie + " / " + descBem + " " + " " + " " + " " + " ";
+  }
 }
+
 

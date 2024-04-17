@@ -13,11 +13,11 @@ include_once('header.php');
             <div class="row">
                 <div class="col-md-6 mb-2">
                     <label for="numPatriSerie" class="form-label text-muted">Nº Patrimonial/Nº de Série:</label>
-                    <input type="text" class="form-control" id="numPatriSerie" name="numPatriSerie">
+                    <input type="text" class="form-control" id="numPatriSerie" name="numPatriSerie" required>
                 </div>
                 <div class="col-md-6 mb-2">
                     <label for="descBem" class="form-label text-muted">Descrição do Bem:</label>
-                    <input type="text" class="form-control" id="descBem" name="descBem">
+                    <input type="text" class="form-control" id="descBem" name="descBem" required>
                 </div>
             </div>
             <div>
@@ -26,7 +26,7 @@ include_once('header.php');
                     <textarea class="form-control" id="textareaid" cols="3" rows="3" wrap="hard" disabled></textarea>
                 </div>
             </div>
-            <button type="button" class="btn btn-success mb-3" name="salvar" onclick="adicionarItem()">Adicionar Item</button>
+            <button type="button" class="btn btn-success mb-3" id="btn-adc-item" name="salvar" onclick="adicionarItem()">Adicionar Item</button>
             <h6 class="mb-3">Entregue em:</h6>
             <hr class="mb-4 w" style="opacity: 1;">
             <div class="row">

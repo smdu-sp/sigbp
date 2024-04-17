@@ -18,6 +18,7 @@
         $result = mysqli_query($conexao, "INSERT INTO item(patrimonio, tipo, numserie, marca, modelo, localizacao, servidor, numprocesso, nome, statusitem) 
         VALUES ('$patrimonio', '$tipo', '$numserie', '$marca', '$modelo', '$localizacao', '$servidor', '$numprocesso', '$nome', '$statusitem')");
     }
+
     
     ?>
 <body>

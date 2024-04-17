@@ -1,21 +1,58 @@
 <?php
 include_once('header.php');
+include_once('./conexoes/config.php');
+
+$sql = "SELECT * FROM item ORDER BY idbem ASC";
+$result = $conexao->query($sql) or die($mysqli->error);
+
+$user_data = mysqli_fetch_assoc($result)
 ?>
 <style>
+        .icon-carrossel {
+        width: 16px;
+    }
+
+    .icon-carrossel-i {
+        width: 16px;
+    }
+
+    .carrossel > a {
+        font-size: 13px;
+    }
+
+    .carrossel > a:hover {
+        font-family: 'Roboto', sans-serif;
+        text-decoration: none;
+    }
+
+    .carrossel {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
 </style>
 
 <body>
     <?php
     include_once('menu.php');
     ?>
-    <div class="p-5 p-md-5 pt-5 conteudo">
+    <div class="p-md-3 conteudo">
+        <div class="carrossel mb-2">
+            <a href="./home.php" class="mb-3 me-1">
+                <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
+            </a>
+            <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
+            <a href="./listaremovimentar.php" class="text-muted ms-1">Listar/Movimentar Bens</a>
+            <img src="./images/icon-avancar.png" class="icon-carrossel-i ms-1" alt="icon-avancar">
+            <a href="./alteracaodebens.php" class="text-primary ms-1">Alteração de bens</a>
+        </div>
         <h3 class="mb-3">Alteração de bens</h3>
         <hr class="mb-4 w" style="opacity: 1;">
         <form method="POST" action="cadastraitem.php">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numPatrimonio" class="form-label text-muted">Número do Patrimônio PMSP:</label>
-                    <input type="text" class="form-control" id="numPatrimonio" name="numPatrimonio">
+                    <input type="text" class="form-control" id="numPatrimonio" name="numPatrimonio" value="<?php echo $user_data['patrimonio'] ?>">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="tipo" class="form-label text-muted">Tipo:</label>
@@ -91,55 +128,49 @@ include_once('header.php');
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="marca" class="form-label text-muted">Marca:</label>
-                    <input type="text" class="form-control" id="marca" name="marca">
+                    <input type="text" class="form-control" id="marca" name="marca" value="<?php echo $user_data['marca'] ?>">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="modelo" class="form-label text-muted">Modelo:</label>
-                    <input type="text" class="form-control" id="mmodelo" name="modelo">
+                    <input type="text" class="form-control" id="mmodelo" name="modelo" value="<?php echo $user_data['modelo'] ?>">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numSerie" class="form-label text-muted">Número de Série:</label>
-                    <input type="text" class="form-control" id="numSerie" name="numSerie">
+                    <input type="text" class="form-control" id="numSerie" name="numSerie" value="<?php echo $user_data['numserie'] ?>">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="setor" class="form-label text-muted">Setor:</label>
-                    <input type="text" class="form-control" id="setor" name="setor">
+                    <input type="text" class="form-control" id="setor" name="setor" value="<?php echo $user_data['localizacao'] ?>">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nomeServidor" class="form-label text-muted">Nome do Servidor:</label>
-                    <input type="text" class="form-control" id="nomeServidor" name="nomeServidor">
+                    <input type="text" class="form-control" id="nomeServidor" name="nomeServidor" value="<?php echo $user_data['servidor'] ?>">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="cimbpm" class="form-label text-muted">CIMBPM:</label>
-                    <input type="text" class="form-control" id="cimbpm" name="cimbpm">
+                    <input type="text" class="form-control" id="cimbpm" name="cimbpm" value="<?php echo $user_data['cimbpm'] ?>">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numProcesso" class="form-label text-muted">Número do Processo:</label>
-                    <input type="text" class="form-control" id="numProcesso" name="numProcesso">
+                    <input type="text" class="form-control" id="numProcesso" name="numProcesso" value="<?php echo $user_data['numprocesso'] ?>">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="nomeComputador" class="form-label text-muted">Setor:</label>
-                    <input type="text" class="form-control" id="nomeComputador" name="nomeComputador">
+                    <label for="nomeComputador" class="form-label text-muted">Nome do computador:</label>
+                    <input type="text" class="form-control" id="nomeComputador" name="nomeComputador" value="<?php echo $user_data['nome'] ?>">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="descricaoPBPM" class="form-label text-muted">Descrição PBPM:</label>
-                    <input type="text" class="form-control" id="descricaoPBPM" name="descricaoPBPM">
+                    <input type="text" class="form-control" id="descricaoPBPM" name="descricaoPBPM" value="<?php echo $user_data['descsbpm'] ?>">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="status" class="form-label text-muted">Status:</label>
-                    <input type="text" class="form-control" id="status" name="status">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-4">
                     <label for="status" class="form-label text-muted">Status:</label>
                     <select class="form-select" id="status" required name="status" required>
                         <option value="Selecionar" hidden="hidden">Selecionar</option>

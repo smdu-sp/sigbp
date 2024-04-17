@@ -1,6 +1,7 @@
 <?php
 include_once('./conexoes/config.php');
 include_once('header.php');
+// print_r($_POST);
 
 if (isset($_POST['submit'])) {
     $usuario = $_POST['loginRede'];
@@ -26,7 +27,7 @@ if (isset($_POST['submit'])) {
                     <div class="input-group mb-3">
                         <input type="text" name="loginRede" class="form-control" placeholder="Buscar por login de rede" aria-label="Recipient's username" aria-describedby="basic-addon2">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary " type="button">Buscar</button>
+                            <button class="btn btn-outline-primary" name="buscar" id="buscar" type="submit">Buscar</button>
                         </div>
                     </div>
                 </div>
