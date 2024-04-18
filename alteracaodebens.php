@@ -8,19 +8,19 @@ $result = $conexao->query($sql) or die($mysqli->error);
 $user_data = mysqli_fetch_assoc($result)
 ?>
 <style>
-        .icon-carrossel {
+    .icon-carrossel {
         width: 16px;
     }
 
-    .icon-carrossel-i {
+    .icon-carrossel-avancar {
         width: 16px;
     }
 
-    .carrossel > a {
+    .carrossel>a {
         font-size: 13px;
     }
 
-    .carrossel > a:hover {
+    .carrossel>a:hover {
         font-family: 'Roboto', sans-serif;
         text-decoration: none;
     }
@@ -36,14 +36,14 @@ $user_data = mysqli_fetch_assoc($result)
     <?php
     include_once('menu.php');
     ?>
-    <div class="p-md-3 conteudo">
+    <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel mb-2">
             <a href="./home.php" class="mb-3 me-1">
                 <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
             </a>
-            <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
+            <img src="./images/icon-avancar.png" class="icon-carrossel-avancar" alt="icon-avancar">
             <a href="./listaremovimentar.php" class="text-muted ms-1">Listar/Movimentar Bens</a>
-            <img src="./images/icon-avancar.png" class="icon-carrossel-i ms-1" alt="icon-avancar">
+            <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
             <a href="./alteracaodebens.php" class="text-primary ms-1">Alteração de bens</a>
         </div>
         <h3 class="mb-3">Alteração de bens</h3>
@@ -185,7 +185,6 @@ $user_data = mysqli_fetch_assoc($result)
             </div>
             <div class="box-btn-voltar">
                 <button type="submit" class="btn btn-primary" name="salvar">Salvar</button>
-                <a href="./listaremovimentar.php" class="seta"><img src="./images/icon-voltar.png" alt="seta-sair" class="seta-voltar"></a>
             </div>
         </form>
     </div>

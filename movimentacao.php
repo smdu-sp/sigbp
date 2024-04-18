@@ -6,13 +6,12 @@ include_once('header.php');
         width: 18px;
     }
 
-    .icon-carrossel-i {
+    .icon-carrossel-avancar {
         width: 16px;
     }
 
     .carrossel > a {
         font-family: 'Roboto', sans-serif;
-
         font-size: 13px;
     }
 
@@ -31,14 +30,14 @@ include_once('header.php');
     <?php
     include_once('menu.php');
     ?>
-    <div class="p-md-4 conteudo">
+    <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel mb-2">
             <a href="./home.php" class="mb-3 me-1">
                 <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
             </a>
-            <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
+            <img src="./images/icon-avancar.png" class="icon-carrossel-avancar" alt="icon-avancar">
             <a href="./listaremovimentar.php" class="text-muted ms-1">Listar/Movimentar Bens</a>
-            <img src="./images/icon-avancar.png" class="icon-carrossel-i ms-1" alt="icon-avancar">
+            <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
             <a href="./movimentacao.php" class="text-primary ms-1">Movimentação</a>
         </div>
         <div class="mb-1 mt-1">

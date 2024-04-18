@@ -9,23 +9,6 @@ include_once('header.php');
 // }
 ?>
 <style>
-    .large-2::-webkit-scrollbar-track {
-        border: 1px solid #fff;
-        padding: 2px 0;
-        background-color: #fff;
-    }
-
-    .large-2::-webkit-scrollbar {
-        width: 10px;
-    }
-
-    .large-2::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        background-color: #E2E3E5;
-        border: none;
-        height: 10px;
-    }
-
     .conteudo {
         margin-left: 345px;
         width: 81%;
@@ -53,12 +36,12 @@ include_once('header.php');
     //     return;
     // }
     ?>
-    <div class="p-2 pt-4 conteudo ">
+    <div class="p-4 p-md-4 pt-3 conteudo">
         <a href="./home.php" class="mb-3"><img src="./images/icon-casa-carrossel.png" class="icon-carrossel" alt=""></a>
         <p class="mb-1 mt-3">
             Digite algo no campo de entrada para pesquisar na tabela:
         </p>
-        <input class="form-control mb-3 input-filtro" id="myInput" type="text" placeholder="Procurar...">
+        <input class="form-control input-filtro" id="myInput" type="text" placeholder="Procurar...">
         <br>
         <p class="mb-1 text-muted">Últimas movimentações</p>
         <div>

@@ -1,3 +1,30 @@
+new DataTable('#example', {
+  lengthMenu: [
+      [6, 12, 24],
+      [6, 12, 24, 'All']
+  ],
+  
+  language: {
+     "info" : "Mostrar a página _PAGE_ de _PAGES_",
+     "lengthMenu": "_MENU_ listas por página",
+     "sSearch" : "Filtrar:"
+  },
+
+  "columnDefs": [
+    {
+      "orderable": false, 
+      "targets": [0,10]
+    }
+  ]
+});
+
+$(document).ready(function() {
+  $('#example').DataTable(); // inicializa
+  var opts = { "aaSorting": [] }; // insere a opção
+  $('#example').DataTable().destroy(); // destrói
+  $('#example').DataTable(opts); // reinicializa com as novas opções
+});
+
 $(document).ready(function () {
   $("#myInput").on("keyup", function () {
     var value = $(this).val().toLowerCase();

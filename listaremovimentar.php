@@ -16,7 +16,25 @@ $result = $conexao->query($sql) or die($mysqli->error);
     }
 
     .icon-carrossel {
-        width: 17px;
+        width: 18px;
+    }
+
+    .icon-carrossel-i {
+        width: 16px;
+    }
+
+    .carrossel>a {
+        font-size: 15px;
+    }
+
+    .carrossel>a:hover {
+        text-decoration: none;
+    }
+
+    .carrossel {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
 
     @media (max-width: 1600px) {
@@ -53,17 +71,17 @@ $result = $conexao->query($sql) or die($mysqli->error);
     <?php
     include_once('menu.php');
     ?>
-    <div class="p-2 pt-4 conteudo ">
-        <div class="carrossel"><a href="./home.php" class="mb-3"><img src="./images/icon-casa-carrossel.png" class="icon-carrossel" alt=""></a></div>
-        <p class="mb-1 mt-3">
-            Digite algo no campo de entrada para pesquisar na tabela:
-        </p>
-        <input class="form-control mb-3 input-filtro" id="myInput" type="text" placeholder="Procurar...">
-        <br>
-        <p class="mb-1 text-muted">Últimas movimentações</p>
-        <div class="table-responsive">
-            <table class="table">
-                <thead class="table-secondary">
+    <div class="p-4 p-md-4 pt-3 conteudo">
+        <div class="carrossel mb-4">
+            <a href="./home.php" class="mb-3 me-1">
+                <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
+            </a>
+            <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
+            <a href="./termo.php" class="text-primary ms-1">Listar/Movimentar Bens</a>
+        </div>
+        <div class="conteudo ml-1 mt-4" style="width: 1500px;">
+            <table id="example" class="display table" style="width: 100%">
+                <thead class="table-primary">
                     <tr>
                         <th>Nº Patrimônio</th>
                         <th>Nome</th>
@@ -103,18 +121,6 @@ $result = $conexao->query($sql) or die($mysqli->error);
                 </tbody>
             </table>
         </div>
-        <div>
-            <ul class="pagination ml-2 mt-2 ">
-                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">Anterior</a></li>
-                <li class="page-item active" onclick="ativar(this)"><a class="page-link" href="#">1</a></li>
-                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">2</a></li>
-                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">3</a></li>
-                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">4</a></li>
-                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">Próxima</a></li>
-            </ul>
-        </div>
-        <div class="hide" id="modal"></div>
-    </div>
 </body>
 
 </html>

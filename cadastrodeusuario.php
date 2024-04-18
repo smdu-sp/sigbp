@@ -13,13 +13,42 @@ if (isset($_POST['submit'])) {
 }
 
 ?>
+<style>
+    .icon-carrossel {
+        width: 18px;
+    }
 
+    .icon-carrossel-i {
+        width: 16px;
+    }
+
+    .carrossel > a {
+        font-size: 15px;
+    }
+
+    .carrossel > a:hover {
+        text-decoration: none;
+    }
+
+    .carrossel {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+</style>
 <body>
     <?php
     include_once('menu.php');
     ?>
-    <div class="p-4 p-md-5 pt-5 conteudo">
-        <h3 class="mb-5">Cadastro de Usuários</h3>
+    <div class="p-4 p-md-4 pt-3 conteudo">
+    <div class="carrossel mb-2">
+            <a href="./home.php" class="mb-3 me-1">
+                <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
+            </a>
+            <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
+            <a href="./cadastrarbens.php" class="text-primary ms-1">Cadastro de Usuários</a>
+        </div>
+        <h3 class="mb-4 mt-4">Cadastro de Usuários</h3>
         <form method="POST" action="cadastrodeusuario.php">
             <div class="row">
                 <div class="col-md-13 mb-1">
@@ -131,7 +160,7 @@ if (isset($_POST['submit'])) {
                     <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="email">
                 </div>
                 <div class="d-flex flex-row-reverse">
-                    <input type="submit" class="btn btn-primary ml-2 pe-auto" name="submit" value="Cadastrar"></input>
+                    <input type="submit" class="btn btn-primary ml-3 pe-auto mr-2 " name="submit" value="Cadastrar"></input>
                     <input type="button" class="btn btn-light pe-auto" name="salvar" value="Cancelar"></input>
                 </div>
         </form>

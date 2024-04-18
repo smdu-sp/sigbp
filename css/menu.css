@@ -19,6 +19,7 @@ body {
     min-height: 100vh;
 }
 
+
 .conteudo_menu {
     display: flex;
     position: fixed;
@@ -184,6 +185,7 @@ hr {
     margin-right: 2px;
 }
 
+
 .desenvolvedor {
     background-color:#CDDAFC;
     border-radius: 15px;
@@ -342,9 +344,6 @@ hr {
     font-size: 12px;
 }
 
-.icon-carrossel {
-    width: 5px;
-}
 
 @media (max-width: 1300px) {
 

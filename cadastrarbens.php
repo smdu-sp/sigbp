@@ -1,34 +1,64 @@
 <?php
-    // session_start();
-    include_once('./conexoes/config.php');
-    include_once('header.php');
-    
-    if(isset($_POST['submit'])) {
-        $patrimonio = $_POST['numPatrimonio'];
-        $tipo = $_POST['tipo'];
-        $marca = $_POST['marca'];
-        $modelo = $_POST['modelo'];
-        $numserie = $_POST['numSerie'];
-        $localizacao = $_POST['localNovo'];
-        $servidor = $_POST['nomeServidor'];
-        $numprocesso = $_POST['numprocesso'];
-        $nome = $_POST['nomeComputador'];
-        $statusitem = $_POST['status'];
-        
-        $result = mysqli_query($conexao, "INSERT INTO item(patrimonio, tipo, numserie, marca, modelo, localizacao, servidor, numprocesso, nome, statusitem) 
+// session_start();
+include_once('./conexoes/config.php');
+include_once('header.php');
+
+if (isset($_POST['submit'])) {
+    $patrimonio = $_POST['numPatrimonio'];
+    $tipo = $_POST['tipo'];
+    $marca = $_POST['marca'];
+    $modelo = $_POST['modelo'];
+    $numserie = $_POST['numSerie'];
+    $localizacao = $_POST['localNovo'];
+    $servidor = $_POST['nomeServidor'];
+    $numprocesso = $_POST['numprocesso'];
+    $nome = $_POST['nomeComputador'];
+    $statusitem = $_POST['status'];
+
+    $result = mysqli_query($conexao, "INSERT INTO item(patrimonio, tipo, numserie, marca, modelo, localizacao, servidor, numprocesso, nome, statusitem) 
         VALUES ('$patrimonio', '$tipo', '$numserie', '$marca', '$modelo', '$localizacao', '$servidor', '$numprocesso', '$nome', '$statusitem')");
+}
+
+
+?>
+<style>
+    .icon-carrossel {
+        width: 18px;
     }
 
-    
-    ?>
+    .icon-carrossel-i {
+        width: 16px;
+    }
+
+    .carrossel > a {
+        font-size: 15px;
+    }
+
+    .carrossel > a:hover {
+        text-decoration: none;
+    }
+
+    .carrossel {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+</style>
 <body>
     <?php
     include_once('menu.php');
     ?>
-    <div class=" p-4 p-md-5 pt-5 conteudo">
-        <h3 class="mb-3">Cadastro de bens</h3>
+    <div class="p-4 p-md-4 pt-3 conteudo">
+    <div class="carrossel mb-2">
+            <a href="./home.php" class="mb-3 me-1">
+                <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
+            </a>
+            <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
+            <a href="./cadastrarbens.php" class="text-primary ms-1">Cadastro de bens</a>
+        </div>
+        <h3 class="mb-3 mt-4">Cadastro de bens</h3>
         <hr class="mb-4 w" style="opacity: 1;">
-        <form  action="cadastrarbens.php" method="POST">
+        <form action="cadastrarbens.php" method="POST">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numPatrimonio" class="form-label text-muted">Número do Patrimônio PMSP:</label>
@@ -37,7 +67,7 @@
                 <div class="col-md-6 mb-3">
                     <label for="tipo" class="form-label text-muted">Tipo:</label>
                     <select class="form-select" name="tipo" id="tipo" required>
-                        <option value="Selecionar" hidden="hidden" >Selecionar</option>
+                        <option value="Selecionar" hidden="hidden">Selecionar</option>
                         <option value="AMPLIFICADOR">AMPLIFICADOR</option>
                         <option value="ANTENA PARABÓLICA">ANTENA PARABÓLICA</option>
                         <option value="AP TELEFONICO DIGITAL">AP TELEFONICO DIGITAL</option>
@@ -205,8 +235,8 @@
                     </select>
                 </div>
             </div>
-            <input type="submit" class="btn btn-primary" name="submit" value="Cadastrar"></input>
-        <div class="hide" id="modal"></div>
+            <div class="d-flex justify-content-end mr-2"><input type="submit" class="btn btn-primary" name="submit" value="Cadastrar"></input></div>
+            <div class="hide" id="modal"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

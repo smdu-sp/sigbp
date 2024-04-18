@@ -1,14 +1,43 @@
 <?php
 include_once('header.php');
 ?>
+<style>
+    .icon-carrossel {
+        width: 18px;
+    }
 
+    .icon-carrossel-i {
+        width: 16px;
+    }
+
+    .carrossel > a {
+        font-size: 15px;
+    }
+
+    .carrossel > a:hover {
+        text-decoration: none;
+    }
+
+    .carrossel {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+</style>
 <body>
     <?php
     include_once('menu.php');
     ?>
-    <div class="p-4 p-md-5 pt-5 conteudo">
-        <h4 class="mb-3">Termo de Entrega/Retirada</h4>
-        <hr class="mb-4 w" style="opacity: 1;">
+    <div class="p-4 p-md-4 pt-3 conteudo">
+    <div class="carrossel mb-2">
+            <a href="./home.php" class="mb-3 me-1">
+                <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
+            </a>
+            <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
+            <a href="./termo.php" class="text-primary ms-1">Termo</a>
+        </div>
+        <h3 class="mb-3 mt-2">Termo de Entrega/Retirada</h3>
+        <hr class="mb-3 w" style="opacity: 1;">
         <form method="POST" action="cadastraitem.php">
             <div class="row">
                 <div class="col-md-6 mb-2">
@@ -26,9 +55,9 @@ include_once('header.php');
                     <textarea class="form-control" id="textareaid" cols="3" rows="3" wrap="hard" disabled></textarea>
                 </div>
             </div>
-            <button type="button" class="btn btn-success mb-3" id="btn-adc-item" name="salvar" onclick="adicionarItem()">Adicionar Item</button>
-            <h6 class="mb-3">Entregue em:</h6>
-            <hr class="mb-4 w" style="opacity: 1;">
+            <div class="d-flex justify-content-end mr-2"><button type="button" class="btn btn-success mb-3" id="btn-adc-item" name="salvar" onclick="adicionarItem()">Adicionar Item</button></div>
+            <h6 class="mb-2">Entregue em:</h6>
+            <hr class="mb-3" style="opacity: 1;">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="dataEntregue" class="form-label text-muted">Data da Entrega:</label>
@@ -89,7 +118,7 @@ include_once('header.php');
                     </select>
                 </div>
             </div>
-            <div class="row mb-4">
+            <div class="row mb-2">
                 <div class="col-md-6 mb-3">
                     <label for="nomeEntrega" class="form-label text-muted">Nome responsável pela Entrega:</label>
                     <input type="text" class="form-control" id="nomeEntrega" name="nomeEntrega">
@@ -99,8 +128,8 @@ include_once('header.php');
                     <input type="text" class="form-control" id="rfEntrega" name="rfEntrega">
                 </div>
             </div>
-            <h6 class="mb-3" style="opacity: 1;">Recebido em:</h6>
-            <hr class="mb-4 w" style="opacity: 1;">
+            <h6 class="mb-2">Recebido em:</h6>
+            <hr class="mb-3 " style="opacity: 1;">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="dataRecebimento" class="form-label text-muted">Data da Recebimento:</label>
@@ -171,7 +200,7 @@ include_once('header.php');
                     <input type="text" class="form-control" id="rfRecebimento" name="rfRecebimento">
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary mb-4" name="salvar">Baixar o Termo</button>
+            <div class="btn-baixar d-flex justify-content-end mr-2"><button type="submit" class="btn btn-primary mb-4" name="salvar">Baixar o Termo</button></div>
         </form>
         <div class="hide" id="modal"></div>
     </div>
