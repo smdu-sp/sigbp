@@ -1,5 +1,54 @@
 <?php
 include_once('header.php');
+
+if (!empty($_GET['id'])) {
+    include_once('./conexoes/config.php');
+    print_r($_POST);
+
+    $id = $_GET['id'];
+
+    $sqlSelect = "SELECT * FROM item WHERE idbem=$id";
+
+    $result = $conexao->query($sqlSelect);
+
+    if ($result->num_rows > 0) {
+        while ($user_data = mysqli_fetch_assoc($result)) {
+            $id = $user_data['idbem'];
+            $patrimonio = $user_data['patrimonio'];
+            $tipo = $user_data['tipo'];
+            $marca = $user_data['marca'];
+            $modelo = $user_data['modelo'];
+            $numserie = $user_data['numserie'];
+            $localizacao = $user_data['localizacao'];
+            $servidor = $user_data['servidor'];
+        }
+    } else {
+        header('Location: listaremovimentar.php');
+    }
+}
+echo "<script>console.log('Erro')</script>";
+
+if (isset($_POST['submit'])) {
+    echo "<script>console.log('Erro')</script>";
+    $id = $_POST['id'];
+    $patrimonio = $_POST['numPatrimonio'];
+    $tipo = $_POST['tipo'];
+    $marca = $_POST['marca'];
+    $modelo = $_POST['modelo'];
+    $numserie = $_POST['numSerie'];
+    $localnovo = $_POST['localnovo'];
+    $servidoranterior = $_POST['servidorAnterior'];
+    $servidoratual = $_POST['servidoratual'];
+    $localanterior = $_POST['localAnterior'];
+    $cimbpm = $_POST['cimbpm'];
+    $idusuario = $_POST['idusuario'];
+    $usuario = $_POST['usuario'];
+
+    $result = mysqli_query($conexao, "INSERT INTO transferencia(iditem, localanterior, localnovo, usuario, idusuario, servidoranterior, servidoratual, cimbpm) 
+            VALUES ('$id', '$localanterior', '$localnovo','$idusuario', '$usuario', '$servidoranterior', '$servidoratual', '$cimbpm')");
+
+    header('Location: home.php');
+}
 ?>
 <style>
     .icon-carrossel {
@@ -10,12 +59,12 @@ include_once('header.php');
         width: 16px;
     }
 
-    .carrossel > a {
+    .carrossel>a {
         font-family: 'Roboto', sans-serif;
         font-size: 13px;
     }
 
-    .carrossel > a:hover {
+    .carrossel-link {
         text-decoration: none;
     }
 
@@ -23,6 +72,19 @@ include_once('header.php');
         display: flex;
         flex-direction: row;
         align-items: center;
+    }
+
+    .carrossel-text {
+        text-decoration: none;
+    }
+
+    .carrossel-text:hover {
+        text-decoration: none;
+    }
+
+    hr {
+        opacity: 0.7;
+        border: 0.1px solid #DDDFE2;
     }
 </style>
 
@@ -36,67 +98,67 @@ include_once('header.php');
                 <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
             </a>
             <img src="./images/icon-avancar.png" class="icon-carrossel-avancar" alt="icon-avancar">
-            <a href="./listaremovimentar.php" class="text-muted ms-1">Listar/Movimentar Bens</a>
+            <a href="./listaremovimentar.php" class="text-muted ms-1 carrossel-text">Listar/Movimentar Bens</a>
             <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
-            <a href="./movimentacao.php" class="text-primary ms-1">Movimentação</a>
+            <a href="./movimentacao.php" class="text-primary ms-1 carrossel-text">Movimentação</a>
         </div>
         <div class="mb-1 mt-1">
             <h4 class="mb-3">Movimentação</h4>
 
         </div>
-        <hr class="mb-4 w" style="opacity: 1;">
+        <hr class="mb-4 w">
         <h5 class="mb-3">Dados do Item</h4>
-            <form method="POST" action="cadastraitem.php">
+            <form method="POST">
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="id" class="form-label text-muted">ID:</label>
-                        <input type="text" class="form-control" id="id" name="id">
+                        <input type="text" class="form-control" id="id" name="id" value="<?php echo $id ?>" readonly>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="numPatrimonio" class="form-label text-muted">Número do Patrimônio PMSP:</label>
-                        <input type="text" class="form-control" id="numPatrimonio" name="numPatrimonio">
+                        <input type="text" class="form-control" id="numPatrimonio" name="numPatrimonio" value="<?php echo $patrimonio ?>" readonly>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="tipo" class="form-label text-muted">Tipo:</label>
-                        <input type="text" class="form-control" id="tipo" name="tipo">
+                        <input type="text" class="form-control" id="tipo" name="tipo" value="<?php echo $tipo ?>" readonly>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="modelo" class="form-label text-muted">Modelo:</label>
-                        <input type="text" class="form-control" id="modelo" name="modelo">
+                        <input type="text" class="form-control" id="modelo" name="modelo" value="<?php echo $modelo ?>" readonly>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="numSerie" class="form-label text-muted">Número de Série:</label>
-                        <input type="text" class="form-control" id="numSerie" name="numSerie">
+                        <input type="text" class="form-control" id="numSerie" name="numSerie" value="<?php echo $numserie ?>" readonly>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="marca" class="form-label text-muted">Marca:</label>
-                        <input type="text" class="form-control" id="marca" name="marca">
+                        <input type="text" class="form-control" id="marca" name="marca" value="<?php echo $marca ?>" readonly>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6 mb-3">
                         <label for="servidorAtual" class="form-label text-muted">Servidor Atual:</label>
-                        <input type="text" class="form-control" id="servidorAtual" name="servidorAtual">
+                        <input type="text" class="form-control" id="servidorAtual" name="servidorAnterior" value="<?php echo $servidor ?>" readonly>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="localAtual" class="form-label text-muted">Localização Atual:</label>
-                        <input type="text" class="form-control" id="localAtual" name="localAtual">
+                        <input type="text" class="form-control" id="localanterior" name="localAnterior" value="<?php echo $localizacao ?>" readonly>
                     </div>
                 </div>
                 <h5 class="mb-3">Dados da Transferência</h4>
-                    <hr class="mb-4 w" style="opacity: 1;">
+                    <hr class="mb-4 w">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="nomeServidor" class="form-label text-muted">Nome do Servidor:</label>
-                            <input type="text" class="form-control" id="nomeServidor" name="nomeServidor">
+                            <input type="text" class="form-control" id="nomeServidor" name="servidoratual">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="localNova" class="form-label text-muted">Localização Nova:</label>
-                            <select class="form-select" id="localNovo" required name="localNovo" required>
+                            <select class="form-select" id="localnovo" required name="localnovo" required>
                                 <option value="Selecionar" hidden="hidden">Selecionar</option>
                                 <option value="ASCOM">ASCOM</option>
                                 <option value="ATAJ">ATAJ</option>
@@ -158,15 +220,15 @@ include_once('header.php');
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="responsavelTransferencia" class="form-label text-muted">Responsável pela Transferência:</label>
-                            <input type="text" class="form-control" id="responsavelTransferencia" name="responsavelTransferencia">
+                            <input type="text" class="form-control" id="responsavelTransferencia" name="idusuario" value="<?php echo $_SESSION['SesNome'] ?>" readonly>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="login" class="form-label text-muted">Login:</label>
-                            <input type="text" class="form-control" id="login" name="login">
+                            <input type="text" class="form-control" id="login" name="usuario" value="<?php echo $_SESSION['SesID'] ?>" readonly>
                         </div>
                     </div>
                     <div class="box-btn-voltar">
-                        <button type="submit" class="btn btn-primary" name="salvar">Salvar</button>
+                        <button type="submit" class="btn btn-primary" name="submit">Salvar</button>
                     </div>
             </form>
             <div class="hide" id="modal"></div>

@@ -134,12 +134,6 @@ body {
     justify-content: center;
 }
 
-hr {
-    border: 0.1px solid #DDDFE2;
-    width: 92%;
-    margin: 5px 0px;
-}
-
 .info-usuario {
     display: flex;
     flex-direction: column;

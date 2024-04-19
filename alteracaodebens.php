@@ -1,11 +1,35 @@
 <?php
 include_once('header.php');
-include_once('./conexoes/config.php');
 
-$sql = "SELECT * FROM item ORDER BY idbem ASC";
-$result = $conexao->query($sql) or die($mysqli->error);
+    if(!empty($_GET['id'])) {
+        include_once('./conexoes/config.php');
 
-$user_data = mysqli_fetch_assoc($result)
+        $id = $_GET['id'];
+
+        $sqlSelect = "SELECT * FROM item WHERE idbem=$id";
+
+        $result = $conexao->query($sqlSelect);
+
+        if($result->num_rows > 0) {
+            while($user_data = mysqli_fetch_assoc($result)) {
+                $patrimonio = $user_data['patrimonio'];
+                $tipo = $user_data['tipo'];
+                $marca = $user_data['marca'];
+                $modelo = $user_data['modelo'];
+                $numserie = $user_data['numserie'];
+                $localizacao = $user_data['localizacao'];
+                $servidor = $user_data['servidor'];
+                $numprocesso = $user_data['numprocesso'];
+                $name = $user_data['nome'];
+                $statusitem = $user_data['statusitem'];
+                $cimbpm = $user_data['cimbpm'];
+                $descsbpm = $user_data['descsbpm'];
+            }
+        } else {
+            header('Location: listaremovimentar.php');
+        }
+
+    }
 ?>
 <style>
     .icon-carrossel {
@@ -25,10 +49,23 @@ $user_data = mysqli_fetch_assoc($result)
         text-decoration: none;
     }
 
+    .carrossel-text {
+        text-decoration: none;
+    }
+
+    .carrossel-text:hover {
+        text-decoration: none;
+    }
+
     .carrossel {
         display: flex;
         flex-direction: row;
         align-items: center;
+    }
+
+    hr {
+        opacity: 0.7;
+        border: 0.1px solid #DDDFE2; 
     }
 </style>
 
@@ -42,22 +79,22 @@ $user_data = mysqli_fetch_assoc($result)
                 <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
             </a>
             <img src="./images/icon-avancar.png" class="icon-carrossel-avancar" alt="icon-avancar">
-            <a href="./listaremovimentar.php" class="text-muted ms-1">Listar/Movimentar Bens</a>
+            <a href="./listaremovimentar.php" class="text-muted ms-1 carrossel-text">Listar/Movimentar Bens</a>
             <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
-            <a href="./alteracaodebens.php" class="text-primary ms-1">Alteração de bens</a>
+            <a href="./alteracaodebens.php" class="text-primary ms-1 carrossel-text">Alteração de bens</a>
         </div>
         <h3 class="mb-3">Alteração de bens</h3>
-        <hr class="mb-4 w" style="opacity: 1;">
+        <hr class="mb-4 w">
         <form method="POST" action="cadastraitem.php">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numPatrimonio" class="form-label text-muted">Número do Patrimônio PMSP:</label>
-                    <input type="text" class="form-control" id="numPatrimonio" name="numPatrimonio" value="<?php echo $user_data['patrimonio'] ?>">
+                    <input type="text" class="form-control" id="numPatrimonio" name="numPatrimonio" value="<?php echo $patrimonio ?>">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="tipo" class="form-label text-muted">Tipo:</label>
                     <select class="form-select" name="tipo" id="tipo" required>
-                        <option value="Selecionar" hidden="hidden">Selecionar</option>
+                        <option value="<?php echo $tipo ?>" hidden="hidden"><?php echo $tipo ?></option>
                         <option value="AMPLIFICADOR">AMPLIFICADOR</option>
                         <option value="ANTENA PARABÓLICA">ANTENA PARABÓLICA</option>
                         <option value="AP TELEFONICO DIGITAL">AP TELEFONICO DIGITAL</option>
@@ -128,52 +165,52 @@ $user_data = mysqli_fetch_assoc($result)
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="marca" class="form-label text-muted">Marca:</label>
-                    <input type="text" class="form-control" id="marca" name="marca" value="<?php echo $user_data['marca'] ?>">
+                    <input type="text" class="form-control" id="marca" name="marca" value="<?php echo $marca ?>">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="modelo" class="form-label text-muted">Modelo:</label>
-                    <input type="text" class="form-control" id="mmodelo" name="modelo" value="<?php echo $user_data['modelo'] ?>">
+                    <input type="text" class="form-control" id="mmodelo" name="modelo" value="<?php echo $modelo ?>">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numSerie" class="form-label text-muted">Número de Série:</label>
-                    <input type="text" class="form-control" id="numSerie" name="numSerie" value="<?php echo $user_data['numserie'] ?>">
+                    <input type="text" class="form-control" id="numSerie" name="numSerie" value="<?php echo $numserie ?>">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="setor" class="form-label text-muted">Setor:</label>
-                    <input type="text" class="form-control" id="setor" name="setor" value="<?php echo $user_data['localizacao'] ?>">
+                    <input type="text" class="form-control" id="setor" name="setor" value="<?php echo $localizacao ?>" disabled>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nomeServidor" class="form-label text-muted">Nome do Servidor:</label>
-                    <input type="text" class="form-control" id="nomeServidor" name="nomeServidor" value="<?php echo $user_data['servidor'] ?>">
+                    <input type="text" class="form-control" id="nomeServidor" name="nomeServidor" value="<?php echo $servidor ?>" disabled>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="cimbpm" class="form-label text-muted">CIMBPM:</label>
-                    <input type="text" class="form-control" id="cimbpm" name="cimbpm" value="<?php echo $user_data['cimbpm'] ?>">
+                    <input type="text" class="form-control" id="cimbpm" name="cimbpm" value="<?php echo $cimbpm ?>">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numProcesso" class="form-label text-muted">Número do Processo:</label>
-                    <input type="text" class="form-control" id="numProcesso" name="numProcesso" value="<?php echo $user_data['numprocesso'] ?>">
+                    <input type="text" class="form-control" id="numProcesso" name="numProcesso" value="<?php echo $numprocesso ?>">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="nomeComputador" class="form-label text-muted">Nome do computador:</label>
-                    <input type="text" class="form-control" id="nomeComputador" name="nomeComputador" value="<?php echo $user_data['nome'] ?>">
+                    <label for="nome" class="form-label text-muted">Nome do computador:</label>
+                    <input type="text" class="form-control" id="nome" name="nome" value="<?php echo $name ?>">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="descricaoPBPM" class="form-label text-muted">Descrição PBPM:</label>
-                    <input type="text" class="form-control" id="descricaoPBPM" name="descricaoPBPM" value="<?php echo $user_data['descsbpm'] ?>">
+                    <input type="text" class="form-control" id="descricaoPBPM" name="descricaoPBPM" value="<?php echo $descsbpm ?>">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="status" class="form-label text-muted">Status:</label>
                     <select class="form-select" id="status" required name="status" required>
-                        <option value="Selecionar" hidden="hidden">Selecionar</option>
+                        <option value="<?php echo $statusitem ?>" hidden="hidden"><?php echo $statusitem ?></option>
                         <option value="Ativo">Ativo</option>
                         <option value="Baixado">Baixado</option>
                         <option value="Para Doação">Para Doação</option>

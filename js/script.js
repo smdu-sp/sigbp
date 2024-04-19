@@ -3,19 +3,21 @@ new DataTable('#example', {
       [6, 12, 24],
       [6, 12, 24, 'All']
   ],
-  
-  language: {
-     "info" : "Mostrar a página _PAGE_ de _PAGES_",
-     "lengthMenu": "_MENU_ listas por página",
-     "sSearch" : "Filtrar:"
-  },
 
-  "columnDefs": [
-    {
-      "orderable": false, 
-      "targets": [0,10]
-    }
-  ]
+  language: {
+    "sEmptyTable" : "Nenhum registro encontrado",
+    "sInfoEmpty" : "Mostrando 0 até 0 de 0 registros",
+     "sInfo" : "Mostrando _PAGE_ de _PAGES_",
+     "sLengthMenu": "_MENU_ resultados por página",
+     "sSearch" : "Pesquisar:",
+     "sZeroRecords" : "Nenhum registro encontrado",
+     "sProcessing" : "Processando...",
+     "sLoadingRecords" : "Carregando...",
+     "sInfoFiltered" : "(Filtrados de _MAX_ registros)",
+     "sInfoThousands": ".",
+     "sInfoPostFix": "",
+     "order": [[0,'desc']]
+  },
 });
 
 $(document).ready(function() {

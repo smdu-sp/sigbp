@@ -4,8 +4,6 @@ include_once('./conexoes/config.php');
 
 $sql = "SELECT * FROM item ORDER BY idbem ASC";
 $result = $conexao->query($sql) or die($mysqli->error);
-// var_dump($sql_count);
-
 ?>
 <style>
     .conteudo {
@@ -35,6 +33,14 @@ $result = $conexao->query($sql) or die($mysqli->error);
         display: flex;
         flex-direction: row;
         align-items: center;
+    }
+
+    .carrossel-text {
+        text-decoration: none;
+    }
+
+    .carrossel-text:hover {
+        text-decoration: none;
     }
 
     @media (max-width: 1600px) {
@@ -77,12 +83,13 @@ $result = $conexao->query($sql) or die($mysqli->error);
                 <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
             </a>
             <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-            <a href="./termo.php" class="text-primary ms-1">Listar/Movimentar Bens</a>
+            <a href="./termo.php" class="text-primary ms-1 carrossel-text">Listar/Movimentar Bens</a>
         </div>
         <div class="conteudo ml-1 mt-4" style="width: 1500px;">
             <table id="example" class="display table" style="width: 100%">
                 <thead class="table-primary">
                     <tr>
+                        <th hidden>Id</th>
                         <th>Nº Patrimônio</th>
                         <th>Nome</th>
                         <th>Marca</th>
@@ -102,6 +109,7 @@ $result = $conexao->query($sql) or die($mysqli->error);
                     <?php
                     while ($user_data = mysqli_fetch_assoc($result)) {
                         echo "<tr>";
+                        echo "<td hidden>" . $user_data['idbem'] . "</td>";
                         echo "<td>" . $user_data['patrimonio'] . "</td>";
                         echo "<td>" . $user_data['nome'] . "</td>";
                         echo "<td>" . $user_data['marca'] . "</td>";
@@ -114,7 +122,7 @@ $result = $conexao->query($sql) or die($mysqli->error);
                         echo "<td>" . $user_data['numprocesso'] . "</td>";
                         echo "<td>" . $user_data['cimbpm'] . "</td>";
                         echo "<td>" . $user_data['statusitem'] . "</td>";
-                        echo "<td>" . "<a href='./movimentacao.php'><img src='./images/icon-seta.png' alt='Seta'></a>" . "<a href='.//alteracaodebens.php'><img src='./images/icon-lapis.png' alt='Seta'></a>" . "</td>";
+                        echo "<td>" . "<a href='movimentacao.php?id=$user_data[idbem]'><img src='./images/icon-seta.png' alt='Seta'></a>" . "<a href='alteracaodebens.php?id=$user_data[idbem]'><img src='./images/icon-lapis.png' alt='Seta'></a>" . "</td>";
                         echo "</tr>";
                     }
                     ?>

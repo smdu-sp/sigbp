@@ -22,6 +22,13 @@ if (isset($_POST['submit'])) {
         width: 16px;
     }
 
+    hr {
+        opacity: 0.7;
+        border: 0.1px solid #DDDFE2; 
+        width: 97%; 
+        margin-left: 12px; 
+    }
+
     .carrossel > a {
         font-size: 15px;
     }
@@ -35,6 +42,14 @@ if (isset($_POST['submit'])) {
         flex-direction: row;
         align-items: center;
     }
+
+    .carrossel-text {
+        text-decoration: none;
+    }
+
+    .carrossel-text:hover {
+        text-decoration: none;
+    }
 </style>
 <body>
     <?php
@@ -46,7 +61,7 @@ if (isset($_POST['submit'])) {
                 <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
             </a>
             <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-            <a href="./cadastrarbens.php" class="text-primary ms-1">Cadastro de Usuários</a>
+            <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Cadastro de Usuários</a>
         </div>
         <h3 class="mb-4 mt-4">Cadastro de Usuários</h3>
         <form method="POST" action="cadastrodeusuario.php">
@@ -60,14 +75,14 @@ if (isset($_POST['submit'])) {
                         </div>
                     </div>
                 </div>
-                <hr style="opacity: 1; width: 97%; margin-left: 12px" class="mb-2">
+                <hr style="width: 97%;" class="mb-2">
                 <div class="col-md-13 mb-1">
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label text-muted">Nome</label>
                         <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nome" name="nome">
                     </div>
                 </div>
-                <hr style="opacity: 1; width: 97%; margin-left: 12px" class="mb-2">
+                <hr style="width: 97%;" class="mb-2">
                 <div class="col-md-12 mb-3">
                     <label for="usuarioCadastro" class="form-label text-muted">Permissão</label>
                     <div class="input-group">
@@ -80,7 +95,7 @@ if (isset($_POST['submit'])) {
                         </select>
                     </div>
                 </div>
-                <hr style="opacity: 1; width: 97%; margin-left: 12px" class="mb-2">
+                <hr style="width: 97%;" class="mb-2">
                 <div class="col-md-12 mb-3">
                     <label for="usuarioCadastro" class="form-label text-muted">Unidade</label>
                     <div class="input-group">
@@ -138,7 +153,7 @@ if (isset($_POST['submit'])) {
                         </select>
                     </div>
                 </div>
-                <hr style="opacity: 1; width: 97%; margin-left: 12px" class="mb-2">
+                <hr style="width: 97%;" class="mb-2">
                 <div class="col-md-12 mb-3">
                     <label for="usuarioCadastro" class="form-label text-muted">Status</label>
                     <div class="input-group">
@@ -154,7 +169,7 @@ if (isset($_POST['submit'])) {
                         </select>
                     </div>
                 </div>
-                <hr style="opacity: 1; width: 97%; margin-left: 12px" class="mb-2">
+                <hr style="width: 97%;" class="mb-2">
                 <div class="mb-3">
                     <label for="usuarioCadastro" class="form-label text-muted">Email</label>
                     <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="email">

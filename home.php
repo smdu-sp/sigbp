@@ -2,7 +2,7 @@
 session_start();
 include_once('./conexoes/config.php');
 include_once('header.php');
-
+print_r($_POST);
 // if($_SESSION['Perm'] == 1) {
 //     echo '<script>alert("Usuario invalido!");</script>';
 //     return;

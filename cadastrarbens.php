@@ -43,6 +43,20 @@ if (isset($_POST['submit'])) {
         flex-direction: row;
         align-items: center;
     }
+    
+    .carrossel-text {
+        text-decoration: none;
+    }
+
+    .carrossel-text:hover {
+        text-decoration: none;
+    }
+
+    hr {
+        opacity: 0.7;
+        border: 0.1px solid #DDDFE2; 
+    }
+    
 </style>
 <body>
     <?php
@@ -54,7 +68,7 @@ if (isset($_POST['submit'])) {
                 <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
             </a>
             <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-            <a href="./cadastrarbens.php" class="text-primary ms-1">Cadastro de bens</a>
+            <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Cadastro de bens</a>
         </div>
         <h3 class="mb-3 mt-4">Cadastro de bens</h3>
         <hr class="mb-4 w" style="opacity: 1;">
