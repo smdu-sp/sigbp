@@ -1,5 +1,17 @@
 <?php
 include_once('header.php');
+if (isset($_POST['submit'])) {
+    $dataEntregue = $_POST['dataEntregue'];
+    $unidadeEntregue = $_POST['unidadeEntregue'];
+    $nomeEntrega = $_POST['nomeEntrega'];
+    $rfEntrega = $_POST['rfEntrega'];
+    $dataRecebimento = $_POST['dataRecebimento'];
+    $unidadeRecebimento = $_POST['unidadeRecebimento'];
+    $nomeRecebimento = $_POST['nomeRecebimento'];
+    $rfRecebimento = $_POST['rfRecebimento'];
+
+    header('Location: gerar-pdf.php');
+}
 ?>
 <style>
     .icon-carrossel {
@@ -51,15 +63,15 @@ include_once('header.php');
         </div>
         <h3 class="mb-3 mt-2">Termo de Entrega/Retirada</h3>
         <hr class="mb-3 w" style="opacity: 1;">
-        <form method="POST" action="cadastraitem.php">
+        <form method="POST"  id="conteudo" action="gerar-pdf.php">
             <div class="row">
                 <div class="col-md-6 mb-2">
                     <label for="numPatriSerie" class="form-label text-muted">Nº Patrimonial/Nº de Série:</label>
-                    <input type="text" class="form-control" id="numPatriSerie" name="numPatriSerie" required>
+                    <input type="text" class="form-control campos" id="numPatriSerie" name="numPatriSerie" required>
                 </div>
                 <div class="col-md-6 mb-2">
-                    <label for="descBem" class="form-label text-muted">Descrição do Bem:</label>
-                    <input type="text" class="form-control" id="descBem" name="descBem" required>
+                    <label for="descBem" class="form-label text-muted ">Descrição do Bem:</label>
+                    <input type="text" class="form-control campos" id="descBem" name="descBem" required>
                 </div>
             </div>
             <div>
@@ -68,13 +80,13 @@ include_once('header.php');
                     <textarea class="form-control" id="textareaid" cols="3" rows="3" wrap="hard" disabled></textarea>
                 </div>
             </div>
-            <div class="d-flex justify-content-end mr-2"><button type="button" class="btn btn-success mb-3" id="btn-adc-item" name="salvar" onclick="adicionarItem()">Adicionar Item</button></div>
+            <div class="d-flex justify-content-end mr-2"><button type="button" class="btn btn-success mb-3" id="btn-adc-item" name="salvar" onclick="adicionarItem()" disabled>Adicionar Item</button></div>
             <h6 class="mb-2">Entregue em:</h6>
             <hr class="mb-3" style="opacity: 1;">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="dataEntregue" class="form-label text-muted">Data da Entrega:</label>
-                    <input type="text" class="form-control" id="dataEntregue" name="dataEntregue">
+                    <input type="date" class="form-control" id="dataEntregue" name="dataEntregue">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="unidadeEntregue" class="form-label text-muted">Unidade:</label>
@@ -146,7 +158,7 @@ include_once('header.php');
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="dataRecebimento" class="form-label text-muted">Data da Recebimento:</label>
-                    <input type="text" class="form-control" id="dataRecebimento" name="dataRecebimento">
+                    <input type="date" class="form-control" id="dataRecebimento" name="dataRecebimento">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="unidadeRecebimento" class="form-label text-muted">Unidade que Recebeu:</label>
@@ -213,7 +225,7 @@ include_once('header.php');
                     <input type="text" class="form-control" id="rfRecebimento" name="rfRecebimento">
                 </div>
             </div>
-            <div class="btn-baixar d-flex justify-content-end mr-2"><button type="submit" class="btn btn-primary mb-4" name="salvar">Baixar o Termo</button></div>
+            <div class="btn-baixar d-flex justify-content-end mr-2"><button type="submit" class="btn btn-primary mb-4" name="submit" id='btGerarPDF'>Baixar o Termo</button></div>
         </form>
         <div class="hide" id="modal"></div>
     </div>
