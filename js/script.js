@@ -79,7 +79,7 @@ let serieInput = document.getElementById('numPatriSerie');
 let descBem = document.getElementById('descBem');
 let btn = document.getElementById('btn-adc-item');
 
-function verficacao() {
+function verificacao() {
   var tamanhoSerie = serieInput.value.length;
   var tamanhoDescBem = descBem.value.length;
 
@@ -89,26 +89,35 @@ function verficacao() {
 }
 
 var campos = document.getElementsByClassName("campos");
-console.log(campos);
 
 for (let i = 0; i < campos.length; i++) {
-    campos[i].addEventListener('keypress', verficacao);
+  campos[i].addEventListener('keypress', verificacao);
 }
+
+
+var arrayNumSerie = [];
+var arrayDescBem = [];
 
 // MOSTRAR ITENS ADICIONADOS NO TERMO
 function adicionarItem() {
   let nPatriSerie = document.getElementById('numPatriSerie').value;
   let descBem = document.getElementById('descBem').value;
   if(nPatriSerie != '' && descBem != '') {
-    let arrayItem = [];
-    arrayItem.push(nPatriSerie, descBem);
-    document.getElementById('textareaid').value += "Item" + ': ' + arrayItem + " " + " " + " " + " ";
-    document.getElementById('numPatriSerie').value = ' ';
-    document.getElementById('descBem').value = ' ';
-    document.getElementById('btn-adc-item').setAttribute('disabled');
-  }
+    var textareaNumSerie = document.getElementById('textareaNumSerie').value += nPatriSerie + '\n' ;
+    var textareaDescBem = document.getElementById('textareaDescBem').value += descBem + '\n' ;
+    document.getElementById('numPatriSerie').value = '';
+    document.getElementById('descBem').value = '';
 
-  
+    arrayDescBem.push(nPatriSerie);
+    arrayNumSerie.push(descBem);
+    console.log(arrayDescBem);
+    console.log(arrayNumSerie);
+  }
+}
+
+
+function enviar_session(){
+  sessionStorage.setItem("Serie", JSON.stringify(arrayNumSerie));
 }
 
 

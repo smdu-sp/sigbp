@@ -1,6 +1,6 @@
 <?php
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $dataEntregue = $_POST['dataEntregue'];
     $unidadeEntregue = $_POST['unidadeEntregue'];
     $nomeEntrega = $_POST['nomeEntrega'];
@@ -9,6 +9,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $unidadeRecebimento = $_POST['unidadeRecebimento'];
     $nomeRecebimento = $_POST['nomeRecebimento'];
     $rfRecebimento = $_POST['rfRecebimento'];
+
 } else {
     echo "Nenhum dado recebido";
 }
@@ -22,7 +23,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/pdf.css" media="print">
+    <link rel="stylesheet" href="./css/pdf.css">
     <script type="text/javascript" src="js/jspdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -30,9 +31,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <div class="container-pdf" id="conteudo">
+    <div class="container-pdf" id="conteudo modal">
         <div class="titulo-termo">
-            <!-- <img src="./images/logo-cinza.jpg" alt="Logo"> -->
+            <img src="./images/logo-cinza.jpg" alt="Logo" class="logo-cinza">
             <div class="texto-titulo">
                 <h3>PREFEITURA DO MUNICÍPIO DE SÃO PAULO</h3>
                 <h3>SECRETARIA MUNICIPAL DE URBANISMO E LICENCIAMENTO</h3>
@@ -43,7 +44,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="texto-conteudo">
                 <p>Recebi nesta data os Bens Patrimoniais descritos no presente termo de responsabilidade e recebimento, cujas movimentações, transferências/ aceites serão registrados no Sistema de Bens Patrimoniais - SBPM via processo SEI, nos termos da legislação que rege a matéria.</p>
             </div>
-            <table class="descricaoBem">
+            <table class="descricaoBem" id="descricaoBem">
                 <thead>
                     <tr>
                         <th class="desc-th">Nº PATRIMONIAL/ Nº DE SÉRIE</th>
@@ -52,27 +53,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="desc-td">001-051100480-9/EWCFM22</td>
                         <td class="desc-td">NOTEBOOK DELL INSPIRON 15</td>
-                    </tr>
-                    <tr>
-                        <td class="desc-td">001-051100480-9</td>
-                        <td class="desc-td">DELL INSPIRON 15</td>
-                    </tr>
-                    <tr>
-                        <td class="desc-td">EWCFM22/001-051100480-9</td>
-                        <td class="desc-td">DELL INSPIRON 15 NOTEBOOK </td>
+                        <td class="desc-td">NOTEBOOK DELL INSPIRON 15</td>
                     </tr>
                 </tbody>
             </table>
             <table class="assinatura">
                 <tbody>
                     <tr>
-                        <td class="ass-td"><strong>Entregue em:</strong>  <?php echo $dataEntregue ?></td>
-                        <td class="ass-td"><strong>Recebido em:</strong>  <?php echo $dataRecebimento ?> </td>
+                        <td class="ass-td"><strong>Entregue em:</strong> <?php echo $dataEntregue ?></td>
+                        <td class="ass-td"><strong>Recebido em:</strong> <?php echo $dataRecebimento ?> </td>
                     </tr>
                     <tr>
-                        <td class="ass-td"><strong>UNIDADE:</strong>  <?php echo $unidadeEntregue ?></td>
+                        <td class="ass-td"><strong>UNIDADE:</strong> <?php echo $unidadeEntregue ?></td>
                         <td class="ass-td"><strong>UNIDADE:</strong> <?php echo $unidadeRecebimento ?></td>
                     </tr>
                     <tr>
@@ -92,12 +85,38 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
     <div id="editor"></div>
-    <button id="btGerarPDF">Baixar pdf</button>
+    <div id="absolute">
+        <button class="botao-modal" id="botao" onclick="printTermo()">Imprimir</button>
+    </div>
 </body>
 
 </html>
 
 <script>
+
+
+    var session = sessionStorage.getItem("Serie");
+    console.log(session);
+    const strCopy = session.split(',');
+    console.log(strCopy);
+    var botao = document.getElementById('botao');
+
+    const map1 = strCopy.map((x) => x)
+    console.log(map1);
+
+    var teste = document.getElementById('descricaoBem');
+
+    teste.innerHTML(map1);
+
+    function printTermo() {
+        botao.style.display = 'none'
+        window.print();
+    }
+
+    window.onafterprint = function() {
+        botao.style.display = 'block'
+    }
+
     var doc = new jsPDF();
     var specialElementHandlers = {
         '#editor': function(element, renderer) {

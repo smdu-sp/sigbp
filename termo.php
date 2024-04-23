@@ -22,11 +22,11 @@ if (isset($_POST['submit'])) {
         width: 16px;
     }
 
-    .carrossel > a {
+    .carrossel>a {
         font-size: 15px;
     }
 
-    .carrossel > a:hover {
+    .carrossel>a:hover {
         text-decoration: none;
     }
 
@@ -43,18 +43,19 @@ if (isset($_POST['submit'])) {
     .carrossel-text:hover {
         text-decoration: none;
     }
-    
+
     hr {
         opacity: 0.7;
-        border: 0.1px solid #DDDFE2; 
+        border: 0.1px solid #DDDFE2;
     }
 </style>
+
 <body>
     <?php
     include_once('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
-    <div class="carrossel mb-2">
+        <div class="carrossel mb-2">
             <a href="./home.php" class="mb-3 me-1">
                 <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
             </a>
@@ -63,7 +64,7 @@ if (isset($_POST['submit'])) {
         </div>
         <h3 class="mb-3 mt-2">Termo de Entrega/Retirada</h3>
         <hr class="mb-3 w" style="opacity: 1;">
-        <form method="POST"  id="conteudo" action="gerar-pdf.php">
+        <form method="POST" id="conteudo" action="gerar-pdf.php">
             <div class="row">
                 <div class="col-md-6 mb-2">
                     <label for="numPatriSerie" class="form-label text-muted">Nº Patrimonial/Nº de Série:</label>
@@ -75,9 +76,15 @@ if (isset($_POST['submit'])) {
                 </div>
             </div>
             <div>
-                <div class="form-group">
-                    <label for="exampleFormControlTextarea1" class="text-muted">Itens Adicionados/Descrição do Bem</label>
-                    <textarea class="form-control" id="textareaid" cols="3" rows="3" wrap="hard" disabled></textarea>
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <label for="exampleFormControlTextarea1" class="text-muted">Itens adicionados</label>
+                        <textarea class="form-control" id="textareaNumSerie" name="textarea" cols="3" rows="3" wrap="hard" readonly></textarea>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <label for="exampleFormControlTextarea1" class="text-muted">Itens adicionados</label>
+                        <textarea class="form-control" id="textareaDescBem" name="textarea" cols="3" rows="3" wrap="hard" readonly></textarea>
+                    </div>
                 </div>
             </div>
             <div class="d-flex justify-content-end mr-2"><button type="button" class="btn btn-success mb-3" id="btn-adc-item" name="salvar" onclick="adicionarItem()" disabled>Adicionar Item</button></div>
@@ -91,7 +98,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-6 mb-3">
                     <label for="unidadeEntregue" class="form-label text-muted">Unidade:</label>
                     <select class="form-select" id="unidadeEntregue" name="unidadeEntregue">
-                        <option value="Selecionar" hidden="hidden">Selecionar</option>
+                        <option value="" hidden="hidden">Selecionar</option>
                         <option value="ASCOM">ASCOM</option>
                         <option value="ATAJ">ATAJ</option>
                         <option value="ATECC">ATECC</option>
@@ -163,7 +170,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-6 mb-3">
                     <label for="unidadeRecebimento" class="form-label text-muted">Unidade que Recebeu:</label>
                     <select class="form-select" id="unidadeRecebimento" name="unidadeRecebimento">
-                        <option value="Selecionar" hidden="hidden">Selecionar</option>
+                        <option value="" hidden="hidden">Selecionar</option>
                         <option value="ASCOM">ASCOM</option>
                         <option value="ATAJ">ATAJ</option>
                         <option value="ATECC">ATECC</option>
@@ -225,7 +232,7 @@ if (isset($_POST['submit'])) {
                     <input type="text" class="form-control" id="rfRecebimento" name="rfRecebimento">
                 </div>
             </div>
-            <div class="btn-baixar d-flex justify-content-end mr-2"><button type="submit" class="btn btn-primary mb-4" name="submit" id='btGerarPDF'>Baixar o Termo</button></div>
+            <div class="btn-baixar d-flex justify-content-end mr-2"><button type="submit" class="btn btn-primary mb-4" name="submit" id='btGerarPDF' onclick="enviar_session()">Baixar o Termo</button></div>
         </form>
         <div class="hide" id="modal"></div>
     </div>
@@ -233,3 +240,9 @@ if (isset($_POST['submit'])) {
 </body>
 
 </html>
+
+<script>
+    function enviar_session() {
+        sessionStorage.setItem("Serie", arrayNumSerie);
+    }
+</script>
