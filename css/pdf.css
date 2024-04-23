@@ -107,32 +107,26 @@ body {
     font-size: 14px;
 }
 
-#botao {
-    color: #fff;
-    font-size: 20px;
-    border: none;
-    border-radius: 3px;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin-left: 20px;
-    margin-bottom: 20px;
-}
-
 #modal {
     position: relative;
     width: 100%;
 }
   
-  #absolute {
+#absolute {
     position: absolute;
     bottom: 50px;
     right: 170px;
-
 }
   
-  #botao {
+#botao {
     position: fixed;
     width: 120px;
     height: 40px;
     background-color: #0B5ED7;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
 }

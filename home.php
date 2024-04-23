@@ -65,7 +65,6 @@ $result = $conexao->query($sql) or die($conexao->error);
                         echo "<td>" . '*' . "</td>";
                         echo "<td>" . '*' . "</td>";
                         echo "<td>" . '*' . "</td>";
-                        echo "<td>" . '*' . "</td>";
                         echo "<td>" . $user_data['localnovo'] . "</td>";
                         echo "<td>" . $user_data['servidoratual'] . "</td>";
                         echo "<td>" . $user_data['usuario'] . "</td>";
