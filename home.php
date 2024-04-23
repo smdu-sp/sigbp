@@ -1,24 +1,24 @@
 <?php
 session_start();
-include_once('./conexoes/config.php');
-include_once('header.php');
+include_once ('./conexoes/config.php');
+include_once ('header.php');
 print_r($_POST);
-// if($_SESSION['Perm'] == 1) {
-//     echo '<script>alert("Usuario invalido!");</script>';
-//     return;
-// }
+ 
+$sql = "SELECT * FROM transferencia ORDER BY iditem ASC";
+$result = $conexao->query($sql) or die($conexao->error);
 ?>
 <style>
     .conteudo {
+ 
         margin-left: 345px;
         width: 81%;
     }
-
+ 
     .icon-carrossel {
         width: 17px;
     }
-
-
+ 
+ 
     @media (max-width: 1300px) {
         .conteudo {
             margin-left: 75px;
@@ -26,11 +26,11 @@ print_r($_POST);
         }
     }
 </style>
-
+ 
 <body>
     <?php
-    include_once('menu.php');
-
+    include_once ('menu.php');
+ 
     // if($_SESSION['Perm'] == 1) {
     //     echo '<script>alert("Usuario invalido!");</script>';
     //     return;
@@ -58,17 +58,28 @@ print_r($_POST);
                         <th>Data</th>
                     </tr>
                 </thead>
-                <tbody id="myTable" class="large-2">
-                    <tr>
-                        <td>#</td>
-                        <td>#</td>
-                        <td>#</td>
-                        <td>#</td>
-                        <td>#</td>
-                        <td>#</td>
-                        <td>#</td>
-                        <td>#</td>
-                    </tr>
+                <tbody>
+                    <?php
+                    while ($user_data = mysqli_fetch_assoc($result)) {
+                        echo "<tr>";
+                        echo "<td>" . '*' . "</td>";
+                        echo "<td>" . '*' . "</td>";
+                        echo "<td>" . '*' . "</td>";
+                        echo "<td>" . '*' . "</td>";
+                        echo "<td>" . $user_data['localnovo'] . "</td>";
+                        echo "<td>" . $user_data['servidoratual'] . "</td>";
+                        echo "<td>" . $user_data['usuario'] . "</td>";
+                        echo "<td>" . $user_data['cimbpm'] . "</td>";
+                        if ($user_data['datatransf']) {
+                            $teste = explode('-', $user_data['datatransf']);
+                            $data = $teste[2] . '/' .$teste[1] . '/' .$teste[0];
+                            echo "<td>" . $data . "</td>";
+                        } else{
+                            echo "<td> NaN </td>";
+                        }
+                        echo "</tr>";
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -85,7 +96,5 @@ print_r($_POST);
         <div class="hide" id="modal"></div>
     </div>
 </body>
-
+ 
 </html>
-
-
