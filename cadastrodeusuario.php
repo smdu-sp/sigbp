@@ -24,16 +24,16 @@ if (isset($_POST['submit'])) {
 
     hr {
         opacity: 0.7;
-        border: 0.1px solid #DDDFE2; 
-        width: 97%; 
-        margin-left: 12px; 
+        border: 0.1px solid #DDDFE2;
+        width: 97%;
+        margin-left: 12px;
     }
 
-    .carrossel > a {
+    .carrossel>a {
         font-size: 15px;
     }
 
-    .carrossel > a:hover {
+    .carrossel>a:hover {
         text-decoration: none;
     }
 
@@ -51,12 +51,13 @@ if (isset($_POST['submit'])) {
         text-decoration: none;
     }
 </style>
+
 <body>
     <?php
     include_once('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
-    <div class="carrossel mb-2">
+        <div class="carrossel mb-2">
             <a href="./home.php" class="mb-3 me-1">
                 <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
             </a>
@@ -64,12 +65,12 @@ if (isset($_POST['submit'])) {
             <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Cadastro de Usuários</a>
         </div>
         <h3 class="mb-4 mt-4">Cadastro de Usuários</h3>
-        <form method="POST" action="cadastrodeusuario.php">
+        <form method="POST" action="cadastrodeusuario.php" onSubmit="alert('Usuário Cadastrado!');">
             <div class="row">
                 <div class="col-md-13 mb-1">
                     <label for="usuarioCadastro" class="form-label text-muted">Login de rede</label>
                     <div class="input-group mb-3">
-                        <input type="text" name="loginRede" class="form-control" placeholder="Buscar por login de rede" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <input type="text" name="loginRede" class="form-control" id="inputCadUsuario" placeholder="Buscar por login de rede" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary" name="buscar" id="buscar" type="submit">Buscar</button>
                         </div>
@@ -79,7 +80,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-13 mb-1">
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label text-muted">Nome</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nome" name="nome">
+                        <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="Nome" name="nome" required>
                     </div>
                 </div>
                 <hr style="width: 97%;" class="mb-2">
@@ -87,8 +88,8 @@ if (isset($_POST['submit'])) {
                     <label for="usuarioCadastro" class="form-label text-muted">Permissão</label>
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-cracha.png" alt="" class="imgCadastro"></div>
-                        <select class="form-select" aria-label="Filter select" name="permissao">
-                            <option value="Usuário" selected>Usuário</option>
+                        <select class="form-select" aria-label="Filter select" name="permissao" required>
+                            <option value="Usuário">Usuário</option>
                             <option value="Desenvolvedor">Desenvolvedor</option>
                             <option value="Administrador">Administrador</option>
                             <option value="Técnico">Técnico</option>
@@ -100,8 +101,8 @@ if (isset($_POST['submit'])) {
                     <label for="usuarioCadastro" class="form-label text-muted">Unidade</label>
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/unidades.png" alt="" class="imgCadastro"></div>
-                        <select class="form-select" name="unidade">
-                            <option value="Selecionar" hidden="hidden">Selecionar</option>
+                        <select class="form-select" name="unidade" required>
+                            <option value="" hidden="hidden">Selecionar</option>
                             <option value="ASCOM">ASCOM</option>
                             <option value="ATAJ">ATAJ</option>
                             <option value="ATECC">ATECC</option>
@@ -158,8 +159,8 @@ if (isset($_POST['submit'])) {
                     <label for="usuarioCadastro" class="form-label text-muted">Status</label>
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-status.png" alt="" class="imgCadastro"></div>
-                        <select class="form-select" name="status">
-                            <option value="Selecionar" hidden="hidden">Selecionar</option>
+                        <select class="form-select" name="status" required>
+                            <option value="" hidden="hidden">Selecionar</option>
                             <option value="Ativo">Ativo</option>
                             <option value="Baixado">Baixado</option>
                             <option value="Para Doação">Para Doação</option>
@@ -172,16 +173,15 @@ if (isset($_POST['submit'])) {
                 <hr style="width: 97%;" class="mb-2">
                 <div class="mb-3">
                     <label for="usuarioCadastro" class="form-label text-muted">Email</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="email">
+                    <input type="email" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="name@example.com" name="email" required>
                 </div>
                 <div class="d-flex flex-row-reverse">
-                    <input type="submit" class="btn btn-primary ml-3 pe-auto mr-2 " name="submit" value="Cadastrar"></input>
-                    <input type="button" class="btn btn-light pe-auto" name="salvar" value="Cancelar"></input>
+                    <input type="submit" class="btn btn-primary ml-3 pe-auto mr-2 " id="btn-cadUsuario" name="submit" value="Cadastrar"></input>
+                    <input type="button" class="btn btn-light pe-auto" id="btnSair-cadUsuario" name="salvar" value="Cancelar"></input>
                 </div>
         </form>
         <div class="hide" id="modal"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
     $result = mysqli_query($conexao, "INSERT INTO transferencia(iditem, localanterior, localnovo, usuario, idusuario, servidoranterior, servidoratual, cimbpm) 
             VALUES ('$id', '$localanterior', '$localnovo','$idusuario', '$usuario', '$servidoranterior', '$servidoratual', '$cimbpm')");
 
-    header('Location: home.php');
+    header('Location: listaremovimentar.php');
 }
 ?>
 <style>
@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
         </div>
         <hr class="mb-4 w">
         <h5 class="mb-3">Dados do Item</h4>
-            <form method="POST">
+            <form method="POST" onSubmit="alert('Item movimentado com sucesso!');">
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="id" class="form-label text-muted">ID:</label>
@@ -154,7 +154,7 @@ if (isset($_POST['submit'])) {
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="nomeServidor" class="form-label text-muted">Nome do Servidor:</label>
-                            <input type="text" class="form-control" id="nomeServidor" name="servidoratual">
+                            <input type="text" class="form-control" id="nomeServidor" name="servidoratual" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="localNova" class="form-label text-muted">Localização Nova:</label>
@@ -214,7 +214,7 @@ if (isset($_POST['submit'])) {
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="cimbpm" class="form-label text-muted">CIMBPM:</label>
-                            <input type="text" class="form-control" id="cimbpm" name="cimbpm">
+                            <input type="text" class="form-control" id="cimbpm" name="cimbpm" required>
                         </div>
                     </div>
                     <div class="row">
@@ -228,7 +228,7 @@ if (isset($_POST['submit'])) {
                         </div>
                     </div>
                     <div class="box-btn-voltar">
-                        <button type="submit" class="btn btn-primary" name="submit">Salvar</button>
+                        <button type="submit" class="btn btn-primary" name="submit">Movimentar</button>
                     </div>
             </form>
             <div class="hide" id="modal"></div>

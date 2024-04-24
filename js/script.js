@@ -7,7 +7,7 @@ new DataTable('#example', {
   language: {
     "sEmptyTable" : "Nenhum registro encontrado",
     "sInfoEmpty" : "Mostrando 0 até 0 de 0 registros",
-     "sInfo" : "Mostrando _PAGE_ de _PAGES_",
+     "sInfo" : "Página _PAGE_ de _PAGES_",
      "sLengthMenu": "_MENU_ resultados por página",
      "sSearch" : "Pesquisar:",
      "sZeroRecords" : "Nenhum registro encontrado",
@@ -73,6 +73,7 @@ function sair() {
 function fecharMsg() {
   let msgSair = document.getElementById("box-sair");
   msgSair.style.display = "none";
+
 }
 
 let serieInput = document.getElementById('numPatriSerie');
@@ -120,4 +121,9 @@ function enviar_session(){
   sessionStorage.setItem("Serie", JSON.stringify(arrayNumSerie));
 }
 
+btnCadUsuario = document.getElementById('btn-cadUsuario');
+btnSairCadUsuario = document.getElementById('btnSair-cadUsuario');
 
+btnSairCadUsuario.addEventListener('click', () => {
+  location.reload();
+});

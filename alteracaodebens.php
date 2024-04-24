@@ -12,18 +12,19 @@ include_once('header.php');
 
         if($result->num_rows > 0) {
             while($user_data = mysqli_fetch_assoc($result)) {
+                $id = $user_data['idbem'];
                 $patrimonio = $user_data['patrimonio'];
+                $name = $user_data['nome'];
+                $marca = $user_data['marca']; 
                 $tipo = $user_data['tipo'];
-                $marca = $user_data['marca'];
+                $descsbpm = $user_data['descsbpm']; 
                 $modelo = $user_data['modelo'];
                 $numserie = $user_data['numserie'];
                 $localizacao = $user_data['localizacao'];
                 $servidor = $user_data['servidor'];
                 $numprocesso = $user_data['numprocesso'];
-                $name = $user_data['nome'];
-                $statusitem = $user_data['statusitem'];
                 $cimbpm = $user_data['cimbpm'];
-                $descsbpm = $user_data['descsbpm'];
+                $statusitem = $user_data['statusitem'];
             }
         } else {
             header('Location: listaremovimentar.php');
@@ -85,7 +86,7 @@ include_once('header.php');
         </div>
         <h3 class="mb-3">Alteração de bens</h3>
         <hr class="mb-4 w">
-        <form method="POST" action="cadastraitem.php">
+        <form method="POST" action="salvar-alteracao.php">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numPatrimonio" class="form-label text-muted">Número do Patrimônio PMSP:</label>
@@ -178,14 +179,14 @@ include_once('header.php');
                     <input type="text" class="form-control" id="numSerie" name="numSerie" value="<?php echo $numserie ?>">
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="setor" class="form-label text-muted">Setor:</label>
-                    <input type="text" class="form-control" id="setor" name="setor" value="<?php echo $localizacao ?>" disabled>
+                    <label for="localNovo" class="form-label text-muted">Setor:</label>
+                    <input type="text" class="form-control" id="localNovo" name="localNovo" value="<?php echo $localizacao ?> " readonly>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nomeServidor" class="form-label text-muted">Nome do Servidor:</label>
-                    <input type="text" class="form-control" id="nomeServidor" name="nomeServidor" value="<?php echo $servidor ?>" disabled>
+                    <input type="text" class="form-control" id="nomeServidor" name="nomeServidor" value="<?php echo $servidor ?>" readonly>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="cimbpm" class="form-label text-muted">CIMBPM:</label>
@@ -220,8 +221,9 @@ include_once('header.php');
                     </select>
                 </div>
             </div>
+            <input type="hidden" name="id" value="<?php echo $id ?>">
             <div class="box-btn-voltar">
-                <button type="submit" class="btn btn-primary" name="salvar">Salvar</button>
+                <button type="submit" class="btn btn-primary" name="update" id="UPDATE">Salvar</button>
             </div>
         </form>
     </div>

@@ -34,8 +34,12 @@ if (isset($_POST['submit'])) {
     }
 
     if ($data["count"] == 0) {
-        $_SESSION = array(); // Limpa todas as variáveis de sessão
-        header('location: index.php?m=erro');
+        unset ($_SESSION['SesID']);
+        unset ($_SESSION['SesNome']);
+        unset ($_SESSION['SesE-mail']);
+        unset ($_SESSION['Perm']);
+        unset ($_SESSION['Status']);
+        header('location: index?m=erro');
     } else {
         for ($i = 0; $i < $data["count"]; $i++) {
             $nomefr = mysqli_real_escape_string($conn, $data[$i]["givenname"][0]) . " " . mysqli_real_escape_string($conn, $data[$i]["sn"][0]);
@@ -52,7 +56,7 @@ if (isset($_POST['submit'])) {
 
         header('Location: http://localhost/home.php');
     }
-}
+} 
 ?>
 
 <!DOCTYPE html>
@@ -136,14 +140,19 @@ if (isset($_POST['submit'])) {
     <div id="modal">
         <main class="container">
             <form class="login" method="post">
+            <?php
+            $token = uniqid();
+            $_SESSION['token'] = $token;
+            ?>
+            <input type="hidden" name="token" value="<?php echo $token; ?>" />
                 <img src="./images/logo.jpg" class="logo" alt="Logo">
                 <div class="input-box first">
                     <img src="./images/usuario.png" class="input-img" id="logo-usuario" alt="Usuario">
-                    <input type="text" name="usuario" id="usuario" class="text-pass" placeholder="Usuário de rede">
+                    <input type="text" name="usuario" id="usuario" class="text-pass" placeholder="Usuário de rede" required>
                 </div>
                 <div class="input-box">
                     <img src="./images/chave.png" class="input-img" id="chave" alt="Chave">
-                    <input type="password" name="senha" id="senha" class="text-pass" placeholder="Senha de rede">
+                    <input type="password" name="senha" id="senha" class="text-pass" placeholder="Senha de rede" required>
                 </div>
                 <input type="submit" name="submit" class="btn-login" value="Entrar" id="button">
             </form>
