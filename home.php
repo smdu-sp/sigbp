@@ -1,28 +1,76 @@
 <?php
-session_start();
+session_start(  );
 include_once ('./conexoes/config.php');
 include_once ('header.php');
 print_r($_POST);
  
 $sql = "SELECT * FROM transferencia ORDER BY iditem ASC";
-$result = $conexao->query($sql) or die($conexao->error);
+$result  = $conexao->query($sql) or die($conexao->error);
 ?>
 <style>
-    .conteudo {
- 
-        margin-left: 345px;
+   .conteudo {
+        margin-left: 340px;
+        flex-wrap: wrap;
         width: 81%;
+        height: 90%;
     }
  
     .icon-carrossel {
-        width: 17px;
+        width: 18px;
     }
  
+    .icon-carrossel-i {
+        width: 16px;
+    }
  
-    @media (max-width: 1300px) {
+    .carrossel>a {
+        font-size: 15px;
+    }
+ 
+    .carrossel>a:hover {
+        text-decoration: none;
+    }
+ 
+    .carrossel {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+ 
+    .carrossel-text {
+        text-decoration: none;
+    }
+ 
+    .carrossel-text:hover {
+        text-decoration: none;
+    }
+ 
+    @media (max-width: 1600px) {
         .conteudo {
             margin-left: 75px;
-            width: 90%;
+        }
+ 
+        .menu-principal {
+            position: fixed;
+            top: 0;
+            left: -187px;
+            z-index: 999999 !important;
+            transition: all 1s ease;
+        }
+ 
+ 
+        .menu-logout {
+            z-index: 1000000 !important;
+        }
+ 
+        .aparecer {
+            left: 70px !important;
+        }
+ 
+ 
+        .menu-button {
+            display: block;
+            cursor: pointer;
         }
     }
 </style>
@@ -31,24 +79,23 @@ $result = $conexao->query($sql) or die($conexao->error);
     <?php
     include_once ('menu.php');
  
-    // if($_SESSION['Perm'] == 1) {
-    //     echo '<script>alert("Usuario invalido!");</script>';
-    //     return;
-    // }
+    if($_SESSION['Perm'] == 1) {
+        echo '<script>alert("Usuario invalido!");</script>';
+        return;
+    }
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
-        <a href="./home.php" class="mb-3"><img src="./images/icon-casa-carrossel.png" class="icon-carrossel" alt=""></a>
-        <p class="mb-1 mt-3">
-            Digite algo no campo de entrada para pesquisar na tabela:
-        </p>
-        <input class="form-control input-filtro" id="myInput" type="text" placeholder="Procurar...">
-        <br>
-        <p class="mb-1 text-muted">Últimas movimentações</p>
-        <div>
-            <table class="table">
-                <thead class="table-secondary">
-                    <tr>
-                        <th>Nº Patrimônio</th>
+        <div class="carrossel mb-4">
+            <a href="./home.php" class="mb-3 me-1">
+                <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
+            </a>
+            <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
+            <a href="./termo.php" class="text-primary ms-1 carrossel-text">Listar/Movimentar Bens</a>
+        </div>
+        <div class="conteudo ml-1 mt-4" style="width: 100%;">
+            <table id="example" class="display table" style="width: 100%">
+                <thead class="table-primary">
+                        <th>Nº Patrimônio  </th>
                         <th>Nome</th>
                         <th>Descrição do Bem</th>
                         <th>Localização</th>
@@ -58,8 +105,9 @@ $result = $conexao->query($sql) or die($conexao->error);
                         <th>Data</th>
                     </tr>
                 </thead>
+               
                 <tbody>
-                    <?php
+                <?php
                     while ($user_data = mysqli_fetch_assoc($result)) {
                         echo "<tr>";
                         echo "<td>" . '*' . "</td>";
@@ -81,18 +129,15 @@ $result = $conexao->query($sql) or die($conexao->error);
                     ?>
                 </tbody>
             </table>
+                   
         </div>
-        <div>
-            <ul class="pagination ml-2 mt-2 ">
-                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">Anterior</a></li>
-                <li class="page-item active" onclick="ativar(this)"><a class="page-link" href="#">1</a></li>
-                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">2</a></li>
-                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">3</a></li>
-                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">4</a></li>
-                <li class="page-item" onclick="ativar(this)"><a class="page-link" href="#">Próxima</a></li>
-            </ul>
+       
+        <div class="hide" id="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         </div>
-        <div class="hide" id="modal"></div>
     </div>
 </body>
  
