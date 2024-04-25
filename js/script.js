@@ -127,3 +127,4 @@ btnSairCadUsuario = document.getElementById('btnSair-cadUsuario');
 btnSairCadUsuario.addEventListener('click', () => {
   location.reload();
 });
+

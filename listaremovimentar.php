@@ -130,5 +130,60 @@ $result = $conexao->query($sql) or die($mysqli->error);
             </table>
         </div>
 </body>
-
+<script>
+    function alert(num) {
+        if(num == 1) {
+            const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+            Toast.fire({
+                icon: "success",
+                title: "Item movimentado com sucesso!"
+            });
+        } else {
+            const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+            Toast.fire({
+                icon: "success",
+                title: "Item alterado com sucesso!"
+            });
+            
+        }
+    }
+    // alert();
+    window.addEventListener('load', function() {
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var data = url.searchParams.get("notificacao");
+        console.log(data);
+        if (data == null) {
+            return;
+        } else if (data == 1) {
+            alert(1);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'http://localhost/listaremovimentar.php');
+        } else {
+            alert(2);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'http://localhost/listaremovimentar.php');
+        }
+    })
+</script>
 </html>

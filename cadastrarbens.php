@@ -18,6 +18,7 @@ if (isset($_POST['submit'])) {
     $result = mysqli_query($conexao, "INSERT INTO item(patrimonio, tipo, numserie, marca, modelo, localizacao, servidor, numprocesso, nome, statusitem) 
     VALUES ('$patrimonio', '$tipo', '$numserie', '$marca', '$modelo', '$localizacao', '$servidor', '$numprocesso', '$nome', '$statusitem')");
 
+    header('Location: cadastrarbens.php?notificacao=true');
 }
 
 
@@ -31,11 +32,11 @@ if (isset($_POST['submit'])) {
         width: 16px;
     }
 
-    .carrossel > a {
+    .carrossel>a {
         font-size: 15px;
     }
 
-    .carrossel > a:hover {
+    .carrossel>a:hover {
         text-decoration: none;
     }
 
@@ -44,7 +45,7 @@ if (isset($_POST['submit'])) {
         flex-direction: row;
         align-items: center;
     }
-    
+
     .carrossel-text {
         text-decoration: none;
     }
@@ -55,16 +56,16 @@ if (isset($_POST['submit'])) {
 
     hr {
         opacity: 0.7;
-        border: 0.1px solid #DDDFE2; 
+        border: 0.1px solid #DDDFE2;
     }
-    
 </style>
+
 <body>
     <?php
     include_once('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
-    <div class="carrossel mb-2">
+        <div class="carrossel mb-2">
             <a href="./home.php" class="mb-3 me-1">
                 <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
             </a>
@@ -73,7 +74,7 @@ if (isset($_POST['submit'])) {
         </div>
         <h3 class="mb-3 mt-4">Cadastro de bens</h3>
         <hr class="mb-4 w" style="opacity: 1;">
-        <form action="cadastrarbens.php" method="POST" onSubmit="alert('Item cadastrado com sucesso!');">
+        <form action="#" method="POST">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numPatrimonio" class="form-label text-muted">Número do Patrimônio PMSP:</label>
@@ -82,7 +83,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-6 mb-3">
                     <label for="tipo" class="form-label text-muted">Tipo:</label>
                     <select class="form-select" name="tipo" id="tipo" required>
-                        <option value="Selecionar" hidden="hidden">Selecionar</option>
+                        <option value="" hidden="hidden">Selecionar</option>
                         <option value="AMPLIFICADOR">AMPLIFICADOR</option>
                         <option value="ANTENA PARABÓLICA">ANTENA PARABÓLICA</option>
                         <option value="AP TELEFONICO DIGITAL">AP TELEFONICO DIGITAL</option>
@@ -168,7 +169,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-6 mb-3">
                     <label for="localNovo" class="form-label text-muted">Localização:</label>
                     <select class="form-select" id="localNovo" name="localNovo" required>
-                        <option value="Selecionar" hidden="hidden">Selecionar</option>
+                        <option value="" hidden="hidden">Selecionar</option>
                         <option value="ASCOM">ASCOM</option>
                         <option value="ATAJ">ATAJ</option>
                         <option value="ATECC">ATECC</option>
@@ -222,8 +223,8 @@ if (isset($_POST['submit'])) {
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="nomeServidor" class="form-label text-muted">Nome do Servidor:</label>
-                    <input type="text" class="form-control" id="nomeServidor" name="nomeServidor">
+                    <label for="nomeServidor" class="form-label text-muted" >Nome do Servidor:</label>
+                    <input type="text" class="form-control" id="nomeServidor" name="nomeServidor" >
                 </div>
             </div>
             <div class="row">
@@ -240,7 +241,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-6 mb-4">
                     <label for="status" class="form-label text-muted">Status:</label>
                     <select class="form-select" id="status" name="status" required>
-                        <option value="Selecionar" hidden="hidden">Selecionar</option>
+                        <option value="" hidden="hidden">Selecionar</option>
                         <option value="Ativo">Ativo</option>
                         <option value="Baixado">Baixado</option>
                         <option value="Para Doação">Para Doação</option>
@@ -253,7 +254,37 @@ if (isset($_POST['submit'])) {
             <div class="d-flex justify-content-end mr-2"><input type="submit" class="btn btn-primary" id="btnCadBens" name="submit" value="Cadastrar"></input></div>
             <div class="hide" id="modal"></div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
+<script>
+    function alert() {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "success",
+            title: "Item cadastrado com sucesso!"
+        });
+    }
+    // alert();
+    window.addEventListener('load', function() {
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var data = url.searchParams.get("notificacao");
+        if (data == 'true') {
+            alert();
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'http://localhost/cadastrarbens.php');
+        }
+    }).then
+</script>
 
 </html>

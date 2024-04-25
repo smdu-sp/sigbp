@@ -223,7 +223,7 @@ include_once('header.php');
             </div>
             <input type="hidden" name="id" value="<?php echo $id ?>">
             <div class="box-btn-voltar">
-                <button type="submit" class="btn btn-primary" name="update" id="UPDATE">Salvar</button>
+                <button type="submit" class="btn btn-primary" name="update" id="UPDATE">Alterar</button>
             </div>
         </form>
     </div>

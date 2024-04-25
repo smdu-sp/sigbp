@@ -10,6 +10,8 @@ if (isset($_POST['submit'])) {
     $status = $_POST['status'];
 
     $result = mysqli_query($conexao, "INSERT INTO usuarios(usuario, nome, permissao, statususer) VALUES ('$usuario', '$nome', '$permissao', '$status')");
+
+    header('Location: cadastrodeusuario.php?notificacao=true');
 }
 
 ?>
@@ -65,7 +67,7 @@ if (isset($_POST['submit'])) {
             <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Cadastro de Usuários</a>
         </div>
         <h3 class="mb-4 mt-4">Cadastro de Usuários</h3>
-        <form method="POST" action="cadastrodeusuario.php" onSubmit="alert('Usuário Cadastrado!');">
+        <form method="POST" action="#">
             <div class="row">
                 <div class="col-md-13 mb-1">
                     <label for="usuarioCadastro" class="form-label text-muted">Login de rede</label>
@@ -180,8 +182,35 @@ if (isset($_POST['submit'])) {
                     <input type="button" class="btn btn-light pe-auto" id="btnSair-cadUsuario" name="salvar" value="Cancelar"></input>
                 </div>
         </form>
-        <div class="hide" id="modal"></div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<script>
+    function alert() {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "success",
+            title: "Usuario cadastrado com sucesso!"
+        });
+    }
+    // alert();
+    window.addEventListener('load', function() {
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var data = url.searchParams.get("notificacao");
+        if (data == 'true') {
+            alert();
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'http://localhost/cadastrarbens.php');
+        }
+    }).then
+</script>
 </html>

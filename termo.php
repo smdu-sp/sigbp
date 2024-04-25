@@ -68,11 +68,11 @@ if (isset($_POST['submit'])) {
             <div class="row">
                 <div class="col-md-6 mb-2">
                     <label for="numPatriSerie" class="form-label text-muted">Nº Patrimonial/Nº de Série:</label>
-                    <input type="text" class="form-control campos" id="numPatriSerie" name="numPatriSerie" required>
+                    <input type="text" class="form-control campos" id="numPatriSerie" name="numPatriSerie" >
                 </div>
                 <div class="col-md-6 mb-2">
                     <label for="descBem" class="form-label text-muted ">Descrição do Bem:</label>
-                    <input type="text" class="form-control campos" id="descBem" name="descBem" required>
+                    <input type="text" class="form-control campos" id="descBem" name="descBem">
                 </div>
             </div>
             <div>
@@ -93,11 +93,11 @@ if (isset($_POST['submit'])) {
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="dataEntregue" class="form-label text-muted">Data da Entrega:</label>
-                    <input type="date" class="form-control" id="dataEntregue" name="dataEntregue">
+                    <input type="date" class="form-control" id="dataEntregue" name="dataEntregue" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="unidadeEntregue" class="form-label text-muted">Unidade:</label>
-                    <select class="form-select" id="unidadeEntregue" name="unidadeEntregue">
+                    <select class="form-select" id="unidadeEntregue" name="unidadeEntregue" required>
                         <option value="" hidden="hidden">Selecionar</option>
                         <option value="ASCOM">ASCOM</option>
                         <option value="ATAJ">ATAJ</option>
@@ -153,11 +153,11 @@ if (isset($_POST['submit'])) {
             <div class="row mb-2">
                 <div class="col-md-6 mb-3">
                     <label for="nomeEntrega" class="form-label text-muted">Nome responsável pela Entrega:</label>
-                    <input type="text" class="form-control" id="nomeEntrega" name="nomeEntrega">
+                    <input type="text" class="form-control" id="nomeEntrega" name="nomeEntrega" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="rfEntrega" class="form-label text-muted">RF:</label>
-                    <input type="text" class="form-control" id="rfEntrega" name="rfEntrega">
+                    <input type="text" class="form-control" id="rfEntrega" name="rfEntrega" required>
                 </div>
             </div>
             <h6 class="mb-2">Recebido em:</h6>
@@ -165,11 +165,11 @@ if (isset($_POST['submit'])) {
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="dataRecebimento" class="form-label text-muted">Data da Recebimento:</label>
-                    <input type="date" class="form-control" id="dataRecebimento" name="dataRecebimento">
+                    <input type="date" class="form-control" id="dataRecebimento" name="dataRecebimento" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="unidadeRecebimento" class="form-label text-muted">Unidade que Recebeu:</label>
-                    <select class="form-select" id="unidadeRecebimento" name="unidadeRecebimento">
+                    <select class="form-select" id="unidadeRecebimento" name="unidadeRecebimento" required>
                         <option value="" hidden="hidden">Selecionar</option>
                         <option value="ASCOM">ASCOM</option>
                         <option value="ATAJ">ATAJ</option>
@@ -225,14 +225,14 @@ if (isset($_POST['submit'])) {
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nomeRecebimento" class="form-label text-muted">Nome responsável pelo Recebimento:</label>
-                    <input type="text" class="form-control" id="nomeRecebimento" name="nomeRecebimento">
+                    <input type="text" class="form-control" id="nomeRecebimento" name="nomeRecebimento" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="rfRecebimento" class="form-label text-muted">RF:</label>
-                    <input type="text" class="form-control" id="rfRecebimento" name="rfRecebimento">
+                    <input type="text" class="form-control" id="rfRecebimento" name="rfRecebimento" required>
                 </div>
             </div>
-            <div class="btn-baixar d-flex justify-content-end mr-2"><button type="submit" class="btn btn-primary mb-4" name="submit" id='btGerarPDF' onclick="enviar_session()">Baixar o Termo</button></div>
+            <div class="btn-baixar d-flex justify-content-end mr-2"><button type="submit" class="btn btn-primary mb-4" name="submit" id='btGerarPDF' onclick="enviar_session()">Visualizar Termo</button></div>
         </form>
         <div class="hide" id="modal"></div>
     </div>

@@ -8,48 +8,48 @@ $sql = "SELECT * FROM transferencia ORDER BY iditem ASC";
 $result  = $conexao->query($sql) or die($conexao->error);
 ?>
 <style>
-   .conteudo {
-        margin-left: 340px;
+     .conteudo {
+        margin-left: 285px;
         flex-wrap: wrap;
         width: 81%;
         height: 90%;
     }
- 
+
     .icon-carrossel {
         width: 18px;
     }
- 
+
     .icon-carrossel-i {
         width: 16px;
     }
- 
+
     .carrossel>a {
         font-size: 15px;
     }
- 
+
     .carrossel>a:hover {
         text-decoration: none;
     }
- 
+
     .carrossel {
         display: flex;
         flex-direction: row;
         align-items: center;
     }
- 
+
     .carrossel-text {
         text-decoration: none;
     }
- 
+
     .carrossel-text:hover {
         text-decoration: none;
     }
- 
+
     @media (max-width: 1600px) {
         .conteudo {
             margin-left: 75px;
         }
- 
+
         .menu-principal {
             position: fixed;
             top: 0;
@@ -57,17 +57,17 @@ $result  = $conexao->query($sql) or die($conexao->error);
             z-index: 999999 !important;
             transition: all 1s ease;
         }
- 
- 
+
+
         .menu-logout {
             z-index: 1000000 !important;
         }
- 
+
         .aparecer {
             left: 70px !important;
         }
- 
- 
+
+
         .menu-button {
             display: block;
             cursor: pointer;

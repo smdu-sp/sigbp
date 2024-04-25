@@ -21,6 +21,7 @@ if (!empty($_GET['id'])) {
             $numserie = $user_data['numserie'];
             $localizacao = $user_data['localizacao'];
             $servidor = $user_data['servidor'];
+            $cimbpm = $user_data['cimbpm'];
         }
     } else {
         header('Location: listaremovimentar.php');
@@ -45,9 +46,9 @@ if (isset($_POST['submit'])) {
     $usuario = $_POST['usuario'];
 
     $result = mysqli_query($conexao, "INSERT INTO transferencia(iditem, localanterior, localnovo, usuario, idusuario, servidoranterior, servidoratual, cimbpm) 
-            VALUES ('$id', '$localanterior', '$localnovo','$idusuario', '$usuario', '$servidoranterior', '$servidoratual', '$cimbpm')");
+    VALUES ('$id', '$localanterior', '$localnovo','$idusuario', '$usuario', '$servidoranterior', '$servidoratual', '$cimbpm')");
 
-    header('Location: listaremovimentar.php');
+    header('Location: listaremovimentar.php?notificacao=1');
 }
 ?>
 <style>
@@ -108,7 +109,7 @@ if (isset($_POST['submit'])) {
         </div>
         <hr class="mb-4 w">
         <h5 class="mb-3">Dados do Item</h4>
-            <form method="POST" onSubmit="alert('Item movimentado com sucesso!');">
+            <form method="POST">
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="id" class="form-label text-muted">ID:</label>
@@ -214,7 +215,7 @@ if (isset($_POST['submit'])) {
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="cimbpm" class="form-label text-muted">CIMBPM:</label>
-                            <input type="text" class="form-control" id="cimbpm" name="cimbpm" required>
+                            <input type="text" class="form-control" id="cimbpm" name="cimbpm" value="<?php echo $cimbpm ?>" readonly>
                         </div>
                     </div>
                     <div class="row">
@@ -233,7 +234,5 @@ if (isset($_POST['submit'])) {
             </form>
             <div class="hide" id="modal"></div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
