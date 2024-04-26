@@ -284,7 +284,7 @@ if (isset($_POST['submit'])) {
             window.history.replaceState({}, document.title, window.location.pathname);
             history.pushState({}, '', 'http://localhost/cadastrarbens.php');
         }
-    }).then
+    })
 </script>
 
 </html>

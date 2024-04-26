@@ -1,15 +1,15 @@
 <?php
-session_start(  );
-include_once ('./conexoes/config.php');
-include_once ('header.php');
-print_r($_POST);
- 
+session_start();
+include_once('./conexoes/config.php');
+include_once('header.php');
+
+
 $sql = "SELECT * FROM transferencia ORDER BY iditem ASC";
 $result  = $conexao->query($sql) or die($conexao->error);
 ?>
 <style>
-     .conteudo {
-        margin-left: 285px;
+    .conteudo {
+        margin-left: 340px;
         flex-wrap: wrap;
         width: 81%;
         height: 90%;
@@ -74,15 +74,10 @@ $result  = $conexao->query($sql) or die($conexao->error);
         }
     }
 </style>
- 
+
 <body>
     <?php
-    include_once ('menu.php');
- 
-    if($_SESSION['Perm'] == 1) {
-        echo '<script>alert("Usuario invalido!");</script>';
-        return;
-    }
+    include_once('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel mb-4">
@@ -90,24 +85,24 @@ $result  = $conexao->query($sql) or die($conexao->error);
                 <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
             </a>
             <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-            <a href="./termo.php" class="text-primary ms-1 carrossel-text">Listar/Movimentar Bens</a>
+            <a href="./termo.php" class="text-primary ms-1 carrossel-text">Home</a>
         </div>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
             <table id="example" class="display table" style="width: 100%">
                 <thead class="table-primary">
-                        <th>Nº Patrimônio  </th>
-                        <th>Nome</th>
-                        <th>Descrição do Bem</th>
-                        <th>Localização</th>
-                        <th>Servidor</th>
-                        <th>Responsável</th>
-                        <th>CIMBPM:</th>
-                        <th>Data</th>
+                    <th>Nº Patrimônio </th>
+                    <th>Nome</th>
+                    <th>Descrição do Bem</th>
+                    <th>Localização</th>
+                    <th>Servidor</th>
+                    <th>Responsável</th>
+                    <th>CIMBPM:</th>
+                    <th>Data</th>
                     </tr>
                 </thead>
-               
+
                 <tbody>
-                <?php
+                    <?php
                     while ($user_data = mysqli_fetch_assoc($result)) {
                         echo "<tr>";
                         echo "<td>" . '*' . "</td>";
@@ -119,9 +114,9 @@ $result  = $conexao->query($sql) or die($conexao->error);
                         echo "<td>" . $user_data['cimbpm'] . "</td>";
                         if ($user_data['datatransf']) {
                             $teste = explode('-', $user_data['datatransf']);
-                            $data = $teste[2] . '/' .$teste[1] . '/' .$teste[0];
+                            $data = $teste[2] . '/' . $teste[1] . '/' . $teste[0];
                             echo "<td>" . $data . "</td>";
-                        } else{
+                        } else {
                             echo "<td> NaN </td>";
                         }
                         echo "</tr>";
@@ -129,16 +124,15 @@ $result  = $conexao->query($sql) or die($conexao->error);
                     ?>
                 </tbody>
             </table>
-                   
+
         </div>
-       
+
         <div class="hide" id="modal">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Modal title</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        </div>
-    </div>
+                </div>
+            </div>
 </body>
- 
 </html>

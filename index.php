@@ -1,8 +1,33 @@
 <?php
-
 if (isset($_POST['submit'])) {
-    include_once('./conexoes/ldap.php');
-} 
+    $server = "ldap://10.10.65.242";
+    $user = $_POST['usuario'] . "@rede.sp";
+    $psw = $_POST['senha'];
+    $dn = "OU=Users,OU=SMUL,DC=rede,DC=sp";
+    $search = "samaccountname=" . $_POST['usuario'];
+
+    $ds = ldap_connect($server);
+    ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+    $r = ldap_bind($ds, $user, $psw);
+
+    if (!$r) {
+        header('Location: index.php?m=erro');
+        exit;
+    }
+
+    $sr = ldap_search($ds, $dn, $search);
+    $data = ldap_get_entries($ds, $sr);
+
+    session_start();
+
+    if ($data["count"] > 0) {
+        header('Location: index.php?m=entrou');
+        exit;
+    } else {
+        header('Location: index.php?m=erro');
+        exit;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -13,84 +38,18 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="./css/login.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <style>
-    #modal {
-        position: relative;
-        width: 100%;
-    }
-    
-    #absolute {
-        position: absolute;
-        bottom: 270px;
-        right: 30px;
-        width: 330px;
-        height: 112px;
-        border-radius: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        animation: msg-erro 0.8s ease;
-    }
-
-    @keyframes msg-erro {
-        from {
-            transform: translateY(-100%);
-        }
-        
-        to {
-            transform: translateY(0);
-        }
-    }
-    
-    #none {
-        display: none;
-    }
-    
-    #erro {
-        position: fixed;
-        height: 40px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
+    .swal2-title {
         color: #fff;
-    }
-
-    .erro {
-        background-color: #C41C1C;
-    }
-    
-    .sucess {
-        background-color: #1F7A1F;
-    }
-    
-    .text-msg > h4 {
-        font-size: 20px;
-    }
-    
-    .text-msg > p {
-        font-size: 16px;
-        margin-top: 10px;
-    }
-
-    .img-x {
-      width: 30px;
-      height: 30px;
-      margin-right: 20px;
+        font-size: 30px;
     }
 </style>
-
 <body>
     <div id="modal">
         <main class="container">
-            <form class="login" method="post">
-            <?php
-            $token = uniqid();
-            $_SESSION['token'] = $token;
-            ?>
-            <input type="hidden" name="token" value="<?php echo $token; ?>" />
+            <form id="loginForm" class="login" method="post">
                 <img src="./images/logo.jpg" class="logo" alt="Logo">
                 <div class="input-box first">
                     <img src="./images/usuario.png" class="input-img" id="logo-usuario" alt="Usuario">
@@ -103,25 +62,74 @@ if (isset($_POST['submit'])) {
                 <input type="submit" name="submit" class="btn-login" value="Entrar" id="button">
             </form>
         </main>
-        <div id="absolute none" class="erro">
-            <div id="erro">
-                <img src="./images/icon-x.png" alt="" class="img-x">
-                <div class="text-msg">
-                    <h4>Credenciais incorretas!</h4>
-                    <p>Tente novamente!</p>
-                </div>
-            </div>
-        </div>
-        <div id="absolute none" class="sucess">
-            <div id="erro">
-                <img src="./images/icon-check.png" alt="" class="img-x">
-                <div class="text-msg">
-                    <h4>Bem-vindo!</h4>
-                    <p>Login efetuado com sucesso.</p>
-                </div>
-            </div>
-        </div>
     </div>
 </body>
+<script>
+    function alert(num) {
+        if (num == 1) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                customClass : ({
+                    title: 'swal2-title'
+                }),
+                icon: "error",
+                title: "Credenciais incorretas!",
+                titleColor: '#ffffff',
+                background: 'red',
+                iconColor: '#ffffff'
+            });
+        } else {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                customClass : ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Seja bem-vindo!",
+                titleColor: '#ffffff',
+                background: 'green',
+                iconColor: '#ffffff'
+            });
+        }
+    }
+
+    window.addEventListener('load', function() {
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var data = url.searchParams.get("m");
+        if (data == 'erro') {
+            alert(1);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'http://localhost/index.php');
+        } else if (data == 'entrou') {
+            alert(2);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'http://localhost/home.php');
+            setInterval(function() {
+                window.location.href = 'home.php';
+            }, 1800);
+        }
+    })
+</script>
 
 </html>
