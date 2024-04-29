@@ -121,9 +121,7 @@ function enviar_session(){
   sessionStorage.setItem("Serie", JSON.stringify(arrayNumSerie));
 }
 
-btnCadUsuario = document.getElementById('btn-cadUsuario');
 btnSairCadUsuario = document.getElementById('btnSair-cadUsuario');
-
 btnSairCadUsuario.addEventListener('click', () => {
   location.reload();
 });

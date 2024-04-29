@@ -23,43 +23,6 @@ if (isset($_POST['submit'])) {
 
 
 ?>
-<style>
-    .icon-carrossel {
-        width: 18px;
-    }
-
-    .icon-carrossel-i {
-        width: 16px;
-    }
-
-    .carrossel>a {
-        font-size: 15px;
-    }
-
-    .carrossel>a:hover {
-        text-decoration: none;
-    }
-
-    .carrossel {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-
-    .carrossel-text {
-        text-decoration: none;
-    }
-
-    .carrossel-text:hover {
-        text-decoration: none;
-    }
-
-    hr {
-        opacity: 0.7;
-        border: 0.1px solid #DDDFE2;
-    }
-</style>
-
 <body>
     <?php
     include_once('menu.php');
@@ -73,7 +36,7 @@ if (isset($_POST['submit'])) {
             <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Cadastro de bens</a>
         </div>
         <h3 class="mb-3 mt-4">Cadastro de bens</h3>
-        <hr class="mb-4 w" style="opacity: 1;">
+        <hr class="mb-4">
         <form action="#" method="POST">
             <div class="row">
                 <div class="col-md-6 mb-3">

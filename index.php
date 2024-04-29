@@ -3,6 +3,7 @@ if (isset($_POST['submit'])) {
     $server = "ldap://10.10.65.242";
     $user = $_POST['usuario'] . "@rede.sp";
     $psw = $_POST['senha'];
+    $inicial = $_POST['usuario'];
     $dn = "OU=Users,OU=SMUL,DC=rede,DC=sp";
     $search = "samaccountname=" . $_POST['usuario'];
 
@@ -20,10 +21,34 @@ if (isset($_POST['submit'])) {
 
     session_start();
 
+    require_once('./conexoes/conexao.php');
+
+
+    $buscar_cadastros = "SELECT permissao, statususer FROM usuarios WHERE `usuario`='" . strtolower($inicial) . "';";
+    $query_cadastros = mysqli_query($conn, $buscar_cadastros);
+
+    if (mysqli_num_rows($query_cadastros) != 1) {
+        header("location: erropermissao.php");
+    } else {
+        $resultado = mysqli_fetch_assoc($query_cadastros);
+    }
+
     if ($data["count"] > 0) {
+        for ($i = 0; $i < $data["count"]; $i++) {
+            $nomefr = mysqli_real_escape_string($conn, $data[$i]["givenname"][0]) . " " . mysqli_real_escape_string($conn, $data[$i]["sn"][0]);
+            $emailfr = mysqli_real_escape_string($conn, strtolower($data[$i]["mail"][0]));
+        }
+
+        $_SESSION['SesID'] = $inicial;
+        $_SESSION['SesNome'] = $nomefr;
+        $_SESSION['SesE-mail'] = $emailfr;
+        $_SESSION['Perm'] =  $resultado['permissao'];
+        $_SESSION['Status'] =  $resultado['statususer'];
+
         header('Location: index.php?m=entrou');
         exit;
     } else {
+        $_SESSION = array();
         header('Location: index.php?m=erro');
         exit;
     }
@@ -46,6 +71,7 @@ if (isset($_POST['submit'])) {
         font-size: 30px;
     }
 </style>
+
 <body>
     <div id="modal">
         <main class="container">
@@ -79,7 +105,7 @@ if (isset($_POST['submit'])) {
                 }
             });
             Toast.fire({
-                customClass : ({
+                customClass: ({
                     title: 'swal2-title'
                 }),
                 icon: "error",
@@ -101,7 +127,7 @@ if (isset($_POST['submit'])) {
                 }
             });
             Toast.fire({
-                customClass : ({
+                customClass: ({
                     title: 'swal2-title'
                 }),
                 icon: "success",
@@ -127,7 +153,7 @@ if (isset($_POST['submit'])) {
             history.pushState({}, '', 'http://localhost/home.php');
             setInterval(function() {
                 window.location.href = 'home.php';
-            }, 1800);
+            }, 1400);
         }
     })
 </script>

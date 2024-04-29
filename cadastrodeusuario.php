@@ -1,7 +1,6 @@
 <?php
 include_once('./conexoes/config.php');
 include_once('header.php');
-// print_r($_POST);
 
 if (isset($_POST['submit'])) {
     $usuario = $_POST['loginRede'];
@@ -13,47 +12,7 @@ if (isset($_POST['submit'])) {
 
     header('Location: cadastrodeusuario.php?notificacao=true');
 }
-
 ?>
-<style>
-    .icon-carrossel {
-        width: 18px;
-    }
-
-    .icon-carrossel-i {
-        width: 16px;
-    }
-
-    hr {
-        opacity: 0.7;
-        border: 0.1px solid #DDDFE2;
-        width: 97%;
-        margin-left: 12px;
-    }
-
-    .carrossel>a {
-        font-size: 15px;
-    }
-
-    .carrossel>a:hover {
-        text-decoration: none;
-    }
-
-    .carrossel {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-
-    .carrossel-text {
-        text-decoration: none;
-    }
-
-    .carrossel-text:hover {
-        text-decoration: none;
-    }
-</style>
-
 <body>
     <?php
     include_once('menu.php');
@@ -74,18 +33,18 @@ if (isset($_POST['submit'])) {
                     <div class="input-group mb-3">
                         <input type="text" name="loginRede" class="form-control" id="inputCadUsuario" placeholder="Buscar por login de rede" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary" name="buscar" id="buscar" type="submit">Buscar</button>
+                            <button class="btn btn-outline-primary" name="buscar" id="btn-CadUsuario" type="button">Buscar</button>
                         </div>
                     </div>
                 </div>
-                <hr style="width: 97%;" class="mb-2">
+                <hr id="cdusuario" style="width: 97%;" class="mb-2">
                 <div class="col-md-13 mb-1">
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label text-muted">Nome</label>
                         <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="Nome" name="nome" required>
                     </div>
                 </div>
-                <hr style="width: 97%;" class="mb-2">
+                <hr id="cdusuario" style="width: 97%;" class="mb-2">
                 <div class="col-md-12 mb-3">
                     <label for="usuarioCadastro" class="form-label text-muted">Permissão</label>
                     <div class="input-group">
@@ -98,7 +57,7 @@ if (isset($_POST['submit'])) {
                         </select>
                     </div>
                 </div>
-                <hr style="width: 97%;" class="mb-2">
+                <hr id="cdusuario" style="width: 97%;" class="mb-2">
                 <div class="col-md-12 mb-3">
                     <label for="usuarioCadastro" class="form-label text-muted">Unidade</label>
                     <div class="input-group">
@@ -156,7 +115,7 @@ if (isset($_POST['submit'])) {
                         </select>
                     </div>
                 </div>
-                <hr style="width: 97%;" class="mb-2">
+                <hr id="cdusuario" style="width: 97%;" class="mb-2">
                 <div class="col-md-12 mb-3">
                     <label for="usuarioCadastro" class="form-label text-muted">Status</label>
                     <div class="input-group">
@@ -172,7 +131,7 @@ if (isset($_POST['submit'])) {
                         </select>
                     </div>
                 </div>
-                <hr style="width: 97%;" class="mb-2">
+                <hr id="cdusuario" style="width: 97%;" class="mb-2">
                 <div class="mb-3">
                     <label for="usuarioCadastro" class="form-label text-muted">Email</label>
                     <input type="email" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="name@example.com" name="email" required>
@@ -201,7 +160,6 @@ if (isset($_POST['submit'])) {
             title: "Usuario cadastrado com sucesso!"
         });
     }
-    // alert();
     window.addEventListener('load', function() {
         var url_string = window.location.href;
         var url = new URL(url_string);
@@ -211,6 +169,10 @@ if (isset($_POST['submit'])) {
             window.history.replaceState({}, document.title, window.location.pathname);
             history.pushState({}, '', 'http://localhost/cadastrarbens.php');
         }
-    }).then
+    })
+    // btnCadUsuario = document.getElementById('btn-CadUsuario');
+    // btnCadUsuario.addEventListener('click', () => {
+    //     console.log('teste')
+    // });
 </script>
 </html>

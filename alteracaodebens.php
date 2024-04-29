@@ -32,44 +32,6 @@ include_once('header.php');
 
     }
 ?>
-<style>
-    .icon-carrossel {
-        width: 16px;
-    }
-
-    .icon-carrossel-avancar {
-        width: 16px;
-    }
-
-    .carrossel>a {
-        font-size: 13px;
-    }
-
-    .carrossel>a:hover {
-        font-family: 'Roboto', sans-serif;
-        text-decoration: none;
-    }
-
-    .carrossel-text {
-        text-decoration: none;
-    }
-
-    .carrossel-text:hover {
-        text-decoration: none;
-    }
-
-    .carrossel {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-
-    hr {
-        opacity: 0.7;
-        border: 0.1px solid #DDDFE2; 
-    }
-</style>
-
 <body>
     <?php
     include_once('menu.php');
