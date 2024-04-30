@@ -34,15 +34,94 @@ include_once('header.php');
         </div>
         <div class="container d-flex justify-content-center">
             <div class="card mb-3 me-3 rounded-0 shadow p-3 mb-5 bg-white rounded border-0">
-                <form >
+                <form action="resultadodash.php">
                     <div class="card-body d-flex flex-column" style="width: 800px; height: 700px">
                         <label for="card" class="form-label mt-1 text-primary">Selecione um Item:</label>
-                        <input class="form-control mb-2" type="text" id="textBusca">
+                        <input class="form-control mb-2" type="text" id="textBusca" name="inputText">
                         <div class="card lista-itens">
                         <ul class="list-group list-group-flush overflow-auto" id="ulItens" style="height: 600px;">
                                 <?php
                                     
-                                    $itens = array("AMPLIFICADOR", "ANTENA PARABÓLICA", "AP TELEFONICO DIGITAL", "APARELHO FAX", "AR CONDICIONADO", "ARMARIO", "ARQUIVO DESLIZANTE", "BALCAO", "BATERIA", "CADEIRA", "CAIXAS DE SOM", "CALCULADORA", "CARRINHO PARA SUPERMERCADO", "ARMARIO", "ENCADERNADORA", "ESCADA DE ALUMÍNIO", "ESMERILHADEIRA", "ESTABILIZADOR", "ESTAÇÃO DE TRABALHO", "ESTANTE", "FRAGMENTADORA DE PAPEL", "FREEZER", "FURADEIRA", "GAVETEIRO", "GPS", "GUILHOTINA DE ESCRITÓRIO", "HARD DISK", "HORODATADOR PROTOCOLADOR", "IMPRESSORA", "LIXADEIRA DE CINTA", "LONGARINA", "MAPA", "MAQUINA FOTOGRAFICA/ CÂMERA DIGITAL", "MARTELETE ROMPEDOR", "MEDIDOR DE DISTÂNCIA", "MEDUSA", "MESA", "MESA DE SOM", "MICROCOMPUTADOR", "MICROFONES", "MICRO-ONDAS", "MINIGRAVADOR DIGITAL", "MONITOR", "MORSA", "NOBREAK", "NOTEBOOK", "PAINEL ELETRÔNICO", "PEDESTAL", "PERSIANA", "PLOTTER", "POLTRONA", "PROJETOR MULTIMÍDIA(DATA SHOW)", "QUADRO DE AVISO", "RELÓGIO", "SCANNER", "SERVIDOR", "SOFA", "SWITCH", "TELA DE PROJEÇÃO RETRÁTIL", "TELEVISOR", "TRENA", "UNID. DE PROCESSAMENTO", "VENTILADOR", "OUTROS");
+                                    $itens = array(
+                                        "AMPLIFICADOR",
+                                        "ANTENA PARABÓLICA",
+                                        "ANTENA WIRELESS",
+                                        "AP TELEFONICO DIGITAL",
+                                        "APARELHO FAX",
+                                        "AR CONDICIONADO",
+                                        "ARMARIO",
+                                        "ARQUIVO DESLIZANTE",
+                                        "BALCAO",
+                                        "BATERIA",
+                                        "CADEIRA",
+                                        "CAIXA ACÚSTICA",
+                                        "CAIXAS DE SOM",
+                                        "CALCULADORA",
+                                        "CARRINHO PARA SUPERMERCADO",
+                                        "COMPRESSOR DE ÁUDIO COM DOIS CANAIS",
+                                        "COMPUTADOR",
+                                        "CONTROLADOR",
+                                        "CPU",
+                                        "DESKTOP SWITCH",
+                                        "ENCADERNADORA",
+                                        "ESCADA DE ALUMÍNIO",
+                                        "ESMERILHADEIRA",
+                                        "ESTABILIZADOR",
+                                        "ESTAÇÃO DE TRABALHO",
+                                        "ESTANTE",
+                                        "FRAGMENTADORA DE PAPEL",
+                                        "FREEZER",
+                                        "FURADEIRA",
+                                        "GAVETEIRO",
+                                        "GPS",
+                                        "GUILHOTINA DE ESCRITÓRIO",
+                                        "HARD DISK",
+                                        "HD EXTERNO",
+                                        "HORODATADOR PROTOCOLADOR",
+                                        "IMPRESSORA",
+                                        "LIXADEIRA DE CINTA",
+                                        "LONGARINA",
+                                        "MAPA",
+                                        "MAQUINA FOTOGRAFICA/ CÂMERA DIGITAL",
+                                        "MARTELETE ROMPEDOR",
+                                        "MEDIDOR DE DISTÂNCIA",
+                                        "MEDUSA",
+                                        "MESA",
+                                        "MESA DE SOM",
+                                        "MICROCOMPUTADOR",
+                                        "MICROFONES",
+                                        "MICRO-ONDAS",
+                                        "MINIGRAVADOR DIGITAL",
+                                        "MONITOR",
+                                        "MORSA",
+                                        "NOBREAK",
+                                        "NOTEBOOK",
+                                        "PAINEL ELETRÔNICO",
+                                        "PEDESTAL",
+                                        "PERSIANA",
+                                        "PLOTTER",
+                                        "POLTRONA",
+                                        "PROJETOR MULTIMÍDIA(DATA SHOW)",
+                                        "QUADRO DE AVISO",
+                                        "RACK",
+                                        "RELÓGIO",
+                                        "ROTEADOR",
+                                        "SCANNER",
+                                        "SERVIDOR",
+                                        "SOFA",
+                                        "SWITCH",
+                                        "TABLET MARCA SAMSUNG MODELO TAB S8 5G",
+                                        "TELA DE PROJEÇÃO RETRÁTIL",
+                                        "TELEVISOR",
+                                        "TRENA",
+                                        "TV",
+                                        "UNID. DE PROCESSAMENTO",
+                                        "VENTILADOR",
+                                        "WEBCAM FULL HD 1080P",
+                                        "WORKSTATION",
+                                        "OUTROS",
+                                    );
+                                    
                                     foreach ($itens as $item) {
                                         echo "<li><a href=\"#\" class=\"list-group-item list-group-item-action\" onclick=\"botaoClicado('$item')\">$item</a></li>";
                                     }
@@ -51,7 +130,7 @@ include_once('header.php');
                         </div>
                     </div>
                     <div class="d-flex justify-content-end mr-3 mt-1">
-                        <button type="submit" class="btn btn-primary mb-2" id="btn" onclick="envio()" disabled>Verificar Item</button>
+                        <button type="submit" class="btn btn-primary mb-2" id="btn" disabled>Verificar Item</button>
                     </div>
                 </form>
             </div>
@@ -86,15 +165,6 @@ include_once('header.php');
         function botaoClicado(item) {
             document.getElementById('textBusca').value = item;
             filterList();
-        }
-
-        var passarValor = function(valor) {
-            window.location = 'http://localhost/resultadodash.php?item='+valor;
-        }
-
-        var valorItem = document.getElementById('textBusca').value;
-        function envio() {
-            passarValor(valorItem);
         }
 
     </script>

@@ -60,6 +60,7 @@ include_once('header.php');
                         <option value="<?php echo $tipo ?>" hidden="hidden"><?php echo $tipo ?></option>
                         <option value="AMPLIFICADOR">AMPLIFICADOR</option>
                         <option value="ANTENA PARABÓLICA">ANTENA PARABÓLICA</option>
+                        <option value="ANTENA WIRELESS">ANTENA WIRELESS</option>
                         <option value="AP TELEFONICO DIGITAL">AP TELEFONICO DIGITAL</option>
                         <option value="APARELHO FAX">APARELHO FAX</option>
                         <option value="AR CONDICIONADO">AR CONDICIONADO</option>
@@ -68,10 +69,15 @@ include_once('header.php');
                         <option value="BALCAO">BALCAO</option>
                         <option value="BATERIA">BATERIA</option>
                         <option value="CADEIRA">CADEIRA</option>
+                        <option value="CAIXA ACÚSTICA">CAIXA ACÚSTICA</option>
                         <option value="CAIXAS DE SOM">CAIXAS DE SOM</option>
                         <option value="CALCULADORA">CALCULADORA</option>
                         <option value="CARRINHO PARA SUPERMERCADO">CARRINHO PARA SUPERMERCADO</option>
-                        <option value="COMPRESSOR DE ÁUDIO COM DOIS CANAIS">ARMARIO</option>
+                        <option value="COMPRESSOR DE ÁUDIO COM DOIS CANAIS">COMPRESSOR DE ÁUDIO COM DOIS CANAIS</option>
+                        <option value="COMPUTADOR">COMPUTADOR</option>
+                        <option value="CONTROLADOR">CONTROLADOR</option>
+                        <option value="CPU">CPU</option>
+                        <option value="DESKTOP SWITCH">DESKTOP SWITCH</option>
                         <option value="ENCADERNADORA">ENCADERNADORA</option>
                         <option value="ESCADA DE ALUMÍNIO">ESCADA DE ALUMÍNIO</option>
                         <option value="ESMERILHADEIRA">ESMERILHADEIRA</option>
@@ -85,6 +91,7 @@ include_once('header.php');
                         <option value="GPS">GPS</option>
                         <option value="GUILHOTINA DE ESCRITÓRIO">GUILHOTINA DE ESCRITÓRIO</option>
                         <option value="HARD DISCK">HARD DISK</option>
+                        <option value="HD EXTERNO">HD EXTERNO</option>
                         <option value="HORODATADOR PROTOCOLADOR">HORODATADOR PROTOCOLADOR</option>
                         <option value="IMPRESSORA">IMPRESSORA</option>
                         <option value="LIXADEIRA DE CINTA">LIXADEIRA DE CINTA</option>
@@ -111,16 +118,22 @@ include_once('header.php');
                         <option value="POLTRONA">POLTRONA</option>
                         <option value="PROJETOR MULTIMÍDIA(DATA SHOW)">PROJETOR MULTIMÍDIA(DATA SHOW)</option>
                         <option value="QUADRO DE AVISO">QUADRO DE AVISO</option>
+                        <option value="RACK">RACK</option>
                         <option value="RELÓGIO">RELÓGIO</option>
+                        <option value="ROTEADOR">ROTEADOR</option>
                         <option value="SCANNER">SCANNER</option>
                         <option value="SERVIDOR">SERVIDOR</option>
                         <option value="SOFA">SOFA</option>
                         <option value="SWITCH">SWITCH</option>
+                        <option value="TABLET MARCA SAMSUNG MODELO TAB S8 5G">TABLET MARCA SAMSUNG MODELO TAB S8 5G</option>
                         <option value="TELA DE PROJEÇÃO RETRÁTIL">TELA DE PROJEÇÃO RETRÁTIL</option>
                         <option value="TELEVISOR">TELEVISOR</option>
                         <option value="TRENA">TRENA</option>
+                        <option value="TV">TV</option>
                         <option value="UNID. DE PROCESSAMENTO">UNID. DE PROCESSAMENTO</option>
                         <option value="VENTILADOR">VENTILADOR</option>
+                        <option value="WEBCAM FULL HD 1080P">WEBCAM FULL HD 1080P</option>
+                        <option value="WORKSTATION">WORKSTATION</option>
                         <option value="OUTROS">OUTROS</option>
                     </select>
                 </div>

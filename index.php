@@ -153,7 +153,7 @@ if (isset($_POST['submit'])) {
             history.pushState({}, '', 'http://localhost/home.php');
             setInterval(function() {
                 window.location.href = 'home.php';
-            }, 1400);
+            }, 1100);
         }
     })
 </script>

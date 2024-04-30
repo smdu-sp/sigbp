@@ -170,9 +170,5 @@ if (isset($_POST['submit'])) {
             history.pushState({}, '', 'http://localhost/cadastrarbens.php');
         }
     })
-    // btnCadUsuario = document.getElementById('btn-CadUsuario');
-    // btnCadUsuario.addEventListener('click', () => {
-    //     console.log('teste')
-    // });
 </script>
 </html>
