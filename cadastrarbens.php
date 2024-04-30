@@ -151,10 +151,14 @@ if (isset($_POST['submit'])) {
                         <option value="ATECC">ATECC</option>
                         <option value="ATIC">ATIC</option>
                         <option value="AUDITÓRIO">AUDITÓRIO</option>
+                        <option value="CAEPP">CAEPP</option>
+                        <option value="CAEPP/DERP">CAEPP/DERPP</option>
+                        <option value="CAEPP/DESPP">CAEPP/DESPP</option>
                         <option value="CAF">CAF</option>
                         <option value="CAF/DGP">CAF/DGP</option>
                         <option value="CAF/DLC">CAF/DLC</option>
                         <option value="CAF/DOF">CAF/DOF</option>
+                        <option value="CAF/DRV">CAF/DRV</option>
                         <option value="CAF/DSUP">CAF/DSUP</option>
                         <option value="CAP">CAP</option>
                         <option value="CAP/ARTHUR SABOYA">CAP/ARTHUR SABOYA</option>
@@ -168,6 +172,9 @@ if (isset($_POST['submit'])) {
                         <option value="CASE/DLE">CASE/DLE</option>
                         <option value="CASE/STEL">CASE/STEL</option>
                         <option value="CEPEUC">CEPEUC</option>
+                        <option value="CEPEUC">CEPEUC/DCIT</option>
+                        <option value="CEPEUC">CEPEUC/DDOC</option>
+                        <option value="CEPEUC">CEPEUC/DVF</option>
                         <option value="CGPATRI">CGPATRI</option>
                         <option value="COMIN">COMIN</option>
                         <option value="COMIN/DCIGP">COMIN/DCIGP</option>
@@ -178,6 +185,9 @@ if (isset($_POST['submit'])) {
                         <option value="CONTRU/DLR">CONTRU/DLR</option>
                         <option value="CONTRU/DSUS">CONTRU/DSUS</option>
                         <option value="DEUSO">DEUSO</option>
+                        <option value="DEUSO">DEUSO/DMUS</option>
+                        <option value="DEUSO">DEUSO/DNUS</option>
+                        <option value="DEUSO">DEUSO/DSIZ</option>
                         <option value="GABINETE">GABINETE</option>
                         <option value="GEOINFO">GEOINFO</option>
                         <option value="GTEC">GTEC</option>
@@ -185,15 +195,22 @@ if (isset($_POST['submit'])) {
                         <option value="PARHIS">PARHIS</option>
                         <option value="PARHIS/DHIS">PHARIS/DHIS</option>
                         <option value="PARHIS/DHMP">PHARIS/DHMP</option>
+                        <option value="PARHIS/DHMP">PHARIS/DHPP</option>
                         <option value="PARHIS/DPS">PHARIS/DPS</option>
                         <option value="PLANURB">PLANURB</option>
+                        <option value="PLANURB">PLANURB/DART</option>
                         <option value="RESID">RESID</option>
                         <option value="RESID/DRGP">RESID/DRGP</option>
+                        <option value="RESID/DRGP">RESID/DRH</option>
                         <option value="RESID/DRPM">RESID/DRPM</option>
+                        <option value="RESID/DRPM">RESID/DRVE</option>
                         <option value="RESID/DRU">RESID/DRU</option>
+                        <option value="SECRETARIO">SECRETARIO</option>
+                        <option value="SEL/AJ">SEL/AJ</option>
                         <option value="SERVIN">SERVIN</option>
                         <option value="SERVIN/DSIGP">SERVIN/DSIGP</option>
                         <option value="SERVIN/DSIMP">SERVIN/DSIMP</option>
+                        <option value="STEL">STEL</option>
                     </select>
                 </div>
             </div>
