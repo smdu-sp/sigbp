@@ -388,6 +388,84 @@ hr {
     border-bottom: none;
 }
 
+.margin-dhis {
+    margin-left: 59px;
+}
+.margin-dps {
+    margin-left: 66px;
+}
+.margin-dcimp,
+.margin-ddu {
+    margin-left: 46px;
+}
+.margin-dsigp {
+    margin-left: 51px;
+}
+.margin-dsimp {
+    margin-left: 48px;
+}
+.margin-drgp {
+    margin-left: 44px;
+}
+.margin-drpm {
+    margin-left: 41px;
+}
+.margin-dru {
+    margin-left: 55px;
+}
+.margin-atecc, 
+.margin-dsup{
+    margin-left: 32px;
+}
+.margin-atic,
+.margin-stel {
+    margin-left: 47px;
+}
+.margin-gab,
+.margin-dacess {
+    margin-left: 49px;
+}
+.margin-dgp {
+    margin-left: 39px;
+}
+.margin-dlc {
+    margin-left: 42px;
+}
+.margin-dof {
+    margin-left: 40px;
+}
+.margin-deprot,
+.margin-dcad {
+    margin-left: 36px;
+}
+.margin-dpci {
+    margin-left: 60px;
+}
+.margin-dpd {
+    margin-left: 64px;
+}
+.margin-nucleo {
+    margin-left: 33px;
+}
+.margin-dle,
+.margin-dnus {
+    margin-left: 52px;
+}
+.margin-dins {
+    margin-left: 70px;
+}
+.margin-dlr {
+    margin-left: 77px;
+}
+.margin-dsus {
+    margin-left: 67px;
+}
+.margin-dmus {
+    margin-left: 50px;
+}
+.margin-dsiz {
+    margin-left: 62px;
+}
 
 @media (max-width: 1300px) {
 

@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once('header.php');
 include_once('./conexoes/config.php');
 
@@ -43,6 +44,7 @@ $result = $conexao->query($sql) or die($mysqli->error);
         text-decoration: none;
     }
 
+
     @media (max-width: 1600px) {
         .conteudo {
             margin-left: 75px;
@@ -85,8 +87,8 @@ $result = $conexao->query($sql) or die($mysqli->error);
             <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
             <a href="./termo.php" class="text-primary ms-1 carrossel-text">Listar/Movimentar Bens</a>
         </div>
-        <div class="conteudo ml-1 mt-4" style="width: 1500px;">
-            <table id="example" class="display table" style="width: 100%">
+        <div class="conteudo ml-1 mt-4 table-container" style="width: 1500px;">
+            <table id="example" class="display table" style="width: 100%;">
                 <thead class="table-primary">
                     <tr>
                         <th hidden>Id</th>
@@ -129,6 +131,7 @@ $result = $conexao->query($sql) or die($mysqli->error);
                 </tbody>
             </table>
         </div>
+        <div class="hide" id="modal"></div>
 </body>
 <script>
     function alert(num) {

@@ -3,7 +3,6 @@ new DataTable('#example', {
       [6, 12, 24],
       [6, 12, 24, 'All']
   ],
-
   language: {
     "sEmptyTable" : "Nenhum registro encontrado",
     "sInfoEmpty" : "Mostrando 0 até 0 de 0 registros",
@@ -21,29 +20,34 @@ new DataTable('#example', {
 });
 
 $(document).ready(function() {
-  $('#example').DataTable(); // inicializa
-  var opts = { "aaSorting": [] }; // insere a opção
-  $('#example').DataTable().destroy(); // destrói
-  $('#example').DataTable(opts); // reinicializa com as novas opções
+  $('#example').DataTable(); 
+  var opts = { "aaSorting": [] }; 
+  $('#example').DataTable().destroy(); 
+  $('#example').DataTable(opts);
 });
 
-$(document).ready(function () {
-  $("#myInput").on("keyup", function () {
-    var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function () {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-    });
-  });
+new DataTable('#home', {
+  lengthMenu: [
+      [6, 9],
+      [6, 9]
+  ],
+  language: {
+    "sEmptyTable" : "Nenhum registro encontrado",
+    "sInfoEmpty" : "Mostrando 0 até 0 de 0 registros",
+     "sInfo" : "Página _PAGE_ de _PAGES_",
+     "sLengthMenu": "_MENU_ resultados por página",
+     "sSearch" : "Pesquisar:",
+     "sZeroRecords" : "Nenhum registro encontrado",
+     "sProcessing" : "Processando...",
+     "sLoadingRecords" : "Carregando...",
+     "sInfoFiltered" : "(Filtrados de _MAX_ registros)",
+     "sInfoThousands": ".",
+     "sInfoPostFix": "",
+  },
+  
+  order: [[-1, 'asc']],
 });
 
-$(document).ready(function () {
-  $("#myInput").on("keyup", function () {
-    var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function () {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-    });
-  });
-});
 
 const ativar = (elemento) => {
   let itens = document.getElementsByClassName("page-item");

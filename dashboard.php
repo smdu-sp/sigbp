@@ -136,6 +136,7 @@ include_once('header.php');
             </div>
         </div>
     </div>
+    <div class="hide" id="modal"></div>
     <script>
         $(document).ready(function() {
             $("#textBusca").on("keyup", function() {

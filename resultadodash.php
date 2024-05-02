@@ -1,7 +1,6 @@
 <?php
 include_once('header.php');
 ?>
-
 <body>
     <?php
     include_once('menu.php');
@@ -173,12 +172,12 @@ include_once('header.php');
     $query_produto = mysqli_query($conn, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dacess = ceil($row_pg['dacess']);
-    
+
     $buscar_produtos = "SELECT COUNT(idbem) AS dins FROM item WHERE tipo = '$item' AND localizacao = 'DINS';";
     $query_produto = mysqli_query($conn, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dins = ceil($row_pg['dins']);
-    
+
     $buscar_produtos = "SELECT COUNT(idbem) AS dlr FROM item WHERE tipo = '$item' AND localizacao = 'DLR';";
     $query_produto = mysqli_query($conn, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
@@ -222,28 +221,28 @@ include_once('header.php');
     $query_produto = mysqli_query($conn, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $gtec = ceil($row_pg['gtec']);
-    
+
     $buscar_produtos = "SELECT COUNT(idbem) AS parhis_g FROM item WHERE tipo = '$item' AND localizacao = 'PARHIS';";
     $query_produto = mysqli_query($conn, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $parhis_g = ceil($row_pg['parhis_g']);
 
-    
+
     $buscar_produtos = "SELECT COUNT(idbem) AS dhis FROM item WHERE tipo = '$item' AND localizacao = 'DHIS';";
     $query_produto = mysqli_query($conn, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dhis = ceil($row_pg['dhis']);
-    
+
     $buscar_produtos = "SELECT COUNT(idbem) AS dhmp FROM item WHERE tipo = '$item' AND localizacao = 'DHMP';";
     $query_produto = mysqli_query($conn, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dhmp = ceil($row_pg['dhmp']);
-    
+
     $buscar_produtos = "SELECT COUNT(idbem) AS dps FROM item WHERE tipo = '$item' AND localizacao = 'DPS';";
     $query_produto = mysqli_query($conn, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dps = ceil($row_pg['dps']);
-    
+
     $parhis = $parhis_g + $dhis + $dhmp + $dps;
 
     $buscar_produtos = "SELECT COUNT(idbem) AS planurb FROM item WHERE tipo = '$item' AND localizacao = 'PLANURB';";
@@ -296,8 +295,10 @@ include_once('header.php');
             <a href="./home.php" class="mb-3 me-1">
                 <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
             </a>
-            <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-            <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Dashboard</a>
+            <img src="./images/icon-avancar.png" class="icon-carrossel-avancar" alt="icon-avancar">
+            <a href="./dashboard.php" class="text-muted ms-1 carrossel-text">Dashboard</a>
+            <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
+            <a href="#" class="text-primary ms-1 carrossel-text">Distribuição</a>
         </div>
         <div class="container d-flex justify-content-center ">
             <div class="card mb-3 me-3 rounded-0 shadow p-3 mb-5 bg-white rounded border-0">
@@ -309,139 +310,170 @@ include_once('header.php');
                     <?php echo "<span>$totalItem</span>" ?></p>
             </div>
         </div>
-        <div class="container text-center overflow-auto">
-            <div class="row mb-3">
+        <div class="text-center px-2">
+            <div class="row mb-3 w-70 d-flex flex-row align-items-stretch">
                 <div class="col">
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>GABINETE(total: <?php echo $gabinete; ?>)</strong></li>
-                        <li class="list-group-item">ASCOM: <?php echo $ascom; ?></li>
-                        <li class="list-group-item">ATECC: <?php echo $atecc; ?></li>
-                        <li class="list-group-item">ATIC: <?php echo $atic; ?></li>
-                        <li class="list-group-item">GAB: <?php echo $gab; ?></li>
-                        <li class="list-group-item">STEL: <?php echo $stel; ?></li>
+                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>GABINETE (total: <?php echo $gabinete; ?>)</strong></li>
+                        <li class="list-group-item d-flex justify-content-start">ASCOM: <?php echo "<span class='ml-4'>" . $ascom . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">ATECC: <?php echo "<span class='margin-atecc'>" . $atecc . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">ATIC: <?php echo "<span class='margin-atic'>" . $atic . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">GAB: <?php echo "<span class='margin-gab'>" . $gab . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">STEL: <?php echo "<span class='margin-stel'>" . $stel . "</span>" ?></li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <ul class="list-group" style="height: 320px;">
+                        <li class="list-group-item list-group-item-primary"><strong>CAF (total: <?php echo $caf; ?>)</strong></li>
+                        <li class="list-group-item d-flex justify-content-start">ALMOXARIFADO: <?php echo "<span class='ml-3'>" . $almoxarifado . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">AUDITÓRIO: <?php echo "<span class='ml-3'>" . $auditorio . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">CAF-G: <?php echo "<span class='ml-4'>" . $caf_g . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DGP: <?php  echo "<span class='margin-dgp'>" . $dgp . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DLC: <?php echo "<span class='margin-dlc'>" . $dlc . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DOF: <?php echo "<span class='margin-dof'>" . $dof . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DSUP: <?php echo "<span class='margin-dsup'>" . $dsup . "</span>" ?></li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <ul class="list-group d-flex justify-content-evenly" >
+                        <li class="list-group-item list-group-item-primary"><strong>CAP (total: <?php echo $cap; ?>)</strong></li>
+                        <li class="list-group-item d-flex justify-content-start">ARTHUR SABOYA: <?php echo "<span class='ml-3'>" . $arthur . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">CAP-G: <?php echo "<span class='ml-5'>" . $cap_g . "</span>"  ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DEPROT: <?php echo "<span class='margin-deprot'>" . $deprot . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DPCI: <?php echo "<span class='margin-dpci'>" . $dpci . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DPD: <?php echo "<span class='margin-dpd'>" . $dpd . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">NÚCLEO: <?php echo "<span class='margin-nucleo'>" . $nucleo . "</span>" ?></li>
+                        <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>CAF(total: <?php echo $caf; ?>)</strong></li>
-                        <li class="list-group-item">CAF-G: <?php echo $caf_g; ?></li>
-                        <li class="list-group-item">DGP: <?php echo $dgp; ?></li>
-                        <li class="list-group-item">DLC: <?php echo $dlc; ?></li>
-                        <li class="list-group-item">DOF: <?php echo $dof; ?></li>
-                        <li class="list-group-item">DSUP: <?php echo $dsup; ?></li>
-                        <li class="list-group-item">AUDITÓRIO: <?php echo $auditorio; ?></li>
-                        <li class="list-group-item">ALMOXARIFADO: <?php echo $almoxarifado; ?></li>
+                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>CASE (total: <?php echo $case; ?>)</strong></li>
+                        <li class="list-group-item d-flex justify-content-start">CASE-G: <?php echo "<span class='ml-4'>" . $case_g . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DCAD: <?php echo "<span class='margin-dcad'>" . $dcad . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DDU: <?php echo "<span class='margin-ddu'>" . $ddu . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DLE: <?php echo "<span class='margin-dle'>" . $dle . "</span>" ?></li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>CAP(total: <?php echo $cap; ?>)</strong></li>
-                        <li class="list-group-item">CAP-G: <?php echo $cap_g; ?></li>
-                        <li class="list-group-item">ARTHUR SABOYA: <?php echo $arthur; ?></li>
-                        <li class="list-group-item">DEPROT: <?php echo $deprot; ?></li>
-                        <li class="list-group-item">DPCI: <?php echo $dpci; ?></li>
-                        <li class="list-group-item">DPD: <?php echo $dpd; ?></li>
-                        <li class="list-group-item">NÚCLEO: <?php echo $nucleo; ?></li>
+                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>CONTRU (total: <?php echo $contru; ?>)</strong></li>
+                        <li class="list-group-item d-flex justify-content-start">CONTRU-G: <?php echo "<span class='ml-4'>" . $contru_g . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DACESS: <?php echo  "<span class='margin-dacess'>" . $dacess . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DINS: <?php echo "<span class='margin-dins'>" . $dins . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DLR: <?php echo "<span class='margin-dlr'>" . $dlr . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DSUS: <?php echo "<span class='margin-dsus'>" . $dsus . "</span>" ?></li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>CASE(total: <?php echo $case; ?>)</strong></li>
-                        <li class="list-group-item">CASE-G: <?php echo $case_g; ?></li>
-                        <li class="list-group-item">DCAD: <?php echo $dcad; ?></li>
-                        <li class="list-group-item">DDU: <?php echo $ddu; ?></li>
-                        <li class="list-group-item">DLE: <?php echo $dle; ?></li>
+                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>DEUSO (total: <?php echo $deuso; ?>)</strong></li>
+                        <li class="list-group-item d-flex justify-content-start">DEUSO-G: <?php echo "<span class='ml-4'>" . $deuso_g . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DMUS: <?php echo "<span class='margin-dmus'>" . $dmus . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DNUS: <?php echo "<span class='margin-dnus'>" . $dnus . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DSIZ: <?php echo "<span class='margin-dsiz'>" . $dsiz . "</span>" ?></li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>CEPEUC(total:<?php echo $cepeuc; ?> )</strong></li>
-                        <li class="list-group-item">CEPEUC: <?php echo $cepeuc; ?></li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>COMIN(total: <?php echo $comin; ?>)</strong></li>
-                        <li class="list-group-item">COMIN-G: <?php echo $comin_g; ?></li>
-                        <li class="list-group-item">DCIGP: <?php echo $dcigp; ?></li>
-                        <li class="list-group-item">DCIMP: <?php echo $dcimp; ?></li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>CONTRU(total: <?php echo $contru; ?>)</strong></li>
-                        <li class="list-group-item">CONTRU-G: <?php echo $contru_g; ?></li>
-                        <li class="list-group-item">DACESS: <?php echo $dacess; ?></li>
-                        <li class="list-group-item">DINS: <?php echo $dins; ?></li>
-                        <li class="list-group-item">DLR: <?php echo $dlr; ?></li>
-                        <li class="list-group-item">DSUS: <?php echo $dsus; ?></li>
+                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>RESID (total: <?php echo $resid; ?>)</strong></li>
+                        <li class="list-group-item d-flex justify-content-start">RESID-G: <?php echo "<span class='ml-4'>" . $resid_g . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DRGP: <?php echo "<span class='margin-drgp'>" . $drgp . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DRPM: <?php echo "<span class='margin-drpm'>" . $drpm . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DRU: <?php echo "<span class='margin-dru'>" . $dru . "</span>" ?></li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="container text-center">
-            <div class="row mb-3">
+        <div class="text-center px-2">
+            <div class="row mb-3 w-80">
                 <div class="col">
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>DEUSO(total: <?php echo $deuso; ?>)</strong></li>
-                        <li class="list-group-item">DEUSO-G: <?php echo $deuso_g; ?></li>
-                        <li class="list-group-item">DMUS: <?php echo $dmus; ?></li>
-                        <li class="list-group-item">DNUS: <?php echo $dnus; ?></li>
-                        <li class="list-group-item">DSIZ: <?php echo $dsiz; ?></li>
+                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>PARHIS (total: <?php echo $parhis; ?>)</strong></li>
+                        <li class="list-group-item d-flex justify-content-start">PARHIS-G: <?php echo "<span class='ml-4'>" . $parhis_g .  "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DHIS: <?php echo  "<span class='margin-dhis'>" . $dhis .  "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DHMP: <?php echo  "<span class='ml-5'>" . $dhmp .  "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DPS: <?php echo "<span class='margin-dps'>" . $dps .  "</span>" ?></li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>GEOINFO(total: <?php echo $geoinfo; ?>)</strong></li>
-                        <li class="list-group-item">GEOINFO: <?php echo $geoinfo; ?></li>
+                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>COMIN (total: <?php echo $comin; ?>)</strong></li>
+                        <li class="list-group-item d-flex justify-content-start">COMIN-G: <?php echo "<span class='ml-4'>" . $comin_g .  "</span>"  ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DCIGP: <?php echo  "<span class='ml-5'>" . $dcigp . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DCIMP: <?php echo "<span class='margin-dcimp'>" . $dcimp . "</span>" ?></li>
+                        <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>GTEC(total: <?php echo $gtec; ?>)</strong></li>
-                        <li class="list-group-item">GTEC: <?php echo $gtec; ?></li>
+                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>SERVIN (total: <?php echo $servin; ?>)</strong></li>
+                        <li class="list-group-item d-flex justify-content-start">SERVIN-G: <?php echo "<span class='ml-4'>" . $servin_g . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DSIGP: <?php echo "<span class='margin-dsigp'>" . $dsigp . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DSIMP: <?php echo "<span class='margin-dsimp'>" . $dsimp . "</span>" ?></li>
+                        <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>PARHIS(total: <?php echo $parhis; ?>)</strong></li>
-                        <li class="list-group-item">PARHIS-G: <?php echo $parhis_g; ?></li>
-                        <li class="list-group-item">DHIS: <?php echo $dhis; ?></li>
-                        <li class="list-group-item">DHMP: <?php echo $dhmp; ?></li>
-                        <li class="list-group-item">DPS: <?php echo $dps; ?></li>
+                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>CEPEUC (total: <?php echo $cepeuc; ?> )</strong></li>
+                        <li class="list-group-item  d-flex justify-content-start">CEPEUC: <?php echo "<span class='ml-4'>" . $cepeuc . "</span>" ?></li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>PLANURB(total: <?php echo $planurb; ?>)</strong></li>
-                        <li class="list-group-item">PLANURB: <?php echo $planurb; ?></li>
+                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>GEOINFO (total: <?php echo $geoinfo; ?>)</strong></li>
+                        <li class="list-group-item d-flex justify-content-start">GEOINFO: <?php echo "<span class='ml-4'>" . $geoinfo . "</span>"; ?></li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>RESID(total: <?php echo $resid; ?>)</strong></li>
-                        <li class="list-group-item">RESID-G: <?php echo $resid_g; ?></li>
-                        <li class="list-group-item">DRGP: <?php echo $drgp; ?></li>
-                        <li class="list-group-item">DRPM: <?php echo $drpm; ?></li>
-                        <li class="list-group-item">DRU: <?php echo $dru; ?></li>
+                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>PLANURB (total: <?php echo $planurb; ?>)</strong></li>
+                        <li class="list-group-item d-flex justify-content-start">PLANURB: <?php echo "<span class='ml-4'>" . $planurb . "</span>"; ?></li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>SERVIN(total: <?php echo $servin; ?>)</strong></li>
-                        <li class="list-group-item">SERVIN-G: <?php echo $servin_g; ?></li>
-                        <li class="list-group-item">DSIGP: <?php echo $dsigp; ?></li>
-                        <li class="list-group-item">DSIMP: <?php echo $dsimp; ?></li>
+                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>GTEC (total: <?php echo $gtec; ?>)</strong></li>
+                        <li class="list-group-item d-flex justify-content-start">GTEC: <?php echo "<span class='ml-4'>" . $gtec . "</span>"; ?></li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
             </div>
+        </div>
+        <div class="d-flex justify-content-end mr-2">
+            <a href="dashboard.php" class="btn btn-primary">Escolher outro item</a>
         </div>
     </div>
+    <div class="hide" id="modal"></div>
 </body>
 <script>
     const urlParams = new URLSearchParams(window.location.search);
     const valorItem = urlParams.get("inputText");
     console.log(valorItem);
-
     document.getElementById('textResultado').value = valorItem;
 </script>

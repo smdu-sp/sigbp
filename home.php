@@ -3,9 +3,8 @@ session_start();
 include_once('./conexoes/config.php');
 include_once('header.php');
 
-
-$sql = "SELECT * FROM transferencia ORDER BY iditem ASC";
-$result  = $conexao->query($sql) or die($conexao->error);
+$sql = "SELECT item.patrimonio, item.tipo, item.marca, item.modelo, item.nome, transferencia.cimbpm, transferencia.localnovo, transferencia.servidoratual, transferencia.usuario, transferencia.datatransf FROM item, transferencia WHERE item.idbem = transferencia.iditem ORDER BY transferencia.datatransf DESC";
+$result = mysqli_query($conexao, $sql);
 ?>
 <style>
     .conteudo {
@@ -88,7 +87,7 @@ $result  = $conexao->query($sql) or die($conexao->error);
             <a href="./termo.php" class="text-primary ms-1 carrossel-text">Home</a>
         </div>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
-            <table id="example" class="display table" style="width: 100%">
+            <table id="home" class="display table" style="width: 100%">
                 <thead class="table-primary">
                     <th>Nº Patrimônio </th>
                     <th>Nome</th>
@@ -103,36 +102,34 @@ $result  = $conexao->query($sql) or die($conexao->error);
 
                 <tbody>
                     <?php
-                    while ($user_data = mysqli_fetch_assoc($result)) {
-                        echo "<tr>";
-                        echo "<td>" . '*' . "</td>";
-                        echo "<td>" . '*' . "</td>";
-                        echo "<td>" . '*' . "</td>";
-                        echo "<td>" . $user_data['localnovo'] . "</td>";
-                        echo "<td>" . $user_data['servidoratual'] . "</td>";
-                        echo "<td>" . $user_data['usuario'] . "</td>";
-                        echo "<td>" . $user_data['cimbpm'] . "</td>";
-                        if ($user_data['datatransf']) {
-                            $teste = explode('-', $user_data['datatransf']);
-                            $data = $teste[2] . '/' . $teste[1] . '/' . $teste[0];
-                            echo "<td>" . $data . "</td>";
-                        } else {
-                            echo "<td> NaN </td>";
-                        }
-                        echo "</tr>";
-                    }
+                    while ($user_data = mysqli_fetch_array($result)) {
+                        $numPatrimonio = $user_data['patrimonio'];
+                        $nome = $user_data['nome'];
+                        $marca = $user_data['marca'];
+                        $tipo = $user_data['tipo'];
+                        $modelo = $user_data['modelo'];
+                        $desc = $tipo . ' ' . $marca . ' Modelo:' . $modelo;
+                        $localizacao = $user_data['localnovo'];
+                        $servidor = $user_data['servidoratual'];
+                        $usuario = $user_data['usuario'];
+                        $cimbpm = $user_data['cimbpm'];
+                        $data_transf = $user_data['datatransf'];
                     ?>
+                        <tr>
+                            <td scope="row"><?php echo $numPatrimonio ?>
+                            <td><?php echo $nome ?></td>
+                            <td><?php echo $desc ?></td>
+                            <td><?php echo $localizacao ?></td>
+                            <td><?php echo $servidor ?></td>
+                            <td><?php echo $usuario ?></td>
+                            <td><?php echo $cimbpm ?></td>
+                            <td><?php echo $data_transf ?></td>
+                        </tr>
+                    <?php }; ?>
                 </tbody>
             </table>
-
         </div>
-
-        <div class="hide" id="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </div>
-            </div>
+        <div class="hide" id="modal"></div>
 </body>
+
 </html>

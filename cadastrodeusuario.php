@@ -1,6 +1,28 @@
 <?php
 include_once('./conexoes/config.php');
 include_once('header.php');
+include_once('env.php');
+
+$usuario = '';
+$nomefr = '';
+$emailfr = '';
+
+if (isset($_GET['usuario'])) {
+    $usuario = $_GET['usuario'];
+    $search = "samaccountname=" . $usuario;
+
+    $ds = ldap_connect($server);
+    ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+    $r = ldap_bind($ds, $user, $psw);
+
+    $sr = ldap_search($ds, $dn, $search);
+    $data = ldap_get_entries($ds, $sr);
+
+    for ($i = 0; $i < $data["count"]; $i++) {
+        $nomefr = $data[$i]["givenname"][0] . " " . $data[$i]["sn"][0];
+        $emailfr = strtolower($data[$i]["mail"][0]);
+    }
+}
 
 if (isset($_POST['submit'])) {
     $usuario = $_POST['loginRede'];
@@ -15,7 +37,7 @@ if (isset($_POST['submit'])) {
 ?>
 <body>
     <?php
-    include_once('menu.php');
+        include_once('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel mb-2">
@@ -31,9 +53,9 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-13 mb-1">
                     <label for="usuarioCadastro" class="form-label text-muted">Login de rede</label>
                     <div class="input-group mb-3">
-                        <input type="text" name="loginRede" class="form-control" id="inputCadUsuario" placeholder="Buscar por login de rede" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
+                        <input value="<?php echo $usuario; ?>" type="text" name="loginRede" class="form-control" id="inputCadUsuario" placeholder="Buscar por login de rede" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary" name="buscar" id="btn-CadUsuario" type="button">Buscar</button>
+                            <button class="btn btn-outline-primary" name="buscar" id="btn-CadUsuario" type="button" onclick="buscarUsuario()">Buscar</button>
                         </div>
                     </div>
                 </div>
@@ -41,7 +63,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-13 mb-1">
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label text-muted">Nome</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="Nome" name="nome" required>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="Nome" name="nome" value="<?php echo $nomefr; ?>" required>
                     </div>
                 </div>
                 <hr id="cdusuario" style="width: 97%;" class="mb-2">
@@ -134,7 +156,7 @@ if (isset($_POST['submit'])) {
                 <hr id="cdusuario" style="width: 97%;" class="mb-2">
                 <div class="mb-3">
                     <label for="usuarioCadastro" class="form-label text-muted">Email</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="name@example.com" name="email" required>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="name@example.com" name="email" value="<?php echo $emailfr; ?>" required>
                 </div>
                 <div class="d-flex flex-row-reverse">
                     <input type="submit" class="btn btn-primary ml-3 pe-auto mr-2 " id="btn-cadUsuario" name="submit" value="Cadastrar"></input>
@@ -143,7 +165,14 @@ if (isset($_POST['submit'])) {
         </form>
 </body>
 <script>
-    function alert() {
+    function buscarUsuario() {
+        const usuario = document.getElementById("inputCadUsuario").value;
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        url.searchParams.set('usuario', usuario);
+        window.location.href = url;
+    }
+    function toast() {
         const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -165,7 +194,7 @@ if (isset($_POST['submit'])) {
         var url = new URL(url_string);
         var data = url.searchParams.get("notificacao");
         if (data == 'true') {
-            alert();
+            toast();
             window.history.replaceState({}, document.title, window.location.pathname);
             history.pushState({}, '', 'http://localhost/cadastrarbens.php');
         }
