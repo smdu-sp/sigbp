@@ -3,7 +3,6 @@ session_start();
 include_once('verificacao.php');
 include_once('./conexoes/config.php');
 include_once('header.php');
-include_once('env.php');
 
 $usuario = '';
 $nomefr = '';
@@ -11,18 +10,32 @@ $emailfr = '';
 
 if (isset($_GET['usuario'])) {
     $usuario = $_GET['usuario'];
-    $search = "samaccountname=" . $usuario;
+    $query = "SELECT COUNT(*) FROM usuarios WHERE usuario = '$usuario'";
+    $conexao = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+    $resultado = mysqli_query($conexao, $query);
+    $row = mysqli_fetch_assoc($resultado);
+    $total = $row['COUNT(*)'];
 
-    $ds = ldap_connect($server);
-    ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
-    $r = ldap_bind($ds, $user, $psw);
+    if ($total == 0) {
+        include_once('env.php');
+        $search = "samaccountname=" . $usuario;
 
-    $sr = ldap_search($ds, $dn, $search);
-    $data = ldap_get_entries($ds, $sr);
+        $ds = ldap_connect($server);
+        ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+        $r = ldap_bind($ds, $user, $psw);
 
-    for ($i = 0; $i < $data["count"]; $i++) {
-        $nomefr = $data[$i]["givenname"][0] . " " . $data[$i]["sn"][0];
-        $emailfr = strtolower($data[$i]["mail"][0]);
+        $sr = ldap_search($ds, $dn, $search);
+        $data = ldap_get_entries($ds, $sr);
+
+        for ($i = 0; $i < $data["count"]; $i++) {
+            $nomefr = $data[$i]["givenname"][0] . " " . $data[$i]["sn"][0];
+            $emailfr = strtolower($data[$i]["mail"][0]);
+        }
+    } else {
+        $usuario = '';
+        $nomefr = '';
+        $emailfr = '';
+        header('Location: cadastrodeusuario.php?notificacao=jaCadastrado');
     }
 }
 
@@ -37,9 +50,14 @@ if (isset($_POST['submit'])) {
     header('Location: cadastrodeusuario.php?notificacao=true');
 }
 ?>
+<style>
+    .swal2-title{
+        color: #fff;
+}
+</style>
 <body>
     <?php
-        include_once('menu.php');
+    include_once('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel mb-2">
@@ -74,10 +92,10 @@ if (isset($_POST['submit'])) {
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-cracha.png" alt="" class="imgCadastro"></div>
                         <select class="form-select" aria-label="Filter select" name="permissao" required>
-                            <option value="Usuário">Usuário</option>
-                            <option value="Desenvolvedor">Desenvolvedor</option>
-                            <option value="Administrador">Administrador</option>
-                            <option value="Técnico">Técnico</option>
+                            <option value="3">Usuário</option>
+                            <option value="2">Desenvolvedor</option>
+                            <option value="1">Administrador</option>
+                            <option value="4">Técnico</option>
                         </select>
                     </div>
                 </div>
@@ -175,32 +193,61 @@ if (isset($_POST['submit'])) {
         url.searchParams.set('usuario', usuario);
         window.location.href = url;
     }
-    function toast() {
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
-        });
-        Toast.fire({
-            icon: "success",
-            title: "Usuario cadastrado com sucesso!"
-        });
+
+    function toast(num) {
+        if (num == 1) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "Usuario cadastrado com sucesso!",
+                background: "green",
+            });
+        } else if (num == 2) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "warning",
+                title: "Usuário já cadastrado!",
+                titleColor: "#fff",
+                background: "#104EEF",
+                iconColor: "#ffffff"
+            });
+        }
     }
+
     window.addEventListener('load', function() {
         var url_string = window.location.href;
         var url = new URL(url_string);
         var data = url.searchParams.get("notificacao");
         if (data == 'true') {
-            toast();
+            toast(1);
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'http://localhost/cadastrarbens.php');
+            history.pushState({}, '', 'http://localhost/cadastrodeusuario.php');
+        } else if (data == 'jaCadastrado') {
+            toast(2);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'http://localhost/cadastrodeusuario.php');
         }
     })
 </script>
+
 </html>

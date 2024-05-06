@@ -2,19 +2,28 @@
 session_start();
 include_once('verificacao.php');
 include_once('header.php');
+include_once('./conexoes/config.php');
+
+$login = $_SESSION['SesNome'];
+$buscar_cadastros = "SELECT permissao FROM usuarios WHERE `usuario`='" . strtolower($login) . "';";
+$query_cadastros = mysqli_query($conexao, $buscar_cadastros);
+// print_r($query_cadastros);
+
+if (mysqli_num_rows($query_cadastros) == 1) {
+  header("location: erropermissao.php");
+} else {
+  $resultado = mysqli_fetch_assoc($query_cadastros);
+}
 ?>
 <style>
-    /* width */
     ::-webkit-scrollbar {
         width: 10px;
     }
 
-    /* Track */
     ::-webkit-scrollbar-track {
         background-color: #F8F8F8;
     }
 
-    /* Handle */
     ::-webkit-scrollbar-thumb {
         background: #a8a8a8;
         border-radius: 5px;
@@ -24,7 +33,6 @@ include_once('header.php');
 <body>
     <?php
     include_once('menu.php');
-    include_once('./conexoes/config.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel mb-2">
