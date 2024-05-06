@@ -1,7 +1,8 @@
 <?php
-// session_start();
+session_start();
 include_once('./conexoes/config.php');
 include_once('header.php');
+include_once('verificacao.php');
 
 if (isset($_POST['submit'])) {
     $patrimonio = $_POST['numPatrimonio'];

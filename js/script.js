@@ -120,7 +120,6 @@ function adicionarItem() {
   }
 }
 
-
 function enviar_session(){
   sessionStorage.setItem("Serie", JSON.stringify(arrayNumSerie));
 }
@@ -129,4 +128,3 @@ btnSairCadUsuario = document.getElementById('btnSair-cadUsuario');
 btnSairCadUsuario.addEventListener('click', () => {
   location.reload();
 });
-

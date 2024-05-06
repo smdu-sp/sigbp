@@ -1,4 +1,11 @@
 <?php
+
+session_start();
+
+// if(isset($_SESSION['logado'])) {
+//     header("location: http://localhost/verificacao.php");
+// }
+
 if (isset($_POST['submit'])) {
     $server = "ldap://10.10.65.242";
     $user = $_POST['usuario'] . "@rede.sp";
@@ -46,6 +53,7 @@ if (isset($_POST['submit'])) {
         $_SESSION['Status'] =  $resultado['statususer'];
 
         header('Location: index.php?m=entrou');
+        $_SESSION['logado'] = true;
         exit;
     } else {
         $_SESSION = array();
@@ -61,17 +69,16 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>SisGP - Sistema de Gerenciamento de Patrimônio</title>
+    <link rel="shortcut icon" href="./images/logo-cdsp.png" type="image/x-icon">
     <link rel="stylesheet" href="./css/login.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <style>
-    .swal2-title {
+    .swal2-title{
         color: #fff;
-        font-size: 30px;
-    }
+}
 </style>
-
 <body>
     <div id="modal">
         <main class="container">
@@ -114,7 +121,7 @@ if (isset($_POST['submit'])) {
                 background: 'red',
                 iconColor: '#ffffff'
             });
-        } else {
+        } else if (num == 2) {
             const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -132,8 +139,25 @@ if (isset($_POST['submit'])) {
                 }),
                 icon: "success",
                 title: "Seja bem-vindo!",
-                titleColor: '#ffffff',
                 background: 'green',
+                iconColor: '#ffffff'
+            });
+        } else if (num == 3) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "warning",
+                title: "Por favor, inserir usuário e senha!",
+                background: "#104EEF",
                 iconColor: '#ffffff'
             });
         }
@@ -154,6 +178,10 @@ if (isset($_POST['submit'])) {
             setInterval(function() {
                 window.location.href = 'home.php';
             }, 1100);
+        } else if (data == 'faltaLogar') {
+            alert(3);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'http://localhost/index.php');
         }
     })
 </script>
