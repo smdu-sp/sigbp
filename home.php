@@ -1,7 +1,8 @@
 <?php
 session_start();
-include_once('./conexoes/config.php');
+include_once('conexoes/config.php');
 include_once('header.php');
+include_once('verificacao.php');
 
 
 $sql = "SELECT item.patrimonio, item.tipo, item.marca, item.modelo, item.nome, transferencia.cimbpm, transferencia.localnovo, transferencia.servidoratual, transferencia.usuario, transferencia.datatransf FROM item, transferencia WHERE item.idbem = transferencia.iditem ORDER BY transferencia.datatransf DESC";

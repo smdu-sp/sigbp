@@ -1,5 +1,4 @@
 <?php
-@session_start();
 include_once('header.php');
 include_once('env.php');
 
@@ -50,7 +49,7 @@ include_once('env.php');
                 <h2>Você está saindo.</h2>
                 <p>Tem certeza de que deseja sair?</p>
                 <div class="box-msg-sair">
-                    <a href="index.php" class="btn-msg-sair sim" onclick="<?php session_destroy(); ?>">Sim</a>
+                    <a href="?sair" class="btn-msg-sair sim">Sim</a>
                     <a onclick="fecharMsg()" class="btn-msg-sair">Não</a>
                 </div>
             </div>

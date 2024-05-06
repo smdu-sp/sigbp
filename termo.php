@@ -1,5 +1,8 @@
 <?php
+session_start();
+include_once('verificacao.php');
 include_once('header.php');
+
 if (isset($_POST['submit'])) {
     $dataEntregue = $_POST['dataEntregue'];
     $unidadeEntregue = $_POST['unidadeEntregue'];
