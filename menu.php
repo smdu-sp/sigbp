@@ -1,6 +1,8 @@
 <?php
 @session_start();
 include_once('header.php');
+include_once('env.php');
+
 ?>
 
 <body>
@@ -29,6 +31,8 @@ include_once('header.php');
                 <a href="./listaremovimentar.php" id="botao4" class="btn-menu botoes"><img id="icon-lista" src="./images/icon-lista.png" alt="Icon Lista">Listar/Movimentar Bens</a>
                 <a href="./cadastrodeusuario.php" id="botao3" class="btn-menu botoes"><img id="icon-usuario" src="./images/usuario.png" alt="Icon Usuario">Cadastro de Usuários</a>
                 <a href="./dashboard.php" id="botao6" class="btn-menu botoes"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">Dashboard</a>
+                <a href="./unidades.php" id="botao6" class="btn-menu botoes"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">Unidades</a>
+
             </div>
             <div class="info-usuario">
                 <h3 class="nome-usuario"><?php 
