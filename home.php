@@ -45,9 +45,16 @@ $result = mysqli_query($conexao, $sql);
         text-decoration: none;
     }
 
+    @media (max-width: 1850px) {
+        .overflow{
+            overflow-x: auto;
+        }
+    }
+
     @media (max-width: 1600px) {
         .conteudo {
             margin-left: 75px;
+            width: 95%;
         }
 
         .menu-principal {
@@ -55,7 +62,7 @@ $result = mysqli_query($conexao, $sql);
             top: 0;
             left: -187px;
             z-index: 999999 !important;
-            transition: all 1s ease;
+            transition: all .5s ease;
         }
 
 
@@ -79,7 +86,7 @@ $result = mysqli_query($conexao, $sql);
     <?php
     include_once('menu.php');
     ?>
-    <div class="p-4 p-md-4 pt-3 conteudo">
+    <div class="p-4 p-md-4 pt-3 conteudo overflow">
         <div class="carrossel mb-4">
             <a href="./home.php" class="mb-3 me-1">
                 <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">

@@ -45,10 +45,16 @@ $result = $conexao->query($sql) or die($mysqli->error);
         text-decoration: none;
     }
 
+    @media (max-width: 1850px) {
+        .overflow{
+            overflow-x: auto;
+        }
+    }
 
     @media (max-width: 1600px) {
         .conteudo {
             margin-left: 75px;
+            width: 90%;
         }
 
         .menu-principal {
@@ -56,7 +62,7 @@ $result = $conexao->query($sql) or die($mysqli->error);
             top: 0;
             left: -187px;
             z-index: 999999 !important;
-            transition: all 1s ease;
+            transition: all .5s ease;
         }
 
 
@@ -80,7 +86,7 @@ $result = $conexao->query($sql) or die($mysqli->error);
     <?php
     include_once('menu.php');
     ?>
-    <div class="p-4 p-md-4 pt-3 conteudo">
+    <div class="p-4 p-md-4 pt-3 conteudo overflow">
         <div class="carrossel mb-4">
             <a href="./home.php" class="mb-3 me-1">
                 <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
@@ -88,7 +94,7 @@ $result = $conexao->query($sql) or die($mysqli->error);
             <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
             <a href="./termo.php" class="text-primary ms-1 carrossel-text">Listar/Movimentar Bens</a>
         </div>
-        <div class="conteudo ml-1 mt-4 table-container" style="width: 1500px;">
+        <div class="conteudo conteudo-table ml-1 mt-4 table-container" style="width: 1500px;">
             <table id="example" class="display table" style="width: 100%;">
                 <thead class="table-primary">
                     <tr>

@@ -24,7 +24,7 @@ include_once('header.php');
 <body>
     <?php
     include_once('menu.php');
-    include_once('./conexoes/conexao.php');
+    include_once('./conexoes/config.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel mb-2">

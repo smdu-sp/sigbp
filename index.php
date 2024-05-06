@@ -2,10 +2,6 @@
 
 session_start();
 
-// if(isset($_SESSION['logado'])) {
-//     header("location: http://localhost/verificacao.php");
-// }
-
 if (isset($_POST['submit'])) {
     $server = "ldap://10.10.65.242";
     $user = $_POST['usuario'] . "@rede.sp";
@@ -28,11 +24,11 @@ if (isset($_POST['submit'])) {
 
     session_start();
 
-    require_once('./conexoes/conexao.php');
+    require_once('./conexoes/config.php');
 
 
     $buscar_cadastros = "SELECT permissao, statususer FROM usuarios WHERE `usuario`='" . strtolower($inicial) . "';";
-    $query_cadastros = mysqli_query($conn, $buscar_cadastros);
+    $query_cadastros = mysqli_query($conexao, $buscar_cadastros);
 
     if (mysqli_num_rows($query_cadastros) != 1) {
         header("location: erropermissao.php");
@@ -42,8 +38,8 @@ if (isset($_POST['submit'])) {
 
     if ($data["count"] > 0) {
         for ($i = 0; $i < $data["count"]; $i++) {
-            $nomefr = mysqli_real_escape_string($conn, $data[$i]["givenname"][0]) . " " . mysqli_real_escape_string($conn, $data[$i]["sn"][0]);
-            $emailfr = mysqli_real_escape_string($conn, strtolower($data[$i]["mail"][0]));
+            $nomefr = mysqli_real_escape_string($conexao, $data[$i]["givenname"][0]) . " " . mysqli_real_escape_string($conexao, $data[$i]["sn"][0]);
+            $emailfr = mysqli_real_escape_string($conexao, strtolower($data[$i]["mail"][0]));
         }
 
         $_SESSION['SesID'] = $inicial;

@@ -165,6 +165,7 @@ if (isset($_POST['submit'])) {
                     <input type="button" class="btn btn-light pe-auto" id="btnSair-cadUsuario" name="salvar" value="Cancelar"></input>
                 </div>
         </form>
+        <div class="hide" id="modal"></div>
 </body>
 <script>
     function buscarUsuario() {
