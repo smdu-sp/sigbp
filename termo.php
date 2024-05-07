@@ -4,6 +4,11 @@ include_once('verificacao.php');
 include_once('header.php');
 
 if (isset($_POST['submit'])) {
+
+    $array1 = explode("\n", $_POST['textarea1']);
+    $array2 = explode("\n", $_POST['textarea2']);
+
+
     $dataEntregue = $_POST['dataEntregue'];
     $unidadeEntregue = $_POST['unidadeEntregue'];
     $nomeEntrega = $_POST['nomeEntrega'];
@@ -13,7 +18,13 @@ if (isset($_POST['submit'])) {
     $nomeRecebimento = $_POST['nomeRecebimento'];
     $rfRecebimento = $_POST['rfRecebimento'];
 
-    header('Location: gerar-pdf.php');
+
+    $array1Encoded = implode(',', $array1);
+    $array2Encoded = implode(',', $array2);
+
+
+    header("Location: gerar-pdf.php");
+    exit;
 }
 ?>
 <style>
@@ -71,7 +82,7 @@ if (isset($_POST['submit'])) {
             <div class="row">
                 <div class="col-md-6 mb-2">
                     <label for="numPatriSerie" class="form-label text-muted">Nº Patrimonial/Nº de Série:</label>
-                    <input type="text" class="form-control campos" id="numPatriSerie" name="numPatriSerie" >
+                    <input type="text" class="form-control campos" id="numPatriSerie" name="numPatriSerie">
                 </div>
                 <div class="col-md-6 mb-2">
                     <label for="descBem" class="form-label text-muted ">Descrição do Bem:</label>
@@ -82,11 +93,11 @@ if (isset($_POST['submit'])) {
                 <div class="row">
                     <div class="col-md-6 mb-2">
                         <label for="exampleFormControlTextarea1" class="text-muted">Itens adicionados</label>
-                        <textarea class="form-control" id="textareaNumSerie" name="textarea" cols="3" rows="3" wrap="hard" readonly></textarea>
+                        <textarea class="form-control" id="textareaNumSerie" name="textarea1" cols="3" rows="3" wrap="hard" readonly></textarea>
                     </div>
                     <div class="col-md-6 mb-2">
                         <label for="exampleFormControlTextarea1" class="text-muted">Itens adicionados</label>
-                        <textarea class="form-control" id="textareaDescBem" name="textarea" cols="3" rows="3" wrap="hard" readonly></textarea>
+                        <textarea class="form-control" id="textareaDescBem" name="textarea2" cols="3" rows="3" wrap="hard" readonly></textarea>
                     </div>
                 </div>
             </div>
@@ -241,11 +252,4 @@ if (isset($_POST['submit'])) {
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
-
-<script>
-    function enviar_session() {
-        sessionStorage.setItem("Serie", arrayNumSerie);
-    }
-</script>

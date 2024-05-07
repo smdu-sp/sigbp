@@ -60,11 +60,13 @@ body {
 
 .descricaoBem {
     border-collapse: collapse;
-    margin-top: 40px;
-    width: 800px;
+    margin-top: 60px;
+    width: 80%;
+    table-layout: fixed;
 }
 
 .desc-th,.desc-td{
+    word-wrap: break-word;
     border: 1px solid #000;
 }
 
@@ -114,19 +116,44 @@ body {
   
 #absolute {
     position: absolute;
-    bottom: 50px;
-    right: 170px;
+    bottom: 60px;
+    right: 120px;
+}
+
+#absolute2 {
+    position: absolute;
+    bottom: 60px;
+    right: 225px;
 }
   
 #botao {
     position: fixed;
-    width: 120px;
+    width: 95px;
     height: 40px;
     background-color: #0B5ED7;
     color: #fff;
-    font-size: 20px;
+    font-size: 18px;
     cursor: pointer;
     border: none;
     border-radius: 3px;
     padding: 5px 10px;
 }
+
+#botao2 {
+    position: fixed;
+    width: 70px;
+    height: 30px;
+    background-color: #157347;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+

@@ -1,4 +1,7 @@
 <?php
+
+use LDAP\Result;
+
 session_start();
 include_once('verificacao.php');
 include_once('./conexoes/config.php');
@@ -32,16 +35,51 @@ if (isset($_GET['usuario'])) {
             $emailfr = strtolower($data[$i]["mail"][0]);
         }
     } else {
-        $usuario = '';
-        $nomefr = '';
-        $emailfr = '';
-        header('Location: cadastrodeusuario.php?notificacao=jaCadastrado');
+        if ($total == 1) {
+            if(!empty($_GET['usuario'])) {
+                include_once('./conexoes/config.php');
+        
+                $usuario = $_GET['usuario'];
+        
+                $sqlSelect = "SELECT * FROM usuarios WHERE usuario = $usuario";
+        
+                $result = $conexao->query($sqlSelect);
+        
+                if($result->num_rows > 0) {
+                    while($user_data = mysqli_fetch_assoc($result)) {
+                        $usuario = $user_data['usuario'];
+                        $nome = $user_data['nome'];
+                        $permissao = $user_data['permissao'];
+                        $statususer = $user_data['statususer'];
+                    }
+                } else {
+                    header('Location: cadastrodeusuario.php');
+                }
+        
+            }
+        }
+        //     $user_data = $result->fetch_assoc();
+
+        //     $id = $user_data['id'];
+
+        //     while($user_data = mysqli_fetch_assoc($result)) {
+        //         $nome = $user_data['nome'];
+        //         $permissao = $user_data['permissao'];
+        //         $statususer = $user_data['statususer'];
+        //     }
+
+        //     $sqlUpdate = "UPDATE usuarios SET nome='$nome', permissao='$permissao', statususer='$statususer' WHERE id='$id'";
+        //     $conexao->query($sqlUpdate);
+
+        // } else {
+        //     echo "Nenhum usuário encontrado com o nome de usuário '$usuario'.";
+        // }
     }
 }
 
 if (isset($_POST['submit'])) {
     $usuario = $_POST['loginRede'];
-    $nome = $_POST['nome'];
+    $name = $_POST['nome'];
     $permissao = $_POST['permissao'];
     $status = $_POST['status'];
 
@@ -51,10 +89,11 @@ if (isset($_POST['submit'])) {
 }
 ?>
 <style>
-    .swal2-title{
+    .swal2-title {
         color: #fff;
-}
+    }
 </style>
+
 <body>
     <?php
     include_once('menu.php');
@@ -83,7 +122,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-13 mb-1">
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label text-muted">Nome</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="Nome" name="nome" value="<?php echo $nomefr; ?>" required>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="Nome" name="nome" value="<?php echo $total ? $nomefr : $name ?>" required>
                     </div>
                 </div>
                 <hr id="cdusuario" style="width: 97%;" class="mb-2">
@@ -92,10 +131,8 @@ if (isset($_POST['submit'])) {
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-cracha.png" alt="" class="imgCadastro"></div>
                         <select class="form-select" aria-label="Filter select" name="permissao" required>
-                            <option value="3">Usuário</option>
-                            <option value="2">Desenvolvedor</option>
-                            <option value="1">Administrador</option>
-                            <option value="4">Técnico</option>
+                            <option value="1">true</option>
+                            <option value="2">false</option>
                         </select>
                     </div>
                 </div>

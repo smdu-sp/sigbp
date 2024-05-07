@@ -31,31 +31,48 @@ if (isset($_POST['submit'])) {
     $query_cadastros = mysqli_query($conexao, $buscar_cadastros);
 
     if (mysqli_num_rows($query_cadastros) != 1) {
-        header("location: erropermissao.php");
+        header("location: index.php?erropermissao");
     } else {
         $resultado = mysqli_fetch_assoc($query_cadastros);
     }
 
-    if ($data["count"] > 0) {
-        for ($i = 0; $i < $data["count"]; $i++) {
-            $nomefr = mysqli_real_escape_string($conexao, $data[$i]["givenname"][0]) . " " . mysqli_real_escape_string($conexao, $data[$i]["sn"][0]);
-            $emailfr = mysqli_real_escape_string($conexao, strtolower($data[$i]["mail"][0]));
+
+    $buscar_usuario = "SELECT usuario, permissao FROM usuarios WHERE `usuario`='" . strtolower($inicial) . "';";
+    $query_usuario = mysqli_query($conexao, $buscar_usuario);
+
+    // while ($user_data = mysqli_fetch_assoc($query_usuario)) {
+    //     $permissao = $user_data['permissao'];
+    // }
+
+    if (mysqli_num_rows($query_usuario) == 1) {
+        if ($data["count"] > 0) {
+            for ($i = 0; $i < $data["count"]; $i++) {
+                $nomefr = mysqli_real_escape_string($conexao, $data[$i]["givenname"][0]) . " " . mysqli_real_escape_string($conexao, $data[$i]["sn"][0]);
+                $emailfr = mysqli_real_escape_string($conexao, strtolower($data[$i]["mail"][0]));
+            }
+    
+            $_SESSION['SesID'] = $inicial;
+            $_SESSION['SesNome'] = $nomefr;
+            $_SESSION['SesE-mail'] = $emailfr;
+            $_SESSION['Perm'] =  $resultado['permissao'];
+            $_SESSION['Status'] =  $resultado['statususer'];
+    
+            header('Location: index.php?m=entrou');
+            $_SESSION['logado'] = true;
+            exit;
+        } else {
+            $_SESSION = array();
+            header('Location: index.php?m=erro');
+            exit;
         }
-
-        $_SESSION['SesID'] = $inicial;
-        $_SESSION['SesNome'] = $nomefr;
-        $_SESSION['SesE-mail'] = $emailfr;
-        $_SESSION['Perm'] =  $resultado['permissao'];
-        $_SESSION['Status'] =  $resultado['statususer'];
-
-        header('Location: index.php?m=entrou');
-        $_SESSION['logado'] = true;
-        exit;
     } else {
         $_SESSION = array();
-        header('Location: index.php?m=erro');
+        $nome = $_SESSION['SesNome'];
+        $result = mysqli_query($conexao, "INSERT INTO usuarios(usuario, nome, statususer) 
+        VALUES ('$inicial', '$nome', 'ativo')");
         exit;
     }
+    
 }
 ?>
 
@@ -71,10 +88,11 @@ if (isset($_POST['submit'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <style>
-    .swal2-title{
+    .swal2-title {
         color: #fff;
-}
+    }
 </style>
+
 <body>
     <div id="modal">
         <main class="container">

@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $dataEntregue = $_POST['dataEntregue'];
@@ -10,6 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nomeRecebimento = $_POST['nomeRecebimento'];
     $rfRecebimento = $_POST['rfRecebimento'];
 
+    $array1 = explode("\n", $_POST['textarea1']);
+    $array2 = explode("\n", $_POST['textarea2']);
 } else {
     echo "Nenhum dado recebido";
 }
@@ -18,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
@@ -52,10 +55,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="desc-td">NOTEBOOK DELL INSPIRON 15</td>
-                        <td class="desc-td">NOTEBOOK DELL INSPIRON 15</td>
-                    </tr>
+                    <?php $tamanhoArray = max(count($array1), count($array2)); ?>
+                    <?php for ($i = 0; $i < $tamanhoArray; $i++) : ?>
+                        <?php if (!empty($array1[$i]) || !empty($array2[$i])) : ?>
+                            <tr>
+                                <td class="desc-td"><?php echo !empty($array1[$i]) ? htmlspecialchars($array1[$i]) : ''; ?></td>
+                                <td class="desc-td"><?php echo !empty($array2[$i]) ? htmlspecialchars($array2[$i]) : ''; ?></td>
+                            </tr>
+                        <?php endif; ?>
+                    <?php endfor; ?>
                 </tbody>
             </table>
             <table class="assinatura">
@@ -73,8 +81,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <td class="ass-td"><strong>NOME:</strong> <?php echo $nomeRecebimento ?></td>
                     </tr>
                     <tr>
-                        <td class="ass-td"><strong>RF:</strong> <?php echo $nomeEntrega ?></td>
-                        <td class="ass-td"><strong>RF:</strong> <?php echo $nomeRecebimento ?></td>
+                        <td class="ass-td"><strong>RF:</strong> <?php echo $rfEntrega ?></td>
+                        <td class="ass-td"><strong>RF:</strong> <?php echo $rfRecebimento ?></td>
                     </tr>
                 </tbody>
             </table>
@@ -86,27 +94,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div id="editor"></div>
     <div id="absolute">
-        <button class="botao-modal" id="botao" onclick="printTermo()">Imprimir</button>
+        <a type="button" href='http://localhost/termo.php' class="botao-voltar" id="botao2">Voltar</a>
+    </div>
+    <div id="absolute2">
+        <button  class="botao-modal" id="botao" onclick="printTermo()">Imprimir</button>
+
     </div>
 </body>
 
 </html>
 
 <script>
+    // var session = sessionStorage.getItem("Serie");
+    // console.log(session);
+    // const strCopy = session.split(',');
+    // console.log(strCopy);
+    // var botao = document.getElementById('botao');
 
+    // const map1 = strCopy.map((x) => x)
+    // console.log(map1);
 
-    var session = sessionStorage.getItem("Serie");
-    console.log(session);
-    const strCopy = session.split(',');
-    console.log(strCopy);
-    var botao = document.getElementById('botao');
+    // var teste = document.getElementById('descricaoBem');
 
-    const map1 = strCopy.map((x) => x)
-    console.log(map1);
-
-    var teste = document.getElementById('descricaoBem');
-
-    teste.innerHTML(map1);
+    // teste.innerHTML(map1);
 
     function printTermo() {
         botao.style.display = 'none'
