@@ -30,21 +30,23 @@ if (isset($_POST['submit'])) {
     $buscar_cadastros = "SELECT permissao, statususer FROM usuarios WHERE `usuario`='" . strtolower($inicial) . "';";
     $query_cadastros = mysqli_query($conexao, $buscar_cadastros);
 
-    if (mysqli_num_rows($query_cadastros) != 1) {
+    if (mysqli_num_rows($query_cadastros) == 3) {
         header("location: index.php?erropermissao");
     } else {
         $resultado = mysqli_fetch_assoc($query_cadastros);
     }
 
 
-    $buscar_usuario = "SELECT usuario, permissao FROM usuarios WHERE `usuario`='" . strtolower($inicial) . "';";
+    $buscar_usuario = "SELECT usuario FROM usuarios WHERE `usuario`='" . strtolower($inicial) . "';";
     $query_usuario = mysqli_query($conexao, $buscar_usuario);
 
-    // while ($user_data = mysqli_fetch_assoc($query_usuario)) {
-    //     $permissao = $user_data['permissao'];
-    // }
+    $buscar_permisao = "SELECT permissao FROM usuarios WHERE `usuario`='" . strtolower($inicial) . "';";
+    $query_usuario = mysqli_query($conexao, $buscar_permisao);
+    $row = mysqli_fetch_assoc($query_usuario);
+    $permissao = $row['permissao'];
 
-    if (mysqli_num_rows($query_usuario) == 1) {
+
+    if (mysqli_num_rows($query_usuario) == 1 && $permissao !=3) {
         if ($data["count"] > 0) {
             for ($i = 0; $i < $data["count"]; $i++) {
                 $nomefr = mysqli_real_escape_string($conexao, $data[$i]["givenname"][0]) . " " . mysqli_real_escape_string($conexao, $data[$i]["sn"][0]);
@@ -66,11 +68,17 @@ if (isset($_POST['submit'])) {
             exit;
         }
     } else {
-        $_SESSION = array();
-        $nome = $_SESSION['SesNome'];
-        $result = mysqli_query($conexao, "INSERT INTO usuarios(usuario, nome, statususer) 
-        VALUES ('$inicial', '$nome', 'ativo')");
-        exit;
+        $buscar_login = "SELECT * FROM usuarios WHERE usuario = '" . $_SESSION['SesID'] . "'; ";
+        if(mysqli_num_rows($query_usuario) == 1) {
+            header('Location: index.php?m=erroPermissao');
+            exit;
+        } else {
+            $_SESSION = array();
+            $nome = $_SESSION['SesNome'];
+            $result = mysqli_query($conexao, "INSERT INTO usuarios(usuario, nome, statususer) VALUES ('$inicial', '$nome', 'ativo')");
+            header('Location: index.php?m=erroPermissao');
+            exit;
+        }
     }
     
 }
@@ -174,6 +182,24 @@ if (isset($_POST['submit'])) {
                 background: "#104EEF",
                 iconColor: '#ffffff'
             });
+        } else if (num == 4) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "error",
+                title: "Você não tem permissão para acessar esse sistema!",
+                background: "#104EEF",
+                iconColor: '#ffffff'
+            });
         }
     }
 
@@ -194,6 +220,10 @@ if (isset($_POST['submit'])) {
             }, 1100);
         } else if (data == 'faltaLogar') {
             alert(3);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'http://localhost/index.php');
+        } else if (data == 'erroPermissao') {
+            alert(4);
             window.history.replaceState({}, document.title, window.location.pathname);
             history.pushState({}, '', 'http://localhost/index.php');
         }

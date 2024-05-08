@@ -182,7 +182,6 @@ $result = $conexao->query($sql) or die($mysqli->error);
         var url_string = window.location.href;
         var url = new URL(url_string);
         var data = url.searchParams.get("notificacao");
-        console.log(data);
         if (data == null) {
             return;
         } else if (data == 1) {

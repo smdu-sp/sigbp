@@ -61,7 +61,6 @@ body {
 }
 
 .menu-principal {
-    width: 257px;
     padding: 18px;
     display: flex;
     flex-direction: column;
@@ -139,11 +138,11 @@ body {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    width: 183px;
+    width: 92%;
     padding: 16px;
     border: 1px solid #DDDFE2;
     border-radius: 8px;
-    margin-left: 17px;
+    margin: 0 auto;
 }
 
 .nome-usuario{
@@ -154,14 +153,14 @@ body {
 
 
 .email-usuario, 
-.atic, 
-.desenvolvedor {
+.rf-usuario {
     font-size: 12px;
     font-family: 'Lato', sans-serif;
     margin-bottom: 2px;
 }
 
 .email-usuario {
+    padding: 0px 4px;
     margin-bottom: 5px;
 }
 
@@ -169,25 +168,6 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-}
-
-.atic {
-    border: 1px solid #DDDFE2;
-    background-color: transparent;
-    border-radius: 15px;
-    padding: 0px 6px;
-    margin-right: 2px;
-}
-
-
-.desenvolvedor {
-    background-color:#CDDAFC;
-    border-radius: 15px;
-    padding: 2px 5px;
-}
-
-.itemAdicionado {
-    border: 1px solid #DDDFE2;
 }
 
 .menu-button {
@@ -206,11 +186,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.seta-voltar {
-    width: 40px;
-    height: 40px;
 }
 
 #tooltip {
@@ -380,8 +355,12 @@ hr {
     width: 16px;
 }
 
+.btn-CadUsuario {
+    border-radius: 0px 5px 5px 0px;
+}
+
 #cdusuario {
-    margin-left: 12px;
+    width: 100%;
 }
 
 .list-group-item-action:hover{
@@ -477,7 +456,7 @@ hr {
     .menu-principal {
         position: fixed;
         top: 0;
-        left: -187px;
+        left: -190px;
         z-index: 9 !important;
         transition: all 0.5s ease;
     }
@@ -495,4 +474,34 @@ hr {
         cursor: pointer;
     }
 
+    .lista-itens,
+    #textBusca {
+        width: 100%;
+    }
+
+    .container-msg-logout {
+        width: 300px;
+        margin-right: 5000px;
+    }
+}
+
+@media (max-width: 1000px) { 
+    .lista-itens,
+    #textBusca {
+        width: 80%;
+    }
+}
+
+@media (max-width: 770px) { 
+    .lista-itens,
+    #textBusca {
+        width: 57%;
+    }
+}
+
+@media (max-width: 1000px) { 
+    .lista-itens,
+    #textBusca {
+        width: 80%;
+    }
 }

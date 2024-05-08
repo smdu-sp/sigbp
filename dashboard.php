@@ -3,17 +3,6 @@ session_start();
 include_once('verificacao.php');
 include_once('header.php');
 include_once('./conexoes/config.php');
-
-$login = $_SESSION['SesNome'];
-$buscar_cadastros = "SELECT permissao FROM usuarios WHERE `usuario`='" . strtolower($login) . "';";
-$query_cadastros = mysqli_query($conexao, $buscar_cadastros);
-// print_r($query_cadastros);
-
-if (mysqli_num_rows($query_cadastros) == 1) {
-  header("location: erropermissao.php");
-} else {
-  $resultado = mysqli_fetch_assoc($query_cadastros);
-}
 ?>
 <style>
     ::-webkit-scrollbar {
@@ -49,97 +38,97 @@ if (mysqli_num_rows($query_cadastros) == 1) {
                         <label for="card" class="form-label mt-1 text-primary">Selecione um Item:</label>
                         <input class="form-control mb-2" type="text" id="textBusca" name="inputText">
                         <div class="card lista-itens">
-                        <ul class="list-group list-group-flush overflow-auto" id="ulItens" style="height: 600px;">
+                            <ul class="list-group list-group-flush overflow-auto" id="ulItens" style="height: 600px;">
                                 <?php
-                                    
-                                    $itens = array(
-                                        "AMPLIFICADOR",
-                                        "ANTENA PARABÓLICA",
-                                        "ANTENA WIRELESS",
-                                        "AP TELEFONICO DIGITAL",
-                                        "APARELHO FAX",
-                                        "AR CONDICIONADO",
-                                        "ARMARIO",
-                                        "ARQUIVO DESLIZANTE",
-                                        "BALCAO",
-                                        "BATERIA",
-                                        "CADEIRA",
-                                        "CAIXA ACÚSTICA",
-                                        "CAIXAS DE SOM",
-                                        "CALCULADORA",
-                                        "CARRINHO PARA SUPERMERCADO",
-                                        "COMPRESSOR DE ÁUDIO COM DOIS CANAIS",
-                                        "COMPUTADOR",
-                                        "CONTROLADOR",
-                                        "CPU",
-                                        "DESKTOP SWITCH",
-                                        "ENCADERNADORA",
-                                        "ESCADA DE ALUMÍNIO",
-                                        "ESMERILHADEIRA",
-                                        "ESTABILIZADOR",
-                                        "ESTAÇÃO DE TRABALHO",
-                                        "ESTANTE",
-                                        "FRAGMENTADORA DE PAPEL",
-                                        "FREEZER",
-                                        "FURADEIRA",
-                                        "GAVETEIRO",
-                                        "GPS",
-                                        "GUILHOTINA DE ESCRITÓRIO",
-                                        "HARD DISK",
-                                        "HD EXTERNO",
-                                        "HORODATADOR PROTOCOLADOR",
-                                        "IMPRESSORA",
-                                        "LIXADEIRA DE CINTA",
-                                        "LONGARINA",
-                                        "MAPA",
-                                        "MAQUINA FOTOGRAFICA/ CÂMERA DIGITAL",
-                                        "MARTELETE ROMPEDOR",
-                                        "MEDIDOR DE DISTÂNCIA",
-                                        "MEDUSA",
-                                        "MESA",
-                                        "MESA DE SOM",
-                                        "MICROCOMPUTADOR",
-                                        "MICROFONES",
-                                        "MICRO-ONDAS",
-                                        "MINIGRAVADOR DIGITAL",
-                                        "MONITOR",
-                                        "MORSA",
-                                        "NOBREAK",
-                                        "NOTEBOOK",
-                                        "PAINEL ELETRÔNICO",
-                                        "PEDESTAL",
-                                        "PERSIANA",
-                                        "PLOTTER",
-                                        "POLTRONA",
-                                        "PROJETOR MULTIMÍDIA(DATA SHOW)",
-                                        "QUADRO DE AVISO",
-                                        "RACK",
-                                        "RELÓGIO",
-                                        "ROTEADOR",
-                                        "SCANNER",
-                                        "SERVIDOR",
-                                        "SOFA",
-                                        "SWITCH",
-                                        "TABLET MARCA SAMSUNG MODELO TAB S8 5G",
-                                        "TELA DE PROJEÇÃO RETRÁTIL",
-                                        "TELEVISOR",
-                                        "TRENA",
-                                        "TV",
-                                        "UNID. DE PROCESSAMENTO",
-                                        "VENTILADOR",
-                                        "WEBCAM FULL HD 1080P",
-                                        "WORKSTATION",
-                                        "OUTROS",
-                                    );
-                                    
-                                    foreach ($itens as $item) {
-                                        echo "<li><a href=\"#\" class=\"list-group-item list-group-item-action\" onclick=\"botaoClicado('$item')\">$item</a></li>";
-                                    }
+
+                                $itens = array(
+                                    "AMPLIFICADOR",
+                                    "ANTENA PARABÓLICA",
+                                    "ANTENA WIRELESS",
+                                    "AP TELEFONICO DIGITAL",
+                                    "APARELHO FAX",
+                                    "AR CONDICIONADO",
+                                    "ARMARIO",
+                                    "ARQUIVO DESLIZANTE",
+                                    "BALCAO",
+                                    "BATERIA",
+                                    "CADEIRA",
+                                    "CAIXA ACÚSTICA",
+                                    "CAIXAS DE SOM",
+                                    "CALCULADORA",
+                                    "CARRINHO PARA SUPERMERCADO",
+                                    "COMPRESSOR DE ÁUDIO COM DOIS CANAIS",
+                                    "COMPUTADOR",
+                                    "CONTROLADOR",
+                                    "CPU",
+                                    "DESKTOP SWITCH",
+                                    "ENCADERNADORA",
+                                    "ESCADA DE ALUMÍNIO",
+                                    "ESMERILHADEIRA",
+                                    "ESTABILIZADOR",
+                                    "ESTAÇÃO DE TRABALHO",
+                                    "ESTANTE",
+                                    "FRAGMENTADORA DE PAPEL",
+                                    "FREEZER",
+                                    "FURADEIRA",
+                                    "GAVETEIRO",
+                                    "GPS",
+                                    "GUILHOTINA DE ESCRITÓRIO",
+                                    "HARD DISK",
+                                    "HD EXTERNO",
+                                    "HORODATADOR PROTOCOLADOR",
+                                    "IMPRESSORA",
+                                    "LIXADEIRA DE CINTA",
+                                    "LONGARINA",
+                                    "MAPA",
+                                    "MAQUINA FOTOGRAFICA/ CÂMERA DIGITAL",
+                                    "MARTELETE ROMPEDOR",
+                                    "MEDIDOR DE DISTÂNCIA",
+                                    "MEDUSA",
+                                    "MESA",
+                                    "MESA DE SOM",
+                                    "MICROCOMPUTADOR",
+                                    "MICROFONES",
+                                    "MICRO-ONDAS",
+                                    "MINIGRAVADOR DIGITAL",
+                                    "MONITOR",
+                                    "MORSA",
+                                    "NOBREAK",
+                                    "NOTEBOOK",
+                                    "PAINEL ELETRÔNICO",
+                                    "PEDESTAL",
+                                    "PERSIANA",
+                                    "PLOTTER",
+                                    "POLTRONA",
+                                    "PROJETOR MULTIMÍDIA(DATA SHOW)",
+                                    "QUADRO DE AVISO",
+                                    "RACK",
+                                    "RELÓGIO",
+                                    "ROTEADOR",
+                                    "SCANNER",
+                                    "SERVIDOR",
+                                    "SOFA",
+                                    "SWITCH",
+                                    "TABLET MARCA SAMSUNG MODELO TAB S8 5G",
+                                    "TELA DE PROJEÇÃO RETRÁTIL",
+                                    "TELEVISOR",
+                                    "TRENA",
+                                    "TV",
+                                    "UNID. DE PROCESSAMENTO",
+                                    "VENTILADOR",
+                                    "WEBCAM FULL HD 1080P",
+                                    "WORKSTATION",
+                                    "OUTROS",
+                                );
+
+                                foreach ($itens as $item) {
+                                    echo "<li><a href=\"#\" class=\"list-group-item list-group-item-action\" onclick=\"botaoClicado('$item')\">$item</a></li>";
+                                }
                                 ?>
                             </ul>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-end mr-3 mt-1">
+                    <div class="d-flex justify-content-end mr-3 mt-1" id="bnt ">
                         <button type="submit" class="btn btn-primary mb-2" id="btn" disabled>Verificar Item</button>
                     </div>
                 </form>
@@ -168,7 +157,7 @@ if (mysqli_num_rows($query_cadastros) == 1) {
                 if (item.indexOf(filter) > -1) {
                     button.disabled = false;
                     return;
-                } 
+                }
             }
             button.disabled = true;
         }
@@ -177,6 +166,5 @@ if (mysqli_num_rows($query_cadastros) == 1) {
             document.getElementById('textBusca').value = item;
             filterList();
         }
-
     </script>
 </body>

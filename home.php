@@ -4,11 +4,7 @@ include_once('conexoes/config.php');
 include_once('header.php');
 include_once('verificacao.php');
 
-$permissao = $_SESSION['Perm'];
-print_r($permissao);
-if ($permissao == 2) {
-  header("location: erropermissao.php");
-}
+
 
 $sql = "SELECT item.patrimonio, item.tipo, item.marca, item.modelo, item.nome, transferencia.cimbpm, transferencia.localnovo, transferencia.servidoratual, transferencia.usuario, transferencia.datatransf FROM item, transferencia WHERE item.idbem = transferencia.iditem ORDER BY transferencia.datatransf DESC";
 $result = mysqli_query($conexao, $sql);
@@ -49,12 +45,6 @@ $result = mysqli_query($conexao, $sql);
 
     .carrossel-text:hover {
         text-decoration: none;
-    }
-
-    @media (max-width: 1850px) {
-        .overflow{
-            overflow-x: auto;
-        }
     }
 
     @media (max-width: 1600px) {

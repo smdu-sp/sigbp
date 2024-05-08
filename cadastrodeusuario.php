@@ -3,6 +3,7 @@
 use LDAP\Result;
 
 session_start();
+
 include_once('verificacao.php');
 include_once('./conexoes/config.php');
 include_once('header.php');
@@ -10,6 +11,7 @@ include_once('header.php');
 $usuario = '';
 $nomefr = '';
 $emailfr = '';
+$permissaoCad = '';
 
 if (isset($_GET['usuario'])) {
     $usuario = $_GET['usuario'];
@@ -19,14 +21,13 @@ if (isset($_GET['usuario'])) {
     $row = mysqli_fetch_assoc($resultado);
     $total = $row['COUNT(*)'];
 
-    if ($total == 0) {
+    if ($total == 1) {
         include_once('env.php');
         $search = "samaccountname=" . $usuario;
 
         $ds = ldap_connect($server);
         ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
         $r = ldap_bind($ds, $user, $psw);
-
         $sr = ldap_search($ds, $dn, $search);
         $data = ldap_get_entries($ds, $sr);
 
@@ -34,58 +35,42 @@ if (isset($_GET['usuario'])) {
             $nomefr = $data[$i]["givenname"][0] . " " . $data[$i]["sn"][0];
             $emailfr = strtolower($data[$i]["mail"][0]);
         }
-    } else {
-        if ($total == 1) {
-            if(!empty($_GET['usuario'])) {
-                include_once('./conexoes/config.php');
-        
-                $usuario = $_GET['usuario'];
-        
-                $sqlSelect = "SELECT * FROM usuarios WHERE usuario = $usuario";
-        
-                $result = $conexao->query($sqlSelect);
-        
-                if($result->num_rows > 0) {
-                    while($user_data = mysqli_fetch_assoc($result)) {
-                        $usuario = $user_data['usuario'];
-                        $nome = $user_data['nome'];
-                        $permissao = $user_data['permissao'];
-                        $statususer = $user_data['statususer'];
-                    }
-                } else {
-                    header('Location: cadastrodeusuario.php');
-                }
-        
-            }
-        }
-        //     $user_data = $result->fetch_assoc();
 
-        //     $id = $user_data['id'];
-
-        //     while($user_data = mysqli_fetch_assoc($result)) {
-        //         $nome = $user_data['nome'];
-        //         $permissao = $user_data['permissao'];
-        //         $statususer = $user_data['statususer'];
-        //     }
-
-        //     $sqlUpdate = "UPDATE usuarios SET nome='$nome', permissao='$permissao', statususer='$statususer' WHERE id='$id'";
-        //     $conexao->query($sqlUpdate);
-
-        // } else {
-        //     echo "Nenhum usuário encontrado com o nome de usuário '$usuario'.";
-        // }
-    }
+        $buscar_permisao = "SELECT permissao FROM usuarios WHERE `usuario`='" . strtolower($usuario) . "';";
+        $query_usuario = mysqli_query($conexao, $buscar_permisao);
+        $row = mysqli_fetch_assoc($query_usuario);
+        $permissaoCad = $row['permissao'];
+    } 
 }
 
+
 if (isset($_POST['submit'])) {
-    $usuario = $_POST['loginRede'];
-    $name = $_POST['nome'];
-    $permissao = $_POST['permissao'];
-    $status = $_POST['status'];
-
-    $result = mysqli_query($conexao, "INSERT INTO usuarios(usuario, nome, permissao, statususer) VALUES ('$usuario', '$nome', '$permissao', '$status')");
-
-    header('Location: cadastrodeusuario.php?notificacao=true');
+    $usuario = $_GET['usuario'];
+    $query = "SELECT COUNT(*) FROM usuarios WHERE usuario = '$usuario'";
+    $conexao = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+    $resultado = mysqli_query($conexao, $query);
+    $row = mysqli_fetch_assoc($resultado);
+    $total = $row['COUNT(*)'];
+    if($total == 0) {
+        $usuario = $_POST['loginRede'];
+        $nome = $_POST['nome'];
+        $permissao = $_POST['permissao'];
+        $status = $_POST['status'];
+    
+        $result = mysqli_query($conexao, "INSERT INTO usuarios(usuario, nome, permissao, statususer) VALUES ('$usuario', '$nome', '$permissao', '$status')");
+    
+        header('Location: cadastrodeusuario.php?notificacao=true');
+    } else {
+        $usuario = $_POST['loginRede'];
+        $nome = $_POST['nome'];
+        $permissao = $_POST['permissao'];
+        $status = $_POST['status'];
+    
+        $query = "UPDATE usuarios SET nome='$nome', permissao='$permissao', statususer='$status' WHERE usuario='$usuario'";
+        $result = mysqli_query($conexao, $query);
+    
+        header('Location: cadastrodeusuario.php?notificacao=alterado');
+    }
 }
 ?>
 <style>
@@ -109,35 +94,37 @@ if (isset($_POST['submit'])) {
         <h3 class="mb-4 mt-4">Cadastro de Usuários</h3>
         <form method="POST" action="#">
             <div class="row">
-                <div class="col-md-13 mb-1">
+                <div class="col-md-12 mb-1">
                     <label for="usuarioCadastro" class="form-label text-muted">Login de rede</label>
-                    <div class="input-group mb-3">
+                    <div class="input-group">
                         <input value="<?php echo $usuario; ?>" type="text" name="loginRede" class="form-control" id="inputCadUsuario" placeholder="Buscar por login de rede" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary" name="buscar" id="btn-CadUsuario" type="button" onclick="buscarUsuario()">Buscar</button>
                         </div>
+                        <hr id="cdusuario">
                     </div>
                 </div>
-                <hr id="cdusuario" style="width: 97%;" class="mb-2">
-                <div class="col-md-13 mb-1">
-                    <div class="mb-3">
+                <div class="col-md-12 mb-1">
+                    <div>
                         <label for="exampleFormControlInput1" class="form-label text-muted">Nome</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="Nome" name="nome" value="<?php echo $total ? $nomefr : $name ?>" required>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="Nome" name="nome" value="<?php echo $nomefr ?>" required>
+                        <hr id="cdusuario">
                     </div>
                 </div>
-                <hr id="cdusuario" style="width: 97%;" class="mb-2">
-                <div class="col-md-12 mb-3">
+                <div class="col-md-12 mb-1">
                     <label for="usuarioCadastro" class="form-label text-muted">Permissão</label>
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-cracha.png" alt="" class="imgCadastro"></div>
                         <select class="form-select" aria-label="Filter select" name="permissao" required>
-                            <option value="1">true</option>
-                            <option value="2">false</option>
+                            <option value="" hidden="hidden">Selecionar</option>
+                            <option value="2" <?php if ($permissaoCad == 2) echo 'selected' ?>>Usuário</option>
+                            <option value="1" <?php if ($permissaoCad == 1) echo 'selected' ?>>Administrador</option>
+                            <option value="3" <?php if ($permissaoCad == 3) echo 'selected' ?>>Sem permissão</option>
                         </select>
+                        <hr id="cdusuario">
                     </div>
                 </div>
-                <hr id="cdusuario" style="width: 97%;" class="mb-2">
-                <div class="col-md-12 mb-3">
+                <div class="col-md-12 mb-1">
                     <label for="usuarioCadastro" class="form-label text-muted">Unidade</label>
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/unidades.png" alt="" class="imgCadastro"></div>
@@ -192,25 +179,21 @@ if (isset($_POST['submit'])) {
                             <option value="SERVIN/DSIGP">SERVIN/DSIGP</option>
                             <option value="SERVIN/DSIMP">SERVIN/DSIMP</option>
                         </select>
+                        <hr id="cdusuario">
                     </div>
                 </div>
-                <hr id="cdusuario" style="width: 97%;" class="mb-2">
-                <div class="col-md-12 mb-3">
+                <div class="col-md-12 mb-1">
                     <label for="usuarioCadastro" class="form-label text-muted">Status</label>
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-status.png" alt="" class="imgCadastro"></div>
                         <select class="form-select" name="status" required>
                             <option value="" hidden="hidden">Selecionar</option>
                             <option value="Ativo">Ativo</option>
-                            <option value="Baixado">Baixado</option>
-                            <option value="Para Doação">Para Doação</option>
-                            <option value="Ativo">Para Descarte</option>
-                            <option value="Ativo">Doado</option>
-                            <option value="Descartado">Descartado</option>
+                            <option value="Inativo">Inativo</option>
                         </select>
+                        <hr id="cdusuario">
                     </div>
                 </div>
-                <hr id="cdusuario" style="width: 97%;" class="mb-2">
                 <div class="mb-3">
                     <label for="usuarioCadastro" class="form-label text-muted">Email</label>
                     <input type="email" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="name@example.com" name="email" value="<?php echo $emailfr; ?>" required>
@@ -246,7 +229,7 @@ if (isset($_POST['submit'])) {
             });
             Toast.fire({
                 icon: "success",
-                title: "Usuario cadastrado com sucesso!",
+                title: "Usuário cadastrado com sucesso!",
                 background: "green",
             });
         } else if (num == 2) {
@@ -268,6 +251,23 @@ if (isset($_POST['submit'])) {
                 background: "#104EEF",
                 iconColor: "#ffffff"
             });
+        } else if (num == 3) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "Usuário atualizado com sucesso!",
+                background: "green",
+            });
         }
     }
 
@@ -281,6 +281,10 @@ if (isset($_POST['submit'])) {
             history.pushState({}, '', 'http://localhost/cadastrodeusuario.php');
         } else if (data == 'jaCadastrado') {
             toast(2);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'http://localhost/cadastrodeusuario.php');
+        } else if (data == 'alterado') {
+            toast(3);
             window.history.replaceState({}, document.title, window.location.pathname);
             history.pushState({}, '', 'http://localhost/cadastrodeusuario.php');
         }
