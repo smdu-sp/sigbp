@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
         <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
       </a>
       <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-      <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Cadastro de Usuários</a>
+      <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Cadastro de Unidades</a>
     </div>
     <h3 class="mb-4 mt-4">Cadastro de Unidades</h3>
     <form method="POST" action="#">

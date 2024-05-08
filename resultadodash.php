@@ -293,14 +293,19 @@ include_once('header.php');
 
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
-        <div class="carrossel mb-2">
-            <a href="./home.php" class="mb-3 me-1">
-                <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
-            </a>
-            <img src="./images/icon-avancar.png" class="icon-carrossel-avancar" alt="icon-avancar">
-            <a href="./dashboard.php" class="text-muted ms-1 carrossel-text">Dashboard</a>
-            <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
-            <a href="#" class="text-primary ms-1 carrossel-text">Distribuição</a>
+        <div class="carrossel-box mb-2">
+            <div class="carrossel">
+                <a href="./home.php" class="mb-3 me-1">
+                    <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
+                </a>
+                <img src="./images/icon-avancar.png" class="icon-carrossel-avancar" alt="icon-avancar">
+                <a href="./dashboard.php" class="text-muted ms-1 carrossel-text">Dashboard</a>
+                <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
+                <a href="#" class="text-primary ms-1 carrossel-text">Distribuição</a>
+            </div>
+            <div class="button-dark">
+                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
+            </div>
         </div>
         <div class="container d-flex justify-content-center ">
             <div class="card mb-3 me-3 rounded-0 shadow p-3 mb-5 bg-white rounded border-0">

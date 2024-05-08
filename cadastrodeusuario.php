@@ -73,23 +73,23 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
-<style>
-    .swal2-title {
-        color: #fff;
-    }
-</style>
 
 <body>
     <?php
     include_once('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
-        <div class="carrossel mb-2">
-            <a href="./home.php" class="mb-3 me-1">
-                <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
-            </a>
-            <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-            <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Cadastro de Usuários</a>
+        <div class="carrossel-box mb-2">
+            <div class="carrossel">
+                <a href="./home.php" class="mb-3 me-1">
+                    <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
+                </a>
+                <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
+                <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Cadastro de Usuários</a>
+            </div>
+            <div class="button-dark">
+                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
+            </div>
         </div>
         <h3 class="mb-4 mt-4">Cadastro de Usuários</h3>
         <form method="POST" action="#">

@@ -29,12 +29,17 @@ if (isset($_POST['submit'])) {
     include_once('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
-        <div class="carrossel mb-2">
-            <a href="./home.php" class="mb-3 me-1">
-                <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
-            </a>
-            <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-            <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Cadastro de bens</a>
+        <div class="carrossel-box mb-2">
+            <div class="carrossel">
+                <a href="./home.php" class="mb-3 me-1">
+                    <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
+                </a>
+                <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
+                <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Cadastro de bens</a>
+            </div>
+            <div class="button-dark">
+                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
+            </div>
         </div>
         <h3 class="mb-3 mt-4">Cadastro de bens</h3>
         <hr class="mb-4">

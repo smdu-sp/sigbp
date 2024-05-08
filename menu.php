@@ -23,17 +23,17 @@ $permissao = $_SESSION['Perm'];
             <div class="menu-paginas">
                 <p class="title-menu">Menu</p>
                 <a href="./home.php" value="home" id="botao1" class="btn-menu botoes"><img id="icon-casa" src="./images/icon-casa.png" alt="Icon Casa">Home</a>
-                <a href="./cadastrarbens.php" value="cadastrarbens" id="botao2" class="btn-menu botoes"><img id="icon-computador" src="./images/icon-computador.png" alt="Icon Computador">Cadastro de Bens</a>
                 <a href="./termo.php" value="termo" id="botao3" class="btn-menu botoes mb-2"><img id="icon-termo" src="./images/icon-termo.png" alt="Icon Ferramentas">Termo Entrega/Retirada</a>
-
+                <a href="./dashboard.php" value="dashboard" id="botao7" class="btn-menu botoes"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">Dashboard</a>
+                
                 <div class="centralizar-linha admin">
                     <hr style="opacity: 0.7; border: 0.1px solid #DDDFE2; margin-right: 12px">
                 </div>
                 <p class="title-menu admin">Administração</p>
+                <a href="./cadastrarbens.php" value="cadastrarbens" id="botao2" class="btn-menu botoes admin"><img id="icon-computador" src="./images/icon-computador.png" alt="Icon Computador">Cadastro de Bens</a>
                 <a href="./listaremovimentar.php" value="listaremovimentar" id="botao4" class="btn-menu botoes admin"><img id="icon-lista" src="./images/icon-lista.png" alt="Icon Lista">Listar/Movimentar Bens</a>
                 <a href="./cadastrodeusuario.php" value="cadastrodeusuario" id="botao5" class="btn-menu botoes admin"><img id="icon-usuario" src="./images/usuario.png" alt="Icon Usuario">Cadastro de Usuários</a>
                 <a href="./unidades.php" value="unidades" id="botao6" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/unidades.png" alt="Icon Usuario">Unidades</a>
-                <a href="./dashboard.php" value="dashboard" id="botao7" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">Dashboard</a>
 
             </div>
             <div class="info-usuario">

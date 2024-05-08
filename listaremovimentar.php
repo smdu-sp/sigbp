@@ -7,92 +7,22 @@ include_once('./conexoes/config.php');
 $sql = "SELECT * FROM item ORDER BY idbem ASC";
 $result = $conexao->query($sql) or die($mysqli->error);
 ?>
-<style>
-    .conteudo {
-        margin-left: 340px;
-        flex-wrap: wrap;
-        width: 81%;
-        height: 90%;
-    }
-
-    .icon-carrossel {
-        width: 18px;
-    }
-
-    .icon-carrossel-i {
-        width: 16px;
-    }
-
-    .carrossel>a {
-        font-size: 15px;
-    }
-
-    .carrossel>a:hover {
-        text-decoration: none;
-    }
-
-    .carrossel {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-
-    .carrossel-text {
-        text-decoration: none;
-    }
-
-    .carrossel-text:hover {
-        text-decoration: none;
-    }
-
-    @media (max-width: 1850px) {
-        .overflow{
-            overflow-x: auto;
-        }
-    }
-
-    @media (max-width: 1600px) {
-        .conteudo {
-            margin-left: 75px;
-            width: 90%;
-        }
-
-        .menu-principal {
-            position: fixed;
-            top: 0;
-            left: -187px;
-            z-index: 999999 !important;
-            transition: all .5s ease;
-        }
-
-
-        .menu-logout {
-            z-index: 1000000 !important;
-        }
-
-        .aparecer {
-            left: 70px !important;
-        }
-
-
-        .menu-button {
-            display: block;
-            cursor: pointer;
-        }
-    }
-</style>
-
 <body>
     <?php
     include_once('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo overflow">
-        <div class="carrossel mb-4">
-            <a href="./home.php" class="mb-3 me-1">
-                <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
-            </a>
-            <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-            <a href="./termo.php" class="text-primary ms-1 carrossel-text">Listar/Movimentar Bens</a>
+        <div class="carrossel-box mb-4">
+            <div class="carrossel">
+                <a href="./home.php" class="mb-3 me-1">
+                    <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
+                </a>
+                <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
+                <a href="./termo.php" class="text-primary ms-1 carrossel-text">Listar/Movimentar Bens</a>
+            </div>
+            <div class="button-dark">
+                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
+            </div>
         </div>
         <div class="conteudo conteudo-table ml-1 mt-4 table-container" style="width: 1500px;">
             <table id="example" class="display table" style="width: 100%;">

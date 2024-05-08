@@ -53,57 +53,24 @@ if (isset($_POST['submit'])) {
     header('Location: listaremovimentar.php?notificacao=1');
 }
 ?>
-<style>
-    .icon-carrossel {
-        width: 18px;
-    }
-
-    .icon-carrossel-avancar {
-        width: 16px;
-    }
-
-    .carrossel>a {
-        font-family: 'Roboto', sans-serif;
-        font-size: 13px;
-    }
-
-    .carrossel-link {
-        text-decoration: none;
-    }
-
-    .carrossel {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-
-    .carrossel-text {
-        text-decoration: none;
-    }
-
-    .carrossel-text:hover {
-        text-decoration: none;
-    }
-
-    hr {
-        opacity: 0.7;
-        border: 0.1px solid #DDDFE2;
-    }
-</style>
-
 <body>
     <?php
     include_once('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
-        <div class="carrossel mb-2">
-            <a href="./home.php" class="mb-3 me-1">
-                <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
-            </a>
-            <img src="./images/icon-avancar.png" class="icon-carrossel-avancar" alt="icon-avancar">
-            <a href="./listaremovimentar.php" class="text-muted ms-1 carrossel-text">Listar/Movimentar Bens</a>
-            <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
-            <a href="./movimentacao.php" class="text-primary ms-1 carrossel-text">Movimentação</a>
+        <div class="carrossel-box mb-2">
+            <div class="carrossel">
+                <a href="./home.php" class="mb-3 me-1">
+                    <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
+                </a>
+                <img src="./images/icon-avancar.png" class="icon-carrossel-avancar" alt="icon-avancar">
+                <a href="./listaremovimentar.php" class="text-muted ms-1 carrossel-text">Listar/Movimentar Bens</a>
+                <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
+                <a href="./movimentacao.php" class="text-primary ms-1 carrossel-text">Movimentação</a>
+            </div>
+            <div class="button-dark">
+                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
+            </div>
         </div>
         <div class="mb-1 mt-1">
             <h4 class="mb-3">Movimentação</h4>

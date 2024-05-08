@@ -4,32 +4,22 @@ include_once('verificacao.php');
 include_once('header.php');
 include_once('./conexoes/config.php');
 ?>
-<style>
-    ::-webkit-scrollbar {
-        width: 10px;
-    }
-
-    ::-webkit-scrollbar-track {
-        background-color: #F8F8F8;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: #a8a8a8;
-        border-radius: 5px;
-    }
-</style>
-
 <body>
     <?php
     include_once('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
-        <div class="carrossel mb-2">
-            <a href="./home.php" class="mb-3 me-1">
-                <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
-            </a></li>
-            <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-            <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Dashboard</a></li>
+        <div class="carrossel-box mb-2">
+            <div class="carrossel">
+                <a href="./home.php" class="mb-3 me-1">
+                    <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
+                </a></li>
+                <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
+                <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Dashboard</a></li>
+            </div>
+            <div class="button-dark">
+                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
+            </div>
         </div>
         <div class="container d-flex justify-content-center">
             <div class="card mb-3 me-3 rounded-0 shadow p-3 mb-5 bg-white rounded border-0">

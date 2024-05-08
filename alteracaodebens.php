@@ -3,50 +3,53 @@ session_start();
 include_once('verificacao.php');
 include_once('header.php');
 
-    if(!empty($_GET['id'])) {
-        include_once('./conexoes/config.php');
+if (!empty($_GET['id'])) {
+    include_once('./conexoes/config.php');
 
-        $id = $_GET['id'];
+    $id = $_GET['id'];
 
-        $sqlSelect = "SELECT * FROM item WHERE idbem=$id";
+    $sqlSelect = "SELECT * FROM item WHERE idbem=$id";
 
-        $result = $conexao->query($sqlSelect);
+    $result = $conexao->query($sqlSelect);
 
-        if($result->num_rows > 0) {
-            while($user_data = mysqli_fetch_assoc($result)) {
-                $id = $user_data['idbem'];
-                $patrimonio = $user_data['patrimonio'];
-                $name = $user_data['nome'];
-                $marca = $user_data['marca']; 
-                $tipo = $user_data['tipo'];
-                $descsbpm = $user_data['descsbpm']; 
-                $modelo = $user_data['modelo'];
-                $numserie = $user_data['numserie'];
-                $localizacao = $user_data['localizacao'];
-                $servidor = $user_data['servidor'];
-                $numprocesso = $user_data['numprocesso'];
-                $cimbpm = $user_data['cimbpm'];
-                $statusitem = $user_data['statusitem'];
-            }
-        } else {
-            header('Location: listaremovimentar.php');
+    if ($result->num_rows > 0) {
+        while ($user_data = mysqli_fetch_assoc($result)) {
+            $id = $user_data['idbem'];
+            $patrimonio = $user_data['patrimonio'];
+            $name = $user_data['nome'];
+            $marca = $user_data['marca'];
+            $tipo = $user_data['tipo'];
+            $descsbpm = $user_data['descsbpm'];
+            $modelo = $user_data['modelo'];
+            $numserie = $user_data['numserie'];
+            $localizacao = $user_data['localizacao'];
+            $servidor = $user_data['servidor'];
+            $numprocesso = $user_data['numprocesso'];
+            $cimbpm = $user_data['cimbpm'];
+            $statusitem = $user_data['statusitem'];
         }
-
+    } else {
+        header('Location: listaremovimentar.php');
     }
+}
 ?>
+
 <body>
     <?php
     include_once('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
-        <div class="carrossel mb-2">
-            <a href="./home.php" class="mb-3 me-1">
-                <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
-            </a>
-            <img src="./images/icon-avancar.png" class="icon-carrossel-avancar" alt="icon-avancar">
-            <a href="./listaremovimentar.php" class="text-muted ms-1 carrossel-text">Listar/Movimentar Bens</a>
-            <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
-            <a href="./alteracaodebens.php" class="text-primary ms-1 carrossel-text">Alteração de bens</a>
+        <div class="carrossel-box mb-2">
+            <div class="carrossel-box">
+                <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
+                <img src="./images/icon-avancar.png" class="icon-carrossel-avancar" alt="icon-avancar">
+                <a href="./listaremovimentar.php" class="text-muted ms-1 carrossel-text">Listar/Movimentar Bens</a>
+                <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
+                <a href="./alteracaodebens.php" class="text-primary ms-1 carrossel-text">Alteração de bens</a>
+            </div>
+            <div class="button-dark">
+                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
+            </div>
         </div>
         <h3 class="mb-3">Alteração de bens</h3>
         <hr class="mb-4 w">
