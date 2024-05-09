@@ -3,10 +3,20 @@
 use LDAP\Result;
 
 session_start();
+include_once('./conexoes/config.php');
+
+$buscar_permisao = "SELECT permissao FROM usuarios WHERE `usuario`='" . strtolower($_SESSION['SesID']) . "';";
+$query_usuario = mysqli_query($conexao, $buscar_permisao);
+$row = mysqli_fetch_assoc($query_usuario);
+$permissao = $row['permissao'];
+if ($permissao != 1) {
+    header('Location: home.php');
+}
 
 include_once('verificacao.php');
-include_once('./conexoes/config.php');
 include_once('header.php');
+
+
 
 $usuario = '';
 $nomefr = '';
@@ -73,7 +83,11 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
-
+<style>
+    .swal2-title {
+        color: #fff;
+    }
+</style>
 <body>
     <?php
     include_once('menu.php');
@@ -278,15 +292,15 @@ if (isset($_POST['submit'])) {
         if (data == 'true') {
             toast(1);
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'http://localhost/cadastrodeusuario.php');
+            history.pushState({}, '', 'cadastrodeusuario.php');
         } else if (data == 'jaCadastrado') {
             toast(2);
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'http://localhost/cadastrodeusuario.php');
+            history.pushState({}, '', 'cadastrodeusuario.php');
         } else if (data == 'alterado') {
             toast(3);
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'http://localhost/cadastrodeusuario.php');
+            history.pushState({}, '', 'cadastrodeusuario.php');
         }
     })
 </script>

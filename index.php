@@ -95,6 +95,11 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="./css/login.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+<style>
+    .swal2-title {
+    color: #fff;
+}
+</style>
 <body>
     <div id="modal">
         <main class="container">
@@ -204,22 +209,22 @@ if (isset($_POST['submit'])) {
         if (data == 'erro') {
             alert(1);
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'http://localhost/index.php');
+            history.pushState({}, '', 'index.php');
         } else if (data == 'entrou') {
             alert(2);
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'http://localhost/home.php');
+            history.pushState({}, '', 'home.php');
             setInterval(function() {
                 window.location.href = 'home.php';
             }, 1100);
         } else if (data == 'faltaLogar') {
             alert(3);
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'http://localhost/index.php');
+            history.pushState({}, '', 'index.php');
         } else if (data == 'erroPermissao') {
             alert(4);
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'http://localhost/index.php');
+            history.pushState({}, '', 'index.php');
         }
     })
 </script>

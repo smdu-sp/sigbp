@@ -2,6 +2,16 @@
 session_start();
 include_once('verificacao.php');
 include_once('header.php');
+include_once('./conexoes/config.php');
+
+$buscar_permisao = "SELECT permissao FROM usuarios WHERE `usuario`='" . strtolower($_SESSION['SesID']) . "';";
+$query_usuario = mysqli_query($conexao, $buscar_permisao);
+$row = mysqli_fetch_assoc($query_usuario);
+$permissao = $row['permissao'];
+if ($permissao != 1) {
+    header('Location: home.php');
+}
+
 
 if (!empty($_GET['id'])) {
     include_once('./conexoes/config.php');
@@ -57,7 +67,7 @@ if (isset($_POST['submit'])) {
     <?php
     include_once('menu.php');
     ?>
-    <div class="p-4 p-md-4 pt-3 conteudo">
+    <div class="p-md-4 pt-3 conteudo" style="margin-left:310px">
         <div class="carrossel-box mb-2">
             <div class="carrossel">
                 <a href="./home.php" class="mb-3 me-1">
@@ -74,9 +84,8 @@ if (isset($_POST['submit'])) {
         </div>
         <div class="mb-1 mt-1">
             <h4 class="mb-3">Movimentação</h4>
-
         </div>
-        <hr class="mb-4 w">
+        <hr class="mb-4">
         <h5 class="mb-3">Dados do Item</h4>
             <form method="POST">
                 <div class="row">

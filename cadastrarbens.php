@@ -4,6 +4,15 @@ include_once('./conexoes/config.php');
 include_once('header.php');
 include_once('verificacao.php');
 
+$buscar_permisao = "SELECT permissao FROM usuarios WHERE `usuario`='" . strtolower($_SESSION['SesID']) . "';";
+$query_usuario = mysqli_query($conexao, $buscar_permisao);
+$row = mysqli_fetch_assoc($query_usuario);
+$permissao = $row['permissao'];
+if ($permissao != 1) {
+    header('Location: home.php');
+}
+
+
 if (isset($_POST['submit'])) {
     $patrimonio = $_POST['numPatrimonio'];
     $tipo = $_POST['tipo'];
@@ -24,6 +33,11 @@ if (isset($_POST['submit'])) {
 
 
 ?>
+<style>
+    .swal2-title {
+        color: #fff;
+    }
+</style>
 <body>
     <?php
     include_once('menu.php');
@@ -258,20 +272,25 @@ if (isset($_POST['submit'])) {
 <script>
     function alert() {
         const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
-        });
-        Toast.fire({
-            icon: "success",
-            title: "Item cadastrado com sucesso!"
-        });
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Item cadastrado com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
+            });
     }
     // alert();
     window.addEventListener('load', function() {
@@ -281,7 +300,7 @@ if (isset($_POST['submit'])) {
         if (data == 'true') {
             alert();
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'http://localhost/cadastrarbens.php');
+            history.pushState({}, '', 'cadastrarbens.php');
         }
     })
 </script>

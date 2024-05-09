@@ -1,10 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@400;700&display=swap');
 
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "PT Sans Narrow", sans-serif;;
+}
+
+p, span, th, td {
     font-family: 'Lato', sans-serif;
 }
 
@@ -323,11 +331,11 @@ body {
 }
 
 .icon-carrossel {
-    width: 18px;
+    width: 16px;
 }
 
 .icon-carrossel-i {
-    width: 16px;
+    width: 14px;
 }
 
 hr {
@@ -344,10 +352,21 @@ hr {
     justify-content: space-between;
 }
 
+
 .carrossel{
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.carrossel > a {
+    font-size: 13px;
+    text-decoration: none;
+}
+
+
+.carrossel > a:hover {
+    text-decoration: none;
 }
 
 .icon-sun {

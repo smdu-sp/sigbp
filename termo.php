@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
         <h3 class="mb-3 mt-2">Termo de Entrega/Retirada</h3>
-        <hr class="mb-3 w" style="opacity: 1;">
+        <hr class="mb-3">
         <form method="POST" id="conteudo" action="gerar-pdf.php">
             <div class="row">
                 <div class="col-md-6 mb-2">
@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
             </div>
             <div class="d-flex justify-content-end mr-2"><button type="button" class="btn btn-success mb-3" id="btn-adc-item" name="salvar" onclick="adicionarItem()" disabled>Adicionar Item</button></div>
             <h6 class="mb-2">Entregue em:</h6>
-            <hr class="mb-3" style="opacity: 1;">
+            <hr class="mb-3">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="dataEntregue" class="form-label text-muted">Data da Entrega:</label>
@@ -141,7 +141,7 @@ if (isset($_POST['submit'])) {
                 </div>
             </div>
             <h6 class="mb-2">Recebido em:</h6>
-            <hr class="mb-3 " style="opacity: 1;">
+            <hr class="mb-3">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="dataRecebimento" class="form-label text-muted">Data da Recebimento:</label>

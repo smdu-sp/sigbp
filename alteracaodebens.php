@@ -2,6 +2,16 @@
 session_start();
 include_once('verificacao.php');
 include_once('header.php');
+include_once('./conexoes/config.php');
+
+$buscar_permisao = "SELECT permissao FROM usuarios WHERE `usuario`='" . strtolower($_SESSION['SesID']) . "';";
+$query_usuario = mysqli_query($conexao, $buscar_permisao);
+$row = mysqli_fetch_assoc($query_usuario);
+$permissao = $row['permissao'];
+if ($permissao != 1) {
+    header('Location: home.php');
+}
+
 
 if (!empty($_GET['id'])) {
     include_once('./conexoes/config.php');
@@ -40,7 +50,7 @@ if (!empty($_GET['id'])) {
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel-box mb-2">
-            <div class="carrossel-box">
+            <div class="carrossel">
                 <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-avancar" alt="icon-avancar">
                 <a href="./listaremovimentar.php" class="text-muted ms-1 carrossel-text">Listar/Movimentar Bens</a>
@@ -52,7 +62,7 @@ if (!empty($_GET['id'])) {
             </div>
         </div>
         <h3 class="mb-3">Alteração de bens</h3>
-        <hr class="mb-4 w">
+        <hr class="mb-4">
         <form method="POST" action="salvar-alteracao.php">
             <div class="row">
                 <div class="col-md-6 mb-3">

@@ -1,12 +1,22 @@
-<?php
-session_start();
-include_once('verificacao.php');
-include_once('header.php');
-include_once('./conexoes/config.php');
+4<?php
+    session_start();
+    include_once('verificacao.php');
+    include_once('header.php');
+    include_once('./conexoes/config.php');
 
-$sql = "SELECT * FROM item ORDER BY idbem ASC";
-$result = $conexao->query($sql) or die($mysqli->error);
-?>
+    $buscar_permisao = "SELECT permissao FROM usuarios WHERE `usuario`='" . strtolower($_SESSION['SesID']) . "';";
+    $query_usuario = mysqli_query($conexao, $buscar_permisao);
+    $row = mysqli_fetch_assoc($query_usuario);
+    $permissao = $row['permissao'];
+    if ($permissao != 1) {
+        header('Location: home.php');
+    }
+
+
+    $sql = "SELECT * FROM item ORDER BY idbem ASC";
+    $result = $conexao->query($sql) or die($mysqli->error);
+    ?>
+
 <body>
     <?php
     include_once('menu.php');
@@ -72,57 +82,66 @@ $result = $conexao->query($sql) or die($mysqli->error);
 </body>
 <script>
     function alert(num) {
-        if(num == 1) {
+        if (num == 1) {
             const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
-        });
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
             Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
                 icon: "success",
-                title: "Item movimentado com sucesso!"
+                title: "Item movimentado com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
             });
         } else {
             const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
-        });
-            Toast.fire({
-                icon: "success",
-                title: "Item alterado com sucesso!"
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
             });
-            
+            Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Item alterado com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
+            });
         }
     }
-    // alert();
-    window.addEventListener('load', function() {
-        var url_string = window.location.href;
-        var url = new URL(url_string);
-        var data = url.searchParams.get("notificacao");
-        if (data == null) {
-            return;
-        } else if (data == 1) {
-            alert(1);
-            window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'http://localhost/listaremovimentar.php');
-        } else {
-            alert(2);
-            window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'http://localhost/listaremovimentar.php');
-        }
-    })
+        window.addEventListener('load', function() {
+            var url_string = window.location.href;
+            var url = new URL(url_string);
+            var data = url.searchParams.get("notificacao");
+            if (data == null) {
+                return;
+            } else if (data == 1) {
+                alert(1);
+                window.history.replaceState({}, document.title, window.location.pathname);
+                history.pushState({}, '', 'listaremovimentar.php');
+            } else {
+                alert(2);
+                window.history.replaceState({}, document.title, window.location.pathname);
+                history.pushState({}, '', 'listaremovimentar.php');
+            }
+        })
 </script>
+
 </html>

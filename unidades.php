@@ -4,6 +4,14 @@ include_once ('./conexoes/config.php');
 include_once ('header.php');
 include_once ('env.php');
 
+$buscar_permisao = "SELECT permissao FROM usuarios WHERE `usuario`='" . strtolower($_SESSION['SesID']) . "';";
+$query_usuario = mysqli_query($conexao, $buscar_permisao);
+$row = mysqli_fetch_assoc($query_usuario);
+$permissao = $row['permissao'];
+if ($permissao != 1) {
+    header('Location: home.php');
+}
+
 
 $usuario = '';
 $nomefr = '';
@@ -185,7 +193,7 @@ if (isset($_POST['submit'])) {
     if (data == 'true') {
       toast();
       window.history.replaceState({}, document.title, window.location.pathname);
-      history.pushState({}, '', 'http://localhost/cadastrarbens.php');
+      history.pushState({}, '', 'cadastrarbens.php');
     }
   })
 </script>
