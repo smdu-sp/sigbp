@@ -4,8 +4,8 @@ include_once('conexoes/config.php');
 include_once('header.php');
 include_once('verificacao.php');
 
-$sql = "SELECT item.patrimonio, item.tipo, item.marca, item.modelo, item.nome, transferencia.cimbpm, transferencia.localnovo, transferencia.servidoratual, transferencia.usuario, transferencia.datatransf FROM item, transferencia WHERE item.idbem = transferencia.iditem ORDER BY transferencia.datatransf DESC";
-$result = mysqli_query($conexao, $sql);
+$sql = "SELECT * FROM usuarios ORDER BY id ASC";
+$result = $conexao->query($sql) or die($mysqli->error);
 ?>
 
 <body>
@@ -30,40 +30,63 @@ $result = mysqli_query($conexao, $sql);
                 <p>Buscar:</p>
                 <input class="form-control" id="myInput" type="text" placeholder="Procurar..">
                 <br>
-                <table class="table table-bordered">
+                <table class="table">
                     <thead>
                         <tr>
-                            <th>Primeiro Nome</th>
-                            <th>Sobrenome</th>
-                            <th>Email</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">E-mail</th>
+                            <th scope="col">Usuário</th>
+                            <th scope="col">Unidade</th>
+                            <th scope="col">Permissão</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody id="myTable">
-                        <tr>
-                            <td>João</td>
-                            <td>Ninguém</td>
-                            <td>joao@examplo.com</td>
-                        </tr>
-                        <tr>
-                            <td>Maria</td>
-                            <td>da Silva</td>
-                            <td>maria@mail.com</td>
-                        </tr>
-                        <tr>
-                            <td>Julio</td>
-                            <td>Moscado</td>
-                            <td>julio@grandescaras.com</td>
-                        </tr>
-                        <tr>
-                            <td>Anjelina</td>
-                            <td>Não Jolie</td>
-                            <td>angel@sweet.com</td>
-                        </tr>
+                        <?php
+                        while ($user_data = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";
+                            echo "<td hidden>" . $user_data['id'] . "</td>";
+                            echo "<td>" . $user_data['nome'] . "</td>";
+                            echo "<td>" . $user_data['email'] . "</td>";
+                            echo "<td>" . $user_data['usuario'] . "</td>";
+                            echo "<td>" . $user_data['unidade'] . "</td>";
+                            echo "<td>";
+
+                            if ($user_data['permissao'] == 1) {
+                                echo "<div id='dev'><p class='perm-usuario'>Desenvolvedor</p></div>";
+                            } elseif ($user_data['permissao'] == 2) {
+                                echo "<div id='usuario'><p class='perm-usuario'>Usuário</p></div>";
+                            } else {
+                                echo "<div id='semPermissao'><p class='perm-usuario'>Sem permissão</p></div>";
+                            }
+
+                            echo "</td>";
+
+                            echo "<td>" . "<a href='movimentacao.php?id=$user_data[id]'><img src='./images/icon-seta.png' alt='Seta'></a>"  . "</td>";
+                            echo "</tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
+            <div class="d-flex justify-content-end mt-5 mr-2">
+                <a href="./cadastrodeusuario.php" id="btn-adc-usuario">
+                    <img src="./images/icons-adcUsuario.png" alt="">
+                </a>
+            </div>
         </div>
-        <div class="hide" id="modal"></div>
+    </div>
+    <div class="hide" id="modal"></div>
 </body>
+<script>
+    $(document).ready(function() {
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 
 </html>

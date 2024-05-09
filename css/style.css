@@ -169,7 +169,7 @@ body {
 
 
 .email-usuario, 
-.rf-usuario {
+.rf-usuario{
     font-size: 12px;
     font-family: 'Lato', sans-serif;
     margin-bottom: 2px;
@@ -324,12 +324,72 @@ body {
     border-radius: 50px;
 }
 
+
 .rf > p {
     margin-top: 1px;
     padding: 2px 8px 0px 8px;
     font-size: 12px;
 }
 
+
+.perm-usuario {
+    font-size: 12px;
+    font-family: 'Lato', sans-serif;
+    margin-bottom: 1px;
+}
+
+#dev {
+    background-color: #AFC5FE;
+    font-weight: 500;
+    border-radius: 50px;
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#dev:hover {
+    background-color: #7A9DF6;
+}
+
+
+#usuario {
+    background-color: #FEF0DF;
+    font-weight: 500;
+    border-radius: 50px;
+    width: 75px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+
+}
+
+#usuario:hover {
+    background-color: #FCE1C2;
+}
+
+#semPermissao {
+    background-color: #e2514c83;
+    font-weight: 500;
+    border-radius: 50px;
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+
+}
+
+#semPermissao:hover {
+    background-color: #e2514ce0;
+}
+
+#dev > p,
+#usuario > p,
+#semPermissao > p {
+    margin-top: 1px;
+    padding: 2px 8px 2px 8px;
+    font-size: 14px;
+}
 .icon-carrossel {
     width: 16px;
 }
@@ -494,6 +554,25 @@ hr {
 ::-webkit-scrollbar-thumb {
     background: #a8a8a8;
     border-radius: 5px;
+}
+
+#btn-adc-usuario {
+    background-color: #AFC4FA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 5px;
+}
+
+#btn-adc-usuario:hover {
+    background-color: #7A9DF6;
+}
+
+#btn-adc-usuario > img {
+    width: 24px;
+    height: 24px;
 }
 
 @media (max-width: 1600px) {
