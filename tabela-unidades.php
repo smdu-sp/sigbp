@@ -6,6 +6,7 @@ include_once('./conexoes/config.php');
 
 $sql = "SELECT * FROM unidades ORDER BY id ASC";
 $result = $conexao->query($sql) or die($mysqli->error);
+
 ?>
 <style>
     .table-container{
@@ -84,6 +85,12 @@ $result = $conexao->query($sql) or die($mysqli->error);
             cursor: pointer;
         }
     }
+    .form-select{
+        width:40%;
+        display: flex;
+        align-items: left;
+
+    }
 </style>
 
 <body>
@@ -98,12 +105,14 @@ $result = $conexao->query($sql) or die($mysqli->error);
             <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
             <a href="./termo.php" class="text-primary ms-1 carrossel-text">Listar/Movimentar Bens</a>
         </div>
-        <select class="form-select" aria-label="Default select example">
+   
+        <div class="conteudo ml-1 mt-4 table-container">
+        <select class="form-select" aria-label="Default select example"display= flex;
+        align-items="left" ;>
                 <option selected>Open this select menu</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
             </select>
-        <div class="conteudo ml-1 mt-4 table-container">
             <table id="example" class="display table" style="width: 1400px;">
                 <thead class="table-primary">
                     <tr>
@@ -117,15 +126,16 @@ $result = $conexao->query($sql) or die($mysqli->error);
                     <?php
                     while ($user_data = mysqli_fetch_assoc($result)) {
                         
-                        echo "<tr onclick=location.href='unidades.php?id=$user_data[id]' style=' cursor: pointer; background-color:hover: grey;'>";
-                        echo "<td>" . $user_data['unidades'] . "</td>";
-                        echo "<td>" . $user_data['sigla'] . "</td>";
-                        echo "<td>" . $user_data['codigo'] . "</td>";
+                        echo "<tr >";
+                        echo "<td style=' cursor: pointer; background-color:hover: grey;' onclick=location.href='unidades.php?id=$user_data[id]'>" . $user_data['unidades'] . "</td>";
+                        echo "<td style=' cursor: pointer; background-color:hover: grey;' onclick=location.href='unidades.php?id=$user_data[id]'>" . $user_data['sigla'] . "</td>";
+                        echo "<td style=' cursor: pointer; background-color:hover: grey;' onclick=location.href='unidades.php?id=$user_data[id]'>" . $user_data['codigo'] . "</td>";
                         $tipostatus = [
                             'Ativo',
                             'Inativo'
                         ];
-                        echo "<td>" . $tipostatus[$user_data['statusunidade']] . "</td>";
+                        include_once('interruptor.php');
+                        // echo "<td style='color: red; font-weight: bold; text-align: right'>" . 'a' . "</td>";                        
                         echo "</tr>";
                     }
                     ?>
