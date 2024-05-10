@@ -63,11 +63,47 @@ if (isset($_POST['submit'])) {
     header('Location: listaremovimentar.php?notificacao=1');
 }
 ?>
+<style>
+    @media (max-width: 1600px) {
+        .conteudo {
+            margin-left: 25px;
+            width: 95%;
+        }
+
+        .conteudo_menu {
+            width: 70px;
+        }
+
+        .menu-principal {
+            position: fixed;
+            top: 0;
+            left: -187px;
+            z-index: 999999 !important;
+            transition: all .5s ease;
+        }
+
+
+        .menu-logout {
+            z-index: 1000000 !important;
+        }
+
+        .aparecer {
+            left: 70px !important;
+        }
+
+
+        .menu-button {
+            display: block;
+            cursor: pointer;
+        }
+    }
+</style>
+
 <body>
     <?php
     include_once('menu.php');
     ?>
-    <div class="p-md-4 pt-3 conteudo" style="margin-left:310px">
+    <div class="p-md-4 pt-3 conteudo">
         <div class="carrossel-box mb-2">
             <div class="carrossel">
                 <a href="./home.php" class="mb-3 me-1">
@@ -213,4 +249,5 @@ if (isset($_POST['submit'])) {
             <div class="hide" id="modal"></div>
     </div>
 </body>
+
 </html>

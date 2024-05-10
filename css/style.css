@@ -585,7 +585,7 @@ hr {
     border-radius: 5px;
 }
 
-#usuario-img {
+.usuario-img {
     height: 33px;
     width: 33px;
     padding: 5px;
@@ -601,7 +601,7 @@ hr {
     background-color: #ffcccc; 
 }
 
-#usuario-img:hover {
+.usuario-img:hover {
     background-color:#F0F4F8; 
 }
 
@@ -649,34 +649,68 @@ hr {
     opacity: 1;
 }
 
-@media (max-width: 1600px) {
-    .conteudo {
-        margin-left: 75px;
-        width: 95%;
-    }
 
-    .menu-principal {
-        position: fixed;
-        top: 0;
-        left: -187px;
-        z-index: 999999 !important;
-        transition: all .5s ease;
-    }
+.arrow-container {
+    text-align: right;
+}
 
+.arrow-button {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    margin: 0 5px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    .menu-logout {
-        z-index: 1000000 !important;
-    }
+.arrow-button:hover {
+    background-color: #F5F5F5;
+    border-radius: 50%;
+}
 
-    .aparecer {
-        left: 70px !important;
-    }
+.arrow-icon {
+    width: 15px;
+    height: 15px;
+    opacity: 1;
+}
 
+.arrow-container {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
 
-    .menu-button {
-        display: block;
-        cursor: pointer;
-    }
+.pagination-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: stretch;
+    font-size: 14px;
+}
+
+.records-per-page {
+    margin-top: 10px;
+}
+
+.records-per-page > label {
+    margin-right: 10px;
+}
+
+#recordsPerPage {
+    border: none;
+    margin-right: 20px;
+    font-size: 14px;
+}
+
+.page-info {
+    margin-left: 10px;
+    margin-right: 20px;
+    margin-top: 10px;
+    font-size: 14px;
 }
 
 @media (max-width: 1300px) {

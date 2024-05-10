@@ -60,6 +60,11 @@ $result = $conexao->query($sql) or die($mysqli->error);
     @media (max-width: 1600px) {
         .conteudo {
             margin-left: 75px;
+            width: 95%;
+        }
+
+        .conteudo_menu {
+            width: 70px;
         }
 
         .menu-principal {
@@ -67,7 +72,7 @@ $result = $conexao->query($sql) or die($mysqli->error);
             top: 0;
             left: -187px;
             z-index: 999999 !important;
-            transition: all 1s ease;
+            transition: all .5s ease;
         }
 
 

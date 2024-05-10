@@ -9,6 +9,41 @@ include_once('verificacao.php');
 $sql = "SELECT item.patrimonio, item.tipo, item.marca, item.modelo, item.nome, transferencia.cimbpm, transferencia.localnovo, transferencia.servidoratual, transferencia.usuario, transferencia.datatransf FROM item, transferencia WHERE item.idbem = transferencia.iditem ORDER BY transferencia.datatransf DESC";
 $result = mysqli_query($conexao, $sql);
 ?>
+<style>
+        @media (max-width: 1600px) {
+        .conteudo {
+            margin-left: 75px;
+            width: 95%;
+        }
+
+        .conteudo_menu {
+            width: 70px;
+        }
+
+        .menu-principal {
+            position: fixed;
+            top: 0;
+            left: -187px;
+            z-index: 999999 !important;
+            transition: all .5s ease;
+        }
+
+
+        .menu-logout {
+            z-index: 1000000 !important;
+        }
+
+        .aparecer {
+            left: 70px !important;
+        }
+
+
+        .menu-button {
+            display: block;
+            cursor: pointer;
+        }
+    }
+</style>
 <body>
     <?php
     include_once('menu.php');

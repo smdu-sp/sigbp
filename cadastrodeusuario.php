@@ -84,6 +84,39 @@ if (isset($_POST['submit'])) {
 }
 ?>
 <style>
+        @media (max-width: 1600px) {
+        .conteudo {
+            margin-left: 75px;
+            width: 95%;
+        }
+
+        .conteudo_menu {
+            width: 70px;
+        }
+
+        .menu-principal {
+            position: fixed;
+            top: 0;
+            left: -187px;
+            z-index: 999999 !important;
+            transition: all .5s ease;
+        }
+
+
+        .menu-logout {
+            z-index: 1000000 !important;
+        }
+
+        .aparecer {
+            left: 70px !important;
+        }
+
+
+        .menu-button {
+            display: block;
+            cursor: pointer;
+        }
+    }
     .swal2-title {
         color: #fff;
     }
@@ -97,7 +130,7 @@ if (isset($_POST['submit'])) {
             <div class="carrossel">
                 <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-avancar" alt="icon-avancar">
-                <a href="./listaremovimentar.php" class="text-muted ms-1 carrossel-text">Usuários</a>
+                <a href="./usuarios.php" class="text-muted ms-1 carrossel-text">Usuários</a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
                 <a href="./cadastrodeusuario.php" class="text-primary ms-1 carrossel-text">Cadastro de Usuários</a>
             </div>

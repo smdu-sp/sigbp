@@ -4,6 +4,27 @@ include_once('conexoes/config.php');
 include_once('header.php');
 include_once('verificacao.php');
 
+// Número de registros por página
+$recordsPerPage = 10;
+
+// Página atual
+if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+    $currentPage = $_GET['page'];
+} else {
+    $currentPage = 1;
+}
+
+// Offset para a consulta SQL
+$offset = ($currentPage - 1) * $recordsPerPage;
+
+// Consulta SQL modificada para incluir a cláusula LIMIT
+$sql = "SELECT * FROM usuarios ORDER BY id ASC LIMIT $offset, $recordsPerPage";
+$result = $conexao->query($sql) or die($mysqli->error);
+$totalRecords = mysqli_num_rows($result);
+
+// Número total de páginas
+$totalPages = ceil($totalRecords / $recordsPerPage);
+
 $buscar_permisao = "SELECT permissao FROM usuarios WHERE `usuario`='" . strtolower($_SESSION['SesID']) . "';";
 $query_usuario = mysqli_query($conexao, $buscar_permisao);
 $row = mysqli_fetch_assoc($query_usuario);
@@ -21,6 +42,10 @@ $result = $conexao->query($sql) or die($mysqli->error);
         .conteudo {
             margin-left: 75px;
             width: 95%;
+        }
+
+        .conteudo_menu {
+            width: 70px;
         }
 
         .menu-principal {
@@ -68,15 +93,15 @@ $result = $conexao->query($sql) or die($mysqli->error);
                 <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
             </div>
         </div>
-        <h3 class="mb-3 mt-4">Usuários</h3>
-        <hr>
+        <h2 class="mb-3 mt-4">Usuários</h2>
+
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
             <div>
                 <div class="d-flex justify-content-end align-items-end">
-                    <a href="#" onclick="recarregar()" class="mb-2 mr-2"  id="usuario-img" style="cursor: pointer;">
+                    <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar" style="cursor: pointer;">
                         <img src="./images/icon-recarregar.png" alt="#" id='img-recarregar'>
                     </a>
-                    <a href="#" onclick="limparInputs()" class="mb-2 ml-2 " id="usuario-img">
+                    <a href="#" class="mb-2 mr-2 usuario-img" id="limpar" style="cursor: pointer;">
                         <img src="./images/limpar.png" alt="#" id='img-recarregar'>
                     </a>
                     <div class="col-2 ml-2 mb-2">
@@ -93,7 +118,7 @@ $result = $conexao->query($sql) or die($mysqli->error);
                             <option value="1">Administrador</option>
                             <option value="2">Usuário</option>
                             <option value="3">Sem Permissão</option>
-                            <option value="4"  selected>Todos</option>
+                            <option value="4" selected>Todos</option>
                         </select>
                     </div>
                     <div class="col-3 mb-2">
@@ -173,7 +198,7 @@ $result = $conexao->query($sql) or die($mysqli->error);
                     </div>
                 </div>
                 <br>
-                <table class="table table-hover">
+                <table class="table table-hover" id='myTable'>
                     <thead>
                         <tr>
                             <th scope="col">Nome</th>
@@ -188,7 +213,6 @@ $result = $conexao->query($sql) or die($mysqli->error);
                         <?php
                         while ($user_data = mysqli_fetch_assoc($result)) {
                             echo "<tr>";
-                            echo "<a href='cadastrodeusuario.php?id={$user_data['id']}'>";
                             echo "<td hidden>" . $user_data['id'] . "</td>";
                             echo "<td style='cursor: pointer;' onclick=location.href='cadastrodeusuario.php?id=$user_data[id]'>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
                             echo "<td style='cursor: pointer;' onclick=location.href='cadastrodeusuario.php?id=$user_data[id]'>" . $user_data['email'] . '<span hidden>todos</span>' . "</td>";
@@ -217,6 +241,22 @@ $result = $conexao->query($sql) or die($mysqli->error);
                     </tbody>
                 </table>
             </div>
+            <div class='pagination-controls'>
+                <div class='records-per-page'>
+                    <label for='recordsPerPage'>Registros por página:</label>
+                    <select id='recordsPerPage'>
+                        <option value='5'>5</option>
+                        <option value='10' selected>10</option>
+                        <option value='20'>20</option>
+                    </select>
+                </div>
+
+                <!-- Informações de página e setas -->
+                <div class='page-info'>Página 1 de 2</div>
+                <button onclick='sort(1)' class='arrow-button' id='esquerda' disabled><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></button>
+                <button onclick='sort(2)' class='arrow-button' id='direita'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></button>
+            </div>
+
             <div class="d-flex justify-content-end mt-5 mr-2">
                 <a href="./cadastrodeusuario.php" id="btn-adc-usuario">
                     <img src="./images/icons-adcUsuario.png" alt="">
@@ -228,60 +268,133 @@ $result = $conexao->query($sql) or die($mysqli->error);
 </body>
 <script>
     $(document).ready(function() {
-        $("#myInput").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
+        function aplicarFiltros() {
+            var inputValue = $("#myInput").val().toLowerCase();
+            var unidadeValue = $("#unidadeSelect").val();
+            var statusValue = $("#statusSelect").val();
+            var permissaoValue = $("#permissaoSelect").val();
 
-    $(document).ready(function() {
-        $("#unidadeSelect").on("change", function() {
-            var value = $(this).val();
-            $("#myTable tr").filter(function() {
-                $(this).toggle($(this).text().indexOf(value) > -1)
-            });
-        });
-    });
+            $("#myTable tr").each(function(index) {
+                // Ignorar a primeira linha (índice 0) que provavelmente contém os títulos das colunas
+                if (index > 0) {
+                    var row = $(this);
+                    var textToShow = true;
 
-    $(document).ready(function() {
-        $("#statusSelect").on("change", function() {
-            var value = $(this).val();
-            console.log(value);
-            $("#myTable tr").filter(function() {
-                $(this).toggle($(this).text().indexOf(value) > -1)
-            });
-        });
-    });
+                    if (inputValue) {
+                        textToShow = textToShow && row.text().toLowerCase().indexOf(inputValue) > -1;
+                    }
 
-    $(document).ready(function() {
-        $("#permissaoSelect").on("change", function() {
-            var value = $(this).val();
-            $("#myTable tr").filter(function() {
-                if (value == 1) {
-                    $(this).toggle($(this).text().indexOf('Administrador') > -1)
-                } else if (value == 2) {
-                    $(this).toggle($(this).text().indexOf('Usuário') > -1)
-                } else if (value == 3) {
-                    $(this).toggle($(this).text().indexOf('Sem permissão') > -1)
-                } else if (value == 4) {
-                    $(this).toggle($(this).text().indexOf('todos') > -1)
+                    if (unidadeValue) {
+                        textToShow = textToShow && row.text().indexOf(unidadeValue) > -1;
+                    }
+
+                    if (statusValue) {
+                        textToShow = textToShow && row.text().indexOf(statusValue) > -1;
+                    }
+
+                    if (permissaoValue) {
+                        if (permissaoValue == 1) {
+                            textToShow = textToShow && row.text().indexOf('Administrador') > -1;
+                        } else if (permissaoValue == 2) {
+                            textToShow = textToShow && row.text().indexOf('Usuário') > -1;
+                        } else if (permissaoValue == 3) {
+                            textToShow = textToShow && row.text().indexOf('Sem permissão') > -1;
+                        } else if (permissaoValue == 4) {
+                            textToShow = textToShow && row.text().indexOf('todos') > -1;
+                        }
+                    }
+
+                    row.toggle(textToShow);
                 }
             });
+        }
+
+        $("#myInput, #unidadeSelect, #statusSelect, #permissaoSelect").on("change keyup", function() {
+            aplicarFiltros();
+        });
+
+        function limparInputs() {
+            $("#myInput").val('');
+            $("#unidadeSelect").val('');
+            $("#statusSelect").val('Ativo');
+            $("#permissaoSelect").val('4');
+            $("#myTable tr").show();
+        }
+
+        $("#limpar").on("click", function() {
+            limparInputs();
         });
     });
 
-    function limparInputs() {
-        var statusInput = document.getElementById('statusSelect').value;
-        var permissaoInput = document.getElementById('permissaoSelect').value;
-        var unidadeInput = document.getElementById('unidadeSelect').value;
-        var buscarInput = document.getElementById('myInput').value;
-        console.log(statusInput);
-        console.log(permissaoInput);
-        console.log(unidadeInput);
-        console.log(buscarInput);
-    }
+    $(document).ready(function() {
+        // Número total de registros e registros por página
+        var totalRecords = <?php echo $totalRecords; ?>;
+        var recordsPerPage = <?php echo $recordsPerPage; ?>;
+
+        // Calcular o número total de páginas
+        var totalPages = Math.ceil(totalRecords / recordsPerPage);
+
+        // Página atual
+        var currentPage = <?php echo $currentPage; ?>;
+
+        // Função para atualizar a exibição da tabela com base na página atual
+        function updateTable() {
+            var start = (currentPage - 1) * recordsPerPage;
+            var end = start + recordsPerPage;
+            $('#myTable tbody tr').hide().slice(start, end).show();
+            $('.page-info').text('Página ' + currentPage + ' de ' + totalPages);
+
+            // Desabilitar botões se houver menos de duas páginas
+            if (totalPages < 2) {
+                // Desabilita o botão 'esquerda' e define a opacidade
+                var botaoEsquerda = document.getElementById('esquerda');
+                botaoEsquerda.disabled = true;
+                botaoEsquerda.style.opacity = '0.5'; // Defina o valor desejado de opacidade (entre 0 e 1)
+                var botaoEsquerda = document.getElementById('direita');
+                botaoEsquerda.disabled = true;
+                botaoEsquerda.style.opacity = '0.5';
+            } else {
+                // Desabilitar o botão de página anterior se estiver na primeira página
+                $('.arrow-button:first').prop('disabled', currentPage === 1).toggleClass('disabled', currentPage === 1);
+
+                // Desabilitar o botão de próxima página se estiver na última página
+                $('.arrow-button:last').prop('disabled', currentPage === totalPages).toggleClass('disabled', currentPage === totalPages);
+            }
+        }
+
+        // Atualizar tabela ao carregar a página
+        updateTable();
+
+        // Função para ir para a página anterior
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updateTable();
+            }
+        }
+
+        // Função para ir para a próxima página
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateTable();
+            }
+        }
+
+        // Event listener para botão de página anterior
+        $('.arrow-button:first').click(previousPage);
+
+        // Event listener para botão de próxima página
+        $('.arrow-button:last').click(nextPage);
+
+        // Event listener para select de registros por página
+        $('#recordsPerPage').change(function() {
+            recordsPerPage = parseInt($(this).val());
+            totalPages = Math.ceil(totalRecords / recordsPerPage);
+            currentPage = 1;
+            updateTable();
+        });
+    });
 </script>
 
 </html>
