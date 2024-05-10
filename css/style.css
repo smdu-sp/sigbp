@@ -575,6 +575,80 @@ hr {
     height: 24px;
 }
 
+.x-image {
+    height: 33px;
+    width: 33px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+#usuario-img {
+    height: 33px;
+    width: 33px;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+
+.x-image:hover {
+    background-color: #ffcccc; 
+}
+
+#usuario-img:hover {
+    background-color:#F0F4F8; 
+}
+
+
+.img-usuario {
+    width: 20px;
+    height: 20px;
+    
+}
+
+#tooltip2 {
+    position: relative;
+    cursor: pointer;
+}
+
+#tooltipText2 {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-42%);
+    background-color: gray;
+    color: #FFF;
+    white-space: nowrap;
+    padding: 3px 6px;
+    border-radius: 5px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opactiy 0.5s ease;
+    font-size: 12px;
+}
+
+#tooltipText2::before {
+    content: "";
+    position: absolute;
+    left: 40%;
+    top: 100%;
+    transform: translateX(-50%);
+    border: 6px solid;
+    border-color: gray #0000 #0000 #0000;
+}
+
+#tooltip2:hover #tooltipText2 {
+    top: -110%;
+    visibility: visible;
+    opacity: 1;
+}
+
 @media (max-width: 1600px) {
     .conteudo {
         margin-left: 75px;

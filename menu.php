@@ -32,13 +32,9 @@ $permissao = $_SESSION['Perm'];
                 <p class="title-menu admin">Administração</p>
                 <a href="./cadastrarbens.php" value="cadastrarbens" id="botao2" class="btn-menu botoes admin"><img id="icon-computador" src="./images/icon-computador.png" alt="Icon Computador">Cadastro de Bens</a>
                 <a href="./listaremovimentar.php" value="listaremovimentar" id="botao4" class="btn-menu botoes admin"><img id="icon-lista" src="./images/icon-lista.png" alt="Icon Lista">Listar/Movimentar Bens</a>
-<<<<<<< HEAD
-                <a href="./controledeusuario.php" value="usuarios" id="botao5" class="btn-menu botoes admin"><img id="icon-usuario" src="./images/usuario.png" alt="Icon Usuario">Usuários</a>
-                <a href="./tabela-unidades.php" value="unidades" id="botao6" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/unidades.png" alt="Icon Usuario">Unidades</a>
-=======
-                <a href="./cadastrodeusuario.php" value="usuarios" id="botao5" class="btn-menu botoes admin"><img id="icon-usuario" src="./images/usuario.png" alt="Icon Usuario">Cadastro de Usuários</a>
-                <a href="tabela-unidades.php" value="tabela-unidades" id="botao6" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/unidades.png" alt="Icon Usuario">Unidades</a>
->>>>>>> 0ae3c1c23cd70b02054b6e79183e6f061d95e135
+                <a href="./usuarios.php" value="usuarios" id="botao5" class="btn-menu botoes admin"><img id="icon-usuario" src="./images/usuario.png" alt="Icon Usuario">Usuários</a>
+                <a href="./unidades.php" value="unidades" id="botao6" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/unidades.png" alt="Icon Usuario">Unidades</a>
+
 
             </div>
             <div class="info-usuario">
@@ -77,8 +73,6 @@ $permissao = $_SESSION['Perm'];
     var url = window.location.href;
     var match = url.match(/\/([^\/]+)\.php$/);
     var nomePagina = match ? match[1] : null;
-    console.log(nomePagina);
-
     var botoes = document.querySelectorAll('.btn-menu');
 
     botoes.forEach(function(botao) {

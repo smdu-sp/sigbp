@@ -1,4 +1,4 @@
-<td style='color: red; font-weight: bold; text-align: right, maxWidth: 10px'>
+<td style="color: red; font-weight: bold; text-align: right;">
   <div class="switch__container">
     <input id="switch-shadow" class="switch switch--shadow" type="checkbox">
     <label for="switch-shadow"></label>
@@ -52,7 +52,7 @@
   }
 
   .switch--shadow+label:after {
-    width: 62px;a
+    width: 62px;
     background-color: #fff;
     border-radius: 100%;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
