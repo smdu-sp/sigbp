@@ -4,35 +4,24 @@ include_once('conexoes/config.php');
 include_once('header.php');
 include_once('verificacao.php');
 
-$busca = "SELECT * FROM usuarios ORDER BY id ASC";
+$recordsPerPage = 5;
 
-// Número de registros por página
-$recordsPerPage = 10;
-
-// Página atual
-if (isset($_GET['pagina']) && is_numeric($_GET['pagina'])) {
-    $currentPage = $_GET['pagina'];
+if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+    $currentPage = $_GET['page'];
 } else {
     $currentPage = 1;
 }
 
-$inicio = ($currentPage - 1) * $recordsPerPage;
+// Offset para a consulta SQL
+$offset = ($currentPage - 1) * $recordsPerPage;
 
 // Consulta SQL modificada para incluir a cláusula LIMIT
-$limite = mysqli_query($conexao, "$busca LIMIT $inicio,$recordsPerPage");
-$todos = mysqli_query($conexao, "$busca");
+$sql = "SELECT item.patrimonio, item.tipo, item.marca, item.modelo, item.nome, transferencia.cimbpm, transferencia.localnovo, transferencia.servidoratual, transferencia.usuario, transferencia.datatransf FROM item, transferencia WHERE item.idbem = transferencia.iditem ORDER BY transferencia.datatransf DESC";
+$result = $conexao->query($sql) or die($mysqli->error);
+$totalRecords = mysqli_num_rows($result);
 
-// Contar o total de registros
-$totalRecords = mysqli_num_rows($todos);
-
-echo "Total de registros: " . $totalRecords;
-echo "Consulta SQL: " . $busca;
-
-$tr = $totalRecords;
-$tp = $tr / $recordsPerPage;
-
-$anterior = $currentPage - 1;
-$proximo = $currentPage + 1;
+// Número total de páginas
+$totalPages = ceil($totalRecords / $recordsPerPage);
 
 $buscar_permisao = "SELECT permissao FROM usuarios WHERE `usuario`='" . strtolower($_SESSION['SesID']) . "';";
 $query_usuario = mysqli_query($conexao, $buscar_permisao);
@@ -41,6 +30,10 @@ $permissao = $row['permissao'];
 if ($permissao != 1) {
     header('Location: home.php');
 }
+
+
+$sql = "SELECT item.patrimonio, item.tipo, item.marca, item.modelo, item.nome, transferencia.cimbpm, transferencia.localnovo, transferencia.servidoratual, transferencia.usuario, transferencia.datatransf FROM item, transferencia WHERE item.idbem = transferencia.iditem ORDER BY transferencia.datatransf DESC";
+$result = $conexao->query($sql) or die($mysqli->error);
 ?>
 <style>
     @media (max-width: 1600px) {
@@ -98,7 +91,7 @@ if ($permissao != 1) {
                 <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
             </div>
         </div>
-        <h2 class="mb-3 mt-4">Usuários</h2>
+        <h2 class="mb-3 mt-4">Últimas Movimentações</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
             <div>
                 <div class="d-flex justify-content-end align-items-end">
@@ -108,23 +101,6 @@ if ($permissao != 1) {
                     <a href="#" class="mb-2 mr-2 usuario-img" id="limpar" style="cursor: pointer;">
                         <img src="./images/limpar.png" alt="#" id='img-recarregar'>
                     </a>
-                    <div class="col-2 ml-2 mb-2">
-                        <p class="mb-1 text-muted">Status:</p>
-                        <select id="statusSelect" class="form-select" aria-label="Default select example">
-                            <option value="Ativo" selected>Ativo</option>
-                            <option value="Inativo">Inativo</option>
-                            <option value="todos">Todos</option>
-                        </select>
-                    </div>
-                    <div class="col-2 mb-2">
-                        <p class="mb-1 text-muted">Permissão:</p>
-                        <select id="permissaoSelect" class="form-select" aria-label="Default select example">
-                            <option value="1">Administrador</option>
-                            <option value="2">Usuário</option>
-                            <option value="3">Sem Permissão</option>
-                            <option value="4" selected>Todos</option>
-                        </select>
-                    </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
                         <select id="unidadeSelect" class="form-select" aria-label="Default select example">
@@ -205,40 +181,34 @@ if ($permissao != 1) {
                 <table class="table table-hover" id='myTable'>
                     <thead>
                         <tr>
+                            <th scope="col">Nº Patrimônio </th>
                             <th scope="col">Nome</th>
-                            <th scope="col">E-mail</th>
-                            <th scope="col">Usuário</th>
-                            <th scope="col">Unidade</th>
-                            <th scope="col">Permissão</th>
-                            <th scope="col"></th>
+                            <th scope="col">Descrição do Bem</th>
+                            <th scope="col">Localização</th>
+                            <th scope="col">Servidor</th>
+                            <th scope="col">Responsável</th>
+                            <th scope="col">CIMBPM</th>
+                            <th scope="col">Data</th>
                         </tr>
                     </thead>
-                    <tbody id="myTable">
+                    <tbody>
                         <?php
-                        while ($user_data = mysqli_fetch_assoc($limite)) {
+                        while ($user_data = mysqli_fetch_assoc($result)) {
+                            $marca = $user_data['marca'];
+                            $modelo = $user_data['modelo'];
+                            $tipo = $user_data['tipo'];
+                            $desc = $tipo . ' ' . $marca . ' Modelo:' . $modelo;
                             echo "<tr>";
-                            echo "<td hidden>" . $user_data['id'] . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='cadastrodeusuario.php?id=$user_data[id]'>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='cadastrodeusuario.php?id=$user_data[id]'>" . $user_data['email'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='cadastrodeusuario.php?id=$user_data[id]' hidden>" . $user_data['statususer'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td class='unidade' style='cursor: pointer;' onclick=location.href='cadastrodeusuario.php?id=$user_data[id]'>" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='cadastrodeusuario.php?id=$user_data[id]'>" . $user_data['unidade'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td id='permissao' style='cursor: pointer;' onclick=location.href='cadastrodeusuario.php?id=$user_data[id]'>";
-
-                            if ($user_data['permissao'] == 1) {
-                                echo "<div id='dev'><p class='perm-usuario'>Administrador<span hidden>todos</span></p></div>";
-                            } elseif ($user_data['permissao'] == 2) {
-                                echo "<div id='usuario'><p class='perm-usuario'>Usuário<span hidden>todos</span></p></div>";
-                            } elseif ($user_data['permissao'] == 3) {
-                                echo "<div id='semPermissao'><p class='perm-usuario'>Sem permissão<span hidden>todos</span></p></div>";
-                            } else {
-                                echo "<div id='todos'><p class='perm-usuario'>Todos<span hidden>todos</span></p></div>";
-                            }
-
-                            echo "</td>";
-                            echo "<td>";
-                            echo "<a class='x-image' id='tooltip2' href='#'><span id='tooltipText2'>Excluir</span><img class='img-usuario' src='./images/icons-x.png' alt='x'></a>";
-                            echo "</td>";
+                            echo "<td style='cursor: pointer;'>" . $user_data['patrimonio'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;'>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;'>" . $user_data['marca'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td class='unidade' style='cursor: pointer;'>" . $user_data['tipo'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;'>" . $user_data['modelo'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;'>" . $desc . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;'>" . $user_data['localnovo'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;'>" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;'>" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;'>" . $user_data['datatransf'] . '<span hidden>todos</span>' . "</td>";
                             echo "</tr>";
                         }
                         ?>
@@ -249,22 +219,14 @@ if ($permissao != 1) {
                 <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
                     <select id='recordsPerPage'>
-                        <option value='5'>5</option>
-                        <option value='10' selected>10</option>
+                        <option value='5'selected>5</option>
+                        <option value='10' >10</option>
                         <option value='20'>20</option>
                     </select>
                 </div>
                 <div class='page-info'>Página 1 de 2</div>
-                <?php
-                echo "<a href='?pagina=$anterior' onclick='sort(1)' class='arrow-button esquerda' id='esquerda'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
-                echo "<a href='?pagina=$proximo' onclick='sort(2)' class='arrow-button direita' id='direita'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
-                ?>
-            </div>
-
-            <div class="d-flex justify-content-end mt-5 mr-2">
-                <a href="./cadastrodeusuario.php" id="btn-adc-usuario">
-                    <img src="./images/icons-adcUsuario.png" alt="">
-                </a>
+                <button onclick='sort(1)' class='arrow-button esquerda' id='esquerda'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></button>
+                <button onclick='sort(2)' class='arrow-button direita' id='direita'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></button>
             </div>
         </div>
     </div>
@@ -275,11 +237,8 @@ if ($permissao != 1) {
         function aplicarFiltros() {
             var inputValue = $("#myInput").val().toLowerCase();
             var unidadeValue = $("#unidadeSelect").val();
-            var statusValue = $("#statusSelect").val();
-            var permissaoValue = $("#permissaoSelect").val();
 
             $("#myTable tr").each(function(index) {
-                // Ignorar a primeira linha (índice 0) que provavelmente contém os títulos das colunas
                 if (index > 0) {
                     var row = $(this);
                     var textToShow = true;
@@ -292,36 +251,18 @@ if ($permissao != 1) {
                         textToShow = textToShow && row.text().indexOf(unidadeValue) > -1;
                     }
 
-                    if (statusValue) {
-                        textToShow = textToShow && row.text().indexOf(statusValue) > -1;
-                    }
-
-                    if (permissaoValue) {
-                        if (permissaoValue == 1) {
-                            textToShow = textToShow && row.text().indexOf('Administrador') > -1;
-                        } else if (permissaoValue == 2) {
-                            textToShow = textToShow && row.text().indexOf('Usuário') > -1;
-                        } else if (permissaoValue == 3) {
-                            textToShow = textToShow && row.text().indexOf('Sem permissão') > -1;
-                        } else if (permissaoValue == 4) {
-                            textToShow = textToShow && row.text().indexOf('todos') > -1;
-                        }
-                    }
-
                     row.toggle(textToShow);
                 }
             });
         }
 
-        $("#myInput, #unidadeSelect, #statusSelect, #permissaoSelect").on("change keyup", function() {
+        $("#myInput, #unidadeSelect").on("change keyup", function() {
             aplicarFiltros();
         });
 
         function limparInputs() {
             $("#myInput").val('');
             $("#unidadeSelect").val('');
-            $("#statusSelect").val('Ativo');
-            $("#permissaoSelect").val('4');
             $("#myTable tr").show();
         }
 
@@ -335,7 +276,6 @@ if ($permissao != 1) {
         var recordsPerPage = <?php echo $recordsPerPage; ?>;
         var totalPages = Math.ceil(totalRecords / recordsPerPage);
         var currentPage = <?php echo $currentPage; ?>;
-
         function updateTable() {
             var start = (currentPage - 1) * recordsPerPage;
             var end = start + recordsPerPage;
