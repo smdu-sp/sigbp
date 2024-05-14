@@ -36,11 +36,11 @@ CREATE TABLE IF NOT EXISTS `item` (
   `nome` varchar(240) DEFAULT NULL,
   `statusitem` varchar(240) DEFAULT NULL,
   PRIMARY KEY (`idbem`)
-) ENGINE=InnoDB AUTO_INCREMENT=3979 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3984 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela sisgp.item: ~3.262 rows (aproximadamente)
+-- Copiando dados para a tabela sisgp.item: ~3.418 rows (aproximadamente)
 INSERT IGNORE INTO `item` (`idbem`, `patrimonio`, `tipo`, `descsbpm`, `numserie`, `tiposbpm`, `marca`, `modelo`, `localizacao`, `servidor`, `numprocesso`, `cimbpm`, `nome`, `statusitem`) VALUES
-	(1, '001-052209414-6', 'MICROCOMPUTADOR', 'DSDDSDS', 'sssssssssss', 'N.A.', 'gfggf', 'OPTIPLEX 5070', '      ', '', 'JSOSJOJSS', '001.004639/2023', 'SELGBC321', 'Ativo'),
+	(1, '001-052209414-6', 'MICROCOMPUTADOR', 'dfddddddddddd', 'aaaaaaa', 'N.A.', 'gfggf', 'OPTIPLEX 5070', '          ', '', '40028922', '001.004639/2023', 'aaaaaaaaa', 'Ativo'),
 	(2, '001-052209415-4', 'MICROCOMPUTADOR', '', 'hhghh', 'N.A.', 'DELL', 'OPTIPLEX 5070', '', '', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC320', 'Ativo'),
 	(3, '001-052209416-2', 'MICROCOMPUTADOR', 'N.A.', 'CL65423', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'GTEC', 'HARALDO MANOEL CORRÊA', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC319', 'Ativo'),
 	(4, '001-052209417-0', 'MICROCOMPUTADOR', 'N.A.', 'JOAOAOAO', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'sddss ', 'dsdddsd', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC325', 'Ativo'),
@@ -188,7 +188,7 @@ INSERT IGNORE INTO `item` (`idbem`, `patrimonio`, `tipo`, `descsbpm`, `numserie`
 	(146, '001-052209559-2', 'MICROCOMPUTADOR', 'N.A.', 'CMJ6423', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'RESID/GTEL', '', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC3136', 'Ativo'),
 	(147, '001-052209560-6', 'MICROCOMPUTADOR', 'N.A.', 'CM8B423', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'SERVIN/DSIMP', 'VALDETE KANAGUSKO ITIKAWA', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC3137', 'Ativo'),
 	(148, '001-052209561-4', 'MICROCOMPUTADOR', 'N.A.', 'CLB6423', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'ATECC', 'MARCO ANTONIO NASCIMENTO MACHADO', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC3142', 'Ativo'),
-	(149, '001-052209562-2', 'MICROCOMPUTADOR', 'N.A.', 'CNF6423', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'DEUSO', 'GUILHERME D\ EL ARCO', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC3143', 'Ativo'),
+	(149, '001-052209562-2', 'MICROCOMPUTADOR', 'N.A.', 'CNF6423', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'DEUSO', 'GUILHERME D\'EL ARCO', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC3143', 'Ativo'),
 	(150, '001-052209563-0', 'MICROCOMPUTADOR', 'N.A.', 'CMC3423', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'PLANURB', 'HELIANA LOMBARDI ARTGIANI', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC3146', 'Ativo'),
 	(151, '001-052209564-9', 'MICROCOMPUTADOR', 'N.A.', 'CND7423', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'SERVIN/DSIGP', 'ELIANA GONÇALVES DA LUZ', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC3145', 'Ativo'),
 	(152, '001-052209565-7', 'MICROCOMPUTADOR', 'N.A.', 'CLK4423', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'STEL', 'LIGIA', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC326', 'Ativo'),
@@ -1287,7 +1287,7 @@ INSERT IGNORE INTO `item` (`idbem`, `patrimonio`, `tipo`, `descsbpm`, `numserie`
 	(1245, '001-052422133-1', 'MICROCOMPUTADOR', 'N.A.', '4ZJZP33', 'N.A.', 'DELL', 'OPTIPLEX 7070', 'ASCOM', 'Glauco Blasco', 'SMDU/ COMPRA 6066.2019/0007729-5', 'N.A.', 'SMULASCOM004', 'Ativo'),
 	(1246, '001-052422134-0', 'MICROCOMPUTADOR', 'N.A.', '500YP33', 'N.A.', 'DELL', 'OPTIPLEX 7070', 'GABINETE', 'Genair Fernandes', 'SMDU/ COMPRA 6066.2019/0007729-5', '001.014522/2023', 'SMDUGBC421', 'Ativo'),
 	(1247, '001-052422135-8', 'MICROCOMPUTADOR', 'N.A.', '4ZW0Q33', 'N.A.', 'DELL', 'OPTIPLEX 7070', 'ATIC', 'LARA QUADROS DE MELO', 'SMDU/ COMPRA 6066.2019/0007729-5', '001.013177/2023', 'SMDUGBC425', 'Ativo'),
-	(1248, '001-052422136-6', 'MICROCOMPUTADOR', 'N.A.', '4Z4WP33', 'N.A.', 'DELL', 'OPTIPLEX 7070', 'GTEC', 'JOSÉ JOAQUIM D\ ANDREA MATHIAS', 'SMDU/ COMPRA 6066.2019/0007729-5', 'N.A.', 'SMDUGBC426', 'Ativo'),
+	(1248, '001-052422136-6', 'MICROCOMPUTADOR', 'N.A.', '4Z4WP33', 'N.A.', 'DELL', 'OPTIPLEX 7070', 'GTEC', 'JOSÉ JOAQUIM D\'ANDREA MATHIAS', 'SMDU/ COMPRA 6066.2019/0007729-5', 'N.A.', 'SMDUGBC426', 'Ativo'),
 	(1249, '001-052422137-4', 'MICROCOMPUTADOR', 'N.A.', '4ZZXP33', 'N.A.', 'DELL', 'OPTIPLEX 7070', 'ATIC', '', 'SMDU/ COMPRA 6066.2019/0007729-5', 'N.A.', 'SMDUGBC427', 'Ativo'),
 	(1250, '001-052422138-2', 'MICROCOMPUTADOR', 'N.A.', '4ZPWP33', 'N.A.', 'DELL', 'OPTIPLEX 7070', 'SECRETARIO', 'JOSÉ ARMENIO DE BRITO CRUZ', 'SMDU/ COMPRA 6066.2019/0007729-5', 'N.A.', 'SMDUGBC588', 'Ativo'),
 	(1251, '001-052422139-0', 'MICROCOMPUTADOR', 'N.A.', '4ZSTP33', 'N.A.', 'DELL', 'OPTIPLEX 7070', 'CEPEUC', '', 'SMDU/ COMPRA 6066.2019/0007729-5', 'N.A.', 'SMULCEPEUC004', 'Ativo'),
@@ -3452,7 +3452,12 @@ INSERT IGNORE INTO `item` (`idbem`, `patrimonio`, `tipo`, `descsbpm`, `numserie`
 	(3975, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
 	(3976, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
 	(3977, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', 'sssssssssssss', '', NULL, '', 'Selecionar'),
-	(3978, '', 'ARMARIO', NULL, 'dfffd', NULL, '', '', 'ATIC', '', '', NULL, '', 'Ativo');
+	(3978, '', 'ARMARIO', NULL, 'dfffd', NULL, '', '', 'ATIC', '', '', NULL, '', 'Ativo'),
+	(3979, '011150505', 'CARRINHO PARA SUPERMERCADO', NULL, '40028922', NULL, 'FERRARI', 'SRCV', 'RESID/DRGP', 'RANDANDAN', '159848462', NULL, 'Clodoaldo', 'Ativo'),
+	(3980, 'sdsdsdd', 'DESKTOP SWITCH', NULL, 'sdddssds', NULL, 'ssdsds', 'sddssdsd', 'CASE/DDU', 'sdsdsdsd', 'sdsdsd', NULL, 'sdsdsd', 'Baixado'),
+	(3981, 'SDDSDSDD', 'SCANNER', NULL, 'sdsdsd', NULL, 'ssdsd', 'ssdsd', 'GEOINFO', 'sdsdsd', 'sdsdsd', NULL, 'sdsdsd', 'Para Doação'),
+	(3982, 'dsdsdsd', 'ANTENA PARABÓLICA', NULL, 'sdsd', NULL, 'sdsd', 'sdsds', 'SECRETARIO', 'sdsds', 'dsdsds', NULL, 'dssds', 'Baixado'),
+	(3983, 'sdssd', 'AP TELEFONICO DIGITAL', NULL, 'dsdsds', NULL, 'sdssd', 'sdsdsdds', 'ATECC', 'dsds', 'sdds', NULL, 'sdssdsd', 'Ativo');
 
 -- Copiando estrutura para tabela sisgp.transferencia
 CREATE TABLE IF NOT EXISTS `transferencia` (
@@ -3467,9 +3472,9 @@ CREATE TABLE IF NOT EXISTS `transferencia` (
   `servidoratual` varchar(240) DEFAULT NULL,
   `cimbpm` varchar(240) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=397 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=402 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela sisgp.transferencia: ~376 rows (aproximadamente)
+-- Copiando dados para a tabela sisgp.transferencia: ~401 rows (aproximadamente)
 INSERT IGNORE INTO `transferencia` (`id`, `iditem`, `localanterior`, `localnovo`, `datatransf`, `idusuario`, `usuario`, `servidoranterior`, `servidoratual`, `cimbpm`) VALUES
 	(1, '2141', '', 'CAF', '2023-08-24 09:45:23.000', 'd921989', 'Juliette Maria Alfonso Frederico', '', 'Francinaldo da Silva Rodrigues', '001.008038/2023'),
 	(2, '843', 'CAP', 'GABINETE', '2023-08-24 09:53:49.000', 'd921989', 'Juliette Maria Alfonso Frederico', '', 'Giselle Flores Arrojo Pires', '001.008034/2023'),
@@ -3866,64 +3871,52 @@ INSERT IGNORE INTO `transferencia` (`id`, `iditem`, `localanterior`, `localnovo`
 	(393, '1', '', 'CASE/DCAD', '2024-04-25 16:39:53.117', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'dfdf', 'dfdfdf'),
 	(394, '1', '', 'CASE/DDU', '2024-04-25 16:40:53.403', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'sdsdsdd', 'sdsds'),
 	(395, '1', ' ', 'Selecionar', '2024-04-25 16:41:35.658', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'DDSDSD', 'SDDSDS'),
-	(396, '1', '     ', 'CASE/DLE', '2024-04-29 17:46:45.459', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'ddfff', '001.004639/2023');
+	(396, '1', '     ', 'CASE/DLE', '2024-04-29 17:46:45.459', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'ddfff', '001.004639/2023'),
+	(397, '1', '      ', 'CASE/STEL', '2024-05-06 17:13:39.548', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'SEILA', '001.004639/2023'),
+	(398, '1', '         ', 'CASE/DDU', '2024-05-07 13:53:31.722', 'x398900', 'Gustavo Mendes de Lima', '', 'adddadd', '001.004639/2023'),
+	(399, '1', '         ', 'CASE/DLE', '2024-05-09 13:19:17.730', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'sfsfsf', '001.004639/2023'),
+	(400, '1', '         ', 'CASE/DDU', '2024-05-09 13:19:45.234', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'sdsdsd', '001.004639/2023'),
+	(401, '1', '         ', 'CAP/DPD', '2024-05-09 13:21:06.546', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'ddf', '001.004639/2023');
+
+-- Copiando estrutura para tabela sisgp.unidades
+CREATE TABLE IF NOT EXISTS `unidades` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `unidades` varchar(100) NOT NULL,
+  `sigla` varchar(45) NOT NULL,
+  `codigo` int(22) NOT NULL,
+  `statusunidade` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Copiando dados para a tabela sisgp.unidades: ~1 rows (aproximadamente)
+INSERT IGNORE INTO `unidades` (`id`, `unidades`, `sigla`, `codigo`, `statusunidade`) VALUES
+	(1, 'zdas', 'sfd', 345, 0);
 
 -- Copiando estrutura para tabela sisgp.usuarios
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `usuario` varchar(100) DEFAULT NULL,
-  `nome` varchar(100) DEFAULT NULL,
-  `permissao` varchar(100) DEFAULT NULL,
-  `statususer` varchar(45) DEFAULT NULL,
+  `usuario` varchar(100) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `permissao` int(11) NOT NULL DEFAULT 3,
+  `statususer` varchar(45) NOT NULL,
+  `email` varchar(120) DEFAULT NULL,
+  `unidade` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela sisgp.usuarios: ~44 rows (aproximadamente)
-INSERT IGNORE INTO `usuarios` (`id`, `usuario`, `nome`, `permissao`, `statususer`) VALUES
-	(1, 'd879477', 'Juliana Oliveira de Carvalho', '1', 'Ativo'),
-	(2, 'd854440', 'Bruno Luiz Vieira', '1', 'Ativo'),
-	(3, 'd877313', 'Kendi Souza Kurihara', '1', 'Ativo'),
-	(10, 'd887885', 'Vinicius de Oliveira Giuliani', '1', 'Ativo'),
-	(14, 'D854424', 'Tiago Martins Pinheiro', '1', 'Ativo'),
-	(15, 'D921989', 'Juliette Maria Alfonso Frederico', '1', 'Ativo'),
-	(16, 'x394214', 'Nelson Freitas', '1', 'Ativo'),
-	(17, 'x392076', 'Joao Vitor Dias', '1', 'Ativo'),
-	(18, 'x25614', 'Teste', 'Administrador', 'Para Doação'),
-	(19, 'x25614', 'Teste', 'Administrador', 'Para Doação'),
-	(20, 'x265191', 'teste', 'Desenvolvedor', 'Baixado'),
-	(21, '', '', 'Usuário', 'Selecionar'),
-	(22, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(23, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(24, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(25, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(26, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(27, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(28, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(29, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(30, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(31, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(32, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(33, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(34, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(35, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(36, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(37, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(38, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(39, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(40, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(41, 'x392076', 'Joaoo', 'Usuário', 'Para Doação'),
-	(42, 'dfdfd', 'ffdf', 'Desenvolvedor', 'Para Doação'),
-	(43, 'sdsdsd', 'dsdsdsd', 'Usuário', 'Ativo'),
-	(44, 'sdsdsd', 'dsdsdsd', 'Usuário', 'Ativo'),
-	(45, 'dsds', 'sdds', 'Usuário', 'Baixado'),
-	(46, 'dsds', 'sdds', 'Usuário', 'Baixado'),
-	(47, 'dsss', 'dsdsds', 'Desenvolvedor', 'Descartado'),
-	(48, 'dsss', 'dsdsds', 'Desenvolvedor', 'Descartado'),
-	(49, 'ssd', 'sdsds', 'Administrador', 'Baixado'),
-	(50, 'sddsd', 'dsds', 'Usuário', 'Baixado'),
-	(51, 'ssd', 'drvr', 'Usuário', 'Para Doação'),
-	(52, 'sdsdd', 'sdssd', 'Usuário', 'Baixado'),
-	(53, 'sddsds', 'sddssdd', 'Usuário', 'Ativo');
+-- Copiando dados para a tabela sisgp.usuarios: ~11 rows (aproximadamente)
+INSERT IGNORE INTO `usuarios` (`id`, `usuario`, `nome`, `permissao`, `statususer`, `email`, `unidade`) VALUES
+	(1, 'd879477', 'Juliana Oliveira de Carvalho', 1, 'Ativo', 'julianacarvalho@prefeitura.sp.gov.br', 'ATIC'),
+	(2, 'd854440', 'Bruno Luiz Vieira', 1, 'Ativo', 'blvieira@prefeitura.sp.gov.br', 'ATIC'),
+	(3, 'd877313', 'Kendi Souza Kurihara', 1, 'Ativo', 'kurihara@prefeitura.sp.gov.br', 'ATIC'),
+	(10, 'd887885', 'Vinicius de Oliveira Giuliani', 1, 'Ativo', 'vgiuliani@prefeitura.sp.gov.br', 'ATIC'),
+	(14, 'D854424', 'Tiago Martins Pinheiro', 1, 'Ativo', 'tiagopinheiro@prefeitura.sp.gov.br', 'ATIC'),
+	(15, 'D921989', 'Juliette Maria Alfonso Frederico', 1, 'Ativo', 'julietteaf@prefeitura.sp.gov.br', 'ATIC'),
+	(16, 'x394214', 'Nelson Freitas', 1, 'Ativo', 'nelsonfreitas@prefeitura.sp.gov.br', 'ATIC'),
+	(17, 'x392076', 'Joao Vitor Dias', 1, 'Ativo', 'jvcosta@prefeitura.sp.gov.br', 'ATIC'),
+	(18, 'x000000', 'Claudio', 2, 'Ativo', 'teste@prefeitura.sp.gov.br', 'ATIC'),
+	(19, 'x111111', 'Jose', 1, 'Ativo', 'teste@prefeitura.sp.gov.br', 'ATIC'),
+	(20, 'x222222', 'Gabriel', 3, 'Ativo', 'teste@prefeitura.sp.gov.br', 'ATIC');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

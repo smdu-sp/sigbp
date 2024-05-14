@@ -25,9 +25,6 @@ $todos = mysqli_query($conexao, "$busca");
 // Contar o total de registros
 $totalRecords = mysqli_num_rows($todos);
 
-echo "Total de registros: " . $totalRecords;
-echo "Consulta SQL: " . $busca;
-
 $tr = $totalRecords;
 $tp = $tr / $recordsPerPage;
 

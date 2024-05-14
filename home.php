@@ -83,15 +83,15 @@ $result = $conexao->query($sql) or die($mysqli->error);
     <div class="p-4 p-md-4 pt-3 conteudo overflow">
         <div class="carrossel-box mb-4">
             <div class="carrossel">
-                <a href="./controledeusuario" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
+                <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-                <a href="./cadastrodeusuario.php" class="text-primary ms-1 carrossel-text">Usuários</a>
+                <a href="./home.php" class="text-primary ms-1 carrossel-text">Home</a>
             </div>
             <div class="button-dark">
                 <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
             </div>
         </div>
-        <h2 class="mb-3 mt-4">Usuários</h2>
+        <h2 class="mb-3 mt-4">Home</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
             <div>
                 <div class="d-flex justify-content-end align-items-end">
