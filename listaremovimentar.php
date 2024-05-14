@@ -12,9 +12,40 @@
         header('Location: home.php');
     }
 
-
     $sql = "SELECT * FROM item ORDER BY idbem ASC";
     $result = $conexao->query($sql) or die($mysqli->error);
+
+    // $registros = $wpdb->get_results('SELECT
+    // case
+    //     when colegiado = 0 then "CTLU"
+    //     when colegiado = 1 then "CPPU"
+    //     when colegiado = 2 then "FUNDURB"
+    //     when colegiado = 3 then "FMSAI"
+    //     when colegiado = 4 then "CIMPDE"
+    //     when colegiado = 5 then "CMPT"
+    // end as "Colegiado",
+    // indicacao                as "Indicado Como",
+    // membros                  as Membro,
+    // titularidade_conselheira as Titularidade,
+    // entidade_conselheira     as Entidade,
+    // email_conselheira        as "E-mail",
+    // sgm_indicado             as "Setor Indicado Titular",
+    // nome_indicado            as "Nome do Titular",
+    // entidade_indicado        as "Entidade Titular",
+    // email_indicado           as "E-mail Titular",
+    // sgm_suplente             as "Setor Indicado Suplente",
+    // nome_suplente            as "Nome Suplente",
+    // entidade_suplente as "Entidade Suplente",
+    // email_suplente as "E-mail Suplente",
+    //                     CASE
+    //                     WHEN cancelado = 0 THEN "Não"
+    //                     WHEN cancelado = 1 THEN "Sim"
+    //                 END                 AS "Cancelado"
+    // FROM cmpu.indicacoes');
+ 
+    // $registrosGlobal = $registros;
+ 
+    echo "<script>const registros=" . json_encode($result) . ";</script>";
     ?>
 <style>
         @media (max-width: 1600px) {
@@ -69,6 +100,7 @@
             </div>
         </div>
         <div class="conteudo conteudo-table ml-1 mt-4 table-container" style="width: 1500px;">
+        <button onclick="exportarArquivo()">Exportar</button>
             <table id="example" class="display table" style="width: 100%;">
                 <thead class="table-primary">
                     <tr>
@@ -176,6 +208,25 @@
                 history.pushState({}, '', 'listaremovimentar.php');
             }
         })
+
+        function exportarArquivo() {
+                var worksheet = XLSX.utils.json_to_sheet(registros);
+                var workbook = XLSX.utils.book_new(registros);
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'Inscrições');
+ 
+                var data_atual = new Date();
+ 
+                var dia = data_atual.getDate();
+                var mes = data_atual.getMonth() + 1;
+                var ano = data_atual.getFullYear();
+                var hora = data_atual.getHours();
+                var min = data_atual.getMinutes();
+                var seg = data_atual.getSeconds();
+ 
+                var dataFormatada = `${dia}${mes}${ano}${hora}${min}${seg}`;
+ 
+                XLSX.writeFile(workbook, dataFormatada + '.XLSX');
+            }
 </script>
 
 </html>

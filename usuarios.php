@@ -210,7 +210,7 @@ if ($permissao != 1) {
                             <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody id="myTable">
+                    <tbody>
                         <?php
                         while ($user_data = mysqli_fetch_assoc($limite)) {
                             echo "<tr>";
@@ -276,7 +276,6 @@ if ($permissao != 1) {
             var permissaoValue = $("#permissaoSelect").val();
 
             $("#myTable tr").each(function(index) {
-                // Ignorar a primeira linha (índice 0) que provavelmente contém os títulos das colunas
                 if (index > 0) {
                     var row = $(this);
                     var textToShow = true;
