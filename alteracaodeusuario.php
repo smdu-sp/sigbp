@@ -15,68 +15,28 @@ if ($permissao != 1) {
 include_once('verificacao.php');
 include_once('header.php');
 
-$usuario = '';
-$nomefr = '';
-$emailfr = '';
-$permissaoCad = '';
-$unidade = 'Selecionar';
-$status = 'Selecionar';
+
+if (!empty($_GET['id'])) {
+
+    $id = $_GET['id'];
+
+    $sqlSelect = "SELECT * FROM usuarios WHERE id=$id";
+
+    $result = $conexao->query($sqlSelect);
 
 
-
-
-if (isset($_GET['usuario'])) {
-    $usuario = $_GET['usuario'];
-    $query = "SELECT COUNT(*) FROM usuarios WHERE usuario = '$usuario'";
-    $conexao = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
-    $resultado = mysqli_query($conexao, $query);
-    $row = mysqli_fetch_assoc($resultado);
-    $total = $row['COUNT(*)'];
-
-    if ($total == 0) {
-        include_once('env.php');
-        $search = "samaccountname=" . $usuario;
-
-        $ds = ldap_connect($server);
-        ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
-        $r = ldap_bind($ds, $user, $psw);
-        $sr = ldap_search($ds, $dn, $search);
-        $data = ldap_get_entries($ds, $sr);
-
-        for ($i = 0; $i < $data["count"]; $i++) {
-            $nomefr = $data[$i]["givenname"][0] . " " . $data[$i]["sn"][0];
-            $emailfr = strtolower($data[$i]["mail"][0]);
+    if ($result->num_rows > 0) {
+        while ($user_data = mysqli_fetch_assoc($result)) {
+            $id = $user_data['id'];
+            $usuario = $user_data['usuario'];
+            $nomefr = $user_data['nome'];
+            $emailfr = $user_data['email'];
+            $permissao = $user_data['permissao'];
+            $unidade = $user_data['unidade'];
+            $status = $user_data['statususer'];
         }
     } else {
-        $usuario = '';
-        $nomefr = '';
-        $emailfr = '';
-        $permissaoCad = '';
-        $unidade = 'Selecionar';
-        $status = 'Selecionar';
-
-        header('Location: cadastrodeusuario.php?notificacao=jaCadastrado');
-    }
-}
-
-if (isset($_POST['submit'])) {
-    $usuario = $_GET['usuario'];
-    $query = "SELECT COUNT(*) FROM usuarios WHERE usuario = '$usuario'";
-    $conexao = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
-    $resultado = mysqli_query($conexao, $query);
-    $row = mysqli_fetch_assoc($resultado);
-    $total = $row['COUNT(*)'];
-    if ($total == 0) {
-        $usuario = $_POST['loginRede'];
-        $nome = $_POST['nome'];
-        $permissao = $_POST['permissao'];
-        $status = $_POST['status'];
-        $email = $_POST['email'];
-        $unidade = $_POST['unidade'];
-
-        $result = mysqli_query($conexao, "INSERT INTO usuarios(usuario, nome, permissao, statususer, email, unidade) VALUES ('$usuario', '$nome', '$permissao', '$status', '$email', '$unidade')");
-
-        header('Location: usuarios.php?notificacao=cadastrado');
+        header('Location: usuarios.php');
     }
 }
 ?>
@@ -138,15 +98,12 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
         <h3 class="mb-4 mt-4">Cadastro de Usuários</h3>
-        <form method="POST" action="#">
+        <form method="POST" action="salvar-alteracaodeusuarios.php">
             <div class="row">
                 <div class="col-md-12 mb-1">
-                    <label for="usuarioCadastro" class="form-label text-muted">Login de rede</label>
-                    <div class="input-group">
-                        <input value="<?php echo $usuario; ?>" type="text" name="loginRede" class="form-control" id="inputCadUsuario" placeholder="Buscar por login de rede" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-primary" name="buscar" id="btn-CadUsuario" type="button" onclick="buscarUsuario()">Buscar</button>
-                        </div>
+                    <div>
+                        <label for="exampleFormControlInput1" class="form-label text-muted">Login de rede</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="loginRede" name="usuario" value="<?php echo $usuario ?>" required>
                         <hr id="cdusuario">
                     </div>
                 </div>
@@ -163,9 +120,9 @@ if (isset($_POST['submit'])) {
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-cracha.png" alt="" class="imgCadastro"></div>
                         <select class="form-select" aria-label="Filter select" name="permissao" required>
                             <option value="" hidden="hidden">Selecionar</option>
-                            <option value="2" <?php if ($permissaoCad == 2) echo 'selected' ?>>Usuário</option>
-                            <option value="1" <?php if ($permissaoCad == 1) echo 'selected' ?>>Administrador</option>
-                            <option value="3" <?php if ($permissaoCad == 3) echo 'selected' ?>>Sem permissão</option>
+                            <option value="2" <?php if ($permissao == 2) echo 'selected' ?>>Usuário</option>
+                            <option value="1" <?php if ($permissao == 1) echo 'selected' ?>>Administrador</option>
+                            <option value="3" <?php if ($permissao == 3) echo 'selected' ?>>Sem permissão</option>
                         </select>
                         <hr id="cdusuario">
                     </div>
@@ -245,8 +202,9 @@ if (isset($_POST['submit'])) {
                     <input type="email" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="name@example.com" name="email" value="<?php echo $emailfr; ?>" required>
                 </div>
                 <div class="d-flex flex-row-reverse">
-                    <input type="submit" class="btn btn-primary ml-3 pe-auto mr-2 " id="btn-cadUsuario" name="submit" value="Cadastrar"></input>
+                    <input type="submit" class="btn btn-primary ml-3 pe-auto mr-2 " id="btn-cadUsuario" name="update" value="Alterar"></input>
                 </div>
+                <input type="hidden" name="id" value="<?php echo $id ?>">
         </form>
         <div class="hide" id="modal"></div>
 </body>
@@ -274,7 +232,7 @@ if (isset($_POST['submit'])) {
             });
             Toast.fire({
                 icon: "success",
-                title: "Usuario cadastrado com sucesso!",
+                title: "Usuário cadastrado com sucesso!",
                 background: "green",
             });
         } else if (num == 2) {
@@ -296,6 +254,23 @@ if (isset($_POST['submit'])) {
                 background: "#104EEF",
                 iconColor: "#ffffff"
             });
+        } else if (num == 3) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "Usuário atualizado com sucesso!",
+                background: "green",
+            });
         }
     }
 
@@ -303,10 +278,18 @@ if (isset($_POST['submit'])) {
         var url_string = window.location.href;
         var url = new URL(url_string);
         var data = url.searchParams.get("notificacao");
-        if (data == 'jaCadastrado') {
+        if (data == 'true') {
+            toast(1);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'cadastrodeusuario.php');
+        } else if (data == 'jaCadastrado') {
             toast(2);
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'http://localhost/cadastrodeusuario.php');
+            history.pushState({}, '', 'cadastrodeusuario.php');
+        } else if (data == 'alterado') {
+            toast(3);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'usuarios.php');
         }
     })
 </script>

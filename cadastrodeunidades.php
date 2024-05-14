@@ -73,7 +73,7 @@ if ($id != null && isset($_POST['submit'])) {
   <?php
   include_once('menu.php');
   ?>
-  <div class="p-4 p-md-4 pt-3 conteudo container">
+  <div class="p-4 p-md-4 pt-3 conteudo">
     <div class="carrossel mb-2">
       <a href="./home.php" class="mb-3 me-1">
         <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
@@ -84,7 +84,7 @@ if ($id != null && isset($_POST['submit'])) {
 
     <h3 class="mb-4 mt-4">Cadastro de Unidades</h3>
     <form method="POST" action="#">
-      <div class="card" style="width: 1400px">
+      <div class="card" style="width: 1500px">
         <div class="row">
           <div class="col-md-6 mb-1">
             <div class="mb-3">
@@ -98,7 +98,7 @@ if ($id != null && isset($_POST['submit'])) {
               <input type="number" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="código" name="codigo" min="0" required>
             </div>
           </div>
-          <hr id="cdusuario" style="width: 97%;" class="mb-2">
+          <hr id="cdusuario" style="width: 98%;" class="mb-2">
           <div class="col-md-6 mb-1">
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label text-muted">Sigla</label>

@@ -97,7 +97,7 @@ if (!empty($_GET['id'])) {
         </div>
         <h3 class="mb-3">Alteração de bens</h3>
         <hr class="mb-4">
-        <form method="POST" action="salvar-alteracao.php">
+        <form method="POST" action="salvar-alteracaodebens.php">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numPatrimonio" class="form-label text-muted">Número do Patrimônio PMSP:</label>
@@ -105,6 +105,7 @@ if (!empty($_GET['id'])) {
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="tipo" class="form-label text-muted">Tipo:</label>
+                    
                     <select class="form-select" name="tipo" id="tipo" required>
                         <option value="<?php echo $tipo ?>" hidden="hidden"><?php echo $tipo ?></option>
                         <option value="AMPLIFICADOR">AMPLIFICADOR</option>
@@ -204,13 +205,13 @@ if (!empty($_GET['id'])) {
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="localNovo" class="form-label text-muted">Setor:</label>
-                    <input type="text" class="form-control" id="localNovo" name="localNovo" value="<?php echo $localizacao ?> " readonly>
+                    <input type="text" class="form-control" id="localNovo" name="localNovo" value="<?php echo $localizacao ?> ">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nomeServidor" class="form-label text-muted">Nome do Servidor:</label>
-                    <input type="text" class="form-control" id="nomeServidor" name="nomeServidor" value="<?php echo $servidor ?>" readonly>
+                    <input type="text" class="form-control" id="nomeServidor" name="nomeServidor" value="<?php echo $servidor ?>">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="cimbpm" class="form-label text-muted">CIMBPM:</label>

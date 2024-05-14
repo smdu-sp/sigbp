@@ -1,52 +1,3 @@
-new DataTable("#example", {
-  lengthMenu: [
-    [6, 12, 24],
-    [6, 12, 24, "All"],
-  ],
-  language: {
-    sEmptyTable: "Nenhum registro encontrado",
-    sInfoEmpty: "Mostrando 0 até 0 de 0 registros",
-    sInfo: "Página _PAGE_ de _PAGES_",
-    sLengthMenu: "_MENU_ resultados por página",
-    sSearch: "Pesquisar:",
-    sZeroRecords: "Nenhum registro encontrado",
-    sProcessing: "Processando...",
-    sLoadingRecords: "Carregando...",
-    sInfoFiltered: "(Filtrados de _MAX_ registros)",
-    sInfoThousands: ".",
-    sInfoPostFix: "",
-    order: [[0, "desc"]],
-  },
-});
-
-$(document).ready(function () {
-  $("#example").DataTable();
-  var opts = { aaSorting: [] };
-  $("#example").DataTable().destroy();
-  $("#example").DataTable(opts);
-});
-
-new DataTable("#home", {
-  lengthMenu: [
-    [6, 9],
-    [6, 9],
-  ],
-  language: {
-    sEmptyTable: "Nenhum registro encontrado",
-    sInfoEmpty: "Mostrando 0 até 0 de 0 registros",
-    sInfo: "Página _PAGE_ de _PAGES_",
-    sLengthMenu: "_MENU_ resultados por página",
-    sSearch: "Pesquisar:",
-    sZeroRecords: "Nenhum registro encontrado",
-    sProcessing: "Processando...",
-    sLoadingRecords: "Carregando...",
-    sInfoFiltered: "(Filtrados de _MAX_ registros)",
-    sInfoThousands: ".",
-    sInfoPostFix: "",
-  },
-
-  order: [[-1, "asc"]],
-});
 
 const ativar = (elemento) => {
   let itens = document.getElementsByClassName("page-item");
@@ -113,8 +64,3 @@ function adicionarItem() {
     arrayNumSerie.push(nPatriSerie);
   }
 }
-
-btnSairCadUsuario = document.getElementById("btnSair-cadUsuario");
-btnSairCadUsuario.addEventListener("click", () => {
-  location.reload();
-});

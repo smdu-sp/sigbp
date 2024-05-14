@@ -303,39 +303,42 @@ if (isset($_POST['submit'])) {
 
 </body>
 <script>
-    function alert() {
-        const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
+        function alert(num) {
+        if(num == 1) {
+            const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    customClass: ({
+                        title: 'swal2-title'
+                    }),
+                    icon: "success",
+                    title: "Item cadastrado com sucesso!",
+                    background: 'green',
+                    iconColor: '#ffffff'
             });
-            Toast.fire({
-                customClass: ({
-                    title: 'swal2-title'
-                }),
-                icon: "success",
-                title: "Item cadastrado com sucesso!",
-                background: 'green',
-                iconColor: '#ffffff'
-            });
+        }
     }
-    // alert();
+
     window.addEventListener('load', function() {
         var url_string = window.location.href;
         var url = new URL(url_string);
         var data = url.searchParams.get("notificacao");
         if (data == 'true') {
-            alert();
+            alert(1);
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'cadastrarbens.php');
+            setInterval(function() {
+                window.location.href = 'listaremovimentar.php';
+            }, 1100);
         }
     })
 </script>
-
 </html>

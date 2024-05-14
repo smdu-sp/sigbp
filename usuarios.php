@@ -87,9 +87,9 @@ if ($permissao != 1) {
     <div class="p-4 p-md-4 pt-3 conteudo overflow">
         <div class="carrossel-box mb-4">
             <div class="carrossel">
-                <a href="./controledeusuario" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
+                <a href="./controledeusuario.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-                <a href="./cadastrodeusuario.php" class="text-primary ms-1 carrossel-text">Usuários</a>
+                <a href="./controledeusuario.php" class="text-primary ms-1 carrossel-text">Usuários</a>
             </div>
             <div class="button-dark">
                 <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
@@ -215,12 +215,12 @@ if ($permissao != 1) {
                         while ($user_data = mysqli_fetch_assoc($limite)) {
                             echo "<tr>";
                             echo "<td hidden>" . $user_data['id'] . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='cadastrodeusuario.php?id=$user_data[id]'>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='cadastrodeusuario.php?id=$user_data[id]'>" . $user_data['email'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='cadastrodeusuario.php?id=$user_data[id]' hidden>" . $user_data['statususer'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td class='unidade' style='cursor: pointer;' onclick=location.href='cadastrodeusuario.php?id=$user_data[id]'>" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='cadastrodeusuario.php?id=$user_data[id]'>" . $user_data['unidade'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td id='permissao' style='cursor: pointer;' onclick=location.href='cadastrodeusuario.php?id=$user_data[id]'>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['email'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]' hidden>" . $user_data['statususer'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td class='unidade' style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['unidade'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td id='permissao' style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>";
 
                             if ($user_data['permissao'] == 1) {
                                 echo "<div id='dev'><p class='perm-usuario'>Administrador<span hidden>todos</span></p></div>";
@@ -253,12 +253,11 @@ if ($permissao != 1) {
                 </div>
                 <div class='page-info'>Página 1 de 2</div>
                 <?php
-                echo "<a href='?pagina=$anterior' onclick='sort(1)' class='arrow-button esquerda' id='esquerda'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
-                echo "<a href='?pagina=$proximo' onclick='sort(2)' class='arrow-button direita' id='direita'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
+                echo "<a href='?pagina=$anterior' onclick='teste()' class='arrow-button esquerda' id='esquerda'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
+                echo "<a href='?pagina=$proximo' onclick='teste()' class='arrow-button direita' id='direita'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
                 ?>
             </div>
-
-            <div class="d-flex justify-content-end mt-5 mr-2">
+            <div class="d-flex justify-content-end mt-4 mr-2">
                 <a href="./cadastrodeusuario.php" id="btn-adc-usuario">
                     <img src="./images/icons-adcUsuario.png" alt="">
                 </a>
@@ -390,6 +389,69 @@ if ($permissao != 1) {
             updateTable();
         });
     });
+
+    function alert(num) {
+        if(num == 1) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Usuário alterado com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
+            });
+        } else {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Usuário cadastrado com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
+            });
+        }
+    }
+    // alert();
+    window.addEventListener('load', function() {
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var data = url.searchParams.get("notificacao");
+        if (data == null) {
+            return;
+        } else if (data == 'alterado') {
+            alert(1);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'http://localhost/usuario.php');
+        } else if (data == 'cadastrado') {
+            alert(2);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'http://localhost/listaremovimentar.php');
+        }
+    })
 </script>
 
 </html>

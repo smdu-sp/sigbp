@@ -50,7 +50,7 @@ include_once('./conexoes/config.php');
                     <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
                 </a></li>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-                <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Dashboard</a></li>
+                <a href="./dashboard.php" class="text-primary ms-1 carrossel-text">Dashboard</a></li>
             </div>
             <div class="button-dark">
                 <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>

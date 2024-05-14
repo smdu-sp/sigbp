@@ -1,4 +1,4 @@
-<td style="color: red; font-weight: bold; text-align: right;">
+<!-- <td style="color: red; font-weight: bold; text-align: right;">
   <div class="switch__container">
     <input id="switch-shadow" class="switch switch--shadow" type="checkbox">
     <label for="switch-shadow"></label>
@@ -112,4 +112,4 @@
     margin-left: 60px;
     background-color: #8ce196;
   }
-</style>
+</style> -->
