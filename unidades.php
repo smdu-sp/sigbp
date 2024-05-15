@@ -1,13 +1,17 @@
 <?php
 session_start();
-include_once('conexoes/config.php');
-include_once('header.php');
-include_once('verificacao.php');
+include_once ('conexoes/config.php');
+include_once ('header.php');
+include_once ('verificacao.php');
 
 $busca = "SELECT * FROM unidades ORDER BY id ASC";
 
 // Número de registros por página
 $recordsPerPage = 10;
+
+// if ($_GET['atualizado'] === '1') {
+//     echo "<script>alert('Unidade atualizada com sucesso!');</script>";
+// }
 
 // Página atual
 if (isset($_GET['pagina']) && is_numeric($_GET['pagina'])) {
@@ -82,12 +86,13 @@ if ($permissao != 1) {
 
 <body>
     <?php
-    include_once('menu.php');
+    include_once ('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo overflow">
         <div class="carrossel-box mb-4">
             <div class="carrossel">
-                <a href="./unidades.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
+                <a href="./unidades.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3"
+                        alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
                 <a href="./unidades.php" class="text-primary ms-1 carrossel-text">Unidades</a>
             </div>
@@ -99,7 +104,8 @@ if ($permissao != 1) {
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
             <div>
                 <div class="d-flex justify-content-end align-items-end">
-                    <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar" style="cursor: pointer;">
+                    <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar"
+                        style="cursor: pointer;">
                         <img src="./images/icon-recarregar.png" alt="#" id='img-recarregar'>
                     </a>
                     <a href="#" class="mb-2 mr-2 usuario-img" id="limpar" style="cursor: pointer;">
@@ -124,74 +130,7 @@ if ($permissao != 1) {
                     </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
-                        <select id="unidadeSelect" class="form-select" aria-label="Default select example">
-                            <option value="" hidden="hidden">Selecionar</option>
-                            <option value="ASCOM">ASCOM</option>
-                            <option value="ATAJ">ATAJ</option>
-                            <option value="ATECC">ATECC</option>
-                            <option value="ATIC">ATIC</option>
-                            <option value="AUDITÓRIO">AUDITÓRIO</option>
-                            <option value="CAEPP">CAEPP</option>
-                            <option value="CAEPP/DERP">CAEPP/DERPP</option>
-                            <option value="CAEPP/DESPP">CAEPP/DESPP</option>
-                            <option value="CAF">CAF</option>
-                            <option value="CAF/DGP">CAF/DGP</option>
-                            <option value="CAF/DLC">CAF/DLC</option>
-                            <option value="CAF/DOF">CAF/DOF</option>
-                            <option value="CAF/DRV">CAF/DRV</option>
-                            <option value="CAF/DSUP">CAF/DSUP</option>
-                            <option value="CAP">CAP</option>
-                            <option value="CAP/ARTHUR SABOYA">CAP/ARTHUR SABOYA</option>
-                            <option value="CAP/DEPROT">CAP/DEPROT</option>
-                            <option value="CAP/DPCI">CAP/DPCI</option>
-                            <option value="CAP/DPD">CAP/DPD</option>
-                            <option value="CAP/NÚCLEO DE ATENDIMENTO">CAP/NÚCLEO DE ATENDIMENTO</option>
-                            <option value="CASE">CASE</option>
-                            <option value="CASE/DCAD">CASE/DCAD</option>
-                            <option value="CASE/DDU">CASE/DDU</option>
-                            <option value="CASE/DLE">CASE/DLE</option>
-                            <option value="CASE/STEL">CASE/STEL</option>
-                            <option value="CEPEUC">CEPEUC</option>
-                            <option value="CEPEUC">CEPEUC/DCIT</option>
-                            <option value="CEPEUC">CEPEUC/DDOC</option>
-                            <option value="CEPEUC">CEPEUC/DVF</option>
-                            <option value="CGPATRI">CGPATRI</option>
-                            <option value="COMIN">COMIN</option>
-                            <option value="COMIN/DCIGP">COMIN/DCIGP</option>
-                            <option value="COMIN/DCIMP">COMIN/DCIMP</option>
-                            <option value="CONTRU">CONTRU</option>
-                            <option value="CONTRU/DACESS">CONTRU/DACESS</option>
-                            <option value="CONTRU/DINS">CONTRU/DINS</option>
-                            <option value="CONTRU/DLR">CONTRU/DLR</option>
-                            <option value="CONTRU/DSUS">CONTRU/DSUS</option>
-                            <option value="DEUSO">DEUSO</option>
-                            <option value="DEUSO">DEUSO/DMUS</option>
-                            <option value="DEUSO">DEUSO/DNUS</option>
-                            <option value="DEUSO">DEUSO/DSIZ</option>
-                            <option value="GABINETE">GABINETE</option>
-                            <option value="GEOINFO">GEOINFO</option>
-                            <option value="GTEC">GTEC</option>
-                            <option value="ILUME">ILUME</option>
-                            <option value="PARHIS">PARHIS</option>
-                            <option value="PARHIS/DHIS">PHARIS/DHIS</option>
-                            <option value="PARHIS/DHMP">PHARIS/DHMP</option>
-                            <option value="PARHIS/DHMP">PHARIS/DHPP</option>
-                            <option value="PARHIS/DPS">PHARIS/DPS</option>
-                            <option value="PLANURB">PLANURB</option>
-                            <option value="PLANURB">PLANURB/DART</option>
-                            <option value="RESID">RESID</option>
-                            <option value="RESID/DRGP">RESID/DRGP</option>
-                            <option value="RESID/DRGP">RESID/DRH</option>
-                            <option value="RESID/DRPM">RESID/DRPM</option>
-                            <option value="RESID/DRPM">RESID/DRVE</option>
-                            <option value="RESID/DRU">RESID/DRU</option>
-                            <option value="SECRETARIO">SECRETARIO</option>
-                            <option value="SEL/AJ">SEL/AJ</option>
-                            <option value="SERVIN">SERVIN</option>
-                            <option value="SERVIN/DSIGP">SERVIN/DSIGP</option>
-                            <option value="SERVIN/DSIMP">SERVIN/DSIMP</option>
-                            <option value="STEL">STEL</option>
-                        </select>
+                        <?php include_once ('listaUnidades.php'); ?>
                     </div>
                     <div class="col-4 mb-2">
                         <p class="mb-1 text-muted">Buscar:</p>
@@ -202,30 +141,31 @@ if ($permissao != 1) {
                 <table class="table table-hover" id='myTable'>
                     <thead>
                         <tr>
-                        <th>Nome</th>
-                        <th>Sigla</th>
-                        <th>Codigo</th>
-                        <th>Status</th>
+                            <th>Nome</th>
+                            <th>Sigla</th>
+                            <th>Codigo</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <?php
-                    while ($user_data = mysqli_fetch_assoc($todos)) {
-                        
-                        echo "<tr>";
-                        echo "<td style=' cursor: pointer; background-color:hover: grey;' onclick=location.href='unidades.php?id=$user_data[id]'>" . $user_data['unidades'] . "</td>";
-                        echo "<td style=' cursor: pointer; background-color:hover: grey;' onclick=location.href='unidades.php?id=$user_data[id]'>" . $user_data['sigla'] . "</td>";
-                        echo "<td style=' cursor: pointer; background-color:hover: grey;' onclick=location.href='unidades.php?id=$user_data[id]'>" . $user_data['codigo'] . "</td>";
-                        $tipostatus = [
-                            'Ativo',
-                            'Inativo'
-                        ];
-                        echo "<td style=' cursor: pointer; background-color:hover: grey;' onclick=location.href='unidades.php?id=$user_data[id]'>" . $user_data['codigo'] . "</td>";
-                        // include_once('interruptor.php');
-                        // echo "<td style='color: red; font-weight: bold; text-align: right'>" . 'a' . "</td>";                        
-                        echo "</tr>";
-                    }
-                    ?>
+                        <?php
+                        while ($user_data = mysqli_fetch_assoc($todos)) {
+
+                            echo "<tr>";
+                            echo "<td style=' cursor: pointer; background-color:hover: grey;' onclick=location.href='cadastrodeunidades.php?id=$user_data[id]'>" . $user_data['unidades'] . "</td>";
+                            echo "<td style=' cursor: pointer; background-color:hover: grey;' onclick=location.href='cadastrodeunidades.php?id=$user_data[id]'>" . $user_data['sigla'] . "</td>";
+                            echo "<td style=' cursor: pointer; background-color:hover: grey;' onclick=location.href='cadastrodeunidades.php?id=$user_data[id]'>" . $user_data['codigo'] . "</td>";
+                            $tipostatus = [
+                                'Ativo',
+                                'Inativo'
+                            ];
+                            echo $status = $user_data['statusunidade'] == 0 ? "ativo" : "inativo";
+                            echo "<td style='cursor: pointer; background-color:hover: grey;' onclick=location.href='cadastrodeunidades.php?id=$user_data[id]'>$status</td>";
+                            // include_once('interruptor.php');
+                            // echo "<td style='color: red; font-weight: bold; text-align: right'>" . 'a' . "</td>";                        
+                            echo "</tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -255,14 +195,14 @@ if ($permissao != 1) {
     <div class="hide" id="modal"></div>
 </body>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         function aplicarFiltros() {
             var inputValue = $("#myInput").val().toLowerCase();
             var unidadeValue = $("#unidadeSelect").val();
             var statusValue = $("#statusSelect").val();
             var permissaoValue = $("#permissaoSelect").val();
 
-            $("#myTable tr").each(function(index) {
+            $("#myTable tr").each(function (index) {
                 if (index > 0) {
                     var row = $(this);
                     var textToShow = true;
@@ -296,7 +236,7 @@ if ($permissao != 1) {
             });
         }
 
-        $("#myInput, #unidadeSelect, #statusSelect, #permissaoSelect").on("change keyup", function() {
+        $("#myInput, #unidadeSelect, #statusSelect, #permissaoSelect").on("change keyup", function () {
             aplicarFiltros();
         });
 
@@ -308,12 +248,12 @@ if ($permissao != 1) {
             $("#myTable tr").show();
         }
 
-        $("#limpar").on("click", function() {
+        $("#limpar").on("click", function () {
             limparInputs();
         });
     });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         var totalRecords = <?php echo $totalRecords; ?>;
         var recordsPerPage = <?php echo $recordsPerPage; ?>;
         var totalPages = Math.ceil(totalRecords / recordsPerPage);
@@ -370,7 +310,7 @@ if ($permissao != 1) {
 
         $('.arrow-button:first').click(previousPage);
         $('.arrow-button:last').click(nextPage);
-        $('#recordsPerPage').change(function() {
+        $('#recordsPerPage').change(function () {
             recordsPerPage = parseInt($(this).val());
             totalPages = Math.ceil(totalRecords / recordsPerPage);
             currentPage = 1;
