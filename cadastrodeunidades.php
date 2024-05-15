@@ -1,8 +1,9 @@
 <?php
 session_start();
-include_once('verificacao.php');
 include_once('header.php');
 include_once('./conexoes/config.php');
+include_once('componentes/verificacao.php');
+include_once('componentes/permissao.php');
 
 $sql = "SELECT * FROM item ORDER BY idbem ASC";
 $result = $conexao->query($sql) or die($mysqli->error);

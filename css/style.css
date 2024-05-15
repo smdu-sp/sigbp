@@ -667,6 +667,16 @@ hr {
     align-items: center;
 }
 
+
+#esquerda-disabled,
+#direita-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+
 .arrow-button:hover {
     background-color: #F5F5F5;
     border-radius: 50%;

@@ -2,42 +2,26 @@
 session_start();
 include_once('conexoes/config.php');
 include_once('header.php');
-include_once('verificacao.php');
+include_once('componentes/verificacao.php');
+include_once('componentes/permissao.php');
+
+$sql_usuarios_count_query = "SELECT COUNT(*) as c FROM usuarios";
+$sql_usuarios_count_query_exec = $conexao->query($sql_usuarios_count_query) or die($conexao->error);
+
+$sql_usuarios_count = $sql_usuarios_count_query_exec->fetch_assoc();
+$usuarios_count = $sql_usuarios_count['c'];
+
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$limit = 10;
+$offset = ($page - 1) * $limit;
+
+$page_number = ceil($usuarios_count / $limit);
 
 $busca = "SELECT * FROM usuarios ORDER BY id ASC";
 
-// Número de registros por página
-$recordsPerPage = 10;
+$sql_usuarios_query = "$busca LIMIT {$limit} OFFSET {$offset}";
+$sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao->error);
 
-// Página atual
-if (isset($_GET['pagina']) && is_numeric($_GET['pagina'])) {
-    $currentPage = $_GET['pagina'];
-} else {
-    $currentPage = 1;
-}
-
-$inicio = ($currentPage - 1) * $recordsPerPage;
-
-// Consulta SQL modificada para incluir a cláusula LIMIT
-$limite = mysqli_query($conexao, "$busca LIMIT $inicio,$recordsPerPage");
-$todos = mysqli_query($conexao, "$busca");
-
-// Contar o total de registros
-$totalRecords = mysqli_num_rows($todos);
-
-$tr = $totalRecords;
-$tp = $tr / $recordsPerPage;
-
-$anterior = $currentPage - 1;
-$proximo = $currentPage + 1;
-
-$buscar_permisao = "SELECT permissao FROM usuarios WHERE `usuario`='" . strtolower($_SESSION['SesID']) . "';";
-$query_usuario = mysqli_query($conexao, $buscar_permisao);
-$row = mysqli_fetch_assoc($query_usuario);
-$permissao = $row['permissao'];
-if ($permissao != 1) {
-    header('Location: home.php');
-}
 ?>
 <style>
     @media (max-width: 1600px) {
@@ -124,7 +108,7 @@ if ($permissao != 1) {
                     </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
-                        <select id="unidadeSelect" class="form-select" aria-label="Default select example">
+                        <select id="unidadeSelect" class="form-select" >
                             <option value="" hidden="hidden">Selecionar</option>
                             <option value="ASCOM">ASCOM</option>
                             <option value="ATAJ">ATAJ</option>
@@ -199,7 +183,7 @@ if ($permissao != 1) {
                     </div>
                 </div>
                 <br>
-                <table class="table table-hover" id='myTable'>
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th scope="col">Nome</th>
@@ -210,9 +194,9 @@ if ($permissao != 1) {
                             <th scope="col"></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id='myTable'>
                         <?php
-                        while ($user_data = mysqli_fetch_assoc($limite)) {
+                        while ($user_data = $sql_usuarios_query_exec->fetch_assoc()) {
                             echo "<tr>";
                             echo "<td hidden>" . $user_data['id'] . "</td>";
                             echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
@@ -239,22 +223,29 @@ if ($permissao != 1) {
                             echo "</tr>";
                         }
                         ?>
+
                     </tbody>
                 </table>
             </div>
             <div class='pagination-controls'>
-                <div class='records-per-page'>
+                <!-- <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
-                    <select id='recordsPerPage'>
+                    <select id='recordsPerPage' onchange="updateLimit()">
+                        <option value='<?php echo $limit ?>' hidden> <?php echo $limit ?></option>
                         <option value='5'>5</option>
-                        <option value='10' selected>10</option>
-                        <option value='20'>20</option>
+                        <option value='10'>10</option>
                     </select>
-                </div>
-                <div class='page-info'>Página 1 de 2</div>
+                </div> -->
+                <div class='page-info'>Página <?php echo $page; ?> de <?php echo $page_number; ?></div>
                 <?php
-                echo "<a href='?pagina=$anterior' onclick='teste()' class='arrow-button esquerda' id='esquerda'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
-                echo "<a href='?pagina=$proximo' onclick='teste()' class='arrow-button direita' id='direita'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
+                $opacidade_esquerda = ($page == 1) ? '0.5' : '1';
+                $opacidade_direita = ($page == $page_number) ? '0.5' : '1';
+                $disabled_esquerda = ($opacidade_esquerda == '0.5') ? 'disabled' : '';
+                $disabled_direita = ($opacidade_direita == '0.5') ? 'disabled' : '';
+
+                echo "<a href='?page=" . ($page - 1) . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
+                echo "<a href='?page=" . ($page + 1) . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
+
                 ?>
             </div>
             <div class="d-flex justify-content-end mt-4 mr-2">
@@ -267,12 +258,10 @@ if ($permissao != 1) {
     <div class="hide" id="modal"></div>
 </body>
 <script>
-    $(document).ready(function() {
+     $(document).ready(function() {
         function aplicarFiltros() {
             var inputValue = $("#myInput").val().toLowerCase();
             var unidadeValue = $("#unidadeSelect").val();
-            var statusValue = $("#statusSelect").val();
-            var permissaoValue = $("#permissaoSelect").val();
 
             $("#myTable tr").each(function(index) {
                 if (index > 0) {
@@ -287,28 +276,12 @@ if ($permissao != 1) {
                         textToShow = textToShow && row.text().indexOf(unidadeValue) > -1;
                     }
 
-                    if (statusValue) {
-                        textToShow = textToShow && row.text().indexOf(statusValue) > -1;
-                    }
-
-                    if (permissaoValue) {
-                        if (permissaoValue == 1) {
-                            textToShow = textToShow && row.text().indexOf('Administrador') > -1;
-                        } else if (permissaoValue == 2) {
-                            textToShow = textToShow && row.text().indexOf('Usuário') > -1;
-                        } else if (permissaoValue == 3) {
-                            textToShow = textToShow && row.text().indexOf('Sem permissão') > -1;
-                        } else if (permissaoValue == 4) {
-                            textToShow = textToShow && row.text().indexOf('todos') > -1;
-                        }
-                    }
-
                     row.toggle(textToShow);
                 }
             });
         }
 
-        $("#myInput, #unidadeSelect, #statusSelect, #permissaoSelect").on("change keyup", function() {
+        $("#myInput, #unidadeSelect").on("change keyup", function() {
             aplicarFiltros();
         });
 
@@ -325,73 +298,23 @@ if ($permissao != 1) {
         });
     });
 
-    $(document).ready(function() {
-        var totalRecords = <?php echo $totalRecords; ?>;
-        var recordsPerPage = <?php echo $recordsPerPage; ?>;
-        var totalPages = Math.ceil(totalRecords / recordsPerPage);
-        var currentPage = <?php echo $currentPage; ?>;
 
-        function updateTable() {
-            var start = (currentPage - 1) * recordsPerPage;
-            var end = start + recordsPerPage;
-            $('#myTable tbody tr').hide().slice(start, end).show();
-            $('.page-info').text('Página ' + currentPage + ' de ' + totalPages);
+    function updateLimit() {
+        var selectElement = document.getElementById('recordsPerPage');
+        var selectedValue = selectElement.value;
+        window.location.href = '?limit=' + selectedValue;
+    }
 
-            if (totalPages < 2) {
-                var botaoEsquerda = document.getElementById('esquerda');
-                var botaoDireita = document.getElementById('direita');
-                botaoEsquerda.disabled = true;
-                botaoDireita.disabled = true;
-                botaoEsquerda.style.opacity = '0.5';
-                botaoDireita.style.opacity = '0.5';
-            } else {
-                var botaoEsquerda = document.getElementById('esquerda');
-                var botaoDireita = document.getElementById('direita');
-                if (currentPage == 1) {
-                    botaoEsquerda.disabled = true;
-                    botaoEsquerda.style.opacity = '0.5';
-                    botaoDireita.disabled = false;
-                    botaoDireita.style.opacity = '1';
-                } else if (currentPage == totalPages) {
-                    botaoEsquerda.disabled = false;
-                    botaoEsquerda.style.opacity = '1';
-                    botaoDireita.disabled = true;
-                    botaoDireita.style.opacity = '0.5';
-                } else {
-                    botaoEsquerda.disabled = false;
-                    botaoDireita.disabled = false;
-                }
-            }
-        }
-
-        updateTable();
-
-        function previousPage() {
-            if (currentPage > 1) {
-                currentPage--;
-                updateTable();
-            }
-        }
-
-        function nextPage() {
-            if (currentPage < totalPages) {
-                currentPage++;
-                updateTable();
-            }
-        }
-
-        $('.arrow-button:first').click(previousPage);
-        $('.arrow-button:last').click(nextPage);
-        $('#recordsPerPage').change(function() {
-            recordsPerPage = parseInt($(this).val());
-            totalPages = Math.ceil(totalRecords / recordsPerPage);
-            currentPage = 1;
-            updateTable();
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Impede a ação padrão do clique
+            });
         });
     });
 
     function alert(num) {
-        if(num == 1) {
+        if (num == 1) {
             const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -435,7 +358,6 @@ if ($permissao != 1) {
             });
         }
     }
-    // alert();
     window.addEventListener('load', function() {
         var url_string = window.location.href;
         var url = new URL(url_string);
