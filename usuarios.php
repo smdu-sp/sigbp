@@ -63,7 +63,24 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
         height: 22px;
     }
 </style>
-
+<script>
+                        function desativarUsuario(id) {
+                            if (confirm("Tem certeza que deseja desativar este usuário?")) {
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("POST", "desativar_usuario.php", true);
+                                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                                xhr.onreadystatechange = function() {
+                                    if (xhr.readyState === 4 && xhr.status === 200) {
+                                        // Manipular a resposta da requisição, se necessário
+                                        console.log(xhr.responseText);
+                                        // Recarregar a página ou fazer outras ações após desativar o usuário
+                                        location.reload();
+                                    }
+                                };
+                                xhr.send("id=" + id);
+                            }
+                        }
+                        </script>
 <body>
     <?php
     include_once('menu.php');
@@ -221,7 +238,9 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
                             echo "<a class='x-image' id='tooltip2' href='#'><span id='tooltipText2'>Excluir</span><img class='img-usuario' src='./images/icons-x.png' alt='x'></a>";
                             echo "</td>";
                             echo "</tr>";
+                            
                         }
+                       
                         ?>
 
                     </tbody>

@@ -98,7 +98,7 @@ $proximo = $currentPage + 1;
                     <a href="#" class="mb-2 mr-2 usuario-img" id="limpar" style="cursor: pointer;">
                         <img src="./images/limpar.png" alt="#" id='img-recarregar'>
                     </a>
-                    <div class="col-5 mb-2">
+                    <div class="col-5 mb-2">       
                         <p class="mb-1 text-muted">Unidade:</p>
                         <select id="unidadeSelect" class="form-select" aria-label="Default select example">
                             <option value="" hidden="hidden">Selecionar</option>
@@ -168,6 +168,9 @@ $proximo = $currentPage + 1;
                             <option value="SERVIN/DSIMP">SERVIN/DSIMP</option>
                             <option value="STEL">STEL</option>
                         </select>
+                        <select id="unidadeSelect" class="form-select" aria-label="Default select example">
+                        </select>
+                        
                     </div>
                     <div class="col-6 mb-2">
                         <p class="mb-1 text-muted">Buscar:</p>

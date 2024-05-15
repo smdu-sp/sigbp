@@ -10,59 +10,75 @@ $result = $conexao->query($sql) or die($mysqli->error);
 
 isset($_GET['id']) ? $id = $_GET['id'] : $id = null;
 
-if ($id != null && isset($_POST['submit'])) {
-  $nome = $_POST['nome'];
-  $codigo = $_POST['codigo'];
-  $sigla = $_POST['sigla'];
-  $status = $_POST['status'];
+echo '                                                          ' . $id . '';
 
-  $result = mysqli_query($conexao, "UPDATE unidades SET unidades = '$nome', sigla = '$sigla', codigo = '$codigo', statusunidade = $status WHERE id = '$id'");
-} else {
+if ($id) {
+
   if (isset($_POST['submit'])) {
     $nome = $_POST['nome'];
     $codigo = $_POST['codigo'];
     $sigla = $_POST['sigla'];
     $status = $_POST['status'];
 
-    $result = mysqli_query($conexao, "INSERT INTO unidades(unidades, sigla, codigo, statusunidade) VALUES ('$nome', '$sigla', '$codigo', $status)");
+    $result = mysqli_query($conexao, "UPDATE unidades SET unidades = '$nome', sigla = '$sigla', codigo = '$codigo', statusunidade = $status WHERE id = $id");
+
+    header("Location: unidades.php?atualizado=1");
+  } else {
+    $buscar_unidade = "SELECT * FROM unidades WHERE id = $id;";
+    $query_usuario = mysqli_query($conexao, $buscar_unidade);
+    $row = mysqli_fetch_assoc($query_usuario);
+
+    $unidade = $row['unidades'];
+    $sigla = $row['sigla'];
+    $codigo = $row['codigo'];
+    $status = $row['statusunidade'];
   }
+
+} else if (isset($_POST['submit'])) {
+  $nome = $_POST['nome'];
+  $codigo = $_POST['codigo'];
+  $sigla = $_POST['sigla'];
+  $status = $_POST['status'];
+
+  $result = mysqli_query($conexao, "INSERT INTO unidades(unidades, sigla, codigo, statusunidade) VALUES ('$nome', '$sigla', '$codigo', $status)");
 }
+
 ?>
 
 <style>
-     @media (max-width: 1600px) {
-        .conteudo {
-            margin-left: 75px;
-            width: 95%;
-        }
-
-        .conteudo_menu {
-            width: 70px;
-        }
-
-        .menu-principal {
-            position: fixed;
-            top: 0;
-            left: -187px;
-            z-index: 999999 !important;
-            transition: all .5s ease;
-        }
-
-
-        .menu-logout {
-            z-index: 1000000 !important;
-        }
-
-        .aparecer {
-            left: 70px !important;
-        }
-
-
-        .menu-button {
-            display: block;
-            cursor: pointer;
-        }
+  @media (max-width: 1600px) {
+    .conteudo {
+      margin-left: 75px;
+      width: 95%;
     }
+
+    .conteudo_menu {
+      width: 70px;
+    }
+
+    .menu-principal {
+      position: fixed;
+      top: 0;
+      left: -187px;
+      z-index: 999999 !important;
+      transition: all .5s ease;
+    }
+
+
+    .menu-logout {
+      z-index: 1000000 !important;
+    }
+
+    .aparecer {
+      left: 70px !important;
+    }
+
+
+    .menu-button {
+      display: block;
+      cursor: pointer;
+    }
+  }
 
   .card {
     padding: 30px 20px;
@@ -72,7 +88,7 @@ if ($id != null && isset($_POST['submit'])) {
 
 <body>
   <?php
-  include_once('menu.php');
+  include_once ('menu.php');
   ?>
   <div class="p-4 p-md-4 pt-3 conteudo">
     <div class="carrossel mb-2">
@@ -90,26 +106,30 @@ if ($id != null && isset($_POST['submit'])) {
           <div class="col-md-6 mb-1">
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label text-muted">Nome</label>
-              <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="Nome" name="nome" required>
+              <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario"
+                placeholder="Nome" name="nome" value="<?php $id ? print_r($unidade) : '' ?>" required>
             </div>
           </div>
           <div class="col-md-6 mb-1">
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label text-muted">codigo</label>
-              <input type="number" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="código" name="codigo" min="0" required>
+              <input type="number" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario"
+                value="<?php $id ? print_r($codigo) : '' ?>" placeholder="código" name="codigo" min="0" required>
             </div>
           </div>
           <hr id="cdusuario" style="width: 98%;" class="mb-2">
           <div class="col-md-6 mb-1">
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label text-muted">Sigla</label>
-              <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="código" name="sigla" min="0" required>
+              <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario"
+                value="<?php $id ? print_r($sigla) : '' ?>" placeholder="sigla" name="sigla" min="0" required>
             </div>
           </div>
           <div class="col-md-6 mb-1">
             <label for="usuarioCadastro" class="form-label text-muted">Status</label>
             <div class="input-group">
-              <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-status.png" alt="" class="imgCadastro"></div>
+              <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-status.png"
+                  alt="" class="imgCadastro"></div>
               <select class="form-select" name="status" required>
                 <option value="" hidden="hidden">Selecionar</option>
                 <option value="0">Ativo</option>
@@ -119,8 +139,9 @@ if ($id != null && isset($_POST['submit'])) {
           </div>
         </div>
         <div class="d-flex flex-row-reverse">
-          <input type="submit" class="btn btn-primary ml-3 pe-auto mr-2 " id="btn-cadUsuario" name="submit" value="<?php echo isset($_GET['id']) ? 'Atualizar' : 'Cadastrar' ?>"></input>
-          <a type="button" class="btn btn-light bnt-cadastrar" href="tabela-unidades.php">Cancelar</a>
+          <input type="submit" class="btn btn-primary ml-3 pe-auto mr-2 " id="btn-cadUsuario" name="submit"
+            value="<?php echo isset($_GET['id']) ? 'Atualizar' : 'Cadastrar' ?>"></input>
+          <a type="button" class="btn btn-light bnt-cadastrar" href="unidades.php">Cancelar</a>
         </div>
     </form>
 </body>
@@ -150,7 +171,7 @@ if ($id != null && isset($_POST['submit'])) {
       title: "Usuario cadastrado com sucesso!"
     });
   }
-  window.addEventListener('load', function() {
+  window.addEventListener('load', function () {
     var url_string = window.location.href;
     var url = new URL(url_string);
     var data = url.searchParams.get("notificacao");
