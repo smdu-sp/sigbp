@@ -99,8 +99,8 @@ $proximo = $currentPage + 1;
                         <img src="./images/limpar.png" alt="#" id='img-recarregar'>
                     </a>
                     <div class="col-5 mb-2">       
-                        <p class="mb-1 text-muted">Unidade:</p>
-                        <select id="unidadeSelect" class="form-select" aria-label="Default select example">
+                        <!-- <p class="mb-1 text-muted">Unidade:</p> -->
+                        <!-- <select id="unidadeSelect" class="form-select" aria-label="Default select example">
                             <option value="" hidden="hidden">Selecionar</option>
                             <option value="ASCOM">ASCOM</option>
                             <option value="ATAJ">ATAJ</option>
@@ -167,14 +167,15 @@ $proximo = $currentPage + 1;
                             <option value="SERVIN/DSIGP">SERVIN/DSIGP</option>
                             <option value="SERVIN/DSIMP">SERVIN/DSIMP</option>
                             <option value="STEL">STEL</option>
-                        </select>
-                        <select id="unidadeSelect" class="form-select" aria-label="Default select example">
-                        </select>
-                        
+                        </select>                         -->
                     </div>
                     <div class="col-6 mb-2">
-                        <p class="mb-1 text-muted">Buscar:</p>
-                        <input class="form-control" id="myInput" type="text" placeholder="Procurar...">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label for="exampleInputName2" class="mb-1 text-muted">Buscar:</label>
+                                <input class="form-control" id="myInput" type="text" placeholder="Procurar...">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <br>
@@ -233,85 +234,6 @@ $proximo = $currentPage + 1;
     <div class="hide" id="modal"></div>
 </body>
 <script>
-    $(document).ready(function() {
-        function aplicarFiltros() {
-            var inputValue = $("#myInput").val().toLowerCase();
-            var unidadeValue = $("#unidadeSelect").val();
-
-            $("#myTable tr").each(function(index) {
-                if (index > 0) {
-                    var row = $(this);
-                    var textToShow = true;
-
-                    if (inputValue) {
-                        textToShow = textToShow && row.text().toLowerCase().indexOf(inputValue) > -1;
-                    }
-
-                    if (unidadeValue) {
-                        textToShow = textToShow && row.text().indexOf(unidadeValue) > -1;
-                    }
-
-                    row.toggle(textToShow);
-                }
-            });
-        }
-
-        $("#myInput, #unidadeSelect").on("change keyup", function() {
-            aplicarFiltros();
-        });
-
-        function limparInputs() {
-            $("#myInput").val('');
-            $("#unidadeSelect").val('');
-            $("#statusSelect").val('Ativo');
-            $("#permissaoSelect").val('4');
-            $("#myTable tr").show();
-        }
-
-        $("#limpar").on("click", function() {
-            limparInputs();
-        });
-    });
-
-    $(document).ready(function() {
-        var totalRecords = <?php echo $totalRecords; ?>;
-        var recordsPerPage = <?php echo $recordsPerPage; ?>;
-        var totalPages = Math.ceil(totalRecords / recordsPerPage);
-        var currentPage = <?php echo $currentPage; ?>;
-
-        function updateTable() {
-            var start = (currentPage - 1) * recordsPerPage;
-            var end = start + recordsPerPage;
-            $('#myTable tbody tr').hide().slice(start, end).show();
-            $('.page-info').text('Página ' + currentPage + ' de ' + totalPages);
-
-            if (totalPages < 2) {
-                var botaoEsquerda = document.getElementById('esquerda');
-                var botaoDireita = document.getElementById('direita');
-                botaoEsquerda.disabled = true;
-                botaoDireita.disabled = true;
-                botaoEsquerda.style.opacity = '0.5';
-                botaoDireita.style.opacity = '0.5';
-            } else {
-                var botaoEsquerda = document.getElementById('esquerda');
-                var botaoDireita = document.getElementById('direita');
-                if (currentPage == 1) {
-                    botaoEsquerda.disabled = true;
-                    botaoEsquerda.style.opacity = '0.5';
-                    botaoDireita.disabled = false;
-                    botaoDireita.style.opacity = '1';
-                } else if (currentPage == totalPages) {
-                    botaoEsquerda.disabled = false;
-                    botaoEsquerda.style.opacity = '1';
-                    botaoDireita.disabled = true;
-                    botaoDireita.style.opacity = '0.5';
-                } else {
-                    botaoEsquerda.disabled = false;
-                    botaoDireita.disabled = false;
-                }
-            }
-        }
-
         updateTable();
 
         function previousPage() {
