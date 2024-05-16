@@ -12,7 +12,12 @@ $sql_usuarios_count = $sql_usuarios_count_query_exec->fetch_assoc();
 $usuarios_count = $sql_usuarios_count['c'];
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-$limit = 10;
+
+if (isset($_GET['limit'])) {
+    $limit = $_GET['limit'];
+} else {
+    $limit = 10;
+}
 $offset = ($page - 1) * $limit;
 
 $page_number = ceil($usuarios_count / $limit);
@@ -62,25 +67,22 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
         width: 22px;
         height: 22px;
     }
+
+    .btn-filtrar {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 7px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btn-filtrar>img {
+        width: 25px;
+        height: 25px;
+    }
 </style>
-<script>
-                        function desativarUsuario(id) {
-                            if (confirm("Tem certeza que deseja desativar este usuário?")) {
-                                var xhr = new XMLHttpRequest();
-                                xhr.open("POST", "desativar_usuario.php", true);
-                                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                                xhr.onreadystatechange = function() {
-                                    if (xhr.readyState === 4 && xhr.status === 200) {
-                                        // Manipular a resposta da requisição, se necessário
-                                        console.log(xhr.responseText);
-                                        // Recarregar a página ou fazer outras ações após desativar o usuário
-                                        location.reload();
-                                    }
-                                };
-                                xhr.send("id=" + id);
-                            }
-                        }
-                        </script>
+
 <body>
     <?php
     include_once('menu.php');
@@ -99,16 +101,16 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
         <h2 class="mb-3 mt-4">Usuários</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
             <div>
-                <div class="d-flex justify-content-end align-items-end">
+                <form class="d-flex justify-content-end align-items-end" action="pesquisar.php" method="GET">
                     <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar" style="cursor: pointer;">
                         <img src="./images/icon-recarregar.png" alt="#" id='img-recarregar'>
                     </a>
-                    <a href="#" class="mb-2 mr-2 usuario-img" id="limpar" style="cursor: pointer;">
+                    <a href="#" class="mb-2 mr-2 usuario-img" onchange="updateLimit()" id="limpar" style="cursor: pointer;">
                         <img src="./images/limpar.png" alt="#" id='img-recarregar'>
                     </a>
                     <div class="col-2 ml-2 mb-2">
                         <p class="mb-1 text-muted">Status:</p>
-                        <select id="statusSelect" class="form-select" aria-label="Default select example">
+                        <select id="statusSelect" class="form-select" aria-label="Default select example" name="status">
                             <option value="Ativo" selected>Ativo</option>
                             <option value="Inativo">Inativo</option>
                             <option value="todos">Todos</option>
@@ -116,7 +118,7 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
                     </div>
                     <div class="col-2 mb-2">
                         <p class="mb-1 text-muted">Permissão:</p>
-                        <select id="permissaoSelect" class="form-select" aria-label="Default select example">
+                        <select id="permissaoSelect" class="form-select" aria-label="Default select example" name="permissao">
                             <option value="1">Administrador</option>
                             <option value="2">Usuário</option>
                             <option value="3">Sem Permissão</option>
@@ -125,7 +127,7 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
                     </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
-                        <select id="unidadeSelect" class="form-select" >
+                        <select id="unidadeSelect" class="form-select" name="unidade">
                             <option value="" hidden="hidden">Selecionar</option>
                             <option value="ASCOM">ASCOM</option>
                             <option value="ATAJ">ATAJ</option>
@@ -196,9 +198,10 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
                     </div>
                     <div class="col-4 mb-2">
                         <p class="mb-1 text-muted">Buscar:</p>
-                        <input class="form-control" id="myInput" type="text" placeholder="Procurar...">
+                        <input class="form-control" id="myInput" name="pesquisar" type="text" placeholder="Procurar...">
                     </div>
-                </div>
+                    <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon" src="./images/icon-filtrar.png" alt="#"></button>
+                </form>
                 <br>
                 <table class="table table-hover">
                     <thead>
@@ -238,23 +241,22 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
                             echo "<a class='x-image' id='tooltip2' href='#'><span id='tooltipText2'>Excluir</span><img class='img-usuario' src='./images/icons-x.png' alt='x'></a>";
                             echo "</td>";
                             echo "</tr>";
-                            
                         }
-                       
+
                         ?>
 
                     </tbody>
                 </table>
             </div>
             <div class='pagination-controls'>
-                <!-- <div class='records-per-page'>
+                <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
                     <select id='recordsPerPage' onchange="updateLimit()">
                         <option value='<?php echo $limit ?>' hidden> <?php echo $limit ?></option>
                         <option value='5'>5</option>
                         <option value='10'>10</option>
                     </select>
-                </div> -->
+                </div>
                 <div class='page-info'>Página <?php echo $page; ?> de <?php echo $page_number; ?></div>
                 <?php
                 $opacidade_esquerda = ($page == 1) ? '0.5' : '1';
@@ -262,8 +264,9 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
                 $disabled_esquerda = ($opacidade_esquerda == '0.5') ? 'disabled' : '';
                 $disabled_direita = ($opacidade_direita == '0.5') ? 'disabled' : '';
 
-                echo "<a href='?page=" . ($page - 1) . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
-                echo "<a href='?page=" . ($page + 1) . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
+                echo "<a href='?page=" . ($page - 1) . '&limit=' . $limit . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
+                echo "<a href='?page=" . ($page + 1) . '&limit=' . $limit . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
+
 
                 ?>
             </div>
@@ -277,46 +280,9 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
     <div class="hide" id="modal"></div>
 </body>
 <script>
-     $(document).ready(function() {
-        function aplicarFiltros() {
-            var inputValue = $("#myInput").val().toLowerCase();
-            var unidadeValue = $("#unidadeSelect").val();
-
-            $("#myTable tr").each(function(index) {
-                if (index > 0) {
-                    var row = $(this);
-                    var textToShow = true;
-
-                    if (inputValue) {
-                        textToShow = textToShow && row.text().toLowerCase().indexOf(inputValue) > -1;
-                    }
-
-                    if (unidadeValue) {
-                        textToShow = textToShow && row.text().indexOf(unidadeValue) > -1;
-                    }
-
-                    row.toggle(textToShow);
-                }
-            });
-        }
-
-        $("#myInput, #unidadeSelect").on("change keyup", function() {
-            aplicarFiltros();
-        });
-
-        function limparInputs() {
-            $("#myInput").val('');
-            $("#unidadeSelect").val('');
-            $("#statusSelect").val('Ativo');
-            $("#permissaoSelect").val('4');
-            $("#myTable tr").show();
-        }
-
-        $("#limpar").on("click", function() {
-            limparInputs();
-        });
-    });
-
+    function limparInput() {
+        window.location.href = 'usuarios.php';
+    }
 
     function updateLimit() {
         var selectElement = document.getElementById('recordsPerPage');

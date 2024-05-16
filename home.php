@@ -258,7 +258,6 @@ $proximo = $currentPage + 1;
             currentPage = 1;
             updateTable();
         });
-    });
 </script>
 
 </html>

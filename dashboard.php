@@ -1,10 +1,6 @@
 <?php
 session_start();
 include_once('componentes/verificacao.php');
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 include_once('header.php');
 
 

@@ -1,16 +1,8 @@
 <?php
 session_start();
-<<<<<<< Updated upstream
 include_once('conexoes/config.php');
 include_once('header.php'); 
-include_once('menu.php');
-    
-
-
-=======
 include_once('componentes/verificacao.php');
-include_once('header.php');
->>>>>>> Stashed changes
 
 if (isset($_POST['submit'])) {
 
