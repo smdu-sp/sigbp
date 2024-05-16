@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once('verificacao.php');
+include_once('componentes/verificacao.php');
 include_once('header.php');
 ?>
 <style>

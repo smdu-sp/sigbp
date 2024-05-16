@@ -1,6 +1,6 @@
 <?php
 include_once('header.php');
-include_once('componentes/env.php');
+include_once('componentes/verificacao.php');
 
 $permissao = $_SESSION['Perm'];
 

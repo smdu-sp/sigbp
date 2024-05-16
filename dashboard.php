@@ -1,8 +1,12 @@
 <?php
 session_start();
-include_once('verificacao.php');
+include_once('componentes/verificacao.php');
+
 include_once('header.php');
-include_once('./conexoes/config.php');
+
+
+
+
 ?>
 <style>
         @media (max-width: 1600px) {
