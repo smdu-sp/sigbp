@@ -4,32 +4,38 @@ include_once('conexoes/config.php');
 include_once('header.php');
 include_once('componentes/verificacao.php');
 
-$busca = "SELECT item.patrimonio, item.tipo, item.marca, item.modelo, item.nome, transferencia.cimbpm, transferencia.localnovo, transferencia.servidoratual, transferencia.usuario, transferencia.datatransf FROM item, transferencia WHERE item.idbem = transferencia.iditem ORDER BY transferencia.datatransf DESC";
+// Função para escapar entradas do usuário e prevenir SQL Injection
+function escape_input($data) {
+    global $conexao;
+    return mysqli_real_escape_string($conexao, trim($data));
+}
 
 // Número de registros por página
-$recordsPerPage = 6;
+$recordsPerPage = isset($_GET['recordsPerPage']) && is_numeric($_GET['recordsPerPage']) ? (int)$_GET['recordsPerPage'] : 6;
 
 // Página atual
-if (isset($_GET['pagina']) && is_numeric($_GET['pagina'])) {
-    $currentPage = $_GET['pagina'];
-} else {
-    $currentPage = 1;
-}
+$currentPage = isset($_GET['pagina']) && is_numeric($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 
 $inicio = ($currentPage - 1) * $recordsPerPage;
 
 // Consulta SQL modificada para incluir a cláusula LIMIT
-$limite = mysqli_query($conexao, "$busca LIMIT $inicio,$recordsPerPage");
-$todos = mysqli_query($conexao, "$busca");
+$busca = "SELECT item.patrimonio, item.tipo, item.marca, item.modelo, item.nome, transferencia.cimbpm, transferencia.localnovo, transferencia.servidoratual, transferencia.usuario, transferencia.datatransf FROM item, transferencia WHERE item.idbem = transferencia.iditem ORDER BY transferencia.datatransf DESC LIMIT $inicio, $recordsPerPage";
+
+$limite = mysqli_query($conexao, $busca);
+
+// Verificando se a consulta foi bem-sucedida
+if (!$limite) {
+    die('Erro na consulta: ' . mysqli_error($conexao));
+}
 
 // Contar o total de registros
-$totalRecords = mysqli_num_rows($todos);
+$todos = mysqli_query($conexao, "SELECT COUNT(*) as total FROM item, transferencia WHERE item.idbem = transferencia.iditem");
+$totalRecordsRow = mysqli_fetch_assoc($todos);
+$totalRecords = $totalRecordsRow['total'];
 
-$tr = $totalRecords;
-$tp = $tr / $recordsPerPage;
-
-$anterior = $currentPage - 1;
-$proximo = $currentPage + 1;
+$totalPages = ceil($totalRecords / $recordsPerPage);
+$anterior = $currentPage > 1 ? $currentPage - 1 : 1;
+$proximo = $currentPage < $totalPages ? $currentPage + 1 : $totalPages;
 
 ?>
 <style>
@@ -51,7 +57,6 @@ $proximo = $currentPage + 1;
             transition: all .5s ease;
         }
 
-
         .menu-logout {
             z-index: 1000000 !important;
         }
@@ -59,7 +64,6 @@ $proximo = $currentPage + 1;
         .aparecer {
             left: 70px !important;
         }
-
 
         .menu-button {
             display: block;
@@ -74,9 +78,7 @@ $proximo = $currentPage + 1;
 </style>
 
 <body>
-    <?php
-    include_once('menu.php');
-    ?>
+    <?php include_once('menu.php'); ?>
     <div class="p-4 p-md-4 pt-3 conteudo overflow">
         <div class="carrossel-box mb-4">
             <div class="carrossel">
@@ -98,84 +100,17 @@ $proximo = $currentPage + 1;
                     <a href="#" class="mb-2 mr-2 usuario-img" id="limpar" style="cursor: pointer;">
                         <img src="./images/limpar.png" alt="#" id='img-recarregar'>
                     </a>
-                    <div class="col-5 mb-2">       
-                        <!-- <p class="mb-1 text-muted">Unidade:</p> -->
-                        <!-- <select id="unidadeSelect" class="form-select" aria-label="Default select example">
-                            <option value="" hidden="hidden">Selecionar</option>
-                            <option value="ASCOM">ASCOM</option>
-                            <option value="ATAJ">ATAJ</option>
-                            <option value="ATECC">ATECC</option>
-                            <option value="ATIC">ATIC</option>
-                            <option value="AUDITÓRIO">AUDITÓRIO</option>
-                            <option value="CAEPP">CAEPP</option>
-                            <option value="CAEPP/DERP">CAEPP/DERPP</option>
-                            <option value="CAEPP/DESPP">CAEPP/DESPP</option>
-                            <option value="CAF">CAF</option>
-                            <option value="CAF/DGP">CAF/DGP</option>
-                            <option value="CAF/DLC">CAF/DLC</option>
-                            <option value="CAF/DOF">CAF/DOF</option>
-                            <option value="CAF/DRV">CAF/DRV</option>
-                            <option value="CAF/DSUP">CAF/DSUP</option>
-                            <option value="CAP">CAP</option>
-                            <option value="CAP/ARTHUR SABOYA">CAP/ARTHUR SABOYA</option>
-                            <option value="CAP/DEPROT">CAP/DEPROT</option>
-                            <option value="CAP/DPCI">CAP/DPCI</option>
-                            <option value="CAP/DPD">CAP/DPD</option>
-                            <option value="CAP/NÚCLEO DE ATENDIMENTO">CAP/NÚCLEO DE ATENDIMENTO</option>
-                            <option value="CASE">CASE</option>
-                            <option value="CASE/DCAD">CASE/DCAD</option>
-                            <option value="CASE/DDU">CASE/DDU</option>
-                            <option value="CASE/DLE">CASE/DLE</option>
-                            <option value="CASE/STEL">CASE/STEL</option>
-                            <option value="CEPEUC">CEPEUC</option>
-                            <option value="CEPEUC">CEPEUC/DCIT</option>
-                            <option value="CEPEUC">CEPEUC/DDOC</option>
-                            <option value="CEPEUC">CEPEUC/DVF</option>
-                            <option value="CGPATRI">CGPATRI</option>
-                            <option value="COMIN">COMIN</option>
-                            <option value="COMIN/DCIGP">COMIN/DCIGP</option>
-                            <option value="COMIN/DCIMP">COMIN/DCIMP</option>
-                            <option value="CONTRU">CONTRU</option>
-                            <option value="CONTRU/DACESS">CONTRU/DACESS</option>
-                            <option value="CONTRU/DINS">CONTRU/DINS</option>
-                            <option value="CONTRU/DLR">CONTRU/DLR</option>
-                            <option value="CONTRU/DSUS">CONTRU/DSUS</option>
-                            <option value="DEUSO">DEUSO</option>
-                            <option value="DEUSO">DEUSO/DMUS</option>
-                            <option value="DEUSO">DEUSO/DNUS</option>
-                            <option value="DEUSO">DEUSO/DSIZ</option>
-                            <option value="GABINETE">GABINETE</option>
-                            <option value="GEOINFO">GEOINFO</option>
-                            <option value="GTEC">GTEC</option>
-                            <option value="ILUME">ILUME</option>
-                            <option value="PARHIS">PARHIS</option>
-                            <option value="PARHIS/DHIS">PHARIS/DHIS</option>
-                            <option value="PARHIS/DHMP">PHARIS/DHMP</option>
-                            <option value="PARHIS/DHMP">PHARIS/DHPP</option>
-                            <option value="PARHIS/DPS">PHARIS/DPS</option>
-                            <option value="PLANURB">PLANURB</option>
-                            <option value="PLANURB">PLANURB/DART</option>
-                            <option value="RESID">RESID</option>
-                            <option value="RESID/DRGP">RESID/DRGP</option>
-                            <option value="RESID/DRGP">RESID/DRH</option>
-                            <option value="RESID/DRPM">RESID/DRPM</option>
-                            <option value="RESID/DRPM">RESID/DRVE</option>
-                            <option value="RESID/DRU">RESID/DRU</option>
-                            <option value="SECRETARIO">SECRETARIO</option>
-                            <option value="SEL/AJ">SEL/AJ</option>
-                            <option value="SERVIN">SERVIN</option>
-                            <option value="SERVIN/DSIGP">SERVIN/DSIGP</option>
-                            <option value="SERVIN/DSIMP">SERVIN/DSIMP</option>
-                            <option value="STEL">STEL</option>
-                        </select>                         -->
-                    </div>
+                    <div class="col-5 mb-2"></div>
                     <div class="col-6 mb-2">
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <label for="exampleInputName2" class="mb-1 text-muted">Buscar:</label>
-                                <input class="form-control" id="myInput" type="text" placeholder="Procurar...">
+                        <form method="GET" action="">
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label for="exampleInputName2" class="mb-1 text-muted">Buscar:</label>
+                                    <input class="form-control" name="search" type="text" placeholder="Procurar...">
+                                    <button type="submit" class="btn btn-primary">Buscar</button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <br>
@@ -193,71 +128,44 @@ $proximo = $currentPage + 1;
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        while ($user_data = mysqli_fetch_assoc($todos)) {
+                        <?php while ($user_data = mysqli_fetch_assoc($limite)) {
                             $marca = $user_data['marca'];
                             $modelo = $user_data['modelo'];
                             $tipo = $user_data['tipo'];
-                            $desc = $tipo . ' ' . $marca . ' Modelo:' . $modelo;
+                            $desc = "$tipo $marca Modelo: $modelo";
                             echo "<tr>";
-                            echo "<td style='cursor: pointer;'>" . $user_data['patrimonio'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;'>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;'>" . $desc . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;'>" . $user_data['localnovo'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;'>" . $user_data['servidoratual'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;'>" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;'>" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;'>" . $user_data['datatransf'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['patrimonio']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['nome']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$desc}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['localnovo']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['servidoratual']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['usuario']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['cimbpm']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['datatransf']}<span hidden>todos</span></td>";
                             echo "</tr>";
-                        }
-                        ?>
+                        } ?>
                     </tbody>
                 </table>
             </div>
             <div class='pagination-controls'>
                 <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
-                    <select id='recordsPerPage'>
-                        <option value='6' selected>6</option>
-                        <option value='10'>10</option>
-                        <option value='20'>20</option>
+                    <select id='recordsPerPage' onchange="window.location.href = '?pagina=1&recordsPerPage=' + this.value;">
+                        <option value='6' <?= $recordsPerPage == 6 ? 'selected' : '' ?>>6</option>
+                        <option value='10' <?= $recordsPerPage == 10 ? 'selected' : '' ?>>10</option>
+                        <option value='20' <?= $recordsPerPage == 20 ? 'selected' : '' ?>>20</option>
                     </select>
                 </div>
-                <div class='page-info'>Página 1 de 2</div>
-                <?php
-                echo "<a href='?pagina=$anterior' onclick='sort(1)' class='arrow-button esquerda' id='esquerda'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
-                echo "<a href='?pagina=$proximo' onclick='sort(2)' class='arrow-button direita' id='direita'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
-                ?>
+                <div class='page-info'>Página <?= $currentPage ?> de <?= $totalPages ?></div>
+                <?php if ($currentPage > 1): ?>
+                    <a href='?pagina=<?= $anterior ?>&recordsPerPage=<?= $recordsPerPage ?>' class='arrow-button esquerda' id='esquerda'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>
+                <?php endif; ?>
+                <?php if ($currentPage < $totalPages): ?>
+                    <a href='?pagina=<?= $proximo ?>&recordsPerPage=<?= $recordsPerPage ?>' class='arrow-button direita' id='direita'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>
+                <?php endif; ?>
             </div>
         </div>
     </div>
     <div class="hide" id="modal"></div>
 </body>
-<script>
-        updateTable();
-
-        function previousPage() {
-            if (currentPage > 1) {
-                currentPage--;
-                updateTable();
-            }
-        }
-
-        function nextPage() {
-            if (currentPage < totalPages) {
-                currentPage++;
-                updateTable();
-            }
-        }
-
-        $('.arrow-button:first').click(previousPage);
-        $('.arrow-button:last').click(nextPage);
-        $('#recordsPerPage').change(function() {
-            recordsPerPage = parseInt($(this).val());
-            totalPages = Math.ceil(totalRecords / recordsPerPage);
-            currentPage = 1;
-            updateTable();
-        });
-</script>
-
 </html>
