@@ -5,28 +5,53 @@ include_once('header.php');
 include_once('componentes/verificacao.php');
 include_once('componentes/permissao.php');
 
-$sql_item_count_query = "SELECT COUNT(*) as c FROM item";
+$condicoes = [];
+
+if (isset($_GET['unidade']) && $_GET['unidade'] !== '') {
+    $condicoes[] = "localizacao = '{$_GET['unidade']}'";
+}
+
+if (isset($_GET['pesquisar']) && $_GET['pesquisar'] !== '') {
+    $valor_pesquisar = $_GET['pesquisar'];
+    $condicoes[] = "(patrimonio LIKE '%$valor_pesquisar%' OR tipo LIKE '%$valor_pesquisar%' OR descsbpm LIKE '%$valor_pesquisar%' OR numserie LIKE '%$valor_pesquisar%' OR tiposbpm LIKE '%$valor_pesquisar%' OR marca LIKE '%$valor_pesquisar%' OR modelo LIKE '%$valor_pesquisar%' OR localizacao LIKE '%$valor_pesquisar%' OR servidor LIKE '%$valor_pesquisar%' OR numprocesso LIKE '%$valor_pesquisar%' OR cimbpm LIKE '%$valor_pesquisar%' OR nome LIKE '%$valor_pesquisar%' OR statusitem LIKE '%$valor_pesquisar%')";
+}
+
+if (isset($_GET['tipo']) && $_GET['tipo'] !== '') {
+    $condicoes[] = "tipo = '{$_GET['tipo']}'";
+}
+
+if (isset($_GET['permissao']) && $_GET['permissao'] !== '' && $_GET['permissao'] !== '4') {
+    $condicoes[] = "permissao = '{$_GET['permissao']}'";
+}
+
+$where = '';
+if (!empty($condicoes)) {
+    $where = " WHERE " . implode(" AND ", $condicoes);
+}
+
+$busca = "SELECT * FROM item $where ORDER BY idbem ASC";
+
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+if (isset($_GET['limit'])) {
+    $limit = $_GET['limit'];
+} else {
+    $limit = 10;
+}
+$offset = ($page - 1) * $limit;
+
+$sql_item_query = "$busca LIMIT {$limit} OFFSET {$offset}";
+$sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
+
+$sql_item_count_query = "SELECT COUNT(*) as c FROM item $where";
 $sql_item_count_query_exec = $conexao->query($sql_item_count_query) or die($conexao->error);
 
 $sql_item_count = $sql_item_count_query_exec->fetch_assoc();
 $item_count = $sql_item_count['c'];
 
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-
-if (isset($_GET['limit'])) {
-    $limit = $_GET['limit'];
-} else {
-    $limit = 5;
-}
-$offset = ($page - 1) * $limit;
-
 $page_number = ceil($item_count / $limit);
-
-$busca = "SELECT * FROM item ORDER BY idbem ASC";
-
-$sql_item_query = "$busca LIMIT {$limit} OFFSET {$offset}";
-$sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
-
+$pagina = (isset($_GET['pagina'])) ? $_GET['pagina'] : 1;
+$unidade = isset($_GET['unidade']) ? $_GET['unidade'] : '';
+$status = isset($_GET['status']) ? $_GET['status'] : '';
 ?>
 <style>
     @media (max-width: 1600px) {
@@ -79,6 +104,11 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
         width: 25px;
         height: 25px;
     }
+
+    /* .overflow {
+        max-height: 870px;
+        overflow: auto;
+    } */
 </style>
 
 <body>
@@ -90,7 +120,7 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
             <div class="carrossel">
                 <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-                <a href="./listaremovimentar.php" class="text-primary ms-1 carrossel-text">Listar e Movimentar</a>
+                <a href="./usuarios.php" class="text-primary ms-1 carrossel-text">Usuários</a>
             </div>
             <div class="button-dark">
                 <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
@@ -118,7 +148,7 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                     <div class="col-3 ml-2 mb-2">
                         <p class="mb-1 text-muted">Tipo:</p>
                         <select class="form-select" name="tipo" id="tipo">
-                            <option value="" hidden="hidden">Selecionar</option>
+                            <option value="<?php echo $_GET['tipo'] == '' ? '' : $_GET['tipo'] ?>" hidden><?php echo $_GET['tipo'] == '' ? 'Selecionar' : $_GET['tipo'] ?></option>
                             <option value="AMPLIFICADOR">AMPLIFICADOR</option>
                             <option value="ANTENA PARABÓLICA">ANTENA PARABÓLICA</option>
                             <option value="ANTENA WIRELESS">ANTENA WIRELESS</option>
@@ -201,7 +231,7 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
                         <select id="unidadeSelect" class="form-select" name="unidade">
-                            <option value="" hidden="hidden">Selecionar</option>
+                            <option value="<?php echo $_GET['unidade'] == '' ? '' : $_GET['unidade'] ?>" hidden><?php echo $_GET['unidade'] == '' ? 'Selecionar' : $_GET['unidade'] ?></option>
                             <option value="ASCOM">ASCOM</option>
                             <option value="ATAJ">ATAJ</option>
                             <option value="ATECC">ATECC</option>
@@ -271,7 +301,7 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                     </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Buscar:</p>
-                        <input class="form-control buscar" id="myInput" name="pesquisar" type="text" placeholder="Procurar...">
+                        <input class="form-control buscar" id="myInput" name="pesquisar" type="text" placeholder="Procurar..." value="<?php echo $_GET['pesquisar'] ?>">
                     </div>
                     <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon" src="./images/icon-filtrar.png" alt="#"></button>
                 </form>
@@ -323,7 +353,7 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                 <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
                     <select id='recordsPerPage' onchange="updateLimit()">
-                        <option value='<?php echo $limit ?>' hidden> <?php echo $limit ?></option>
+                        <option value='<?php echo $limit ?>' selected hidden> <?php echo $limit ?></option>
                         <option value='5'>5</option>
                         <option value='10'>10</option>
                     </select>
@@ -335,11 +365,20 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                 $disabled_esquerda = ($opacidade_esquerda == '0.5') ? 'disabled' : '';
                 $disabled_direita = ($opacidade_direita == '0.5') ? 'disabled' : '';
 
-                echo "<a href='?page=" . ($page - 1) . '&limit=' . $limit . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
-                echo "<a href='?page=" . ($page + 1) . '&limit=' . $limit . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
+                $unidade = $_GET['unidade'];
+                $pesquisar = $_GET['pesquisar'];
+                $status = $_GET['status'];
+                $tipo = $_GET['tipo'];
 
+                echo "<a href='?page=" . ($page - 1) . "&limit=" . $limit . "&status=" . $status . "&tipo=" . $tipo . "&unidade=" . $unidade . "&pesquisar=" . $pesquisar . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
+                echo "<a href='?page=" . ($page + 1) . "&limit=" . $limit . "&status=" . $status . "&tipo=" . $tipo . "&unidade=" . $unidade . "&pesquisar=" . $pesquisar . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
 
                 ?>
+            </div>
+            <div class="d-flex justify-content-end mt-4 mr-2">
+                <a href="./cadastrodeusuario.php" id="btn-adc-usuario">
+                    <img src="./images/icons-adcUsuario.png" alt="">
+                </a>
             </div>
         </div>
     </div>
@@ -351,10 +390,16 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
     }
 
     function updateLimit() {
-        var selectElement = document.getElementById('recordsPerPage');
-        var selectedValue = selectElement.value;
-        window.location.href = '?limit=' + selectedValue;
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const newLimit = document.getElementById('recordsPerPage').value;
+        const status = urlParams.get('status');
+        const tipo = urlParams.get('tipo');
+        const unidade = urlParams.get('unidade');
+        const pesquisar = urlParams.get('pesquisar');
+        window.location.href = '?limit=' + newLimit + '&status=' + status + '&tipo=' + tipo + '&unidade=' + unidade + '&pesquisar=' + pesquisar;
     }
+
 
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {
@@ -363,92 +408,4 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
             });
         });
     });
-
-    function alert(num) {
-        if(num == 1) {
-            const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    customClass: ({
-                        title: 'swal2-title'
-                    }),
-                    icon: "success",
-                    title: "Item cadastrado com sucesso!",
-                    background: 'green',
-                    iconColor: '#ffffff'
-            });
-        } else if(num == 2) {
-            const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    customClass: ({
-                        title: 'swal2-title'
-                    }),
-                    icon: "success",
-                    title: "Item alterado com sucesso!",
-                    background: 'green',
-                    iconColor: '#ffffff'
-            });
-        } else if (num == 3) {
-            const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    customClass: ({
-                        title: 'swal2-title'
-                    }),
-                    icon: "success",
-                    title: "Item movimentado com sucesso!",
-                    background: 'green',
-                    iconColor: '#ffffff'
-            });
-        }
-    }
-
-    window.addEventListener('load', function() {
-        var url_string = window.location.href;
-        var url = new URL(url_string);
-        var data = url.searchParams.get("notificacao");
-        if (data == 'true') {
-            alert(1);
-            window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'cadastrarbens.php');
-        } else if (data == 2) {
-            alert(2);
-            window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'cadastrarbens.php');
-        } else if (data == 1) {
-            alert(3);
-            window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'cadastrarbens.php');
-        }
-    })
 </script>
-
-</html>

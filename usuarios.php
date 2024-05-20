@@ -47,7 +47,6 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
             transition: all .5s ease;
         }
 
-
         .menu-logout {
             z-index: 1000000 !important;
         }
@@ -55,7 +54,6 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
         .aparecer {
             left: 70px !important;
         }
-
 
         .menu-button {
             display: block;
@@ -87,12 +85,12 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
     <?php
     include_once('menu.php');
     ?>
-    <div class="p-4 p-md-4 pt-3 conteudo overflow">
+    <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel-box mb-4">
             <div class="carrossel">
-                <a href="./controledeusuario.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
+                <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-                <a href="./controledeusuario.php" class="text-primary ms-1 carrossel-text">Usuários</a>
+                <a href="./usuarios.php" class="text-primary ms-1 carrossel-text">Usuários</a>
             </div>
             <div class="button-dark">
                 <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
@@ -100,12 +98,13 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
         </div>
         <h2 class="mb-3 mt-4">Usuários</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
-            <div>
-                <form class="d-flex justify-content-end align-items-end" action="pesquisar.php" method="GET">
+            <div class="d-flex justify-content-center flex-column" style="width: 100%;">
+                <form class="d-flex justify-content-end align-items-end" action="pesquisar-usuario.php" method="GET" style="width: 100%;">
+                    <input type="hidden" name="limit" value="<?php echo $limit; ?>">
                     <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar" style="cursor: pointer;">
                         <img src="./images/icon-recarregar.png" alt="#" id='img-recarregar'>
                     </a>
-                    <a href="#" class="mb-2 mr-2 usuario-img" onchange="updateLimit()" id="limpar" style="cursor: pointer;">
+                    <a class="mb-2 mr-2 usuario-img" onclick='limparInput()' id="limpar" style="cursor: pointer;">
                         <img src="./images/limpar.png" alt="#" id='img-recarregar'>
                     </a>
                     <div class="col-2 ml-2 mb-2">
@@ -198,7 +197,7 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
                     </div>
                     <div class="col-4 mb-2">
                         <p class="mb-1 text-muted">Buscar:</p>
-                        <input class="form-control" id="myInput" name="pesquisar" type="text" placeholder="Procurar...">
+                        <input class="form-control buscar" id="myInput" name="pesquisar" type="text" placeholder="Procurar...">
                     </div>
                     <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon" src="./images/icon-filtrar.png" alt="#"></button>
                 </form>
@@ -241,10 +240,7 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
                             echo "<a class='x-image' id='tooltip2' href='#'><span id='tooltipText2'>Excluir</span><img class='img-usuario' src='./images/icons-x.png' alt='x'></a>";
                             echo "</td>";
                             echo "</tr>";
-                        }
-
-                        ?>
-
+                        } ?>
                     </tbody>
                 </table>
             </div>
@@ -270,8 +266,8 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
 
                 ?>
             </div>
-            <div class="d-flex justify-content-end mt-4 mr-2">
-                <a href="./cadastrodeusuario.php" id="btn-adc-usuario">
+            <div class="d-flex justify-content-end mt-3 mr-2">
+                <a href="./cadastrodeusuarios.php" id="btn-adc-usuario">
                     <img src="./images/icons-adcUsuario.png" alt="">
                 </a>
             </div>
@@ -279,7 +275,7 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
     </div>
     <div class="hide" id="modal"></div>
 </body>
-<script>
+<script>   
     function limparInput() {
         window.location.href = 'usuarios.php';
     }
@@ -293,72 +289,9 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {
             button.addEventListener('click', function(event) {
-                event.preventDefault(); // Impede a ação padrão do clique
+                event.preventDefault();
             });
         });
     });
-
-    function alert(num) {
-        if (num == 1) {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                customClass: ({
-                    title: 'swal2-title'
-                }),
-                icon: "success",
-                title: "Usuário alterado com sucesso!",
-                background: 'green',
-                iconColor: '#ffffff'
-            });
-        } else {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                customClass: ({
-                    title: 'swal2-title'
-                }),
-                icon: "success",
-                title: "Usuário cadastrado com sucesso!",
-                background: 'green',
-                iconColor: '#ffffff'
-            });
-        }
-    }
-    window.addEventListener('load', function() {
-        var url_string = window.location.href;
-        var url = new URL(url_string);
-        var data = url.searchParams.get("notificacao");
-        if (data == null) {
-            return;
-        } else if (data == 'alterado') {
-            alert(1);
-            window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'http://localhost/usuario.php');
-        } else if (data == 'cadastrado') {
-            alert(2);
-            window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'http://localhost/listaremovimentar.php');
-        }
-    })
 </script>
-
 </html>

@@ -3,61 +3,72 @@ session_start();
 include_once('conexoes/config.php');
 include_once('header.php');
 include_once('componentes/verificacao.php');
-include_once('componentes/permissao.php');
 
 $condicoes = [];
+$joins = [];
 
-// Verificar e adicionar a condição para o parâmetro 'unidade'
 if (isset($_GET['unidade']) && $_GET['unidade'] !== '') {
-    $condicoes[] = "unidade = '{$_GET['unidade']}'";
+    $unidade = $conexao->real_escape_string($_GET['unidade']);
+    $condicoes[] = "localnovo = '$unidade'";
 }
 
-// Verificar e adicionar a condição para o parâmetro 'pesquisar'
+if (isset($_GET['ano']) && $_GET['ano'] !== '') {
+    $ano = $_GET['ano'];
+    $condicoes[] = "transferencia.datatransf LIKE '%$ano%'";
+}
+
 if (isset($_GET['pesquisar']) && $_GET['pesquisar'] !== '') {
-    $valor_pesquisar = $_GET['pesquisar'];
-    // Adicione as outras colunas que você deseja pesquisar aqui
-    $condicoes[] = "(usuario = '$valor_pesquisar' OR unidade = '$valor_pesquisar' OR nome = '$valor_pesquisar' OR permissao = '$valor_pesquisar' OR statususer = '$valor_pesquisar')";
+    $valor_pesquisar = $conexao->real_escape_string($_GET['pesquisar']);
+    $palavras = explode(' ', $valor_pesquisar);
+    if (count($palavras) >= 1) {
+        $condicao_individual = [];
+        foreach ($palavras as $palavra) {
+            if (DateTime::createFromFormat('Y-m-d', $palavra) !== false) {
+                $data_formatada = date('Y-m-d', strtotime($palavra));
+                $condicao_individual[] = "transferencia.datatransf LIKE '%$data_formatada%'";
+            } else {
+                $palavra = $conexao->real_escape_string($palavra);
+                $condicao_individual[] = "(item.patrimonio LIKE '%$palavra%' OR item.nome LIKE '%$palavra%' OR transferencia.localnovo LIKE '%$palavra%' OR transferencia.cimbpm LIKE '" . '%' . str_replace('-', '.', $palavra) . '%' . "' OR transferencia.servidoratual LIKE '%$palavra%' OR transferencia.datatransf LIKE '%$palavra%')";
+            }
+        }
+        $condicoes[] = "(" . implode(" OR ", $condicao_individual) . ")";
+    }
 }
 
-if (isset($_GET['status']) && $_GET['status'] !== '') {
-    $condicoes[] = "statususer = '{$_GET['status']}'";
-}
-
-if (isset($_GET['permissao']) && $_GET['permissao'] !== '' && $_GET['permissao'] !== '4') {
-    $condicoes[] = "permissao = '{$_GET['permissao']}'";
-}
-
-// Construir a cláusula WHERE
-$where = '';
 if (!empty($condicoes)) {
     $where = " WHERE " . implode(" AND ", $condicoes);
+} else {
+    $where = '';
 }
 
-// Construir a consulta SQL
-$busca = "SELECT * FROM usuarios $where ORDER BY id ASC";
+$busca = "SELECT item.patrimonio, item.tipo, item.marca, item.modelo, item.nome, transferencia.cimbpm, transferencia.localnovo, transferencia.servidoratual, transferencia.usuario, transferencia.datatransf 
+FROM item
+INNER JOIN transferencia ON item.idbem = transferencia.iditem
+$where
+ORDER BY transferencia.datatransf DESC";
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 if (isset($_GET['limit'])) {
-    $limit = $_GET['limit'];
+    $limit = $conexao->real_escape_string($_GET['limit']);
 } else {
-    $limit = 10;
+    $limit = 7;
 }
 $offset = ($page - 1) * $limit;
 
-$sql_usuarios_query = "$busca LIMIT {$limit} OFFSET {$offset}";
-$sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao->error);
+$sql_home_query = "$busca LIMIT {$limit} OFFSET {$offset}";
+$sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
 
-$sql_usuarios_count_query = "SELECT COUNT(*) as c FROM usuarios $where";
-$sql_usuarios_count_query_exec = $conexao->query($sql_usuarios_count_query) or die($conexao->error);
+$sql_home_count_query = "SELECT COUNT(*) as c FROM item INNER JOIN transferencia ON item.idbem = transferencia.iditem $where";
+$sql_home_count_query_exec = $conexao->query($sql_home_count_query) or die($conexao->error);
 
-$sql_usuarios_count = $sql_usuarios_count_query_exec->fetch_assoc();
-$usuarios_count = $sql_usuarios_count['c'];
+$sql_home_count = $sql_home_count_query_exec->fetch_assoc();
+$home_count = $sql_home_count['c'];
 
-$page_number = ceil($usuarios_count / $limit);
+$page_number = ceil($home_count / $limit);
 
-$pagina = (isset($_GET['pagina'])) ? $_GET['pagina'] : 1;
-
-$unidade = isset($_GET['unidade']) ? $_GET['unidade'] : '';
+$pagina = isset($_GET['pagina']) ? $conexao->real_escape_string($_GET['pagina']) : 1;
+$unidade = isset($_GET['unidade']) ? $conexao->real_escape_string($_GET['unidade']) : '';
+$ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano']) : '';
 ?>
 <style>
     @media (max-width: 1600px) {
@@ -78,7 +89,6 @@ $unidade = isset($_GET['unidade']) ? $_GET['unidade'] : '';
             transition: all .5s ease;
         }
 
-
         .menu-logout {
             z-index: 1000000 !important;
         }
@@ -86,7 +96,6 @@ $unidade = isset($_GET['unidade']) ? $_GET['unidade'] : '';
         .aparecer {
             left: 70px !important;
         }
-
 
         .menu-button {
             display: block;
@@ -112,57 +121,50 @@ $unidade = isset($_GET['unidade']) ? $_GET['unidade'] : '';
         width: 25px;
         height: 25px;
     }
+
+    /* .overflow {
+        max-height: 870px;
+        overflow: auto;
+    } */
 </style>
 
 <body>
     <?php
     include_once('menu.php');
     ?>
-    <div class="p-4 p-md-4 pt-3 conteudo overflow">
+    <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel-box mb-4">
             <div class="carrossel">
-                <a href="./controledeusuario.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
+                <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-                <a href="./controledeusuario.php" class="text-primary ms-1 carrossel-text">Usuários</a>
+                <a href="./home.php" class="text-primary ms-1 carrossel-text">Home</a>
             </div>
             <div class="button-dark">
                 <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
             </div>
         </div>
-        <h2 class="mb-3 mt-4">Usuários</h2>
+        <h2 class="mb-3 mt-4">Últimas Movimentações</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
-            <div>
-                <form class="d-flex justify-content-end align-items-end" action="pesquisar.php" method="GET">
+            <div class="d-flex justify-content-center flex-column" style="width: 100%;">
+                <form class="d-flex justify-content-end align-items-end" action="pesquisar-home.php" method="GET" style="width: 100%;">
                     <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar" style="cursor: pointer;">
                         <img src="./images/icon-recarregar.png" alt="#" id='img-recarregar'>
                     </a>
-                    <a href="#" class="mb-2 mr-2 usuario-img" onclick='limparInput()' id="limpar" style="cursor: pointer;">
+                    <a class="mb-2 mr-2 usuario-img" onclick='limparInput()' id="limpar" style="cursor: pointer;">
                         <img src="./images/limpar.png" alt="#" id='img-recarregar'>
                     </a>
-                    <div class="col-2 ml-2 mb-2">
-                        <p class="mb-1 text-muted">Status:</p>
-                        <select id="statusSelect" class="form-select" aria-label="Default select example" name="status">
-                            <option value="<?php echo empty($status) ? 'Ativo' : htmlspecialchars($status); ?>" hidden><?php echo empty($status) ? 'Ativo' : htmlspecialchars($status); ?></option>
-                            <option value="Ativo">Ativo</option>
-                            <option value="Inativo">Inativo</option>
-                            <option value="todos">Todos</option>
-                        </select>
-                    </div>
                     <div class="col-2 mb-2">
-                        <p class="mb-1 text-muted">Permissão:</p>
-                        <select id="permissaoSelect" class="form-select" aria-label="Default select example" name="permissao">
-                            <option value="Todos" <?php echo (isset($_GET['permissao']) && $_GET['permissao'] == 'Todos') ? 'selected' : ''; ?>>Todos</option>
-                            <option value="1" <?php echo (isset($_GET['permissao']) && $_GET['permissao'] == 1) ? 'selected' : ''; ?>>Administrador</option>
-                            <option value="2" <?php echo (isset($_GET['permissao']) && $_GET['permissao'] == 2) ? 'selected' : ''; ?>>Usuário</option>
-                            <option value="3" <?php echo (isset($_GET['permissao']) && $_GET['permissao'] == 3) ? 'selected' : ''; ?>>Sem Permissão</option>
-                            <option value="4" <?php echo (isset($_GET['permissao']) && $_GET['permissao'] == 4) ? 'selected' : ''; ?>>Todos</option>
+                        <p class="mb-1 text-muted">Ano:</p>
+                        <select id="anoSelect" class="form-select" name="ano">
+                        <option value="<?php echo htmlspecialchars($ano) == '' ? '' : htmlspecialchars($ano) ?>" hidden><?php echo htmlspecialchars($ano) == '' ? 'Selecionar' : htmlspecialchars($ano) ?></option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
                         </select>
-
                     </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
                         <select id="unidadeSelect" class="form-select" name="unidade">
-                            <option value="<?php echo htmlspecialchars($unidade); ?>" <?php echo ($unidade === '') ? 'selected' : ''; ?> hidden><?php echo htmlspecialchars($unidade); ?></option>
+                            <option value="<?php echo $_GET['unidade'] == '' ? '' : $_GET['unidade'] ?>" hidden><?php echo $_GET['unidade'] == '' ? 'Selecionar' : $_GET['unidade'] ?></option>
                             <option value="ASCOM">ASCOM</option>
                             <option value="ATAJ">ATAJ</option>
                             <option value="ATECC">ATECC</option>
@@ -230,9 +232,9 @@ $unidade = isset($_GET['unidade']) ? $_GET['unidade'] : '';
                             <option value="STEL">STEL</option>
                         </select>
                     </div>
-                    <div class="col-4 mb-2">
+                    <div class="col-6 mb-2">
                         <p class="mb-1 text-muted">Buscar:</p>
-                        <input class="form-control" id="myInput" name="pesquisar" type="text" value="<?php echo isset($_GET['pesquisar']) ? strtoupper(htmlspecialchars($_GET['pesquisar'])) : ''; ?>" placeholder="Procurar...">
+                        <input class="form-control buscar" id="myInput" name="pesquisar" type="text" placeholder="Procurar..." value="<?php echo $_GET['pesquisar'] ?>">
                     </div>
                     <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon" src="./images/icon-filtrar.png" alt="#"></button>
                 </form>
@@ -240,45 +242,34 @@ $unidade = isset($_GET['unidade']) ? $_GET['unidade'] : '';
                 <table class="table table-hover">
                     <thead>
                         <tr>
+                            <th scope="col">Nº Patrimônio</th>
                             <th scope="col">Nome</th>
-                            <th scope="col">E-mail</th>
-                            <th scope="col">Usuário</th>
-                            <th scope="col">Unidade</th>
-                            <th scope="col">Permissão</th>
-                            <th scope="col"></th>
+                            <th scope="col">Descrição do Bem</th>
+                            <th scope="col">Localização</th>
+                            <th scope="col">Servidor</th>
+                            <th scope="col">Responsável</th>
+                            <th scope="col">CIMBPM</th>
+                            <th scope="col">Data</th>
                         </tr>
                     </thead>
                     <tbody id='myTable'>
                         <?php
-                        while ($user_data = $sql_usuarios_query_exec->fetch_assoc()) {
+                        while ($user_data = $sql_home_query_exec->fetch_assoc()) {
+                            $marca = $user_data['marca'];
+                            $modelo = $user_data['modelo'];
+                            $tipo = $user_data['tipo'];
+                            $desc = "$tipo $marca Modelo: $modelo";
                             echo "<tr>";
-                            echo "<td hidden>" . $user_data['id'] . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['email'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]' hidden>" . $user_data['statususer'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td class='unidade' style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['unidade'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td id='permissao' style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>";
-
-                            if ($user_data['permissao'] == 1) {
-                                echo "<div id='dev'><p class='perm-usuario'>Administrador<span hidden>todos</span></p></div>";
-                            } elseif ($user_data['permissao'] == 2) {
-                                echo "<div id='usuario'><p class='perm-usuario'>Usuário<span hidden>todos</span></p></div>";
-                            } elseif ($user_data['permissao'] == 3) {
-                                echo "<div id='semPermissao'><p class='perm-usuario'>Sem permissão<span hidden>todos</span></p></div>";
-                            } else {
-                                echo "<div id='todos'><p class='perm-usuario'>Todos<span hidden>todos</span></p></div>";
-                            }
-
-                            echo "</td>";
-                            echo "<td>";
-                            echo "<a class='x-image' id='tooltip2' href='#'><span id='tooltipText2'>Excluir</span><img class='img-usuario' src='./images/icons-x.png' alt='x'></a>";
-                            echo "</td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['patrimonio']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['nome']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$desc}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['localnovo']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['servidoratual']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['usuario']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['cimbpm']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['datatransf']}<span hidden>todos</span></td>";
                             echo "</tr>";
-                        }
-
-                        ?>
-
+                        } ?>
                     </tbody>
                 </table>
             </div>
@@ -286,9 +277,9 @@ $unidade = isset($_GET['unidade']) ? $_GET['unidade'] : '';
                 <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
                     <select id='recordsPerPage' onchange="updateLimit()">
-                        <option value='<?php echo $limit ?>' hidden> <?php echo $limit ?></option>
-                        <option value='5'>5</option>
-                        <option value='10'>10</option>
+                        <option value='<?php echo $limit ?>' selected hidden> <?php echo $limit ?></option>
+                        <option value='7'>7</option>
+                        <option value='14'>14</option>
                     </select>
                 </div>
                 <div class='page-info'>Página <?php echo $page; ?> de <?php echo $page_number; ?></div>
@@ -298,19 +289,12 @@ $unidade = isset($_GET['unidade']) ? $_GET['unidade'] : '';
                 $disabled_esquerda = ($opacidade_esquerda == '0.5') ? 'disabled' : '';
                 $disabled_direita = ($opacidade_direita == '0.5') ? 'disabled' : '';
 
-                if (isset($_GET['status'])) {
-                    $status = $_GET['status'];
-                } else {
-                    $status = 'Ativo';
-                }
-                $status = $_GET['status'];
-                $permissao = $_GET['permissao'];
                 $unidade = $_GET['unidade'];
                 $pesquisar = $_GET['pesquisar'];
+                $ano = $_GET['ano'];
 
-                echo "<a href='?page=" . ($page - 1) . "&limit=" . $limit . "&status=" . urlencode($status) . "&permissao=" . urlencode($permissao) . "&unidade=" . urlencode($unidade) . "&pesquisar=" . urlencode($pesquisar) . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
-                echo "<a href='?page=" . ($page + 1) . "&limit=" . $limit . "&status=" . urlencode($status) . "&permissao=" . urlencode($permissao) . "&unidade=" . urlencode($unidade) . "&pesquisar=" . urlencode($pesquisar) . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
-
+                echo "<a href='?page=" . ($page - 1) . "&limit=" . $limit . "&ano=" . $ano . "&unidade=" . urlencode($unidade) . "&pesquisar=" . urlencode($pesquisar) . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
+                echo "<a href='?page=" . ($page + 1) . "&limit=" . $limit . "&ano=" . $ano . "&unidade=" . urlencode($unidade) . "&pesquisar=" . urlencode($pesquisar) . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
 
                 ?>
             </div>
@@ -325,18 +309,19 @@ $unidade = isset($_GET['unidade']) ? $_GET['unidade'] : '';
 </body>
 <script>
     function limparInput() {
-        window.location.href = 'usuarios.php';
-    }
-
-    function limparInput() {
-        window.location.href = 'usuarios.php';
+        window.location.href = 'home.php';
     }
 
     function updateLimit() {
-        var selectElement = document.getElementById('recordsPerPage');
-        var selectedValue = selectElement.value;
-        window.location.href = '?page=<?php echo $page; ?>&limit=' + selectedValue + '&status=<?php echo urlencode($status); ?>&permissao=<?php echo urlencode($permissao); ?>&unidade=<?php echo urlencode($unidade); ?>&pesquisar=<?php echo urlencode($pesquisar); ?>';
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const newLimit = document.getElementById('recordsPerPage').value;
+        const ano = urlParams.get('ano');
+        const unidade = urlParams.get('unidade');
+        const pesquisar = urlParams.get('pesquisar');
+        window.location.href = '?limit=' + newLimit + '&ano=' + ano + '&unidade=' + unidade + '&pesquisar=' + pesquisar;
     }
+
 
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {

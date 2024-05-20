@@ -32,10 +32,9 @@ if (!empty($_GET['id'])) {
         header('Location: listaremovimentar.php');
     }
 }
-echo "<script>console.log('Erro')</script>";
+
 
 if (isset($_POST['submit'])) {
-    echo "<script>console.log('Erro')</script>";
     $id = $_POST['id'];
     $patrimonio = $_POST['numPatrimonio'];
     $tipo = $_POST['tipo'];

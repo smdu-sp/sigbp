@@ -521,6 +521,5 @@ include_once('header.php');
 <script>
     const urlParams = new URLSearchParams(window.location.search);
     const valorItem = urlParams.get("inputText");
-    console.log(valorItem);
     document.getElementById('textResultado').value = valorItem;
 </script>

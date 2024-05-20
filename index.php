@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
         } else {
             $_SESSION = array();
             $nome = $_SESSION['SesNome'];
-            $result = mysqli_query($conexao, "INSERT INTO usuarios(usuario, nome, statususer) VALUES ('$inicial', '$nome', 'ativo')");
+            $result = mysqli_query($conexao, "INSERT INTO usuarios(usuario, nome, statususer) VALUES ('$inicial', '$nome', 'Ativo')");
             header('Location: index.php?m=erroPermissao');
             exit;
         }

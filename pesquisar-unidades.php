@@ -5,14 +5,33 @@ include_once('header.php');
 include_once('componentes/verificacao.php');
 include_once('componentes/permissao.php');
 
-$sql_unidades_count_query = "SELECT COUNT(*) as c FROM unidades";
-$sql_unidades_count_query_exec = $conexao->query($sql_unidades_count_query) or die($conexao->error);
+$condicoes = [];
 
-$sql_unidades_count = $sql_unidades_count_query_exec->fetch_assoc();
-$unidades_count = $sql_unidades_count['c'];
+if (isset($_GET['nome']) && $_GET['nome'] !== '') {
+    $condicoes[] = "unidades = '{$_GET['nome']}'";
+}
+
+if (isset($_GET['pesquisar']) && $_GET['pesquisar'] !== '') {
+    $valor_pesquisar = $_GET['pesquisar'];
+    $condicoes[] = "(usuario LIKE '%$valor_pesquisar%' OR unidade LIKE '%$valor_pesquisar%' OR nome LIKE '%$valor_pesquisar%' OR permissao LIKE '%$valor_pesquisar%' OR statususer LIKE '%$valor_pesquisar%')";
+}
+
+if (isset($_GET['status']) && $_GET['status'] !== '') {
+    $condicoes[] = "statusunidade = '{$_GET['status']}'";
+}
+
+if (isset($_GET['sigla']) && $_GET['sigla'] !== '') {
+    $condicoes[] = "sigla = '{$_GET['sigla']}'";
+}
+
+$where = '';
+if (!empty($condicoes)) {
+    $where = " WHERE " . implode(" AND ", $condicoes);
+}
+
+$busca = "SELECT * FROM unidades $where ORDER BY id ASC";
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-
 if (isset($_GET['limit'])) {
     $limit = $_GET['limit'];
 } else {
@@ -20,13 +39,19 @@ if (isset($_GET['limit'])) {
 }
 $offset = ($page - 1) * $limit;
 
-$page_number = ceil($unidades_count / $limit);
-
-$busca = "SELECT * FROM unidades ORDER BY id ASC";
-
 $sql_unidades_query = "$busca LIMIT {$limit} OFFSET {$offset}";
 $sql_unidades_query_exec = $conexao->query($sql_unidades_query) or die($conexao->error);
 
+$sql_unidades_count_query = "SELECT COUNT(*) as c FROM unidades $where";
+$sql_unidades_count_query_exec = $conexao->query($sql_unidades_count_query) or die($conexao->error);
+
+$sql_unidades_count = $sql_unidades_count_query_exec->fetch_assoc();
+$unidades_count = $sql_unidades_count['c'];
+
+$page_number = ceil($unidades_count / $limit);
+$pagina = (isset($_GET['pagina'])) ? $_GET['pagina'] : 1;
+$unidade = isset($_GET['unidade']) ? $_GET['unidade'] : '';
+$status = isset($_GET['status']) ? $_GET['status'] : '';
 ?>
 <style>
     @media (max-width: 1600px) {
@@ -79,6 +104,11 @@ $sql_unidades_query_exec = $conexao->query($sql_unidades_query) or die($conexao-
         width: 25px;
         height: 25px;
     }
+
+    /* .overflow {
+        max-height: 870px;
+        overflow: auto;
+    } */
 </style>
 
 <body>
@@ -119,7 +149,8 @@ $sql_unidades_query_exec = $conexao->query($sql_unidades_query) or die($conexao-
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Sigla:</p>
                         <select id="permissaoSelect" class="form-select" aria-label="Default select example" name="sigla">
-                        <option value="" hidden="hidden">Selecionar</option>
+                            <option value="<?php echo $_GET['sigla'] == '' ? '' : $_GET['sigla'] ?>" hidden><?php echo $_GET['sigla'] == '' ? 'Selecionar' : $_GET['sigla'] ?></option>
+                            <option value="" hidden="hidden">Selecionar</option>
                         <option value="ASCOM">ASCOM</option>
                         <option value="ATAJ">ATAJ</option>
                         <option value="ATECC">ATECC</option>
@@ -204,13 +235,13 @@ $sql_unidades_query_exec = $conexao->query($sql_unidades_query) or die($conexao-
                         </tr>
                     </thead>
                     <tbody id='myTable'>
-                        <?php
+                    <?php
                         while ($user_data = $sql_unidades_query_exec->fetch_assoc()) {
                             echo "<tr>";
                             echo "<td style=' cursor: pointer; background-color:hover: grey;' onclick=location.href='cadastrodeunidades.php?id=$user_data[id]'>" . $user_data['unidades'] . "</td>";
                             echo "<td style=' cursor: pointer; background-color:hover: grey;' onclick=location.href='cadastrodeunidades.php?id=$user_data[id]'>" . $user_data['sigla'] . "</td>";
                             echo "<td style=' cursor: pointer; background-color:hover: grey;' onclick=location.href='cadastrodeunidades.php?id=$user_data[id]'>" . $user_data['codigo'] . "</td>";
-                            echo "<td style='cursor: pointer; background-color:hover: grey;' onclick=location.href='cadastrodeunidades.php?id=$user_data[id]'>" . $user_data['statusunidade'] . "</td>";
+                            echo "<td style='cursor: pointer; background-color:hover: grey;' onclick=location.href='cadastrodeunidades.php?id=$user_data[id]'>" . $user_data['statusunidade'] . "</td>";                      
                             echo "</tr>";
                         }
                         ?>
@@ -221,7 +252,7 @@ $sql_unidades_query_exec = $conexao->query($sql_unidades_query) or die($conexao-
                 <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
                     <select id='recordsPerPage' onchange="updateLimit()">
-                        <option value='<?php echo $limit ?>' hidden> <?php echo $limit ?></option>
+                        <option value='<?php echo $limit ?>' selected hidden> <?php echo $limit ?></option>
                         <option value='5'>5</option>
                         <option value='10'>10</option>
                     </select>
@@ -233,14 +264,18 @@ $sql_unidades_query_exec = $conexao->query($sql_unidades_query) or die($conexao-
                 $disabled_esquerda = ($opacidade_esquerda == '0.5') ? 'disabled' : '';
                 $disabled_direita = ($opacidade_direita == '0.5') ? 'disabled' : '';
 
-                echo "<a href='?page=" . ($page - 1) . '&limit=' . $limit . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
-                echo "<a href='?page=" . ($page + 1) . '&limit=' . $limit . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
+                $status = $_GET['status'];
+                $pesquisar = $_GET['pesquisar'];
+                $sigla = $_GET['sigla'];
 
+
+                echo "<a href='?page=" . ($page - 1) . "&limit=" . $limit . "&status=" . $status . "&sigla=" . $sigla  . "&pesquisar=" . $pesquisar . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
+                echo "<a href='?page=" . ($page + 1) . "&limit=" . $limit . "&status=" . $status . "&sigla=" . $sigla  . "&pesquisar=" . $pesquisar . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
 
                 ?>
             </div>
-            <div class="d-flex justify-content-end mt-3 mr-2">
-                <a href="./cadastrodeunidades.php" id="btn-adc-usuario">
+            <div class="d-flex justify-content-end mt-4 mr-2">
+                <a href="./cadastrodeusuario.php" id="btn-adc-usuario">
                     <img src="./images/icons-adcUsuario.png" alt="">
                 </a>
             </div>
@@ -254,10 +289,15 @@ $sql_unidades_query_exec = $conexao->query($sql_unidades_query) or die($conexao-
     }
 
     function updateLimit() {
-        var selectElement = document.getElementById('recordsPerPage');
-        var selectedValue = selectElement.value;
-        window.location.href = '?limit=' + selectedValue;
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const newLimit = document.getElementById('recordsPerPage').value; 
+        const status = urlParams.get('status');
+        const sigla = urlParams.get('sigla');
+        const pesquisar = urlParams.get('pesquisar');
+        window.location.href = '?limit=' + newLimit + '&status=' + status + '&sigla=' + sigla + '&nome=' + nome + '&pesquisar=' + pesquisar;
     }
+
 
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {
@@ -267,5 +307,3 @@ $sql_unidades_query_exec = $conexao->query($sql_unidades_query) or die($conexao-
         });
     });
 </script>
-
-</html>

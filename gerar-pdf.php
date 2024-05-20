@@ -107,18 +107,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </html>
 
 <script>
-    // var session = sessionStorage.getItem("Serie");
-    // console.log(session);
-    // const strCopy = session.split(',');
-    // console.log(strCopy);
-    // var botao = document.getElementById('botao');
-
-    // const map1 = strCopy.map((x) => x)
-    // console.log(map1);
-
-    // var teste = document.getElementById('descricaoBem');
-
-    // teste.innerHTML(map1);
 
     function printTermo() {
         botao.style.display = 'none'

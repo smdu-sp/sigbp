@@ -74,10 +74,30 @@ $permissao = $_SESSION['Perm'];
     var match = url.match(/\/([^\/]+)\.php$/);
     var nomePagina = match ? match[1] : null;
     var botoes = document.querySelectorAll('.btn-menu');
+    console.log(match);
+
+    var urlString = new URL(url);
+    var pathName = urlString.pathname;
+    console.log(pathName);
 
     botoes.forEach(function(botao) {
         var valorBotao = botao.getAttribute('value');
-        console.log(valorBotao);
+        if (pathName == '/pesquisar-item.php') {
+            document.getElementById('botao4').style.background = '#DDE7EE';
+        }
+
+        if (pathName == '/pesquisar-home.php') {
+            document.getElementById('botao1').style.background = '#DDE7EE';
+        }
+
+        if (pathName == '/pesquisar-usuario.php') {
+            document.getElementById('botao5').style.background = '#DDE7EE';
+        }
+
+        if (pathName == '/pesquisar-unidades.php') {
+            document.getElementById('botao6').style.background = '#DDE7EE';
+        }
+
         if (nomePagina === valorBotao) {
             botao.style.background = '#DDE7EE';
         }
