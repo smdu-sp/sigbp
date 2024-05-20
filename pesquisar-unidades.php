@@ -13,7 +13,7 @@ if (isset($_GET['nome']) && $_GET['nome'] !== '') {
 
 if (isset($_GET['pesquisar']) && $_GET['pesquisar'] !== '') {
     $valor_pesquisar = $_GET['pesquisar'];
-    $condicoes[] = "(usuario LIKE '%$valor_pesquisar%' OR unidade LIKE '%$valor_pesquisar%' OR nome LIKE '%$valor_pesquisar%' OR permissao LIKE '%$valor_pesquisar%' OR statususer LIKE '%$valor_pesquisar%')";
+    $condicoes[] = "(unidades LIKE '%$valor_pesquisar%' OR sigla LIKE '%$valor_pesquisar%' OR codigo LIKE '%$valor_pesquisar%' OR statusunidade LIKE '%$valor_pesquisar%')";
 }
 
 if (isset($_GET['status']) && $_GET['status'] !== '') {
