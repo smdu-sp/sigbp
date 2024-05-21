@@ -139,7 +139,7 @@ body {
     padding: 5px 10px;
 }
 
-#botao2 {
+.botao2 {
     position: fixed;
     width: 70px;
     height: 30px;
@@ -156,4 +156,9 @@ body {
     text-decoration: none;
 }
 
+.botao-voltar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 

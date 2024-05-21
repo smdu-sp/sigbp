@@ -312,6 +312,10 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
         window.location.href = 'home.php';
     }
 
+    function recarregar() {
+        window.location.reload(true);
+    }
+
     function updateLimit() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);

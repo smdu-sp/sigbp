@@ -420,9 +420,13 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
         window.location.href = '?limit=' + selectedValue;
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.arrow-button.disabled').forEach(function (button) {
-            button.addEventListener('click', function (event) {
+    function recarregar() {
+        window.location.reload(true);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {
+            button.addEventListener('click', function(event) {
                 event.preventDefault();
             });
         });

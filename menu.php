@@ -22,21 +22,17 @@ $permissao = $_SESSION['Perm'];
         <div class="menu-principal" id="menuPrincipal">
             <div class="menu-paginas">
                 <p class="title-menu">Menu</p>
-                <a href="./home.php" value="home" id="botao1" class="btn-menu botoes"><img id="icon-casa" src="./images/icon-casa.png" alt="Icon Casa">Home</a>
-                <a href="./termo.php" value="termo" id="botao3" class="btn-menu botoes mb-2"><img id="icon-termo" src="./images/icon-termo.png" alt="Icon Ferramentas">Termo Entrega/Retirada</a>
-                <a href="./dashboard.php" value="dashboard" id="botao7" class="btn-menu botoes"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">Dashboard</a>
-                <a href="./extracao-bens.php" value="dashboard" id="botao7" class="btn-menu botoes"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">extracao-bens</a>
-                
+                <a href="./home.php" value="/home.php" id="botao1" class="btn-menu botoes"><img id="icon-casa" src="./images/icon-casa.png" alt="Icon Casa">Home</a>
+                <a href="./termo.php" value="/termo.php" id="botao3" class="btn-menu botoes mb-2"><img id="icon-termo" src="./images/icon-termo.png" alt="Icon Ferramentas">Termo Entrega/Retirada</a>
+                <a href="./dashboard.php" value="/dashboard.php" id="botao7" class="btn-menu botoes"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">Dashboard</a>
                 <div class="centralizar-linha admin">
                     <hr style="opacity: 0.7; border: 0.1px solid #DDDFE2;">
                 </div>
                 <p class="title-menu admin">Administração</p>
-                <a href="./cadastrarbens.php" value="cadastrarbens" id="botao2" class="btn-menu botoes admin"><img id="icon-computador" src="./images/icon-computador.png" alt="Icon Computador">Cadastro de Bens</a>
-                <a href="./listaremovimentar.php" value="listaremovimentar" id="botao4" class="btn-menu botoes admin"><img id="icon-lista" src="./images/icon-lista.png" alt="Icon Lista">Listar/Movimentar Bens</a>
-                <a href="./usuarios.php" value="usuarios" id="botao5" class="btn-menu botoes admin"><img id="icon-usuario" src="./images/usuario.png" alt="Icon Usuario">Usuários</a>
-                <a href="./unidades.php" value="unidades" id="botao6" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/unidades.png" alt="Icon Usuario">Unidades</a>
-
-
+                <a href="./cadastrarbens.php" value="/cadastrarbens.php" id="botao2" class="btn-menu botoes admin"><img id="icon-computador" src="./images/icon-computador.png" alt="Icon Computador">Cadastro de Bens</a>
+                <a href="./listaremovimentar.php" value="/listaremovimentar.php" id="botao4" class="btn-menu botoes admin"><img id="icon-lista" src="./images/icon-lista.png" alt="Icon Lista">Listar/Movimentar Bens</a>
+                <a href="./usuarios.php" value="/usuarios.php" id="botao5" class="btn-menu botoes admin"><img id="icon-usuario" src="./images/usuario.png" alt="Icon Usuario">Usuários</a>
+                <a href="./unidades.php" value="/unidades.php" id="botao6" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/unidades.png" alt="Icon Usuario">Unidades</a>
             </div>
             <div class="info-usuario">
                 <h3 class="nome-usuario"><?php
@@ -75,7 +71,6 @@ $permissao = $_SESSION['Perm'];
     var match = url.match(/\/([^\/]+)\.php$/);
     var nomePagina = match ? match[1] : null;
     var botoes = document.querySelectorAll('.btn-menu');
-    console.log(match);
 
     var urlString = new URL(url);
     var pathName = urlString.pathname;
@@ -99,7 +94,7 @@ $permissao = $_SESSION['Perm'];
             document.getElementById('botao6').style.background = '#DDE7EE';
         }
 
-        if (nomePagina === valorBotao) {
+        if (pathName === valorBotao) {
             botao.style.background = '#DDE7EE';
         }
     });

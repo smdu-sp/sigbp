@@ -259,6 +259,10 @@ $sql_unidades_query_exec = $conexao->query($sql_unidades_query) or die($conexao-
         window.location.href = '?limit=' + selectedValue;
     }
 
+    function recarregar() {
+        window.location.reload(true);
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {
             button.addEventListener('click', function(event) {

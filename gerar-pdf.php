@@ -96,11 +96,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <div id="editor"></div>
     <div id="absolute">
-        <a type="button" href='termo.php' class="botao-voltar" id="botao2">Voltar</a>
+        <a type="button" href='termo.php' class="botao2"  id="botao2">Voltar</a>
     </div>
     <div id="absolute2">
         <button  class="botao-modal" id="botao" onclick="printTermo()">Imprimir</button>
-
     </div>
 </body>
 
@@ -109,26 +108,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <script>
 
     function printTermo() {
-        botao.style.display = 'none'
+        botao.style.display = 'none';
+        document.getElementById('botao2').style.opacity = '0';
         window.print();
     }
 
     window.onafterprint = function() {
-        botao.style.display = 'block'
+        botao.style.display = 'block';
+        botaoVoltar = document.getElementById('botao2');
+        botaoVoltar.style.opacity = '1';
+        botaoVoltar.classList.toggle('botao2');
+        botaoVoltar.classList.toggle('botao-voltar');
     }
-
-    var doc = new jsPDF();
-    var specialElementHandlers = {
-        '#editor': function(element, renderer) {
-            return true;
-        }
-    };
-
-    $('#btGerarPDF').click(function() {
-        doc.fromHTML($('.container-pdf').html(), 1, 1, {
-            'width': '100%',
-            'elementHandlers': specialElementHandlers
-        });
-        doc.save('termo-pdf.pdf');
-    });
 </script>

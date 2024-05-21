@@ -317,6 +317,10 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
         window.location.href = 'usuarios.php';
     }
 
+    function recarregar() {
+        window.location.reload(true);
+    }
+
     function updateLimit() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);

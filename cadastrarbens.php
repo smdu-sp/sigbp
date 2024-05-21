@@ -5,29 +5,35 @@ include_once('header.php');
 include_once('componentes/verificacao.php');
 include_once('componentes/permissao.php');
 
-
-if (isset($_POST['submit'])) {
-    $patrimonio = $_POST['numPatrimonio'];
-    $tipo = $_POST['tipo'];
-    $marca = $_POST['marca'];
-    $modelo = $_POST['modelo'];
-    $numserie = $_POST['numSerie'];
-    $localizacao = $_POST['localNovo'];
-    $servidor = $_POST['nomeServidor'];
-    $numprocesso = $_POST['numprocesso'];
-    $nome = $_POST['nomeComputador'];
-    $statusitem = $_POST['status'];
-
-    $result = mysqli_query($conexao, "INSERT INTO item(patrimonio, tipo, numserie, marca, modelo, localizacao, servidor, numprocesso, nome, statusitem) 
-    VALUES ('$patrimonio', '$tipo', '$numserie', '$marca', '$modelo', '$localizacao', '$servidor', '$numprocesso', '$nome', '$statusitem')");
-
-    header('Location: cadastrarbens.php?notificacao=true');
+if (isset($_GET['num'])) {
+    $registros = $_GET['num'];
+} else {
+    $registros = 1;
 }
 
+if (isset($_POST['submit'])) {
+    for ($i = 1; $i <= $registros; $i++) {
+        $patrimonio = $_POST['numPatrimonio'];
+        $tipo = $_POST['tipo'];
+        $marca = $_POST['marca'];
+        $modelo = $_POST['modelo'];
+        $numserie = $_POST['numSerie'];
+        $localizacao = $_POST['localNovo'];
+        $servidor = $_POST['nomeServidor'];
+        $numprocesso = $_POST['numprocesso'];
+        $nome = $_POST['nomeComputador'];
+        $statusitem = $_POST['status'];
+
+        $result = mysqli_query($conexao, "INSERT INTO item(patrimonio, tipo, numserie, marca, modelo, localizacao, servidor, numprocesso, nome, statusitem) 
+        VALUES ('$patrimonio', '$tipo', '$numserie', '$marca', '$modelo', '$localizacao', '$servidor', '$numprocesso', '$nome', '$statusitem')");
+
+        header('Location: cadastrarbens.php?notificacao=true');
+    }
+}
 
 ?>
 <style>
-        @media (max-width: 1600px) {
+    @media (max-width: 1600px) {
         .conteudo {
             margin-left: 75px;
             width: 95%;
@@ -60,10 +66,21 @@ if (isset($_POST['submit'])) {
             cursor: pointer;
         }
     }
+
     .swal2-title {
         color: #fff;
     }
+
+
+    #registros {
+        display: none;
+    }
+
+    #registros.show {
+        display: block;
+    }
 </style>
+
 <body>
     <?php
     include_once('menu.php');
@@ -81,9 +98,8 @@ if (isset($_POST['submit'])) {
                 <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
             </div>
         </div>
-        <h3 class="mb-3 mt-4">Cadastro de bens</h3>
-        <hr class="mb-4">
-        <form action="#" method="POST">
+        <h2 class="mb-3 mt-4">Cadastro de bens</h2>
+        <form  method="POST" class="mt-5">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numPatrimonio" class="form-label text-muted">Número do Patrimônio PMSP:</label>
@@ -91,7 +107,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="tipo" class="form-label text-muted">Tipo:</label>
-                    <select class="form-select" name="tipo" id="tipo" required>
+                    <select class="form-select" name="tipo" id="tipo" >
                         <option value="" hidden="hidden">Selecionar</option>
                         <option value="AMPLIFICADOR">AMPLIFICADOR</option>
                         <option value="ANTENA PARABÓLICA">ANTENA PARABÓLICA</option>
@@ -186,11 +202,11 @@ if (isset($_POST['submit'])) {
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numSerie" class="form-label text-muted">Número de Série:</label>
-                    <input type="text" class="form-control" id="numSerie" name="numSerie" required>
+                    <input type="text" class="form-control" id="numSerie" name="numSerie" >
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="localNovo" class="form-label text-muted">Localização:</label>
-                    <select class="form-select" id="localNovo" name="localNovo" required>
+                    <select class="form-select" id="localNovo" name="localNovo" >
                         <option value="" hidden="hidden">Selecionar</option>
                         <option value="ASCOM">ASCOM</option>
                         <option value="ATAJ">ATAJ</option>
@@ -262,24 +278,22 @@ if (isset($_POST['submit'])) {
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="nomeServidor" class="form-label text-muted" >Nome do Servidor:</label>
-                    <input type="text" class="form-control" id="nomeServidor" name="nomeServidor" >
+                    <label for="nomeServidor" class="form-label text-muted">Nome do Servidor:</label>
+                    <input type="text" class="form-control" id="nomeServidor" name="nomeServidor">
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numProcesso" class="form-label text-muted">Número do Processo:</label>
                     <input type="text" class="form-control" id="numprocesso" name="numprocesso">
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nomeComputador" class="form-label text-muted">Nome do computador:</label>
                     <input type="text" class="form-control" id="nomeComputador" name="nomeComputador">
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-6 mb-4">
                     <label for="status" class="form-label text-muted">Status:</label>
-                    <select class="form-select" id="status" name="status" required>
+                    <select class="form-select" id="status" name="status" >
                         <option value="" hidden="hidden">Selecionar</option>
                         <option value="Ativo">Ativo</option>
                         <option value="Baixado">Baixado</option>
@@ -290,33 +304,119 @@ if (isset($_POST['submit'])) {
                     </select>
                 </div>
             </div>
-            <div class="d-flex justify-content-end mr-2"><input type="submit" class="btn btn-primary" id="btnCadBens" name="submit" value="Cadastrar"></input></div>
-            <div class="hide" id="modal"></div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <label for="status" class="form-label text-muted">Num de Registro de Itens:</label>
+                    <input class="form-control mb-2" type="text" id="textBusca" name="inputText" onfocus="showOptions()" onblur="hideOptions()" style="width: 200px;">
+                    <div id="registros">
+                        <ul class="list-group list-group-flush overflow-auto" id="ulItens" style="height: 200px;width: 200px;">
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('1')">1</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('2')">2</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('3')">3</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('4')">4</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('5')">5</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('6')">6</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('7')">7</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('8')">8</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('9')">9</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('10')">10</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('15')">15</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('20')">20</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('25')">25</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('30')">30</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('35')">35</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('40')">40</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('45')">45</a></li>
+                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('50')">50</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4 mt-4 d-flex justify-content-end align-items-start">
+                    <input type="submit" class="btn btn-primary" id="btnCadBens" name="submit" value="Cadastrar"></input>
+                </div>
+            </div>
+        </form>
+        <div class="hide" id="modal"></div>
     </div>
 
 </body>
 <script>
-        function alert(num) {
+    function showOptions() {
+        document.getElementById("registros").classList.add("show");
+    }
+
+    function hideOptions() {
+        setTimeout(function() {
+            document.getElementById("registros").classList.remove("show");
+        }, 100);
+    }
+
+    function botaoClicado(item) {
+        var localNovo = document.getElementById('localNovo');
+        var status = document.getElementById('status');
+        var numSerie = document.getElementById('numSerie');
+        var tipo = document.getElementById('tipo');
+
+        if(item == 1) {
+            localNovo.required = true;
+            status.required = true;
+            numSerie.required = true;
+            tipo.required = true;
+        }
+
+        document.getElementById('textBusca').value = item;
+        hideOptions();
+        let newUrl = 'cadastrarbens.php?num=' + item;
+        window.history.pushState({
+            path: newUrl
+        }, '', newUrl);
+    }
+
+    inputText = document.getElementById('textBusca');
+
+    inputText.addEventListener("input", () => {
+        let num = inputText.value;
+        console.log(num);
+        var localNovo = document.getElementById('localNovo');
+        var status = document.getElementById('status');
+        var numSerie = document.getElementById('numSerie');
+        var tipo = document.getElementById('tipo');
+
         if(num == 1) {
+            localNovo.required = true;
+            status.required = true;
+            numSerie.required = true;
+            tipo.required = true;
+        }
+
+        let newUrl = 'cadastrarbens.php?num=' + num;
+        window.history.pushState({
+            path: newUrl
+        }, '', newUrl);
+    });
+
+
+    function alert(num) {
+        if (num == 1) {
             const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    customClass: ({
-                        title: 'swal2-title'
-                    }),
-                    icon: "success",
-                    title: "Item cadastrado com sucesso!",
-                    background: 'green',
-                    iconColor: '#ffffff'
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Item cadastrado com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
             });
         }
     }
@@ -328,10 +428,8 @@ if (isset($_POST['submit'])) {
         if (data == 'true') {
             alert(1);
             window.history.replaceState({}, document.title, window.location.pathname);
-            setInterval(function() {
-                window.location.href = 'listaremovimentar.php';
-            }, 1100);
         }
-    })
+    });
 </script>
+
 </html>
