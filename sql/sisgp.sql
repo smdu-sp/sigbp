@@ -36,14 +36,14 @@ CREATE TABLE IF NOT EXISTS `item` (
   `nome` varchar(240) DEFAULT NULL,
   `statusitem` varchar(240) DEFAULT NULL,
   PRIMARY KEY (`idbem`)
-) ENGINE=InnoDB AUTO_INCREMENT=3984 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3881 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela sisgp.item: ~3.418 rows (aproximadamente)
+-- Copiando dados para a tabela sisgp.item: ~3.315 rows (aproximadamente)
 INSERT IGNORE INTO `item` (`idbem`, `patrimonio`, `tipo`, `descsbpm`, `numserie`, `tiposbpm`, `marca`, `modelo`, `localizacao`, `servidor`, `numprocesso`, `cimbpm`, `nome`, `statusitem`) VALUES
-	(1, '001-052209414-6', 'MICROCOMPUTADOR', 'dfddddddddddd', 'aaaaaaa', 'N.A.', 'gfggf', 'OPTIPLEX 5070', '          ', '', '40028922', '001.004639/2023', 'aaaaaaaaa', 'Ativo'),
-	(2, '001-052209415-4', 'MICROCOMPUTADOR', '', 'hhghh', 'N.A.', 'DELL', 'OPTIPLEX 5070', '', '', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC320', 'Ativo'),
+	(1, '001-052209414-6', 'MICROCOMPUTADOR', 'N.A.', 'CQW8423', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'ATIC', 'atic', 'SEL/ COMPRA 6066.2020/0000628-4', '001.004639/2023', 'SELGBC321', 'Ativo'),
+	(2, '001-052209415-4', 'MICROCOMPUTADOR', 'N.A.', 'CLV8423', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'GTEC', 'MARCELO ARAUJO DE PONTES', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC320', 'Ativo'),
 	(3, '001-052209416-2', 'MICROCOMPUTADOR', 'N.A.', 'CL65423', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'GTEC', 'HARALDO MANOEL CORRÊA', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC319', 'Ativo'),
-	(4, '001-052209417-0', 'MICROCOMPUTADOR', 'N.A.', 'JOAOAOAO', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'sddss ', 'dsdddsd', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC325', 'Ativo'),
+	(4, '001-052209417-0', 'MICROCOMPUTADOR', 'N.A.', 'CLCC423', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'GTEC', 'JOSEPH ABI GHOSN', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC325', 'Ativo'),
 	(5, '001-052209418-9', 'MICROCOMPUTADOR', 'N.A.', 'CLN8423', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'GTEC', 'ROQUE VILLANO BILO', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC317', 'Ativo'),
 	(6, '001-052209419-7', 'MICROCOMPUTADOR', 'N.A.', 'CL29423', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'PARHIS', 'Ana Cristina Pereira Dos Santos', 'SEL/ COMPRA 6066.2020/0000628-4', '001.003919/2024', 'SELGBC318', 'Ativo'),
 	(7, '001-052209420-0', 'MICROCOMPUTADOR', 'N.A.', 'CM87423', 'N.A.', 'DELL', 'OPTIPLEX 5070', 'GTEC', 'JOSE ANTONIO DE OLIVEIRA GATINHO', 'SEL/ COMPRA 6066.2020/0000628-4', 'N.A.', 'SELGBC316', 'Ativo'),
@@ -3354,110 +3354,7 @@ INSERT IGNORE INTO `item` (`idbem`, `patrimonio`, `tipo`, `descsbpm`, `numserie`
 	(3877, 'Â 001-052220472-3', 'MICROCOMPUTADOR', '', '30NQZ23', '', 'DELL', 'OPTIPLEX 7070', 'CASE/DCAD', 'Cleisse Evelyn Oliveira da Rocha', 'SMDU/ DOAÃ‡ÃƒO 6023.2020.0000233-0', '001.006330/2024', 'Â SMULCASE039', 'Ativo'),
 	(3878, '001-052220507-0', 'MICROCOMPUTADOR', '', ' 30MXZ23', '', 'DELL', 'OPTIPLEX 7070', 'CASE/DCAD', 'Cleisse Evelyn Oliveira da Rocha', 'SMDU/ DOAÃ‡ÃƒO 6023.2020.0000233-0', '001.006330/2024', 'Â SMULCASE038', 'Ativo'),
 	(3879, '001-052220467-7', 'MICROCOMPUTADOR', '', ' 351TZ23', '', 'DELL', 'OPTIPLEX 7070', 'GTEC', 'Giovanni de Salvo', 'SMDU/ DOAÃ‡ÃƒO 6023.2020.0000233-0', '001.006950/2024', 'Â SMULGTEC005', 'Ativo'),
-	(3880, 'Â 001-052220465-0', 'MICROCOMPUTADOR', '', '304RZ23', '', 'DELL', 'OPTIPLEX 7070', 'ASCOM', 'Silvia Cristina Batista Amorim', 'SMDU/ DOAÃ‡ÃƒO 6023.2020.0000233-0', '001.006966/2024', '', 'Ativo'),
-	(3881, '0250064', 'ARQUIVO DESLIZANTE', NULL, '1561561', NULL, '262615', '1516155', 'ATIC', '626.2.6', '0000000', NULL, '00000000', 'Ativo'),
-	(3882, 'fgfg', 'NOBREAK', NULL, 'hnhhn', NULL, 'hnh', 'hnhnh', 'AUDITÓRIO', 'hhnhn', 'nnhnn', NULL, 'nhnh', 'Ativo'),
-	(3883, 'bbgbb', 'AR CONDICIONADO', NULL, 'bgbgb', NULL, 'gbgg', 'bgbgb', 'CAP', 'bggbg', 'gbbgb', NULL, 'gbgb', 'Baixado'),
-	(3884, 'teste', 'AMPLIFICADOR', NULL, 'teste', NULL, 'teste', 'teste', 'ATECC', 'teste', 'teste', NULL, 'teste', 'Baixado'),
-	(3885, 'dfdfdd', 'ARQUIVO DESLIZANTE', NULL, 'fdfdf', NULL, 'fdfdf', 'fdffd', 'ATIC', 'dffdf', 'fdff', NULL, 'dffdf', 'Para Doação'),
-	(3886, 'dfdfdd', 'ARQUIVO DESLIZANTE', NULL, 'fdfdf', NULL, 'fdfdf', 'fdffd', 'ATIC', 'dffdf', 'fdff', NULL, 'dffdf', 'Para Doação'),
-	(3887, 'dfdfdd', 'ARQUIVO DESLIZANTE', NULL, 'fdfdf', NULL, 'fdfdf', 'fdffd', 'ATIC', 'dffdf', 'fdff', NULL, 'dffdf', 'Para Doação'),
-	(3888, 'dfdfdd', 'ARQUIVO DESLIZANTE', NULL, 'fdfdf', NULL, 'fdfdf', 'fdffd', 'ATIC', 'dffdf', 'fdff', NULL, 'dffdf', 'Para Doação'),
-	(3889, 'dfdfdd', 'ARQUIVO DESLIZANTE', NULL, 'fdfdf', NULL, 'fdfdf', 'fdffd', 'ATIC', 'dffdf', 'fdff', NULL, 'dffdf', 'Para Doação'),
-	(3890, 'dfdfdd', 'ARQUIVO DESLIZANTE', NULL, 'fdfdf', NULL, 'fdfdf', 'fdffd', 'ATIC', 'dffdf', 'fdff', NULL, 'dffdf', 'Para Doação'),
-	(3891, 'dfdfdd', 'ARQUIVO DESLIZANTE', NULL, 'fdfdf', NULL, 'fdfdf', 'fdffd', 'ATIC', 'dffdf', 'fdff', NULL, 'dffdf', 'Para Doação'),
-	(3892, 'dfdfdd', 'ARQUIVO DESLIZANTE', NULL, 'fdfdf', NULL, 'fdfdf', 'fdffd', 'ATIC', 'dffdf', 'fdff', NULL, 'dffdf', 'Para Doação'),
-	(3893, 'sdsd', 'APARELHO FAX', NULL, 'sdsds', NULL, 'sdds', 'dsd', 'ATECC', 'dsdsd', 'sds', NULL, 'sds', 'Para Doação'),
-	(3894, 'sdsd', 'APARELHO FAX', NULL, 'sdsds', NULL, 'sdds', 'dsd', 'ATECC', 'dsdsd', 'sds', NULL, 'sds', 'Para Doação'),
-	(3895, 'sdsd', 'APARELHO FAX', NULL, 'sdsds', NULL, 'sdds', 'dsd', 'ATECC', 'dsdsd', 'sds', NULL, 'sds', 'Para Doação'),
-	(3896, 'sdsd', 'APARELHO FAX', NULL, 'sdsds', NULL, 'sdds', 'dsd', 'ATECC', 'dsdsd', 'sds', NULL, 'sds', 'Para Doação'),
-	(3897, 'dssds', 'AR CONDICIONADO', NULL, 'dsds', NULL, 'sds', 'dds', 'ATECC', 'dsdsd', 'dsdd', NULL, 'dsdd', 'Para Doação'),
-	(3898, 'dssds', 'AR CONDICIONADO', NULL, 'dsds', NULL, 'sds', 'dds', 'ATECC', 'dsdsd', 'dsdd', NULL, 'dsdd', 'Para Doação'),
-	(3899, 'fdfdff', 'APARELHO FAX', NULL, 'dfd', NULL, 'fdfdfd', 'fdfdf', 'ATIC', 'fdfdf', 'dffdf', NULL, 'fdf', 'Baixado'),
-	(3900, 'dfdfdfd', 'FRAGMENTADORA DE PAPEL', NULL, 'fdfd', NULL, 'dfdf', 'fdfdf', 'ATECC', 'dfdfd', 'fdf', NULL, 'dffd', 'Baixado'),
-	(3901, 'SDSDSDS', 'SCANNER', NULL, 'SDSD', NULL, 'DSDS', 'SDDS', 'DEUSO', 'SDSD', 'SDSDSDS', NULL, 'DDS', 'Ativo'),
-	(3902, '', 'Selecionar', NULL, 'dadass', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3903, '', 'Selecionar', NULL, 'xccxccx', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3904, '', 'Selecionar', NULL, 'xccxc', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3905, '', 'Selecionar', NULL, 'sdsds', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3906, '', 'Selecionar', NULL, 'dsdsd', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3907, '', 'Selecionar', NULL, 'dsdsd', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3908, '', 'Selecionar', NULL, 'sdsdsddsd', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3909, '', 'Selecionar', NULL, 'dsdds', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3910, '', 'Selecionar', NULL, 'dsdds', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3911, '', 'Selecionar', NULL, 'dsdds', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3912, '', 'Selecionar', NULL, 'dsdds', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3913, '', 'Selecionar', NULL, 'dsdds', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3914, '', 'Selecionar', NULL, 'fddfd', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3915, '', 'Selecionar', NULL, 'fddfd', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3916, '', 'Selecionar', NULL, 'fddfd', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3917, '', 'Selecionar', NULL, 'sdsd', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3918, '', 'Selecionar', NULL, 'sdsd', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3919, '', 'Selecionar', NULL, 'dfggg', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3920, '', 'Selecionar', NULL, 'sdds', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3921, '', 'Selecionar', NULL, 'zxxxz', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3922, '', 'Selecionar', NULL, 'cbbdg', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3923, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3924, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3925, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3926, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3927, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3928, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3929, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3930, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3931, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3932, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3933, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3934, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3935, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3936, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3937, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3938, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3939, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3940, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3941, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3942, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3943, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3944, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3945, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3946, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3947, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3948, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3949, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3950, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3951, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3952, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3953, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3954, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3955, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3956, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3957, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3958, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3959, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3960, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3961, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3962, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3963, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3964, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3965, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3966, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3967, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3968, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3969, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3970, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3971, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3972, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3973, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3974, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3975, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3976, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', '', '', NULL, '', 'Selecionar'),
-	(3977, '', 'Selecionar', NULL, '', NULL, '', '', 'Selecionar', 'sssssssssssss', '', NULL, '', 'Selecionar'),
-	(3978, '', 'ARMARIO', NULL, 'dfffd', NULL, '', '', 'ATIC', '', '', NULL, '', 'Ativo'),
-	(3979, '011150505', 'CARRINHO PARA SUPERMERCADO', NULL, '40028922', NULL, 'FERRARI', 'SRCV', 'RESID/DRGP', 'RANDANDAN', '159848462', NULL, 'Clodoaldo', 'Ativo'),
-	(3980, 'sdsdsdd', 'DESKTOP SWITCH', NULL, 'sdddssds', NULL, 'ssdsds', 'sddssdsd', 'CASE/DDU', 'sdsdsdsd', 'sdsdsd', NULL, 'sdsdsd', 'Baixado'),
-	(3981, 'SDDSDSDD', 'SCANNER', NULL, 'sdsdsd', NULL, 'ssdsd', 'ssdsd', 'GEOINFO', 'sdsdsd', 'sdsdsd', NULL, 'sdsdsd', 'Para Doação'),
-	(3982, 'dsdsdsd', 'ANTENA PARABÓLICA', NULL, 'sdsd', NULL, 'sdsd', 'sdsds', 'SECRETARIO', 'sdsds', 'dsdsds', NULL, 'dssds', 'Baixado'),
-	(3983, 'sdssd', 'AP TELEFONICO DIGITAL', NULL, 'dsdsds', NULL, 'sdssd', 'sdsdsdds', 'ATECC', 'dsds', 'sdds', NULL, 'sdssdsd', 'Ativo');
+	(3880, 'Â 001-052220465-0', 'MICROCOMPUTADOR', '', '304RZ23', '', 'DELL', 'OPTIPLEX 7070', 'ASCOM', 'Silvia Cristina Batista Amorim', 'SMDU/ DOAÃ‡ÃƒO 6023.2020.0000233-0', '001.006966/2024', '', 'Ativo');
 
 -- Copiando estrutura para tabela sisgp.transferencia
 CREATE TABLE IF NOT EXISTS `transferencia` (
@@ -3472,9 +3369,9 @@ CREATE TABLE IF NOT EXISTS `transferencia` (
   `servidoratual` varchar(240) DEFAULT NULL,
   `cimbpm` varchar(240) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=402 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=377 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela sisgp.transferencia: ~401 rows (aproximadamente)
+-- Copiando dados para a tabela sisgp.transferencia: ~376 rows (aproximadamente)
 INSERT IGNORE INTO `transferencia` (`id`, `iditem`, `localanterior`, `localnovo`, `datatransf`, `idusuario`, `usuario`, `servidoranterior`, `servidoratual`, `cimbpm`) VALUES
 	(1, '2141', '', 'CAF', '2023-08-24 09:45:23.000', 'd921989', 'Juliette Maria Alfonso Frederico', '', 'Francinaldo da Silva Rodrigues', '001.008038/2023'),
 	(2, '843', 'CAP', 'GABINETE', '2023-08-24 09:53:49.000', 'd921989', 'Juliette Maria Alfonso Frederico', '', 'Giselle Flores Arrojo Pires', '001.008034/2023'),
@@ -3851,32 +3748,7 @@ INSERT IGNORE INTO `transferencia` (`id`, `iditem`, `localanterior`, `localnovo`
 	(373, '2481', 'COMIN', 'ATIC', '2024-04-05 14:58:17.000', 'd921989', 'Juliette Maria Alfonso Frederico', 'Ademir de Assis Candido', 'ATIC', 'BAIXA - 001.006327/2022'),
 	(374, '1336', '', 'ATIC', '2024-04-08 09:20:56.000', 'd921989', 'Juliette Maria Alfonso Frederico', '', 'ATIC', '001.006390/2024'),
 	(375, '862', 'CASE/DCAD', 'ATIC', '2024-04-08 09:24:55.000', 'd921989', 'Juliette Maria Alfonso Frederico', '', 'ATIC', '001.006390/2024'),
-	(376, '1872', 'CAF/DGP', 'ATIC', '2024-04-08 09:43:45.000', 'd921989', 'Juliette Maria Alfonso Frederico', 'SANDRA REGINA BRANDï¿½O', 'Vinicius de Oliveira Giuliani', '001.001940/2024'),
-	(377, '1', 'ATIC', 'CASE', '2024-04-19 15:17:15.914', 'João Vitor Dias do Nascimento Costa', 'DELL', 'OPTIPLEX 5070', 'ATIC', 'atic'),
-	(378, '1', 'ATIC', 'CASE/STEL', '2024-04-19 15:23:42.746', 'DELL', 'João Vitor Dias do Nascimento Costa', 'OPTIPLEX 5070', 'ATIC', 'atic'),
-	(379, '1', 'ATIC', 'CASE/DCAD', '2024-04-19 15:25:46.912', 'x392076', 'João Vitor Dias do Nascimento Costa', 'atic', 'vdfdfdffdfd', 'dfrbtrgv'),
-	(380, '1', 'ATIC', 'PARHIS/DHIS', '2024-04-19 15:25:58.427', 'x392076', 'João Vitor Dias do Nascimento Costa', 'atic', 'jaooaoa', 'rgrgrggvv'),
-	(381, '3884', 'ATECC', 'CASE', '2024-04-22 12:13:56.004', 'x392076', 'João Vitor Dias do Nascimento Costa', 'teste', 'teste', 'testee'),
-	(382, '1', 'ATIC', 'CASE/DLE', '2024-04-24 14:10:33.843', 'x392076', 'João Vitor Dias do Nascimento Costa', 'atic', 'gfgg', 'fgfg'),
-	(383, '1', '', 'CASE/DDU', '2024-04-25 16:08:15.743', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'sdd', 'sdds'),
-	(384, '1', '', 'CASE/DCAD', '2024-04-25 16:09:03.477', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'sdsds', 'sdds'),
-	(385, '1', '', 'Selecionar', '2024-04-25 16:09:40.840', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'dfdfd', 'dfdfdfdfd'),
-	(386, '1', '', 'CASE/DDU', '2024-04-25 16:10:38.703', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'DFRFR ', 'FRFRFR'),
-	(387, '1', '', 'CASE/DDU', '2024-04-25 16:16:11.404', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'DFRFR ', 'FRFRFR'),
-	(388, '1', '', 'CASE/DCAD', '2024-04-25 16:36:31.557', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'ffd', 'fdfddf'),
-	(389, '1', '', 'CASE/DCAD', '2024-04-25 16:37:20.388', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'ffd', 'fdfddf'),
-	(390, '1', '', 'CASE/DDU', '2024-04-25 16:37:47.663', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'fdfdf', 'dfdf'),
-	(391, '1', '', 'CASE/DDU', '2024-04-25 16:38:56.613', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'fdfdf', 'dfdf'),
-	(392, '1', '', 'CASE/DDU', '2024-04-25 16:39:41.156', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'fdfdf', 'dfdf'),
-	(393, '1', '', 'CASE/DCAD', '2024-04-25 16:39:53.117', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'dfdf', 'dfdfdf'),
-	(394, '1', '', 'CASE/DDU', '2024-04-25 16:40:53.403', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'sdsdsdd', 'sdsds'),
-	(395, '1', ' ', 'Selecionar', '2024-04-25 16:41:35.658', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'DDSDSD', 'SDDSDS'),
-	(396, '1', '     ', 'CASE/DLE', '2024-04-29 17:46:45.459', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'ddfff', '001.004639/2023'),
-	(397, '1', '      ', 'CASE/STEL', '2024-05-06 17:13:39.548', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'SEILA', '001.004639/2023'),
-	(398, '1', '         ', 'CASE/DDU', '2024-05-07 13:53:31.722', 'x398900', 'Gustavo Mendes de Lima', '', 'adddadd', '001.004639/2023'),
-	(399, '1', '         ', 'CASE/DLE', '2024-05-09 13:19:17.730', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'sfsfsf', '001.004639/2023'),
-	(400, '1', '         ', 'CASE/DDU', '2024-05-09 13:19:45.234', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'sdsdsd', '001.004639/2023'),
-	(401, '1', '         ', 'CAP/DPD', '2024-05-09 13:21:06.546', 'x392076', 'João Vitor Dias do Nascimento Costa', '', 'ddf', '001.004639/2023');
+	(376, '1872', 'CAF/DGP', 'ATIC', '2024-04-08 09:43:45.000', 'd921989', 'Juliette Maria Alfonso Frederico', 'SANDRA REGINA BRANDï¿½O', 'Vinicius de Oliveira Giuliani', '001.001940/2024');
 
 -- Copiando estrutura para tabela sisgp.unidades
 CREATE TABLE IF NOT EXISTS `unidades` (
@@ -3884,13 +3756,70 @@ CREATE TABLE IF NOT EXISTS `unidades` (
   `unidades` varchar(100) NOT NULL,
   `sigla` varchar(45) NOT NULL,
   `codigo` int(22) NOT NULL,
-  `statusunidade` int(11) NOT NULL,
+  `statusunidade` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela sisgp.unidades: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela sisgp.unidades: ~58 rows (aproximadamente)
 INSERT IGNORE INTO `unidades` (`id`, `unidades`, `sigla`, `codigo`, `statusunidade`) VALUES
-	(1, 'zdas', 'sfd', 345, 0);
+	(1, 'DIVISAO DE MONITORAMENTO E AVALIACAO', 'PLANURB/DMA', 2147483647, 'Ativo'),
+	(2, 'DIVISAO DE ADAPTACAO A ACESSIBILIDADE', 'CONTRU/DACESS', 2147483647, 'Ativo'),
+	(3, 'COORDENADORIA DE ADMINISTRACAO E FINANCAS', 'CAF', 2147483647, 'Ativo'),
+	(4, 'COORDENADORIA DE EDIFICACAO DE USO COMERCIAL E INDUSTRIAL', 'COMIN', 2147483647, 'Ativo'),
+	(5, 'ASSESSORIA DE COMUNICACAO', 'ASCOM', 2147483647, 'Ativo'),
+	(6, 'DIVISAO DE SERVICOS DE SUPORTE', 'CAF/DSUP', 2147483647, 'Ativo'),
+	(7, 'DIVISAO DE EDIFICACOES COMERCIAIS E INDUSTRIAIS DE PEQUENO PORTE', 'CAEPP/DECPP', 2147483647, 'Ativo'),
+	(8, 'DIVISAO DE USO COMERCIAL E INDUSTRIAL DE GRANDE PORTE', 'COMIN/DCIGP', 2147483647, 'Ativo'),
+	(9, 'DIVISAO DE PARCELAMENTO DO SOLO', 'PARHIS/DPS', 2147483647, 'Ativo'),
+	(10, 'DIVISAO DE ORDENAMENTO TERRITORIAL', 'PLANURB/DOT', 2147483647, 'Ativo'),
+	(11, 'DIVISAO DE HABITACAO DE INTERESSE SOCIAL E MERCADO POPULAR DE GRANDE PORTE', 'PARHIS/DHGP', 2147483647, 'Ativo'),
+	(12, 'DIVISAO DE PROCESSOS COMUNICADOS E INDEFERIDOS', 'CAP/DPCI', 2147483647, 'Ativo'),
+	(13, 'DIVISAO DE LOGRADOUROS E EDIFICACOES', 'CASE/DLE', 2147483647, 'Ativo'),
+	(14, 'DIVISAO DE NORMATIZACAO DO USO DO SOLO', 'DEUSO/DNUS', 2147483647, 'Ativo'),
+	(15, 'UNIDADE DE GESTAO TECNICA DE ANALISE DE REGULARIZACAO', 'GTEC', 2147483647, 'Ativo'),
+	(16, 'COORDENADORIA DE PARCELAMENTO DO SOLO E DE HABITACAO DE INTERESSE SOCIAL', 'PARHIS', 2147483647, 'Ativo'),
+	(17, 'DIVISAO DE SEGURANCA DE USO', 'CONTRU/DSUS', 2147483647, 'Ativo'),
+	(18, 'DIVISAO DE SERVICOS E USO INSTITUCIONAL DE GRANDE PORTE', 'SERVIN/DSIGP', 2147483647, 'Ativo'),
+	(19, 'DIVISAO DE HABITACAO DE INTERESSE SOCIAL E MERCADO MÉDIO PORTE', 'PARHIS/DHMP', 2147483647, 'Ativo'),
+	(20, 'COORDENADORIA DE CONTROLE E USO DE IMOVEIS', 'CONTRU', 2147483647, 'Ativo'),
+	(21, 'DIVISAO DE ARTICULACAO INTERSETORIAL', 'PLANURB/DART', 2147483647, 'Ativo'),
+	(22, 'DIVISAO DE DADOS URBANISTICOS', 'CASE/DDU', 2147483647, 'Ativo'),
+	(23, 'DIVISAO DE LOCAL DE REUNIAO', 'CONTRU/DLR', 2147483647, 'Ativo'),
+	(24, 'COORDENADORIA DE APROVACAO DE EDIFICACOES DE PEQUENO PORTE', 'CAEPP', 2147483647, 'Ativo'),
+	(25, 'DIVISAO DE VISTORIA E FISCALIZACAO', 'CEPEUC/DVF', 2147483647, 'Ativo'),
+	(26, 'DIVISAO DE CADASTRO', 'CASE/DCAD', 2147483647, 'Ativo'),
+	(27, 'DIVISAO DE USO RESIDENCIAL HORIZONTAL E VERTICAL DE GRANDE PORTE', 'RESID/DRGP', 2147483647, 'Ativo'),
+	(28, 'COORDENADORIA DE EDIFICACAO DE SERVICOS E USO INSTITUCIONAL DE PEQUENO E MEDIO PORTE', 'SERVIN', 2147483647, 'Ativo'),
+	(29, 'DIVISAO DE ANALISE DOCUMENTAL', 'CEPEUC/DDOC', 2147483647, 'Ativo'),
+	(30, 'DIVISAO DE EDIFICACOES RESIDENCIAIS DE PEQUENO PORTE', 'CAEPP/DERPP', 2147483647, 'Ativo'),
+	(31, 'COORDENADORIA DE PRODUCAO E ANALISE DE INFORMACAO', 'GEOINFO', 2147483647, 'Ativo'),
+	(32, 'DIVISAO DE PROTOCOLO', 'CAP/DEPROT', 2147483647, 'Ativo'),
+	(33, 'ASSESSORIA TECNICA E JURIDICA', 'ATAJ', 2147483647, 'Ativo'),
+	(34, 'DIVISAO DE GESTAO DE RECURSOS VINCULADOS', 'CAF/DRV', 2147483647, 'Ativo'),
+	(35, 'GABINETE DO SECRETARIO', 'GAB', 2147483647, 'Ativo'),
+	(36, 'DIVISAO DE USO RESIDENCIAL HORIZONTAL', 'RESID/DRH', 2147483647, 'Ativo'),
+	(37, 'DIVISAO DE USO RESIDENCIAL VERTICAL', 'RESID/DRVE', 2147483647, 'Ativo'),
+	(38, 'DIVISAO DE ORCAMENTO E FINANCAS', 'CAF/DOF', 2147483647, 'Ativo'),
+	(39, 'COORDENADORIA DE CADASTRO, ANALISE DE DADOS E SISTEMA ELETRONICO DE LICENCIAMENTO', 'CASE', 2147483647, 'Ativo'),
+	(40, 'COORDENADORIA DE ATENDIMENTO AO PUBLICO', 'CAP', 2147483647, 'Ativo'),
+	(41, 'DIVISAO DE EQUIPAMENTOS E INSTALACOES', 'CONTRU/DINS', 2147483647, 'Ativo'),
+	(42, 'COORDENADORIA DE CONTROLE DA FUNCAO SOCIAL DA PROPRIEDADE', 'CEPEUC', 2147483647, 'Ativo'),
+	(43, 'ASSESSORIA TECNICA DE COLEGIADOS E COMISSOES', 'ATECC', 2147483647, 'Ativo'),
+	(44, 'DIVISAO DE CADASTRO E INFORMACOES TERRITORIAIS', 'CEPEUC/DCIT', 2147483647, 'Ativo'),
+	(45, 'SUPERVISAO DE LICENCIAMENTO ELETRONICO E ANALISE DE DADOS', 'CASE/STEL', 2147483647, 'Ativo'),
+	(46, 'COORDENADORIA DE PLANEJAMENTO URBANO', 'PLANURB', 2147483647, 'Ativo'),
+	(47, 'DIVISAO DE SERVICOS E USO INSTITUCIONAL DE MEDIO PORTE', 'SERVIN/DSIMP', 2147483647, 'Ativo'),
+	(48, 'DIVISAO DE USO COMERCIAL E INDUSTRIAL DE PEQUENO E MEDIO PORTE', 'COMIN/DCIMP', 2147483647, 'Ativo'),
+	(49, 'DIVISAO DE EDIFICACOES DE SERVICOS DE PEQUENO PORTE', 'CAEPP/DESPP', 2147483647, 'Ativo'),
+	(50, 'DIVISAO DE HABITACAO DE INTERESSE SOCIAL E MERCADO POPULAR DE PEQUENO PORTE', 'PARHIS/DHPP', 2147483647, 'Ativo'),
+	(51, 'COORDENADORIA DE LEGISLACAO DE USO E OCUPACAO DO SOLO', 'DEUSO', 2147483647, 'Ativo'),
+	(52, 'DIVISAO DE SISTEMA DE INFORMACOES SOBRE ZONEAMENTO', 'DEUSO/DSIZ', 2147483647, 'Ativo'),
+	(53, 'DIVISAO DE PROCESSOS DEFERIDOS', 'CAP/DPD', 2147483647, 'Ativo'),
+	(54, 'COORDENADORIA DE EDIFICACAO DE USO RESIDENCIAL', 'RESID', 2147483647, 'Ativo'),
+	(55, 'ASSESSORIA DE TECNOLOGIA DA INFORMAÇÃO E COMUNICAÇÃO', 'ATIC', 2147483647, 'Ativo'),
+	(56, 'DIVISAO DE MONITORAMENTO DO USO DO SOLO', 'DEUSO/DMUS', 2147483647, 'Ativo'),
+	(57, 'DIVISAO DE GESTAO DE PESSOAS', 'CAF/DGP', 2147483647, 'Ativo'),
+	(58, 'DIVISAO DE LICITACOES E CONTRATOS', 'CAF/DLC', 2147483647, 'Ativo');
 
 -- Copiando estrutura para tabela sisgp.usuarios
 CREATE TABLE IF NOT EXISTS `usuarios` (
@@ -3902,9 +3831,9 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `email` varchar(120) DEFAULT NULL,
   `unidade` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Copiando dados para a tabela sisgp.usuarios: ~11 rows (aproximadamente)
+-- Copiando dados para a tabela sisgp.usuarios: ~8 rows (aproximadamente)
 INSERT IGNORE INTO `usuarios` (`id`, `usuario`, `nome`, `permissao`, `statususer`, `email`, `unidade`) VALUES
 	(1, 'd879477', 'Juliana Oliveira de Carvalho', 1, 'Ativo', 'julianacarvalho@prefeitura.sp.gov.br', 'ATIC'),
 	(2, 'd854440', 'Bruno Luiz Vieira', 1, 'Ativo', 'blvieira@prefeitura.sp.gov.br', 'ATIC'),
@@ -3913,10 +3842,7 @@ INSERT IGNORE INTO `usuarios` (`id`, `usuario`, `nome`, `permissao`, `statususer
 	(14, 'D854424', 'Tiago Martins Pinheiro', 1, 'Ativo', 'tiagopinheiro@prefeitura.sp.gov.br', 'ATIC'),
 	(15, 'D921989', 'Juliette Maria Alfonso Frederico', 1, 'Ativo', 'julietteaf@prefeitura.sp.gov.br', 'ATIC'),
 	(16, 'x394214', 'Nelson Freitas', 1, 'Ativo', 'nelsonfreitas@prefeitura.sp.gov.br', 'ATIC'),
-	(17, 'x392076', 'Joao Vitor Dias', 1, 'Ativo', 'jvcosta@prefeitura.sp.gov.br', 'ATIC'),
-	(18, 'x000000', 'Claudio', 2, 'Ativo', 'teste@prefeitura.sp.gov.br', 'ATIC'),
-	(19, 'x111111', 'Jose', 1, 'Ativo', 'teste@prefeitura.sp.gov.br', 'ATIC'),
-	(20, 'x222222', 'Gabriel', 3, 'Ativo', 'teste@prefeitura.sp.gov.br', 'ATIC');
+	(17, 'x392076', 'Joao Vitor Dias', 1, 'Ativo', 'jvcosta@prefeitura.sp.gov.br', 'ATIC');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

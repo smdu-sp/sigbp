@@ -78,7 +78,7 @@ if (isset($_POST['submit'])) {
                 <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
             </div>
         </div>
-        <h3 class="mb-3 mt-2">Termo de Entrega/Retirada</h3>
+        <h2 class="mb-3 mt-2">Termo de Entrega/Retirada</h2>
         <hr class="mb-3">
         <form method="POST" id="conteudo" action="gerar-pdf.php">
             <div class="row">

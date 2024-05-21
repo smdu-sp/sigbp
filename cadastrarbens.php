@@ -79,6 +79,15 @@ if (isset($_POST['submit'])) {
     #registros.show {
         display: block;
     }
+
+    #textBusca {
+    background-image: url("./images/arrow-sort-svgrepo-com.svg");
+    background-repeat: no-repeat;
+    background-position: calc(100% - 5px) center; /* Ajuste a distância da borda direita */
+    background-size: 1.1em;
+    opacity: 0.8;
+    }
+
 </style>
 
 <body>
@@ -373,7 +382,6 @@ if (isset($_POST['submit'])) {
     }
 
     inputText = document.getElementById('textBusca');
-
     inputText.addEventListener("input", () => {
         let num = inputText.value;
         console.log(num);
