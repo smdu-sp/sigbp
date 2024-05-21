@@ -25,6 +25,7 @@ $permissao = $_SESSION['Perm'];
                 <a href="./home.php" value="home" id="botao1" class="btn-menu botoes"><img id="icon-casa" src="./images/icon-casa.png" alt="Icon Casa">Home</a>
                 <a href="./termo.php" value="termo" id="botao3" class="btn-menu botoes mb-2"><img id="icon-termo" src="./images/icon-termo.png" alt="Icon Ferramentas">Termo Entrega/Retirada</a>
                 <a href="./dashboard.php" value="dashboard" id="botao7" class="btn-menu botoes"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">Dashboard</a>
+                <a href="./extracao-bens.php" value="dashboard" id="botao7" class="btn-menu botoes"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">extracao-bens</a>
                 
                 <div class="centralizar-linha admin">
                     <hr style="opacity: 0.7; border: 0.1px solid #DDDFE2;">

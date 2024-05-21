@@ -1,9 +1,39 @@
 <?php
 session_start();
-include_once('conexoes/config.php');
-include_once('header.php');
-include_once('componentes/verificacao.php');
-include_once('componentes/permissao.php');
+include_once ('conexoes/config.php');
+include_once ('header.php');
+include_once ('componentes/verificacao.php');
+include_once ('componentes/permissao.php');
+
+$result = $conexao->query('SELECT
+    idbem as "Id",
+    patrimonio as "Patrimonio",
+    tipo as "Tipo",
+    descsbpm as "Descricão",
+    numserie as "NumSerie",
+    tiposbpm as "TipoSBPM",
+    marca as "Marca",
+    modelo as "Modelo",
+    localizacao as "Localização",
+    servidor as "Servidor",
+    numprocesso as "NumProcesso",
+    cimbpm as "CIMBPM",
+    nome as "Nome",
+    statusitem as "Status"
+    FROM sisgp.item;');
+
+
+// Inicializa um array para armazenar todos os registros
+$registros = array();
+
+// Usa um loop para buscar todas as linhas e armazená-las no array
+while ($row = $result->fetch_assoc() ) {
+    $registros[] = $row;
+}
+
+// Converte o array de registros para JSON e o imprime dentro de uma tag <script>
+echo "<script>const registros2=" . json_encode($registros) . ";</script>";
+
 
 $sql_item_count_query = "SELECT COUNT(*) as c FROM item";
 $sql_item_count_query_exec = $conexao->query($sql_item_count_query) or die($conexao->error);
@@ -26,6 +56,7 @@ $busca = "SELECT * FROM item ORDER BY idbem ASC";
 
 $sql_item_query = "$busca LIMIT {$limit} OFFSET {$offset}";
 $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
+
 
 ?>
 <style>
@@ -83,12 +114,14 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
 
 <body>
     <?php
-    include_once('menu.php');
+    include_once ('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
+
         <div class="carrossel-box mb-4">
             <div class="carrossel">
-                <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
+                <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3"
+                        alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
                 <a href="./listaremovimentar.php" class="text-primary ms-1 carrossel-text">Listar e Movimentar</a>
             </div>
@@ -98,16 +131,19 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
         </div>
         <h2 class="mb-3 mt-4">Listar e Movimentar</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
+
             <div class="d-flex justify-content-center flex-column" style="width: 100%;">
-                <form class="d-flex justify-content-end align-items-end" action="pesquisar-item.php" method="GET" style="width: 100%;">
+                <form class="d-flex justify-content-end align-items-end" action="pesquisar-item.php" method="GET"
+                    style="width: 100%;">
                     <input type="hidden" name="limit" value="<?php echo $limit; ?>">
-                    <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar" style="cursor: pointer;">
+                    <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar"
+                        style="cursor: pointer;">
                         <img src="./images/icon-recarregar.png" alt="#" id='img-recarregar'>
                     </a>
                     <a class="mb-2 mr-2 usuario-img" onclick='limparInput()' id="limpar" style="cursor: pointer;">
                         <img src="./images/limpar.png" alt="#" id='img-recarregar'>
                     </a>
-                    <div class="col-2 ml-2 mb-2">
+                    <div class="col-1 ml-2 mb-2">
                         <p class="mb-1 text-muted">Status:</p>
                         <select id="statusSelect" class="form-select" aria-label="Default select example" name="status">
                             <option value="Ativo" selected>Ativo</option>
@@ -115,7 +151,11 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                             <option value="todos">Todos</option>
                         </select>
                     </div>
-                    <div class="col-3 ml-2 mb-2">
+                    <div class="col-1 ml-2 mb-2">
+                        <p class="mb-1 text-muted">Exportar tabela:</p>
+                        <input type="button" onclick="exportarArquivo()" value="Exportar" class="btn btn-primary">
+                    </div>
+                    <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Tipo:</p>
                         <select class="form-select" name="tipo" id="tipo">
                             <option value="" hidden="hidden">Selecionar</option>
@@ -134,7 +174,8 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                             <option value="CAIXAS DE SOM">CAIXAS DE SOM</option>
                             <option value="CALCULADORA">CALCULADORA</option>
                             <option value="CARRINHO PARA SUPERMERCADO">CARRINHO PARA SUPERMERCADO</option>
-                            <option value="COMPRESSOR DE ÁUDIO COM DOIS CANAIS">COMPRESSOR DE ÁUDIO COM DOIS CANAIS</option>
+                            <option value="COMPRESSOR DE ÁUDIO COM DOIS CANAIS">COMPRESSOR DE ÁUDIO COM DOIS CANAIS
+                            </option>
                             <option value="COMPUTADOR">COMPUTADOR</option>
                             <option value="CONTROLADOR">CONTROLADOR</option>
                             <option value="CPU">CPU</option>
@@ -158,7 +199,8 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                             <option value="LIXADEIRA DE CINTA">LIXADEIRA DE CINTA</option>
                             <option value="LONGARINA">LONGARINA</option>
                             <option value="MAPA">MAPA</option>
-                            <option value="MAQUINA FOTOGRAFICA/ CÂMERA DIGITAL">MAQUINA FOTOGRAFICA/ CÂMERA DIGITAL</option>
+                            <option value="MAQUINA FOTOGRAFICA/ CÂMERA DIGITAL">MAQUINA FOTOGRAFICA/ CÂMERA DIGITAL
+                            </option>
                             <option value="MARTELETE ROMPEDOR">MARTELETE ROMPEDOR</option>
                             <option value="MEDITOR DE DISTÂNCIA">MEDIDOR DE DISTÂNCIA</option>
                             <option value="MEDUSA">MEDUSA</option>
@@ -186,7 +228,8 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                             <option value="SERVIDOR">SERVIDOR</option>
                             <option value="SOFA">SOFA</option>
                             <option value="SWITCH">SWITCH</option>
-                            <option value="TABLET MARCA SAMSUNG MODELO TAB S8 5G">TABLET MARCA SAMSUNG MODELO TAB S8 5G</option>
+                            <option value="TABLET MARCA SAMSUNG MODELO TAB S8 5G">TABLET MARCA SAMSUNG MODELO TAB S8 5G
+                            </option>
                             <option value="TELA DE PROJEÇÃO RETRÁTIL">TELA DE PROJEÇÃO RETRÁTIL</option>
                             <option value="TELEVISOR">TELEVISOR</option>
                             <option value="TRENA">TRENA</option>
@@ -271,9 +314,11 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                     </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Buscar:</p>
-                        <input class="form-control buscar" id="myInput" name="pesquisar" type="text" placeholder="Procurar...">
+                        <input class="form-control buscar" id="myInput" name="pesquisar" type="text"
+                            placeholder="Procurar...">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon" src="./images/icon-filtrar.png" alt="#"></button>
+                    <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon"
+                            src="./images/icon-filtrar.png" alt="#"></button>
                 </form>
                 <br>
                 <table class="table table-hover">
@@ -346,6 +391,25 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
     <div class="hide" id="modal"></div>
 </body>
 <script>
+    function exportarArquivo() {
+        var worksheet = XLSX.utils.json_to_sheet(registros2);
+        var workbook = XLSX.utils.book_new(registros2);
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Inscrições');
+
+        var data_atual = new Date();
+
+        var dia = data_atual.getDate();
+        var mes = data_atual.getMonth() + 1;
+        var ano = data_atual.getFullYear();
+        var hora = data_atual.getHours();
+        var min = data_atual.getMinutes();
+        var seg = data_atual.getSeconds();
+
+        var dataFormatada = `${dia}${mes}${ano}${hora}${min}${seg}`;
+
+        XLSX.writeFile(workbook, dataFormatada + '.XLSX');
+        console.log(registros2);
+    }
     function limparInput() {
         window.location.href = 'listaremovimentar.php';
     }
@@ -356,82 +420,82 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
         window.location.href = '?limit=' + selectedValue;
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {
-            button.addEventListener('click', function(event) {
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.arrow-button.disabled').forEach(function (button) {
+            button.addEventListener('click', function (event) {
                 event.preventDefault();
             });
         });
     });
 
     function alert(num) {
-        if(num == 1) {
+        if (num == 1) {
             const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    customClass: ({
-                        title: 'swal2-title'
-                    }),
-                    icon: "success",
-                    title: "Item cadastrado com sucesso!",
-                    background: 'green',
-                    iconColor: '#ffffff'
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
             });
-        } else if(num == 2) {
+            Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Item cadastrado com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
+            });
+        } else if (num == 2) {
             const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    customClass: ({
-                        title: 'swal2-title'
-                    }),
-                    icon: "success",
-                    title: "Item alterado com sucesso!",
-                    background: 'green',
-                    iconColor: '#ffffff'
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Item alterado com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
             });
         } else if (num == 3) {
             const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    customClass: ({
-                        title: 'swal2-title'
-                    }),
-                    icon: "success",
-                    title: "Item movimentado com sucesso!",
-                    background: 'green',
-                    iconColor: '#ffffff'
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Item movimentado com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
             });
         }
     }
 
-    window.addEventListener('load', function() {
+    window.addEventListener('load', function () {
         var url_string = window.location.href;
         var url = new URL(url_string);
         var data = url.searchParams.get("notificacao");
