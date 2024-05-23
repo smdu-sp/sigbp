@@ -75,13 +75,23 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
         width: 25px;
         height: 25px;
     }
+
+    .modal {
+        background-color: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: none;
+    }
 </style>
 
 <body>
     <?php
     include_once('menu.php');
     ?>
-    <div class="p-4 p-md-4 pt-3 conteudo">
+    <div class="p-4 p-md-4 pt-3 principal-home conteudo">
         <div class="carrossel-box mb-4">
             <div class="carrossel">
                 <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
@@ -208,16 +218,17 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
                             $marca = $user_data['marca'];
                             $modelo = $user_data['modelo'];
                             $tipo = $user_data['tipo'];
+                            $patrimonio = $user_data['patrimonio'];
                             $desc = "$tipo $marca Modelo: $modelo";
                             echo "<tr>";
-                            echo "<td style='cursor: pointer;'>{$user_data['patrimonio']}<span hidden>todos</span></td>";
-                            echo "<td style='cursor: pointer;'>{$user_data['nome']}<span hidden>todos</span></td>";
-                            echo "<td style='cursor: pointer;'>{$desc}<span hidden>todos</span></td>";
-                            echo "<td style='cursor: pointer;'>{$user_data['localnovo']}<span hidden>todos</span></td>";
-                            echo "<td style='cursor: pointer;'>{$user_data['servidoratual']}<span hidden>todos</span></td>";
-                            echo "<td style='cursor: pointer;'>{$user_data['usuario']}<span hidden>todos</span></td>";
-                            echo "<td style='cursor: pointer;'>{$user_data['cimbpm']}<span hidden>todos</span></td>";
-                            echo "<td style='cursor: pointer;'>{$user_data['datatransf']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;' onclick=\"abrirModal('vis-modal')\">" . $user_data['patrimonio'] . "<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;' onclick=\"abrirModal('vis-modal')\">" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=\"abrirModal('vis-modal')\">" . $desc . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=\"abrirModal('vis-modal')\">" . $user_data['localnovo'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=\"abrirModal('vis-modal')\">" . $user_data['servidoratual'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=\"abrirModal('vis-modal')\">" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=\"abrirModal('vis-modal')\">" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=\"abrirModal('vis-modal')\">" . $user_data['datatransf'] . '<span hidden>todos</span>' . "</td>";
                             echo "</tr>";
                         } ?>
                     </tbody>
@@ -246,32 +257,88 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
                 ?>
             </div>
         </div>
+        <div class="overlay"></div>
     </div>
-    <div class="hide" id="modal"></div>
+
+    <div class="card rounded-3 shadow p-3 bg-white rounded border-0 modal" id="vis-modal" style="width: 1200px;">
+        <div class="conteudo-modal">
+            <h3 class="modal-title mb-3">Movimentações do Item</h3>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Nº Patrimônio</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Descrição do Bem</th>
+                        <th scope="col">Localização</th>
+                        <th scope="col">Servidor</th>
+                        <th scope="col">Responsável</th>
+                        <th scope="col">CIMBPM</th>
+                        <th scope="col">Data</th>
+                    </tr>
+                </thead>
+                <tbody id='myTable'>
+                    <?php
+                    $sql_historico_query = "SELECT item.patrimonio, item.tipo, item.marca, item.modelo, item.nome, transferencia.cimbpm, transferencia.localnovo, transferencia.servidoratual, transferencia.usuario, transferencia.datatransf
+                    FROM item, transferencia
+                    WHERE item.idbem = transferencia.iditem AND item.patrimonio = '001-053259699-3'
+                    ORDER BY transferencia.datatransf DESC";
+                    $sql_historico_query_exec = $conexao->query($sql_historico_query) or die($conexao->error);
+                    while ($user_data = $sql_historico_query_exec->fetch_assoc()) {
+                        $marca = $user_data['marca'];
+                        $modelo = $user_data['modelo'];
+                        $tipo = $user_data['tipo'];
+                        $desc = "$tipo $marca Modelo: $modelo";
+                        echo "<tr>";
+                        echo "<td>" . $user_data['patrimonio'] . '<span hidden>todos</span>' . "</td>";
+                        echo "<td>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
+                        echo "<td>" . $desc . '<span hidden>todos</span>' . "</td>";
+                        echo "<td>" . $user_data['localnovo'] . '<span hidden>todos</span>' . "</td>";
+                        echo "<td>" . $user_data['servidoratual'] . '<span hidden>todos</span>' . "</td>";
+                        echo "<td>" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
+                        echo "<td>" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
+                        echo "<td>" . $user_data['datatransf'] . '<span hidden>todos</span>' . "</td>";
+                        echo "</tr>";
+                    } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </body>
-<script>   
-    function limparInput() {
-        window.location.href = 'home.php';
-    }
+<script>
+function abrirModal(carregarModal) {
+    var modal = document.getElementById(carregarModal);
 
-    function updateLimit() {
-        var selectElement = document.getElementById('recordsPerPage');
-        var selectedValue = selectElement.value;
-        window.location.href = '?limit=' + selectedValue;
-    }
+    modal.style.display = 'block';
+}
 
-    function recarregar() {
-        window.location.reload(true);
-    }
+function fecharModal(fecharModal) {
+    console.log('Fechar a janela modal: ' + carregarModal);
+}
 
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {
-            button.addEventListener('click', function(event) {
-                event.preventDefault();
-            });
+
+function limparInput() {
+    window.location.href = 'home.php';
+}
+
+function updateLimit() {
+    var selectElement = document.getElementById('recordsPerPage');
+    var selectedValue = selectElement.value;
+    window.location.href = '?limit=' + selectedValue;
+}
+
+function recarregar() {
+    window.location.reload(true);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
         });
     });
-</script>
+});
 
+</script>
 
 </html>

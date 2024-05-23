@@ -74,6 +74,16 @@ if (isset($_POST['submit'])) {
 
     #registros {
         display: none;
+        border: 1px solid #DEE2E6;
+        border-radius: 5px;
+    }
+
+    #registros > ul {
+        padding: 6px 3px;
+    }
+
+    #registros > ul > li {
+        border-radius: 5px;
     }
 
     #registros.show {
@@ -317,7 +327,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-6 mb-4">
                     <label for="status" class="form-label text-muted">Num de Registro de Itens:</label>
                     <input class="form-control mb-2" type="text" id="textBusca" name="inputText" onfocus="showOptions()" onblur="hideOptions()" style="width: 200px;">
-                    <div id="registros">
+                    <div id="registros" style="width: 202px;">
                         <ul class="list-group list-group-flush overflow-auto" id="ulItens" style="height: 200px;width: 200px;">
                             <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('1')">1</a></li>
                             <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('2')">2</a></li>

@@ -22,16 +22,12 @@ $result = $conexao->query('SELECT
     statusitem as "Status"
     FROM sisgp.item;');
 
-
-// Inicializa um array para armazenar todos os registros
 $registros = array();
 
-// Usa um loop para buscar todas as linhas e armazená-las no array
 while ($row = $result->fetch_assoc() ) {
     $registros[] = $row;
 }
 
-// Converte o array de registros para JSON e o imprime dentro de uma tag <script>
 echo "<script>const registros2=" . json_encode($registros) . ";</script>";
 
 
@@ -52,7 +48,7 @@ $offset = ($page - 1) * $limit;
 
 $page_number = ceil($item_count / $limit);
 
-$busca = "SELECT * FROM item ORDER BY idbem ASC";
+$busca = "SELECT * FROM item ORDER BY idbem DESC";
 
 $sql_item_query = "$busca LIMIT {$limit} OFFSET {$offset}";
 $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
@@ -174,8 +170,7 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                             <option value="CAIXAS DE SOM">CAIXAS DE SOM</option>
                             <option value="CALCULADORA">CALCULADORA</option>
                             <option value="CARRINHO PARA SUPERMERCADO">CARRINHO PARA SUPERMERCADO</option>
-                            <option value="COMPRESSOR DE ÁUDIO COM DOIS CANAIS">COMPRESSOR DE ÁUDIO COM DOIS CANAIS
-                            </option>
+                            <option value="COMPRESSOR DE ÁUDIO COM DOIS CANAIS">COMPRESSOR DE ÁUDIO COM DOIS CANAIS</option>
                             <option value="COMPUTADOR">COMPUTADOR</option>
                             <option value="CONTROLADOR">CONTROLADOR</option>
                             <option value="CPU">CPU</option>

@@ -720,6 +720,21 @@ hr {
     font-size: 14px;
 }
 
+/* .modal-historico {
+    width: 1050px;
+    height: 300px;
+    border: solid 2px red;
+    z-index: 999;
+}
+
+.principal-home {
+    z-index: 0;
+}
+
+#block {
+    display: none;
+} */
+
 @media (max-width: 1300px) {
 
     .conteudo_menu {
