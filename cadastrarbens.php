@@ -1,9 +1,9 @@
 <?php
 session_start();
-include_once('./conexoes/config.php');
-include_once('header.php');
-include_once('componentes/verificacao.php');
-include_once('componentes/permissao.php');
+include_once ('./conexoes/config.php');
+include_once ('header.php');
+include_once ('componentes/verificacao.php');
+include_once ('componentes/permissao.php');
 
 if (isset($_GET['num'])) {
     $registros = $_GET['num'];
@@ -11,25 +11,25 @@ if (isset($_GET['num'])) {
     $registros = 1;
 }
 
-if (isset($_POST['submit'])) {
-    for ($i = 1; $i <= $registros; $i++) {
-        $patrimonio = $_POST['numPatrimonio'];
-        $tipo = $_POST['tipo'];
-        $marca = $_POST['marca'];
-        $modelo = $_POST['modelo'];
-        $numserie = $_POST['numSerie'];
-        $localizacao = $_POST['localNovo'];
-        $servidor = $_POST['nomeServidor'];
-        $numprocesso = $_POST['numprocesso'];
-        $nome = $_POST['nomeComputador'];
-        $statusitem = $_POST['status'];
+if (isset($_POST['a'])) {
+    $patrimonio = $_POST['numPatrimonio'];
+    $tipo = $_POST['tipo'];
+    $marca = $_POST['marca'];
+    $modelo = $_POST['modelo'];
+    $numserie = $_POST['numSerie'];
+    $localizacao = $_POST['localNovo'];
+    $servidor = $_POST['nomeServidor'];
+    $numprocesso = $_POST['numprocesso'];
+    $nome = $_POST['nomeComputador'];
+    $statusitem = $_POST['status'];
 
-        $result = mysqli_query($conexao, "INSERT INTO item(patrimonio, tipo, numserie, marca, modelo, localizacao, servidor, numprocesso, nome, statusitem) 
+    $result = mysqli_query($conexao, "INSERT INTO item(patrimonio, tipo, numserie, marca, modelo, localizacao, servidor, numprocesso, nome, statusitem) 
         VALUES ('$patrimonio', '$tipo', '$numserie', '$marca', '$modelo', '$localizacao', '$servidor', '$numprocesso', '$nome', '$statusitem')");
 
-        header('Location: cadastrarbens.php?notificacao=true');
-    }
-}
+    header('Location: cadastrarbens.php?notificacao=true');
+  
+
+}   
 
 ?>
 <style>
@@ -91,19 +91,21 @@ if (isset($_POST['submit'])) {
     }
 
     #textBusca {
-    background-image: url("./images/arrow-sort-svgrepo-com.svg");
-    background-repeat: no-repeat;
-    background-position: calc(100% - 5px) center; /* Ajuste a distância da borda direita */
-    background-size: 1.1em;
-    opacity: 0.8;
+        background-image: url("./images/arrow-sort-svgrepo-com.svg");
+        background-repeat: no-repeat;
+        background-position: calc(100% - 5px) center;
+        /* Ajuste a distância da borda direita */
+        background-size: 1.1em;
+        opacity: 0.8;
     }
-
 </style>
 
 <body>
     <?php
-    include_once('menu.php');
+    include_once ('menu.php');
     ?>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="path/to/your/javascript/file.js"></script>
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel-box mb-2">
             <div class="carrossel">
@@ -118,15 +120,15 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
         <h2 class="mb-3 mt-4">Cadastro de bens</h2>
-        <form  method="POST" class="mt-5">
+        <form method="POST" class="mt-5">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numPatrimonio" class="form-label text-muted">Número do Patrimônio PMSP:</label>
-                    <input type="text" class="form-control" id="numPatrimonio" name="numPatrimonio">
+                    <input type="text" class="form-control" id="numPatrimonio" name="numPatrimonio" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="tipo" class="form-label text-muted">Tipo:</label>
-                    <select class="form-select" name="tipo" id="tipo" >
+                    <select class="form-select" name="tipo" id="tipo" required>
                         <option value="" hidden="hidden">Selecionar</option>
                         <option value="AMPLIFICADOR">AMPLIFICADOR</option>
                         <option value="ANTENA PARABÓLICA">ANTENA PARABÓLICA</option>
@@ -195,7 +197,8 @@ if (isset($_POST['submit'])) {
                         <option value="SERVIDOR">SERVIDOR</option>
                         <option value="SOFA">SOFA</option>
                         <option value="SWITCH">SWITCH</option>
-                        <option value="TABLET MARCA SAMSUNG MODELO TAB S8 5G">TABLET MARCA SAMSUNG MODELO TAB S8 5G</option>
+                        <option value="TABLET MARCA SAMSUNG MODELO TAB S8 5G">TABLET MARCA SAMSUNG MODELO TAB S8 5G
+                        </option>
                         <option value="TELA DE PROJEÇÃO RETRÁTIL">TELA DE PROJEÇÃO RETRÁTIL</option>
                         <option value="TELEVISOR">TELEVISOR</option>
                         <option value="TRENA">TRENA</option>
@@ -211,21 +214,21 @@ if (isset($_POST['submit'])) {
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="marca" class="form-label text-muted">Marca:</label>
-                    <input type="text" class="form-control" id="marca" name="marca">
+                    <input type="text" class="form-control" id="marca" name="marca" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="modelo" class="form-label text-muted">Modelo:</label>
-                    <input type="text" class="form-control" id="modelo" name="modelo">
+                    <input type="text" class="form-control" id="modelo" name="modelo" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numSerie" class="form-label text-muted">Número de Série:</label>
-                    <input type="text" class="form-control" id="numSerie" name="numSerie" >
+                    <input type="number" class="form-control" id="numSerie" name="numSerie" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="localNovo" class="form-label text-muted">Localização:</label>
-                    <select class="form-select" id="localNovo" name="localNovo" >
+                    <select class="form-select" id="localNovo" name="localNovo" required>
                         <option value="" hidden="hidden">Selecionar</option>
                         <option value="ASCOM">ASCOM</option>
                         <option value="ATAJ">ATAJ</option>
@@ -298,21 +301,21 @@ if (isset($_POST['submit'])) {
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nomeServidor" class="form-label text-muted">Nome do Servidor:</label>
-                    <input type="text" class="form-control" id="nomeServidor" name="nomeServidor">
+                    <input type="text" class="form-control" id="nomeServidor" name="nomeServidor" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="numProcesso" class="form-label text-muted">Número do Processo:</label>
-                    <input type="text" class="form-control" id="numprocesso" name="numprocesso">
+                    <input type="number" class="form-control" id="numprocesso" name="numprocesso" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nomeComputador" class="form-label text-muted">Nome do computador:</label>
-                    <input type="text" class="form-control" id="nomeComputador" name="nomeComputador">
+                    <input type="text" class="form-control" id="nomeComputador" name="nomeComputador" required>
                 </div>
                 <div class="col-md-6 mb-4">
-                    <label for="status" class="form-label text-muted">Status:</label>
-                    <select class="form-select" id="status" name="status" >
+                    <label for="status" class="form-label text-muted" >Status:</label>
+                    <select class="form-select" id="status" name="status" required>
                         <option value="" hidden="hidden">Selecionar</option>
                         <option value="Ativo">Ativo</option>
                         <option value="Baixado">Baixado</option>
@@ -351,7 +354,7 @@ if (isset($_POST['submit'])) {
                     </div>
                 </div>
                 <div class="col-md-6 mb-4 mt-4 d-flex justify-content-end align-items-start">
-                    <input type="submit" class="btn btn-primary" id="btnCadBens" name="submit" value="Cadastrar"></input>
+                    <input type="submit" class="btn btn-primary" id="btnCadBens" name="a" value="Cadastrar" required></input>
                 </div>
             </div>
         </form>
@@ -365,89 +368,95 @@ if (isset($_POST['submit'])) {
     }
 
     function hideOptions() {
-        setTimeout(function() {
+        setTimeout(function () {
             document.getElementById("registros").classList.remove("show");
         }, 100);
     }
+    function setRequiredFields(required) {
+    var localNovo = document.getElementById('localNovo');
+    var status = document.getElementById('status');
+    var numSerie = document.getElementById('numSerie');
+    var tipo = document.getElementById('tipo');
 
-    function botaoClicado(item) {
-        var localNovo = document.getElementById('localNovo');
-        var status = document.getElementById('status');
-        var numSerie = document.getElementById('numSerie');
-        var tipo = document.getElementById('tipo');
-
-        if(item == 1) {
-            localNovo.required = true;
-            status.required = true;
-            numSerie.required = true;
-            tipo.required = true;
-        }
-
-        document.getElementById('textBusca').value = item;
-        hideOptions();
-        let newUrl = 'cadastrarbens.php?num=' + item;
-        window.history.pushState({
-            path: newUrl
-        }, '', newUrl);
-    }
-
-    inputText = document.getElementById('textBusca');
-    inputText.addEventListener("input", () => {
-        let num = inputText.value;
-        console.log(num);
-        var localNovo = document.getElementById('localNovo');
-        var status = document.getElementById('status');
-        var numSerie = document.getElementById('numSerie');
-        var tipo = document.getElementById('tipo');
-
-        if(num == 1) {
-            localNovo.required = true;
-            status.required = true;
-            numSerie.required = true;
-            tipo.required = true;
-        }
-
-        let newUrl = 'cadastrarbens.php?num=' + num;
-        window.history.pushState({
-            path: newUrl
-        }, '', newUrl);
-    });
-
-
-    function alert(num) {
-        if (num == 1) {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                customClass: ({
-                    title: 'swal2-title'
-                }),
-                icon: "success",
-                title: "Item cadastrado com sucesso!",
-                background: 'green',
-                iconColor: '#ffffff'
-            });
-        }
-    }
-
-    window.addEventListener('load', function() {
-        var url_string = window.location.href;
-        var url = new URL(url_string);
-        var data = url.searchParams.get("notificacao");
-        if (data == 'true') {
-            alert(1);
-            window.history.replaceState({}, document.title, window.location.pathname);
+    localNovo.required = required;
+    status.required = required;
+    numSerie.required = required;
+    tipo.required = required;
+}
+function botaoClicado(item) {
+    setRequiredFields(item == 1);
+    document.getElementById('textBusca').value = item;
+    hideOptions();
+    let newUrl = 'cadastrarbens.php?num=' + item;
+    window.history.pushState({ path: newUrl }, '', newUrl);
+}
+function showAlert(num, numPatrimonio, marca, numSerie, nomeServidor, nomeComputador, numProcesso) {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
         }
     });
+
+    if (!numPatrimonio || !marca || !numSerie || !nomeServidor || !nomeComputador || !numProcesso) {
+        Toast.fire({
+            customClass: { title: 'swal2-title' },
+            icon: "error",
+            title: "Erro: Preencha todos os campos obrigatórios!",
+            background: 'red',
+            iconColor: '#ffffff'
+        });
+    } else if (num === 1) {
+        Toast.fire({
+            customClass: { title: 'swal2-title' },
+            icon: "success",
+            title: "Item cadastrado com sucesso!",
+            background: 'green',
+            iconColor: '#ffffff'
+        });
+    } else if (num === 2) {
+        Toast.fire({
+            customClass: { title: 'swal2-title' },
+            icon: "success",
+            title: "Item atualizado com sucesso!",
+            background: 'blue',
+            iconColor: '#ffffff'
+        });
+    } else {
+        Toast.fire({
+            customClass: { title: 'swal2-title' },
+            icon: "error",
+            title: "Erro: Opção inválida!",
+            background: 'red',
+            iconColor: '#ffffff'
+        });
+    }
+}
+window.addEventListener('load', function () {
+    console.log("Página carregada");
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var data = url.searchParams.get('notificacao');
+    console.log("Parâmetro de notificação:", data);
+
+    if (data === 'true') {
+        console.log("Exibindo alerta de sucesso para cadastro");
+        showAlert(1, true, true, true, true, true, true); // Simulando preenchimento de todos os campos
+        window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (data === 'false') {
+        console.log("Exibindo alerta de sucesso para atualização");
+        showAlert(2, true, true, true, true, true, true); // Simulando preenchimento de todos os campos
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+});
+
+
+
 </script>
 
 </html>

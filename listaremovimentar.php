@@ -147,10 +147,7 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                             <option value="todos">Todos</option>
                         </select>
                     </div>
-                    <div class="col-1 ml-2 mb-2">
-                        <p class="mb-1 text-muted">Exportar tabela:</p>
-                        <input type="button" onclick="exportarArquivo()" value="Exportar" class="btn btn-primary">
-                    </div>
+                    
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Tipo:</p>
                         <select class="form-select" name="tipo" id="tipo">
@@ -236,6 +233,7 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                             <option value="OUTROS">OUTROS</option>
                         </select>
                     </div>
+                    
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
                         <select id="unidadeSelect" class="form-select" name="unidade">
@@ -307,6 +305,7 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                             <option value="STEL">STEL</option>
                         </select>
                     </div>
+                    
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Buscar:</p>
                         <input class="form-control buscar" id="myInput" name="pesquisar" type="text"
@@ -359,7 +358,12 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                     </tbody>
                 </table>
             </div>
-            <div class='pagination-controls'>
+            <div class="col-2 ml-2  mt-4">
+                        <p class="mb-4  text-center text-muted"></p>
+                        <input type="button" onclick="exportarArquivo(  'listaremovimentar')" value="Exportar" class="btn btn-primary">
+                    </div>
+            <div class='pagination-controls mb-4 '>
+                
                 <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
                     <select id='recordsPerPage' onchange="updateLimit()">
@@ -400,8 +404,8 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
         var min = data_atual.getMinutes();
         var seg = data_atual.getSeconds();
 
-        var dataFormatada = `${dia}${mes}${ano}${hora}${min}${seg}`;
-
+        var dataFormatada = `movimentação-${dia}-${mes}-${ano}`;
+        var nome;
         XLSX.writeFile(workbook, dataFormatada + '.XLSX');
         console.log(registros2);
     }
