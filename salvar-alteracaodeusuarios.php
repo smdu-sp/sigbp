@@ -10,13 +10,9 @@ if(isset($_POST['update'])) {
     $unidade = $_POST['unidade'];
     $status = $_POST['status'];
 
-    // Atualização do registro no banco de dados
     $sqlUpdate = "UPDATE usuarios SET usuario='$usuario', nome='$nomefr', email='$emailfr', permissao='$permissao', unidade='$unidade', statususer='$status' WHERE id='$id'";
 
-    // Execução da consulta SQL
     $result = $conexao->query($sqlUpdate);
-
-
     header('Location: usuarios.php?notificacao=alterado');
 
 } else {

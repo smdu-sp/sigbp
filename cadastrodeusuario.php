@@ -1,6 +1,4 @@
 <?php
-
-
 session_start();
 include_once('./conexoes/config.php');
 include_once('componentes/verificacao.php');
@@ -13,9 +11,6 @@ $emailfr = '';
 $permissaoCad = '';
 $unidade = 'Selecionar';
 $status = 'Selecionar';
-
-
-
 
 if (isset($_GET['usuario'])) {
     $usuario = $_GET['usuario'];
@@ -132,25 +127,23 @@ if (isset($_POST['submit'])) {
         <h3 class="mb-4 mt-4">Cadastro de Usuários</h3>
         <form method="POST" action="#">
             <div class="row">
-                <div class="col-md-12 mb-1">
-                    <label for="usuarioCadastro" class="form-label text-muted">Login de rede</label>
+                <div class="col-md-12 mb-4">
+                    <label for="usuarioCadastro" class="form-label text-muted ml-2">Login de rede</label>
                     <div class="input-group">
                         <input value="<?php echo $usuario; ?>" type="text" name="loginRede" class="form-control" id="inputCadUsuario" placeholder="Buscar por login de rede" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary" name="buscar" id="btn-CadUsuario" type="button" onclick="buscarUsuario()">Buscar</button>
                         </div>
-                        <hr id="cdusuario">
                     </div>
                 </div>
-                <div class="col-md-12 mb-1">
+                <div class="col-md-12 mb-4">
                     <div>
-                        <label for="exampleFormControlInput1" class="form-label text-muted">Nome</label>
+                        <label for="exampleFormControlInput1" class="form-label text-muted ml-2">Nome</label>
                         <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="Nome" name="nome" value="<?php echo $nomefr != null ? $nomefr : '' ?>" required>
-                        <hr id="cdusuario">
                     </div>
                 </div>
-                <div class="col-md-12 mb-1">
-                    <label for="usuarioCadastro" class="form-label text-muted">Permissão</label>
+                <div class="col-md-12 mb-4">
+                    <label for="usuarioCadastro" class="form-label text-muted ml-2">Permissão</label>
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-cracha.png" alt="" class="imgCadastro"></div>
                         <select class="form-select" aria-label="Filter select" name="permissao" required>
@@ -159,11 +152,11 @@ if (isset($_POST['submit'])) {
                             <option value="1" <?php if ($permissaoCad == 1) echo 'selected' ?>>Administrador</option>
                             <option value="3" <?php if ($permissaoCad == 3) echo 'selected' ?>>Sem permissão</option>
                         </select>
-                        <hr id="cdusuario">
+                       
                     </div>
                 </div>
-                <div class="col-md-12 mb-1">
-                    <label for="usuarioCadastro" class="form-label text-muted">Unidade</label>
+                <div class="col-md-12 mb-4">
+                    <label for="usuarioCadastro" class="form-label text-muted ml-2">Unidade</label>
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/unidades.png" alt="" class="imgCadastro"></div>
                         <select class="form-select" name="unidade" required>
@@ -217,23 +210,22 @@ if (isset($_POST['submit'])) {
                             <option value="SERVIN/DSIGP">SERVIN/DSIGP</option>
                             <option value="SERVIN/DSIMP">SERVIN/DSIMP</option>
                         </select>
-                        <hr id="cdusuario">
                     </div>
                 </div>
-                <div class="col-md-12 mb-1">
-                    <label for="usuarioCadastro" class="form-label text-muted">Status</label>
+                <div class="col-md-12 mb-4">
+                    <label for="usuarioCadastro" class="form-label text-muted ml-2">Status</label>
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-status.png" alt="" class="imgCadastro"></div>
                         <select class="form-select" name="status" required>
-                            <option value="<?php echo $status ?>"><?php echo $status != null ? $status : '' ?></option>
+                            <option value="<?php echo $status ?>" hidden><?php echo $status != null ? $status : '' ?></option>
                             <option value="Ativo">Ativo</option>
                             <option value="Inativo">Inativo</option>
                         </select>
-                        <hr id="cdusuario">
+                        
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="usuarioCadastro" class="form-label text-muted">Email</label>
+                    <label for="usuarioCadastro" class="form-label text-muted ml-2">Email</label>
                     <input type="email" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="name@example.com" name="email" value="<?php echo $emailfr; ?>" required>
                 </div>
                 <div class="d-flex flex-row-reverse">

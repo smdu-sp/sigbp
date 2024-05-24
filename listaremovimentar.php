@@ -1,9 +1,9 @@
 <?php
 session_start();
-include_once ('conexoes/config.php');
-include_once ('header.php');
-include_once ('componentes/verificacao.php');
-include_once ('componentes/permissao.php');
+include_once('conexoes/config.php');
+include_once('header.php');
+include_once('componentes/verificacao.php');
+include_once('componentes/permissao.php');
 
 $result = $conexao->query('SELECT
     idbem as "Id",
@@ -24,7 +24,7 @@ $result = $conexao->query('SELECT
 
 $registros = array();
 
-while ($row = $result->fetch_assoc() ) {
+while ($row = $result->fetch_assoc()) {
     $registros[] = $row;
 }
 
@@ -110,14 +110,13 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
 
 <body>
     <?php
-    include_once ('menu.php');
+    include_once('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
 
         <div class="carrossel-box mb-4">
             <div class="carrossel">
-                <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3"
-                        alt=""></a>
+                <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
                 <a href="./listaremovimentar.php" class="text-primary ms-1 carrossel-text">Listar e Movimentar</a>
             </div>
@@ -129,11 +128,9 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
 
             <div class="d-flex justify-content-center flex-column" style="width: 100%;">
-                <form class="d-flex justify-content-end align-items-end" action="pesquisar-item.php" method="GET"
-                    style="width: 100%;">
+                <form class="d-flex justify-content-end align-items-end" action="pesquisar-item.php" method="GET" style="width: 100%;">
                     <input type="hidden" name="limit" value="<?php echo $limit; ?>">
-                    <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar"
-                        style="cursor: pointer;">
+                    <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar" style="cursor: pointer;">
                         <img src="./images/icon-recarregar.png" alt="#" id='img-recarregar'>
                     </a>
                     <a class="mb-2 mr-2 usuario-img" onclick='limparInput()' id="limpar" style="cursor: pointer;">
@@ -147,7 +144,7 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                             <option value="todos">Todos</option>
                         </select>
                     </div>
-                    
+
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Tipo:</p>
                         <select class="form-select" name="tipo" id="tipo">
@@ -233,7 +230,7 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                             <option value="OUTROS">OUTROS</option>
                         </select>
                     </div>
-                    
+
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
                         <select id="unidadeSelect" class="form-select" name="unidade">
@@ -305,14 +302,12 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                             <option value="STEL">STEL</option>
                         </select>
                     </div>
-                    
-                    <div class="col-3 mb-2">
+
+                    <div class="col-4 mb-2">
                         <p class="mb-1 text-muted">Buscar:</p>
-                        <input class="form-control buscar" id="myInput" name="pesquisar" type="text"
-                            placeholder="Procurar...">
+                        <input class="form-control buscar" id="myInput" name="pesquisar" type="text" placeholder="Procurar...">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon"
-                            src="./images/icon-filtrar.png" alt="#"></button>
+                    <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon" src="./images/icon-filtrar.png" alt="#"></button>
                 </form>
                 <br>
                 <table class="table table-hover">
@@ -358,11 +353,9 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                     </tbody>
                 </table>
             </div>
-            <div class="col-2 ml-2  mt-4">
-                        <p class="mb-4  text-center text-muted"></p>
-                        <input type="button" onclick="exportarArquivo(  'listaremovimentar')" value="Exportar" class="btn btn-primary">
-                    </div>
-            <div class='pagination-controls mb-4 '>
+            <div class='pagination-controls'>
+                
+                <input type="button" onclick="exportarArquivo(  'listaremovimentar')" value="Exportar" class="btn btn-primary" style="margin-right: 1010px;">
                 
                 <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
@@ -378,12 +371,14 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                 $opacidade_direita = ($page == $page_number) ? '0.5' : '1';
                 $disabled_esquerda = ($opacidade_esquerda == '0.5') ? 'disabled' : '';
                 $disabled_direita = ($opacidade_direita == '0.5') ? 'disabled' : '';
-
+                
                 echo "<a href='?page=" . ($page - 1) . '&limit=' . $limit . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
                 echo "<a href='?page=" . ($page + 1) . '&limit=' . $limit . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
-
-
+                
+                
                 ?>
+            </div>
+            <div class="col-2">
             </div>
         </div>
     </div>
@@ -409,6 +404,7 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
         XLSX.writeFile(workbook, dataFormatada + '.XLSX');
         console.log(registros2);
     }
+
     function limparInput() {
         window.location.href = 'listaremovimentar.php';
     }
@@ -498,7 +494,7 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
         }
     }
 
-    window.addEventListener('load', function () {
+    window.addEventListener('load', function() {
         var url_string = window.location.href;
         var url = new URL(url_string);
         var data = url.searchParams.get("notificacao");

@@ -221,14 +221,14 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
                             $patrimonio = $user_data['patrimonio'];
                             $desc = "$tipo $marca Modelo: $modelo";
                             echo "<tr>";
-                            echo "<td style='cursor: pointer;' onclick=\"abrirModal('vis-modal')\">" . $user_data['patrimonio'] . "<span hidden>todos</span></td>";
-                            echo "<td style='cursor: pointer;' onclick=\"abrirModal('vis-modal')\">" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=\"abrirModal('vis-modal')\">" . $desc . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=\"abrirModal('vis-modal')\">" . $user_data['localnovo'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=\"abrirModal('vis-modal')\">" . $user_data['servidoratual'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=\"abrirModal('vis-modal')\">" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=\"abrirModal('vis-modal')\">" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=\"abrirModal('vis-modal')\">" . $user_data['datatransf'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['patrimonio'] . "<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $desc . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['localnovo'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['servidoratual'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['datatransf'] . '<span hidden>todos</span>' . "</td>";
                             echo "</tr>";
                         } ?>
                     </tbody>
@@ -306,17 +306,6 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
 
 </body>
 <script>
-function abrirModal(carregarModal) {
-    var modal = document.getElementById(carregarModal);
-
-    modal.style.display = 'block';
-}
-
-function fecharModal(fecharModal) {
-    console.log('Fechar a janela modal: ' + carregarModal);
-}
-
-
 function limparInput() {
     window.location.href = 'home.php';
 }

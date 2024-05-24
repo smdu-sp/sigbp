@@ -350,6 +350,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                 </table>
             </div>
             <div class='pagination-controls'>
+            <input type="button" onclick="exportarArquivo(  'listaremovimentar')" value="Exportar" class="btn btn-primary" style="margin-right: 1010px;">
                 <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
                     <select id='recordsPerPage' onchange="updateLimit()">
@@ -385,6 +386,26 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     <div class="hide" id="modal"></div>
 </body>
 <script>
+    function exportarArquivo() {
+        var worksheet = XLSX.utils.json_to_sheet(registros2);
+        var workbook = XLSX.utils.book_new(registros2);
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Inscrições');
+
+        var data_atual = new Date();
+
+        var dia = data_atual.getDate();
+        var mes = data_atual.getMonth() + 1;
+        var ano = data_atual.getFullYear();
+        var hora = data_atual.getHours();
+        var min = data_atual.getMinutes();
+        var seg = data_atual.getSeconds();
+
+        var dataFormatada = `movimentação-${dia}-${mes}-${ano}`;
+        var nome;
+        XLSX.writeFile(workbook, dataFormatada + '.XLSX');
+        console.log(registros2);
+    }
+
     function limparInput() {
         window.location.href = 'listaremovimentar.php';
     }

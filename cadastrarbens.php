@@ -11,25 +11,26 @@ if (isset($_GET['num'])) {
     $registros = 1;
 }
 
-if (isset($_POST['a'])) {
-    $patrimonio = $_POST['numPatrimonio'];
-    $tipo = $_POST['tipo'];
-    $marca = $_POST['marca'];
-    $modelo = $_POST['modelo'];
-    $numserie = $_POST['numSerie'];
-    $localizacao = $_POST['localNovo'];
-    $servidor = $_POST['nomeServidor'];
-    $numprocesso = $_POST['numprocesso'];
-    $nome = $_POST['nomeComputador'];
-    $statusitem = $_POST['status'];
+if (isset($_POST['submit'])) {
+    for ($i = 1; $i <= $registros; $i++) {
+        $patrimonio = $_POST['numPatrimonio'];
+        $tipo = $_POST['tipo'];
+        $marca = $_POST['marca'];
+        $modelo = $_POST['modelo'];
+        $numserie = $_POST['numSerie'];
+        $localizacao = $_POST['localNovo'];
+        $servidor = $_POST['nomeServidor'];
+        $numprocesso = $_POST['numprocesso'];
+        $nome = $_POST['nomeComputador'];
+        $statusitem = $_POST['status'];
+        $cimbpm = $_POST['CIMBPM'];
 
-    $result = mysqli_query($conexao, "INSERT INTO item(patrimonio, tipo, numserie, marca, modelo, localizacao, servidor, numprocesso, nome, statusitem) 
-        VALUES ('$patrimonio', '$tipo', '$numserie', '$marca', '$modelo', '$localizacao', '$servidor', '$numprocesso', '$nome', '$statusitem')");
+        $result = mysqli_query($conexao, "INSERT INTO item(patrimonio, tipo, numserie, marca, modelo, localizacao, servidor, numprocesso, nome, statusitem, cimbpm) 
+        VALUES ('$patrimonio', '$tipo', '$numserie', '$marca', '$modelo', '$localizacao', '$servidor', '$numprocesso', '$nome', '$statusitem', '$cimbpm')");
 
-    header('Location: cadastrarbens.php?notificacao=true');
-  
-
-}   
+        header('Location: cadastrarbens.php?notificacao=true');
+    }
+}
 
 ?>
 <style>
@@ -94,7 +95,6 @@ if (isset($_POST['a'])) {
         background-image: url("./images/arrow-sort-svgrepo-com.svg");
         background-repeat: no-repeat;
         background-position: calc(100% - 5px) center;
-        /* Ajuste a distância da borda direita */
         background-size: 1.1em;
         opacity: 0.8;
     }
@@ -104,8 +104,6 @@ if (isset($_POST['a'])) {
     <?php
     include_once ('menu.php');
     ?>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="path/to/your/javascript/file.js"></script>
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel-box mb-2">
             <div class="carrossel">
@@ -124,7 +122,7 @@ if (isset($_POST['a'])) {
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numPatrimonio" class="form-label text-muted">Número do Patrimônio PMSP:</label>
-                    <input type="text" class="form-control" id="numPatrimonio" name="numPatrimonio" required>
+                    <input type="text" class="form-control" id="numPatrimonio" name="numPatrimonio">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="tipo" class="form-label text-muted">Tipo:</label>
@@ -214,17 +212,17 @@ if (isset($_POST['a'])) {
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="marca" class="form-label text-muted">Marca:</label>
-                    <input type="text" class="form-control" id="marca" name="marca" required>
+                    <input type="text" class="form-control" id="marca" name="marca">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="modelo" class="form-label text-muted">Modelo:</label>
-                    <input type="text" class="form-control" id="modelo" name="modelo" required>
+                    <input type="text" class="form-control" id="modelo" name="modelo">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numSerie" class="form-label text-muted">Número de Série:</label>
-                    <input type="number" class="form-control" id="numSerie" name="numSerie" required>
+                    <input type="text" class="form-control" id="numSerie" name="numSerie" required>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="localNovo" class="form-label text-muted">Localização:</label>
@@ -301,18 +299,24 @@ if (isset($_POST['a'])) {
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nomeServidor" class="form-label text-muted">Nome do Servidor:</label>
-                    <input type="text" class="form-control" id="nomeServidor" name="nomeServidor" required>
+                    <input type="text" class="form-control" id="nomeServidor" name="nomeServidor">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="numProcesso" class="form-label text-muted">Número do Processo:</label>
-                    <input type="number" class="form-control" id="numprocesso" name="numprocesso" required>
+                    <input type="text" class="form-control" id="numprocesso" name="numprocesso">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="nomeComputador" class="form-label text-muted">Nome do computador:</label>
-                    <input type="text" class="form-control" id="nomeComputador" name="nomeComputador" required>
+                    <input type="text" class="form-control" id="nomeComputador" name="nomeComputador">
                 </div>
+                <div class="col-md-6 mb-3">
+                    <label for="CIMBPM" class="form-label text-muted">CIMBPM:</label>
+                    <input type="text" class="form-control" id="CIMBPM" name="CIMBPM">
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6 mb-4">
                     <label for="status" class="form-label text-muted" >Status:</label>
                     <select class="form-select" id="status" name="status" required>
@@ -330,7 +334,7 @@ if (isset($_POST['a'])) {
                 <div class="col-md-6 mb-4">
                     <label for="status" class="form-label text-muted">Num de Registro de Itens:</label>
                     <input class="form-control mb-2" type="text" id="textBusca" name="inputText" onfocus="showOptions()" onblur="hideOptions()" style="width: 200px;">
-                    <div id="registros" style="width: 202px;">
+                    <div id="registros">
                         <ul class="list-group list-group-flush overflow-auto" id="ulItens" style="height: 200px;width: 200px;">
                             <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('1')">1</a></li>
                             <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('2')">2</a></li>
@@ -354,7 +358,7 @@ if (isset($_POST['a'])) {
                     </div>
                 </div>
                 <div class="col-md-6 mb-4 mt-4 d-flex justify-content-end align-items-start">
-                    <input type="submit" class="btn btn-primary" id="btnCadBens" name="a" value="Cadastrar" required></input>
+                    <input type="submit" class="btn btn-primary" id="btnCadBens" name="submit" value="Cadastrar"></input>
                 </div>
             </div>
         </form>
@@ -446,11 +450,11 @@ window.addEventListener('load', function () {
 
     if (data === 'true') {
         console.log("Exibindo alerta de sucesso para cadastro");
-        showAlert(1, true, true, true, true, true, true); // Simulando preenchimento de todos os campos
+        showAlert(1, true, true, true, true, true, true); 
         window.history.replaceState({}, document.title, window.location.pathname);
     } else if (data === 'false') {
         console.log("Exibindo alerta de sucesso para atualização");
-        showAlert(2, true, true, true, true, true, true); // Simulando preenchimento de todos os campos
+        showAlert(2, true, true, true, true, true, true);
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 });

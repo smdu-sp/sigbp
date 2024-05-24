@@ -94,6 +94,18 @@ $permissao = $_SESSION['Perm'];
             document.getElementById('botao6').style.background = '#DDE7EE';
         }
 
+        if (pathName == '/alteracaodeusuario.php') {
+            document.getElementById('botao5').style.background = '#DDE7EE';
+        }
+
+        if (pathName == '/cadastrodeunidades.php') {
+            document.getElementById('botao6').style.background = '#DDE7EE';
+        }
+
+        if (pathName == '/historicodoitem.php') {
+            document.getElementById('botao1').style.background = '#DDE7EE';
+        }
+
         if (pathName === valorBotao) {
             botao.style.background = '#DDE7EE';
         }

@@ -267,7 +267,7 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
                 ?>
             </div>
             <div class="d-flex justify-content-end mt-3 mr-2">
-                <a href="./cadastrodeusuarios.php" id="btn-adc-usuario">
+                <a href="./cadastrodeusuario.php" id="btn-adc-usuario">
                     <img src="./images/icons-adcUsuario.png" alt="">
                 </a>
             </div>
@@ -276,6 +276,68 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
     <div class="hide" id="modal"></div>
 </body>
 <script>   
+        function alert(num) {
+        if (num == 1) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Unidade cadastrada com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
+            });
+        } else if (num == 2) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Unidade alterada com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
+            });
+        } 
+    }
+
+    window.addEventListener('load', function() {
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var data = url.searchParams.get("notificacao");
+        if (data == 'cadastrado') {
+            alert(1);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'cadastrarbens.php');
+        } else if (data == 'alterado') {
+            alert(2);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'cadastrarbens.php');
+        }
+    })
+
+
     function limparInput() {
         window.location.href = 'usuarios.php';
     }

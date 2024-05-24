@@ -81,7 +81,7 @@ if (!empty($_GET['id'])) {
                 <img src="./images/icon-avancar.png" class="icon-carrossel-avancar" alt="icon-avancar">
                 <a href="./listaremovimentar.php" class="text-muted ms-1 carrossel-text">Listar/Movimentar Bens</a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
-                <a href="./alteracaodebens.php" class="text-primary ms-1 carrossel-text">Alteração de bens</a>
+                <a href="#" class="text-primary ms-1 carrossel-text">Alteração de bens</a>
             </div>
             <div class="button-dark">
                 <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>

@@ -10,7 +10,7 @@ $result = $conexao->query($sql) or die($mysqli->error);
 
 isset($_GET['id']) ? $id = $_GET['id'] : $id = null;
 
-echo '                                                          ' . $id . '';
+echo '' . $id . '';
 
 if ($id) {
 
@@ -20,9 +20,9 @@ if ($id) {
     $sigla = $_POST['sigla'];
     $status = $_POST['status'];
 
-    $result = mysqli_query($conexao, "UPDATE unidades SET unidades = '$nome', sigla = '$sigla', codigo = '$codigo', statusunidade = $status WHERE id = $id");
+    $result = mysqli_query($conexao, "UPDATE unidades SET unidades = '$nome', sigla = '$sigla', codigo = '$codigo', statusunidade = '$status' WHERE id = $id");
 
-    header("Location: unidades.php?atualizado=1");
+    header("Location: unidades.php?notificacao=alterado");
   } else {
     $buscar_unidade = "SELECT * FROM unidades WHERE id = $id;";
     $query_usuario = mysqli_query($conexao, $buscar_unidade);
@@ -33,18 +33,17 @@ if ($id) {
     $codigo = $row['codigo'];
     $status = $row['statusunidade'];
   }
-
 } else if (isset($_POST['submit'])) {
   $nome = $_POST['nome'];
   $codigo = $_POST['codigo'];
   $sigla = $_POST['sigla'];
   $status = $_POST['status'];
 
-  $result = mysqli_query($conexao, "INSERT INTO unidades(unidades, sigla, codigo, statusunidade) VALUES ('$nome', '$sigla', '$codigo', $status)");
+  $result = mysqli_query($conexao, "INSERT INTO unidades(unidades, sigla, codigo, statusunidade) VALUES ('$nome', '$sigla', '$codigo', '$status')");
+
+  header("Location: unidades.php?notificacao=cadastrado");
 }
-
 ?>
-
 <style>
   @media (max-width: 1600px) {
     .conteudo {
@@ -88,99 +87,55 @@ if ($id) {
 
 <body>
   <?php
-  include_once ('menu.php');
+  include_once('menu.php');
   ?>
   <div class="p-4 p-md-4 pt-3 conteudo">
-    <div class="carrossel mb-2">
-      <a href="./home.php" class="mb-3 me-1">
-        <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
-      </a>
-      <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-      <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Cadastro de Usuários</a>
+    <div class="carrossel-box mb-2">
+      <div class="carrossel">
+        <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
+        <img src="./images/icon-avancar.png" class="icon-carrossel-avancar" alt="icon-avancar">
+        <a href="./unidades.php" class="text-muted ms-1 carrossel-text">Unidade</a>
+        <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
+        <a href="#" class="text-primary ms-1 carrossel-text">Cadastro de Unidade</a>
+      </div>
+      <div class="button-dark">
+        <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
+      </div>
     </div>
-
     <h3 class="mb-4 mt-4">Cadastro de Unidades</h3>
     <form method="POST" action="#">
-      <div class="card" style="width: 1500px">
-        <div class="row">
-          <div class="col-md-6 mb-1">
-            <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label text-muted">Nome</label>
-              <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario"
-                placeholder="Nome" name="nome" value="<?php $id ? print_r($unidade) : '' ?>" required>
-            </div>
+      <div class="row">
+        <div class="col-md-12 mb-4">
+          <label for="usuarioCadastro" class="form-label text-muted ml-2">Nome</label>
+          <div class="input-group">
+            <input value="<?php $id ? print_r($unidade) : '' ?>" type="text" name="nome" class="form-control" id="inputCadUsuario" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
           </div>
-          <div class="col-md-6 mb-1">
-            <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label text-muted">codigo</label>
-              <input type="number" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario"
-                value="<?php $id ? print_r($codigo) : '' ?>" placeholder="código" name="codigo" min="0" required>
-            </div>
+        </div>
+        <div class="col-md-12 mb-4">
+          <div>
+            <label for="exampleFormControlInput1" class="form-label text-muted ml-2">Código</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" name="codigo" value="<?php $id ? print_r($codigo) : '' ?>" required>
           </div>
-          <hr id="cdusuario" style="width: 98%;" class="mb-2">
-          <div class="col-md-6 mb-1">
-            <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label text-muted">Sigla</label>
-              <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario"
-                value="<?php $id ? print_r($sigla) : '' ?>" placeholder="sigla" name="sigla" min="0" required>
-            </div>
+        </div>
+        <div class="col-md-12 mb-4">
+          <div>
+            <label for="exampleFormControlInput1" class="form-label text-muted ml-2">Sigla</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario"  name="sigla" value="<?php $id ? print_r($sigla) : '' ?>" required>
           </div>
-          <div class="col-md-6 mb-1">
-            <label for="usuarioCadastro" class="form-label text-muted">Status</label>
-            <div class="input-group">
-              <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-status.png"
-                  alt="" class="imgCadastro"></div>
-              <select class="form-select" name="status" required>
-                <option value="" hidden="hidden">Selecionar</option>
-                <option value="0">Ativo</option>
-                <option value="1">Desativado</option>
-              </select>
-            </div>
+        </div>
+        <div class="col-md-12 mb-4">
+          <div>
+            <label for="exampleFormControlInput1" class="form-label text-muted ml-2">Status</label>
+            <select class="form-select" name="status" required>
+              <option value="Selecionar" hidden>Selecionar</option>
+              <option value="Ativo">Ativo</option>
+              <option value="Desativado">Desativado</option>
+            </select>
           </div>
         </div>
         <div class="d-flex flex-row-reverse">
-          <input type="submit" class="btn btn-primary ml-3 pe-auto mr-2 " id="btn-cadUsuario" name="submit"
-            value="<?php echo isset($_GET['id']) ? 'Atualizar' : 'Cadastrar' ?>"></input>
-          <a type="button" class="btn btn-light bnt-cadastrar" href="unidades.php">Cancelar</a>
+          <input type="submit" class="btn btn-primary ml-3 pe-auto mr-2 " id="btn-cadUsuario" name="submit" value="Cadastrar"></input>
         </div>
     </form>
+    <div class="hide" id="modal"></div>
 </body>
-<script>
-  function buscarUsuario() {
-    const usuario = document.getElementById("inputCadUsuario").value;
-    var url_string = window.location.href;
-    var url = new URL(url_string);
-    url.searchParams.set('usuario', usuario);
-    window.location.href = url;
-  }
-
-  function toast() {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      }
-    });
-    Toast.fire({
-      icon: "success",
-      title: "Usuario cadastrado com sucesso!"
-    });
-  }
-  window.addEventListener('load', function () {
-    var url_string = window.location.href;
-    var url = new URL(url_string);
-    var data = url.searchParams.get("notificacao");
-    if (data == 'true') {
-      toast();
-      window.history.replaceState({}, document.title, window.location.pathname);
-      history.pushState({}, '', 'http://localhost/cadastrarbens.php');
-    }
-  })
-</script>
-
-</html>

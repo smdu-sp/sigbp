@@ -90,21 +90,19 @@ if (!empty($_GET['id'])) {
         <h3 class="mb-4 mt-4">Cadastro de Usuários</h3>
         <form method="POST" action="salvar-alteracaodeusuarios.php">
             <div class="row">
-                <div class="col-md-12 mb-1">
+                <div class="col-md-12 mb-4">
                     <div>
                         <label for="exampleFormControlInput1" class="form-label text-muted">Login de rede</label>
                         <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="loginRede" name="usuario" value="<?php echo $usuario ?>" required>
-                        <hr id="cdusuario">
                     </div>
                 </div>
-                <div class="col-md-12 mb-1">
+                <div class="col-md-12 mb-4">
                     <div>
                         <label for="exampleFormControlInput1" class="form-label text-muted">Nome</label>
                         <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="Nome" name="nome" value="<?php echo $nomefr != null ? $nomefr : '' ?>" required>
-                        <hr id="cdusuario">
                     </div>
                 </div>
-                <div class="col-md-12 mb-1">
+                <div class="col-md-12 mb-4">
                     <label for="usuarioCadastro" class="form-label text-muted">Permissão</label>
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-cracha.png" alt="" class="imgCadastro"></div>
@@ -114,10 +112,9 @@ if (!empty($_GET['id'])) {
                             <option value="1" <?php if ($permissao == 1) echo 'selected' ?>>Administrador</option>
                             <option value="3" <?php if ($permissao == 3) echo 'selected' ?>>Sem permissão</option>
                         </select>
-                        <hr id="cdusuario">
                     </div>
                 </div>
-                <div class="col-md-12 mb-1">
+                <div class="col-md-12 mb-4">
                     <label for="usuarioCadastro" class="form-label text-muted">Unidade</label>
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/unidades.png" alt="" class="imgCadastro"></div>
@@ -172,22 +169,20 @@ if (!empty($_GET['id'])) {
                             <option value="SERVIN/DSIGP">SERVIN/DSIGP</option>
                             <option value="SERVIN/DSIMP">SERVIN/DSIMP</option>
                         </select>
-                        <hr id="cdusuario">
                     </div>
                 </div>
-                <div class="col-md-12 mb-1">
+                <div class="col-md-12 mb-4">
                     <label for="usuarioCadastro" class="form-label text-muted">Status</label>
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-status.png" alt="" class="imgCadastro"></div>
                         <select class="form-select" name="status" required>
-                            <option value="<?php echo $status ?>"><?php echo $status != null ? $status : '' ?></option>
+                            <option value="<?php echo $status ?>" hidden><?php echo $status != null ? $status : '' ?></option>
                             <option value="Ativo">Ativo</option>
                             <option value="Inativo">Inativo</option>
                         </select>
-                        <hr id="cdusuario">
                     </div>
                 </div>
-                <div class="mb-3">
+                <div class="mb-4">
                     <label for="usuarioCadastro" class="form-label text-muted">Email</label>
                     <input type="email" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="name@example.com" name="email" value="<?php echo $emailfr; ?>" required>
                 </div>
@@ -199,14 +194,6 @@ if (!empty($_GET['id'])) {
         <div class="hide" id="modal"></div>
 </body>
 <script>
-    function buscarUsuario() {
-        const usuario = document.getElementById("inputCadUsuario").value;
-        var url_string = window.location.href;
-        var url = new URL(url_string);
-        url.searchParams.set('usuario', usuario);
-        window.location.href = url;
-    }
-
     function toast(num) {
         if (num == 1) {
             const Toast = Swal.mixin({
