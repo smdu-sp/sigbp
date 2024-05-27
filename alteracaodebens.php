@@ -83,12 +83,11 @@ if (!empty($_GET['id'])) {
                 <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
                 <a href="#" class="text-primary ms-1 carrossel-text">Alteração de bens</a>
             </div>
-            <div class="button-dark">
+            <!-- <div class="button-dark">
                 <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
-            </div>
+            </div> -->
         </div>
-        <h3 class="mb-3">Alteração de bens</h3>
-        <hr class="mb-4">
+        <h2 class="mb-5">Alteração de bens</h2>
         <form method="POST" action="salvar-alteracaodebens.php">
             <div class="row">
                 <div class="col-md-6 mb-3">
@@ -197,7 +196,10 @@ if (!empty($_GET['id'])) {
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="localNovo" class="form-label text-muted">Setor:</label>
-                    <input type="text" class="form-control" id="localNovo" name="localNovo" value="<?php echo $localizacao ?> ">
+                    <select id="unidadeSelect" class="form-select" name="localNovo">
+                        <option value="<?php echo $localizacao ?>" hidden="hidden"><?php echo $localizacao ?></option>
+                        <?php include 'query-unidades.php' ?>
+                    </select>
                 </div>
             </div>
             <div class="row">

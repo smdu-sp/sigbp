@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
     $array2Encoded = implode(',', $array2);
 
 
-    header("Location: gerar-pdf.php");
+    header("Location: gerar-termo.php");
     exit;
 }
 ?>
@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
         </div>
         <h2 class="mb-3 mt-2">Termo de Entrega/Retirada</h2>
         <hr class="mb-3">
-        <form method="POST" id="conteudo" action="gerar-pdf.php">
+        <form method="POST" id="conteudo" action="gerar-termo.php">
             <div class="row">
                 <div class="col-md-6 mb-2">
                     <label for="numPatriSerie" class="form-label text-muted">Nº Patrimonial/Nº de Série:</label>
@@ -115,54 +115,7 @@ if (isset($_POST['submit'])) {
                     <label for="unidadeEntregue" class="form-label text-muted">Unidade:</label>
                     <select class="form-select" id="unidadeEntregue" name="unidadeEntregue" required>
                         <option value="" hidden="hidden">Selecionar</option>
-                        <option value="ASCOM">ASCOM</option>
-                        <option value="ATAJ">ATAJ</option>
-                        <option value="ATECC">ATECC</option>
-                        <option value="ATIC">ATIC</option>
-                        <option value="AUDITÓRIO">AUDITÓRIO</option>
-                        <option value="CAF">CAF</option>
-                        <option value="CAF/DGP">CAF/DGP</option>
-                        <option value="CAF/DLC">CAF/DLC</option>
-                        <option value="CAF/DOF">CAF/DOF</option>
-                        <option value="CAF/DSUP">CAF/DSUP</option>
-                        <option value="CAP">CAP</option>
-                        <option value="CAP/ARTHUR SABOYA">CAP/ARTHUR SABOYA</option>
-                        <option value="CAP/DEPROT">CAP/DEPROT</option>
-                        <option value="CAP/DPCI">CAP/DPCI</option>
-                        <option value="CAP/DPD">CAP/DPD</option>
-                        <option value="CAP/NÚCLEO DE ATENDIMENTO">CAP/NÚCLEO DE ATENDIMENTO</option>
-                        <option value="CASE">CASE</option>
-                        <option value="CASE/DCAD">CASE/DCAD</option>
-                        <option value="CASE/DDU">CASE/DDU</option>
-                        <option value="CASE/DLE">CASE/DLE</option>
-                        <option value="CASE/STEL">CASE/STEL</option>
-                        <option value="CEPEUC">CEPEUC</option>
-                        <option value="CGPATRI">CGPATRI</option>
-                        <option value="COMIN">COMIN</option>
-                        <option value="COMIN/DCIGP">COMIN/DCIGP</option>
-                        <option value="COMIN/DCIMP">COMIN/DCIMP</option>
-                        <option value="CONTRU">CONTRU</option>
-                        <option value="CONTRU/DACESS">CONTRU/DACESS</option>
-                        <option value="CONTRU/DINS">CONTRU/DINS</option>
-                        <option value="CONTRU/DLR">CONTRU/DLR</option>
-                        <option value="CONTRU/DSUS">CONTRU/DSUS</option>
-                        <option value="DEUSO">DEUSO</option>
-                        <option value="GABINETE">GABINETE</option>
-                        <option value="GEOINFO">GEOINFO</option>
-                        <option value="GTEC">GTEC</option>
-                        <option value="ILUME">ILUME</option>
-                        <option value="PARHIS">PARHIS</option>
-                        <option value="PARHIS/DHIS">PHARIS/DHIS</option>
-                        <option value="PARHIS/DHMP">PHARIS/DHMP</option>
-                        <option value="PARHIS/DPS">PHARIS/DPS</option>
-                        <option value="PLANURB">PLANURB</option>
-                        <option value="RESID">RESID</option>
-                        <option value="RESID/DRGP">RESID/DRGP</option>
-                        <option value="RESID/DRPM">RESID/DRPM</option>
-                        <option value="RESID/DRU">RESID/DRU</option>
-                        <option value="SERVIN">SERVIN</option>
-                        <option value="SERVIN/DSIGP">SERVIN/DSIGP</option>
-                        <option value="SERVIN/DSIMP">SERVIN/DSIMP</option>
+                        <?php include 'query-unidades.php'?>
                     </select>
                 </div>
             </div>
@@ -187,54 +140,7 @@ if (isset($_POST['submit'])) {
                     <label for="unidadeRecebimento" class="form-label text-muted">Unidade que Recebeu:</label>
                     <select class="form-select" id="unidadeRecebimento" name="unidadeRecebimento" required>
                         <option value="" hidden="hidden">Selecionar</option>
-                        <option value="ASCOM">ASCOM</option>
-                        <option value="ATAJ">ATAJ</option>
-                        <option value="ATECC">ATECC</option>
-                        <option value="ATIC">ATIC</option>
-                        <option value="AUDITÓRIO">AUDITÓRIO</option>
-                        <option value="CAF">CAF</option>
-                        <option value="CAF/DGP">CAF/DGP</option>
-                        <option value="CAF/DLC">CAF/DLC</option>
-                        <option value="CAF/DOF">CAF/DOF</option>
-                        <option value="CAF/DSUP">CAF/DSUP</option>
-                        <option value="CAP">CAP</option>
-                        <option value="CAP/ARTHUR SABOYA">CAP/ARTHUR SABOYA</option>
-                        <option value="CAP/DEPROT">CAP/DEPROT</option>
-                        <option value="CAP/DPCI">CAP/DPCI</option>
-                        <option value="CAP/DPD">CAP/DPD</option>
-                        <option value="CAP/NÚCLEO DE ATENDIMENTO">CAP/NÚCLEO DE ATENDIMENTO</option>
-                        <option value="CASE">CASE</option>
-                        <option value="CASE/DCAD">CASE/DCAD</option>
-                        <option value="CASE/DDU">CASE/DDU</option>
-                        <option value="CASE/DLE">CASE/DLE</option>
-                        <option value="CASE/STEL">CASE/STEL</option>
-                        <option value="CEPEUC">CEPEUC</option>
-                        <option value="CGPATRI">CGPATRI</option>
-                        <option value="COMIN">COMIN</option>
-                        <option value="COMIN/DCIGP">COMIN/DCIGP</option>
-                        <option value="COMIN/DCIMP">COMIN/DCIMP</option>
-                        <option value="CONTRU">CONTRU</option>
-                        <option value="CONTRU/DACESS">CONTRU/DACESS</option>
-                        <option value="CONTRU/DINS">CONTRU/DINS</option>
-                        <option value="CONTRU/DLR">CONTRU/DLR</option>
-                        <option value="CONTRU/DSUS">CONTRU/DSUS</option>
-                        <option value="DEUSO">DEUSO</option>
-                        <option value="GABINETE">GABINETE</option>
-                        <option value="GEOINFO">GEOINFO</option>
-                        <option value="GTEC">GTEC</option>
-                        <option value="ILUME">ILUME</option>
-                        <option value="PARHIS">PARHIS</option>
-                        <option value="PARHIS/DHIS">PHARIS/DHIS</option>
-                        <option value="PARHIS/DHMP">PHARIS/DHMP</option>
-                        <option value="PARHIS/DPS">PHARIS/DPS</option>
-                        <option value="PLANURB">PLANURB</option>
-                        <option value="RESID">RESID</option>
-                        <option value="RESID/DRGP">RESID/DRGP</option>
-                        <option value="RESID/DRPM">RESID/DRPM</option>
-                        <option value="RESID/DRU">RESID/DRU</option>
-                        <option value="SERVIN">SERVIN</option>
-                        <option value="SERVIN/DSIGP">SERVIN/DSIGP</option>
-                        <option value="SERVIN/DSIMP">SERVIN/DSIMP</option>
+                        <?php include 'query-unidades.php'?>
                     </select>
                 </div>
             </div>

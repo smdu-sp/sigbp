@@ -92,9 +92,9 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
                 <a href="./usuarios.php" class="text-primary ms-1 carrossel-text">Usuários</a>
             </div>
-            <div class="button-dark">
+            <!-- <div class="button-dark">
                 <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
-            </div>
+            </div> -->
         </div>
         <h2 class="mb-3 mt-4">Usuários</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
@@ -112,7 +112,7 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
                         <select id="statusSelect" class="form-select" aria-label="Default select example" name="status">
                             <option value="Ativo" selected>Ativo</option>
                             <option value="Inativo">Inativo</option>
-                            <option value="todos">Todos</option>
+                            <option value="Todos">Todos</option>
                         </select>
                     </div>
                     <div class="col-2 mb-2">
@@ -128,71 +128,7 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
                         <p class="mb-1 text-muted">Unidade:</p>
                         <select id="unidadeSelect" class="form-select" name="unidade">
                             <option value="" hidden="hidden">Selecionar</option>
-                            <option value="ASCOM">ASCOM</option>
-                            <option value="ATAJ">ATAJ</option>
-                            <option value="ATECC">ATECC</option>
-                            <option value="ATIC">ATIC</option>
-                            <option value="AUDITÓRIO">AUDITÓRIO</option>
-                            <option value="CAEPP">CAEPP</option>
-                            <option value="CAEPP/DERP">CAEPP/DERPP</option>
-                            <option value="CAEPP/DESPP">CAEPP/DESPP</option>
-                            <option value="CAF">CAF</option>
-                            <option value="CAF/DGP">CAF/DGP</option>
-                            <option value="CAF/DLC">CAF/DLC</option>
-                            <option value="CAF/DOF">CAF/DOF</option>
-                            <option value="CAF/DRV">CAF/DRV</option>
-                            <option value="CAF/DSUP">CAF/DSUP</option>
-                            <option value="CAP">CAP</option>
-                            <option value="CAP/ARTHUR SABOYA">CAP/ARTHUR SABOYA</option>
-                            <option value="CAP/DEPROT">CAP/DEPROT</option>
-                            <option value="CAP/DPCI">CAP/DPCI</option>
-                            <option value="CAP/DPD">CAP/DPD</option>
-                            <option value="CAP/NÚCLEO DE ATENDIMENTO">CAP/NÚCLEO DE ATENDIMENTO</option>
-                            <option value="CASE">CASE</option>
-                            <option value="CASE/DCAD">CASE/DCAD</option>
-                            <option value="CASE/DDU">CASE/DDU</option>
-                            <option value="CASE/DLE">CASE/DLE</option>
-                            <option value="CASE/STEL">CASE/STEL</option>
-                            <option value="CEPEUC">CEPEUC</option>
-                            <option value="CEPEUC">CEPEUC/DCIT</option>
-                            <option value="CEPEUC">CEPEUC/DDOC</option>
-                            <option value="CEPEUC">CEPEUC/DVF</option>
-                            <option value="CGPATRI">CGPATRI</option>
-                            <option value="COMIN">COMIN</option>
-                            <option value="COMIN/DCIGP">COMIN/DCIGP</option>
-                            <option value="COMIN/DCIMP">COMIN/DCIMP</option>
-                            <option value="CONTRU">CONTRU</option>
-                            <option value="CONTRU/DACESS">CONTRU/DACESS</option>
-                            <option value="CONTRU/DINS">CONTRU/DINS</option>
-                            <option value="CONTRU/DLR">CONTRU/DLR</option>
-                            <option value="CONTRU/DSUS">CONTRU/DSUS</option>
-                            <option value="DEUSO">DEUSO</option>
-                            <option value="DEUSO">DEUSO/DMUS</option>
-                            <option value="DEUSO">DEUSO/DNUS</option>
-                            <option value="DEUSO">DEUSO/DSIZ</option>
-                            <option value="GABINETE">GABINETE</option>
-                            <option value="GEOINFO">GEOINFO</option>
-                            <option value="GTEC">GTEC</option>
-                            <option value="ILUME">ILUME</option>
-                            <option value="PARHIS">PARHIS</option>
-                            <option value="PARHIS/DHIS">PHARIS/DHIS</option>
-                            <option value="PARHIS/DHMP">PHARIS/DHMP</option>
-                            <option value="PARHIS/DHMP">PHARIS/DHPP</option>
-                            <option value="PARHIS/DPS">PHARIS/DPS</option>
-                            <option value="PLANURB">PLANURB</option>
-                            <option value="PLANURB">PLANURB/DART</option>
-                            <option value="RESID">RESID</option>
-                            <option value="RESID/DRGP">RESID/DRGP</option>
-                            <option value="RESID/DRGP">RESID/DRH</option>
-                            <option value="RESID/DRPM">RESID/DRPM</option>
-                            <option value="RESID/DRPM">RESID/DRVE</option>
-                            <option value="RESID/DRU">RESID/DRU</option>
-                            <option value="SECRETARIO">SECRETARIO</option>
-                            <option value="SEL/AJ">SEL/AJ</option>
-                            <option value="SERVIN">SERVIN</option>
-                            <option value="SERVIN/DSIGP">SERVIN/DSIGP</option>
-                            <option value="SERVIN/DSIMP">SERVIN/DSIMP</option>
-                            <option value="STEL">STEL</option>
+                            <?php include 'query-unidades.php' ?>
                         </select>
                     </div>
                     <div class="col-4 mb-2">
@@ -275,8 +211,8 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
     </div>
     <div class="hide" id="modal"></div>
 </body>
-<script>   
-        function alert(num) {
+<script>
+    function alert(num) {
         if (num == 1) {
             const Toast = Swal.mixin({
                 toast: true,
@@ -294,7 +230,7 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
                     title: 'swal2-title'
                 }),
                 icon: "success",
-                title: "Unidade cadastrada com sucesso!",
+                title: "Usuário cadastrado com sucesso!",
                 background: 'green',
                 iconColor: '#ffffff'
             });
@@ -315,11 +251,11 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
                     title: 'swal2-title'
                 }),
                 icon: "success",
-                title: "Unidade alterada com sucesso!",
+                title: "Usuário alterado com sucesso!",
                 background: 'green',
                 iconColor: '#ffffff'
             });
-        } 
+        }
     }
 
     window.addEventListener('load', function() {
@@ -329,11 +265,11 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
         if (data == 'cadastrado') {
             alert(1);
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'cadastrarbens.php');
+            history.pushState({}, '', 'usuarios.php');
         } else if (data == 'alterado') {
             alert(2);
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'cadastrarbens.php');
+            history.pushState({}, '', 'usuarios.php');
         }
     })
 
@@ -360,4 +296,5 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
         });
     });
 </script>
+
 </html>

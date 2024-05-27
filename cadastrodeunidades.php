@@ -98,9 +98,9 @@ if ($id) {
         <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
         <a href="#" class="text-primary ms-1 carrossel-text">Cadastro de Unidade</a>
       </div>
-      <div class="button-dark">
+      <!-- <div class="button-dark">
         <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
-      </div>
+      </div> -->
     </div>
     <h3 class="mb-4 mt-4">Cadastro de Unidades</h3>
     <form method="POST" action="#">
@@ -127,9 +127,9 @@ if ($id) {
           <div>
             <label for="exampleFormControlInput1" class="form-label text-muted ml-2">Status</label>
             <select class="form-select" name="status" required>
-              <option value="Selecionar" hidden>Selecionar</option>
+              <option value="<?php echo $status?>" hidden><?php echo $status?></option>
               <option value="Ativo">Ativo</option>
-              <option value="Desativado">Desativado</option>
+              <option value="Inativo">Inativo</option>
             </select>
           </div>
         </div>

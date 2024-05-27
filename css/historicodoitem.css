@@ -88,12 +88,12 @@
 
 .timeline ul li:nth-child(odd) .data-historico {
     top: 12px;
-    right: -75px;
+    right: -60px;
 }
 
 .timeline ul li:nth-child(even) .data-historico {
     top: 8px;
-    left: 170px;
+    left: 180px;
 }
 
 .card {

@@ -1,7 +1,6 @@
 <?php
 session_start();
 include_once('./conexoes/config.php');
-include_once('componentes/permissao.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $dataEntregue = $_POST['dataEntregue'];
@@ -19,6 +18,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "Nenhum dado recebido";
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SisGP - Sistema de Gerenciamento de Patrimônio</title>
+    <link rel="shortcut icon" href="./images/logo-cdsp.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/pdf.css">
+</head>
+<body>
+    
+</body>
+</html>
 <style>
 
 </style>
@@ -93,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </html>
 
 <script>
-    function printTermo() {
+   function printTermo() {
         botao.style.display = 'none';
         document.getElementById('botao2').style.opacity = '0';
         window.print();
@@ -103,7 +115,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         botao.style.display = 'block';
         botaoVoltar = document.getElementById('botao2');
         botaoVoltar.style.opacity = '1';
-        botaoVoltar.classList.toggle('botao2');
-        botaoVoltar.classList.toggle('botao-voltar');
     }
 </script>

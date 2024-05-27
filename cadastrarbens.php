@@ -1,9 +1,9 @@
 <?php
 session_start();
-include_once ('./conexoes/config.php');
-include_once ('header.php');
-include_once ('componentes/verificacao.php');
-include_once ('componentes/permissao.php');
+include_once('./conexoes/config.php');
+include_once('header.php');
+include_once('componentes/verificacao.php');
+include_once('componentes/permissao.php');
 
 if (isset($_GET['num'])) {
     $registros = $_GET['num'];
@@ -24,9 +24,10 @@ if (isset($_POST['submit'])) {
         $nome = $_POST['nomeComputador'];
         $statusitem = $_POST['status'];
         $cimbpm = $_POST['CIMBPM'];
+        $descsbpm = $_POST['descsbpm'];
 
-        $result = mysqli_query($conexao, "INSERT INTO item(patrimonio, tipo, numserie, marca, modelo, localizacao, servidor, numprocesso, nome, statusitem, cimbpm) 
-        VALUES ('$patrimonio', '$tipo', '$numserie', '$marca', '$modelo', '$localizacao', '$servidor', '$numprocesso', '$nome', '$statusitem', '$cimbpm')");
+        $result = mysqli_query($conexao, "INSERT INTO item(patrimonio, tipo, descsbpm, numserie, marca, modelo, localizacao, servidor, numprocesso, nome, statusitem, cimbpm) 
+        VALUES ('$patrimonio', '$tipo', '$descsbpm', '$numserie', '$marca', '$modelo', '$localizacao', '$servidor', '$numprocesso', '$nome', '$statusitem', '$cimbpm')");
 
         header('Location: cadastrarbens.php?notificacao=true');
     }
@@ -79,11 +80,11 @@ if (isset($_POST['submit'])) {
         border-radius: 5px;
     }
 
-    #registros > ul {
+    #registros>ul {
         padding: 6px 3px;
     }
 
-    #registros > ul > li {
+    #registros>ul>li {
         border-radius: 5px;
     }
 
@@ -102,7 +103,7 @@ if (isset($_POST['submit'])) {
 
 <body>
     <?php
-    include_once ('menu.php');
+    include_once('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel-box mb-2">
@@ -113,9 +114,9 @@ if (isset($_POST['submit'])) {
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
                 <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Cadastro de bens</a>
             </div>
-            <div class="button-dark">
+            <!-- <div class="button-dark">
                 <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
-            </div>
+            </div> -->
         </div>
         <h2 class="mb-3 mt-4">Cadastro de bens</h2>
         <form method="POST" class="mt-5">
@@ -228,71 +229,7 @@ if (isset($_POST['submit'])) {
                     <label for="localNovo" class="form-label text-muted">Localização:</label>
                     <select class="form-select" id="localNovo" name="localNovo" required>
                         <option value="" hidden="hidden">Selecionar</option>
-                        <option value="ASCOM">ASCOM</option>
-                        <option value="ATAJ">ATAJ</option>
-                        <option value="ATECC">ATECC</option>
-                        <option value="ATIC">ATIC</option>
-                        <option value="AUDITÓRIO">AUDITÓRIO</option>
-                        <option value="CAEPP">CAEPP</option>
-                        <option value="CAEPP/DERP">CAEPP/DERPP</option>
-                        <option value="CAEPP/DESPP">CAEPP/DESPP</option>
-                        <option value="CAF">CAF</option>
-                        <option value="CAF/DGP">CAF/DGP</option>
-                        <option value="CAF/DLC">CAF/DLC</option>
-                        <option value="CAF/DOF">CAF/DOF</option>
-                        <option value="CAF/DRV">CAF/DRV</option>
-                        <option value="CAF/DSUP">CAF/DSUP</option>
-                        <option value="CAP">CAP</option>
-                        <option value="CAP/ARTHUR SABOYA">CAP/ARTHUR SABOYA</option>
-                        <option value="CAP/DEPROT">CAP/DEPROT</option>
-                        <option value="CAP/DPCI">CAP/DPCI</option>
-                        <option value="CAP/DPD">CAP/DPD</option>
-                        <option value="CAP/NÚCLEO DE ATENDIMENTO">CAP/NÚCLEO DE ATENDIMENTO</option>
-                        <option value="CASE">CASE</option>
-                        <option value="CASE/DCAD">CASE/DCAD</option>
-                        <option value="CASE/DDU">CASE/DDU</option>
-                        <option value="CASE/DLE">CASE/DLE</option>
-                        <option value="CASE/STEL">CASE/STEL</option>
-                        <option value="CEPEUC">CEPEUC</option>
-                        <option value="CEPEUC">CEPEUC/DCIT</option>
-                        <option value="CEPEUC">CEPEUC/DDOC</option>
-                        <option value="CEPEUC">CEPEUC/DVF</option>
-                        <option value="CGPATRI">CGPATRI</option>
-                        <option value="COMIN">COMIN</option>
-                        <option value="COMIN/DCIGP">COMIN/DCIGP</option>
-                        <option value="COMIN/DCIMP">COMIN/DCIMP</option>
-                        <option value="CONTRU">CONTRU</option>
-                        <option value="CONTRU/DACESS">CONTRU/DACESS</option>
-                        <option value="CONTRU/DINS">CONTRU/DINS</option>
-                        <option value="CONTRU/DLR">CONTRU/DLR</option>
-                        <option value="CONTRU/DSUS">CONTRU/DSUS</option>
-                        <option value="DEUSO">DEUSO</option>
-                        <option value="DEUSO">DEUSO/DMUS</option>
-                        <option value="DEUSO">DEUSO/DNUS</option>
-                        <option value="DEUSO">DEUSO/DSIZ</option>
-                        <option value="GABINETE">GABINETE</option>
-                        <option value="GEOINFO">GEOINFO</option>
-                        <option value="GTEC">GTEC</option>
-                        <option value="ILUME">ILUME</option>
-                        <option value="PARHIS">PARHIS</option>
-                        <option value="PARHIS/DHIS">PHARIS/DHIS</option>
-                        <option value="PARHIS/DHMP">PHARIS/DHMP</option>
-                        <option value="PARHIS/DHMP">PHARIS/DHPP</option>
-                        <option value="PARHIS/DPS">PHARIS/DPS</option>
-                        <option value="PLANURB">PLANURB</option>
-                        <option value="PLANURB">PLANURB/DART</option>
-                        <option value="RESID">RESID</option>
-                        <option value="RESID/DRGP">RESID/DRGP</option>
-                        <option value="RESID/DRGP">RESID/DRH</option>
-                        <option value="RESID/DRPM">RESID/DRPM</option>
-                        <option value="RESID/DRPM">RESID/DRVE</option>
-                        <option value="RESID/DRU">RESID/DRU</option>
-                        <option value="SECRETARIO">SECRETARIO</option>
-                        <option value="SEL/AJ">SEL/AJ</option>
-                        <option value="SERVIN">SERVIN</option>
-                        <option value="SERVIN/DSIGP">SERVIN/DSIGP</option>
-                        <option value="SERVIN/DSIMP">SERVIN/DSIMP</option>
-                        <option value="STEL">STEL</option>
+                        <?php include 'query-unidades.php' ?>
                     </select>
                 </div>
             </div>
@@ -317,8 +254,12 @@ if (isset($_POST['submit'])) {
                 </div>
             </div>
             <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="descsbpm" class="form-label text-muted">Desc. SBPM:</label>
+                    <input type="text" class="form-control" id="descsbpm" name="descsbpm">
+                </div>
                 <div class="col-md-6 mb-4">
-                    <label for="status" class="form-label text-muted" >Status:</label>
+                    <label for="status" class="form-label text-muted">Status:</label>
                     <select class="form-select" id="status" name="status" required>
                         <option value="" hidden="hidden">Selecionar</option>
                         <option value="Ativo">Ativo</option>
@@ -331,33 +272,11 @@ if (isset($_POST['submit'])) {
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 mb-4">
+                <div class="col-md-2 mb-4">
                     <label for="status" class="form-label text-muted">Num de Registro de Itens:</label>
-                    <input class="form-control mb-2" type="text" id="textBusca" name="inputText" onfocus="showOptions()" onblur="hideOptions()" style="width: 200px;">
-                    <div id="registros">
-                        <ul class="list-group list-group-flush overflow-auto" id="ulItens" style="height: 200px;width: 200px;">
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('1')">1</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('2')">2</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('3')">3</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('4')">4</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('5')">5</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('6')">6</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('7')">7</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('8')">8</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('9')">9</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('10')">10</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('15')">15</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('20')">20</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('25')">25</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('30')">30</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('35')">35</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('40')">40</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('45')">45</a></li>
-                            <li><a href="#" class="list-group-item list-group-item-action" onclick="botaoClicado('50')">50</a></li>
-                        </ul>
-                    </div>
+                    <input type="number" class="form-control" name="numRegistro" id="numRegistro" onchange="numRegistros()" min="1" required>
                 </div>
-                <div class="col-md-6 mb-4 mt-4 d-flex justify-content-end align-items-start">
+                <div class="col-md-10 mb-4 mt-4 d-flex justify-content-end align-items-start">
                     <input type="submit" class="btn btn-primary" id="btnCadBens" name="submit" value="Cadastrar"></input>
                 </div>
             </div>
@@ -367,100 +286,97 @@ if (isset($_POST['submit'])) {
 
 </body>
 <script>
-    function showOptions() {
-        document.getElementById("registros").classList.add("show");
-    }
-
-    function hideOptions() {
-        setTimeout(function () {
-            document.getElementById("registros").classList.remove("show");
-        }, 100);
-    }
-    function setRequiredFields(required) {
-    var localNovo = document.getElementById('localNovo');
-    var status = document.getElementById('status');
-    var numSerie = document.getElementById('numSerie');
-    var tipo = document.getElementById('tipo');
-
-    localNovo.required = required;
-    status.required = required;
-    numSerie.required = required;
-    tipo.required = required;
-}
-function botaoClicado(item) {
-    setRequiredFields(item == 1);
-    document.getElementById('textBusca').value = item;
-    hideOptions();
-    let newUrl = 'cadastrarbens.php?num=' + item;
-    window.history.pushState({ path: newUrl }, '', newUrl);
-}
-function showAlert(num, numPatrimonio, marca, numSerie, nomeServidor, nomeComputador, numProcesso) {
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-        }
+    document.getElementById('numRegistro').addEventListener('input', function() {
+        let item = this.value;
+        let newUrl = 'cadastrarbens.php?num=' + item;
+        setRequiredFields(item == 1);
+        window.history.pushState({ path: newUrl }, '', newUrl);
     });
 
-    if (!numPatrimonio || !marca || !numSerie || !nomeServidor || !nomeComputador || !numProcesso) {
-        Toast.fire({
-            customClass: { title: 'swal2-title' },
-            icon: "error",
-            title: "Erro: Preencha todos os campos obrigatórios!",
-            background: 'red',
-            iconColor: '#ffffff'
-        });
-    } else if (num === 1) {
-        Toast.fire({
-            customClass: { title: 'swal2-title' },
-            icon: "success",
-            title: "Item cadastrado com sucesso!",
-            background: 'green',
-            iconColor: '#ffffff'
-        });
-    } else if (num === 2) {
-        Toast.fire({
-            customClass: { title: 'swal2-title' },
-            icon: "success",
-            title: "Item atualizado com sucesso!",
-            background: 'blue',
-            iconColor: '#ffffff'
-        });
-    } else {
-        Toast.fire({
-            customClass: { title: 'swal2-title' },
-            icon: "error",
-            title: "Erro: Opção inválida!",
-            background: 'red',
-            iconColor: '#ffffff'
-        });
+    function setRequiredFields(required) {
+        var localNovo = document.getElementById('localNovo');
+        var status = document.getElementById('status');
+        var numSerie = document.getElementById('numSerie');
+        var tipo = document.getElementById('tipo');
+
+        localNovo.required = required;
+        status.required = required;
+        numSerie.required = required;
+        tipo.required = required;
     }
-}
-window.addEventListener('load', function () {
-    console.log("Página carregada");
-    var url_string = window.location.href;
-    var url = new URL(url_string);
-    var data = url.searchParams.get('notificacao');
-    console.log("Parâmetro de notificação:", data);
 
-    if (data === 'true') {
-        console.log("Exibindo alerta de sucesso para cadastro");
-        showAlert(1, true, true, true, true, true, true); 
-        window.history.replaceState({}, document.title, window.location.pathname);
-    } else if (data === 'false') {
-        console.log("Exibindo alerta de sucesso para atualização");
-        showAlert(2, true, true, true, true, true, true);
-        window.history.replaceState({}, document.title, window.location.pathname);
+    function showAlert(num, numPatrimonio, marca, numSerie, nomeServidor, nomeComputador, numProcesso) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+
+        if (!numPatrimonio || !marca || !numSerie || !nomeServidor || !nomeComputador || !numProcesso) {
+            Toast.fire({
+                customClass: {
+                    title: 'swal2-title'
+                },
+                icon: "error",
+                title: "Erro: Preencha todos os campos obrigatórios!",
+                background: 'red',
+                iconColor: '#ffffff'
+            });
+        } else if (num === 1) {
+            Toast.fire({
+                customClass: {
+                    title: 'swal2-title'
+                },
+                icon: "success",
+                title: "Item cadastrado com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
+            });
+        } else if (num === 2) {
+            Toast.fire({
+                customClass: {
+                    title: 'swal2-title'
+                },
+                icon: "success",
+                title: "Item atualizado com sucesso!",
+                background: 'blue',
+                iconColor: '#ffffff'
+            });
+        } else {
+            Toast.fire({
+                customClass: {
+                    title: 'swal2-title'
+                },
+                icon: "error",
+                title: "Erro: Opção inválida!",
+                background: 'red',
+                iconColor: '#ffffff'
+            });
+        }
     }
-});
+    window.addEventListener('load', function() {
+        console.log("Página carregada");
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var data = url.searchParams.get('notificacao');
+        console.log("Parâmetro de notificação:", data);
 
-
-
+        if (data === 'true') {
+            console.log("Exibindo alerta de sucesso para cadastro");
+            showAlert(1, true, true, true, true, true, true);
+            window.history.replaceState({}, document.title, window.location.pathname);
+        } else if (data === 'false') {
+            console.log("Exibindo alerta de sucesso para atualização");
+            showAlert(2, true, true, true, true, true, true);
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    });
 </script>
 
 </html>

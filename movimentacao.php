@@ -106,15 +106,16 @@ if (isset($_POST['submit'])) {
                 <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
                 <a href="#" class="text-primary ms-1 carrossel-text">Movimentação</a>
             </div>
-            <div class="button-dark">
+            <!-- <div class="button-dark">
                 <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
-            </div>
+            </div> -->
         </div>
         <div class="mb-1 mt-1">
-            <h4 class="mb-3">Movimentação</h4>
+            <h2 class="mb-4">Movimentação do Item</h2>
         </div>
-        <hr class="mb-4">
-        <h5 class="mb-3">Dados do Item</h4>
+        <!-- <hr class="mb-4"> -->
+        <h5 class="mb-3">Dados do Item</h5>
+        <hr class="mb-3">
             <form method="POST">
                 <div class="row">
                     <div class="col-md-6 mb-3">
@@ -156,8 +157,8 @@ if (isset($_POST['submit'])) {
                         <input type="text" class="form-control" id="localanterior" name="localAnterior" value="<?php echo $localizacao ?>" readonly>
                     </div>
                 </div>
-                <h5 class="mb-3">Dados da Transferência</h4>
-                    <hr class="mb-4 w">
+                <h5 class="mb-3">Dados da Transferência</h5>
+                    <hr class="mb-3">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="nomeServidor" class="form-label text-muted">Nome do Servidor:</label>
@@ -167,54 +168,7 @@ if (isset($_POST['submit'])) {
                             <label for="localNova" class="form-label text-muted">Localização Nova:</label>
                             <select class="form-select" id="localnovo" required name="localnovo" required>
                                 <option value="Selecionar" hidden="hidden">Selecionar</option>
-                                <option value="ASCOM">ASCOM</option>
-                                <option value="ATAJ">ATAJ</option>
-                                <option value="ATECC">ATECC</option>
-                                <option value="ATIC">ATIC</option>
-                                <option value="AUDITÓRIO">AUDITÓRIO</option>
-                                <option value="CAF">CAF</option>
-                                <option value="CAF/DGP">CAF/DGP</option>
-                                <option value="CAF/DLC">CAF/DLC</option>
-                                <option value="CAF/DOF">CAF/DOF</option>
-                                <option value="CAF/DSUP">CAF/DSUP</option>
-                                <option value="CAP">CAP</option>
-                                <option value="CAP/ARTHUR SABOYA">CAP/ARTHUR SABOYA</option>
-                                <option value="CAP/DEPROT">CAP/DEPROT</option>
-                                <option value="CAP/DPCI">CAP/DPCI</option>
-                                <option value="CAP/DPD">CAP/DPD</option>
-                                <option value="CAP/NÚCLEO DE ATENDIMENTO">CAP/NÚCLEO DE ATENDIMENTO</option>
-                                <option value="CASE">CASE</option>
-                                <option value="CASE/DCAD">CASE/DCAD</option>
-                                <option value="CASE/DDU">CASE/DDU</option>
-                                <option value="CASE/DLE">CASE/DLE</option>
-                                <option value="CASE/STEL">CASE/STEL</option>
-                                <option value="CEPEUC">CEPEUC</option>
-                                <option value="CGPATRI">CGPATRI</option>
-                                <option value="COMIN">COMIN</option>
-                                <option value="COMIN/DCIGP">COMIN/DCIGP</option>
-                                <option value="COMIN/DCIMP">COMIN/DCIMP</option>
-                                <option value="CONTRU">CONTRU</option>
-                                <option value="CONTRU/DACESS">CONTRU/DACESS</option>
-                                <option value="CONTRU/DINS">CONTRU/DINS</option>
-                                <option value="CONTRU/DLR">CONTRU/DLR</option>
-                                <option value="CONTRU/DSUS">CONTRU/DSUS</option>
-                                <option value="DEUSO">DEUSO</option>
-                                <option value="GABINETE">GABINETE</option>
-                                <option value="GEOINFO">GEOINFO</option>
-                                <option value="GTEC">GTEC</option>
-                                <option value="ILUME">ILUME</option>
-                                <option value="PARHIS">PARHIS</option>
-                                <option value="PARHIS/DHIS">PHARIS/DHIS</option>
-                                <option value="PARHIS/DHMP">PHARIS/DHMP</option>
-                                <option value="PARHIS/DPS">PHARIS/DPS</option>
-                                <option value="PLANURB">PLANURB</option>
-                                <option value="RESID">RESID</option>
-                                <option value="RESID/DRGP">RESID/DRGP</option>
-                                <option value="RESID/DRPM">RESID/DRPM</option>
-                                <option value="RESID/DRU">RESID/DRU</option>
-                                <option value="SERVIN">SERVIN</option>
-                                <option value="SERVIN/DSIGP">SERVIN/DSIGP</option>
-                                <option value="SERVIN/DSIMP">SERVIN/DSIMP</option>
+                               <?php include 'query-unidades.php'?>
                             </select>
                         </div>
                     </div>
@@ -234,7 +188,7 @@ if (isset($_POST['submit'])) {
                             <input type="text" class="form-control" id="login" name="usuario" value="<?php echo $_SESSION['SesID'] ?>" readonly>
                         </div>
                     </div>
-                    <div class="box-btn-voltar">
+                    <div class="box-btn-voltar d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary" name="submit">Movimentar</button>
                     </div>
             </form>

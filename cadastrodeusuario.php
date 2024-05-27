@@ -120,9 +120,9 @@ if (isset($_POST['submit'])) {
                 <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
                 <a href="./cadastrodeusuario.php" class="text-primary ms-1 carrossel-text">Cadastro de Usuários</a>
             </div>
-            <div class="button-dark">
+            <!-- <div class="button-dark">
                 <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
-            </div>
+            </div> -->
         </div>
         <h3 class="mb-4 mt-4">Cadastro de Usuários</h3>
         <form method="POST" action="#">
@@ -161,54 +161,7 @@ if (isset($_POST['submit'])) {
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/unidades.png" alt="" class="imgCadastro"></div>
                         <select class="form-select" name="unidade" required>
                             <option value="<?php echo $unidade ?>"><?php echo $unidade ?></option>
-                            <option value="ASCOM">ASCOM</option>
-                            <option value="ATAJ">ATAJ</option>
-                            <option value="ATECC">ATECC</option>
-                            <option value="ATIC">ATIC</option>
-                            <option value="AUDITÓRIO">AUDITÓRIO</option>
-                            <option value="CAF">CAF</option>
-                            <option value="CAF/DGP">CAF/DGP</option>
-                            <option value="CAF/DLC">CAF/DLC</option>
-                            <option value="CAF/DOF">CAF/DOF</option>
-                            <option value="CAF/DSUP">CAF/DSUP</option>
-                            <option value="CAP">CAP</option>
-                            <option value="CAP/ARTHUR SABOYA">CAP/ARTHUR SABOYA</option>
-                            <option value="CAP/DEPROT">CAP/DEPROT</option>
-                            <option value="CAP/DPCI">CAP/DPCI</option>
-                            <option value="CAP/DPD">CAP/DPD</option>
-                            <option value="CAP/NÚCLEO DE ATENDIMENTO">CAP/NÚCLEO DE ATENDIMENTO</option>
-                            <option value="CASE">CASE</option>
-                            <option value="CASE/DCAD">CASE/DCAD</option>
-                            <option value="CASE/DDU">CASE/DDU</option>
-                            <option value="CASE/DLE">CASE/DLE</option>
-                            <option value="CASE/STEL">CASE/STEL</option>
-                            <option value="CEPEUC">CEPEUC</option>
-                            <option value="CGPATRI">CGPATRI</option>
-                            <option value="COMIN">COMIN</option>
-                            <option value="COMIN/DCIGP">COMIN/DCIGP</option>
-                            <option value="COMIN/DCIMP">COMIN/DCIMP</option>
-                            <option value="CONTRU">CONTRU</option>
-                            <option value="CONTRU/DACESS">CONTRU/DACESS</option>
-                            <option value="CONTRU/DINS">CONTRU/DINS</option>
-                            <option value="CONTRU/DLR">CONTRU/DLR</option>
-                            <option value="CONTRU/DSUS">CONTRU/DSUS</option>
-                            <option value="DEUSO">DEUSO</option>
-                            <option value="GABINETE">GABINETE</option>
-                            <option value="GEOINFO">GEOINFO</option>
-                            <option value="GTEC">GTEC</option>
-                            <option value="ILUME">ILUME</option>
-                            <option value="PARHIS">PARHIS</option>
-                            <option value="PARHIS/DHIS">PHARIS/DHIS</option>
-                            <option value="PARHIS/DHMP">PHARIS/DHMP</option>
-                            <option value="PARHIS/DPS">PHARIS/DPS</option>
-                            <option value="PLANURB">PLANURB</option>
-                            <option value="RESID">RESID</option>
-                            <option value="RESID/DRGP">RESID/DRGP</option>
-                            <option value="RESID/DRPM">RESID/DRPM</option>
-                            <option value="RESID/DRU">RESID/DRU</option>
-                            <option value="SERVIN">SERVIN</option>
-                            <option value="SERVIN/DSIGP">SERVIN/DSIGP</option>
-                            <option value="SERVIN/DSIMP">SERVIN/DSIMP</option>
+                            <?php include 'query-unidades.php' ?>
                         </select>
                     </div>
                 </div>
@@ -242,57 +195,6 @@ if (isset($_POST['submit'])) {
         url.searchParams.set('usuario', usuario);
         window.location.href = url;
     }
-
-    function toast(num) {
-        if (num == 1) {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "success",
-                title: "Usuario cadastrado com sucesso!",
-                background: "green",
-            });
-        } else if (num == 2) {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "warning",
-                title: "Usuário já cadastrado!",
-                titleColor: "#fff",
-                background: "#104EEF",
-                iconColor: "#ffffff"
-            });
-        }
-    }
-
-    window.addEventListener('load', function() {
-        var url_string = window.location.href;
-        var url = new URL(url_string);
-        var data = url.searchParams.get("notificacao");
-        if (data == 'jaCadastrado') {
-            toast(2);
-            window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'http://localhost/cadastrodeusuario.php');
-        }
-    })
 </script>
 
 </html>
