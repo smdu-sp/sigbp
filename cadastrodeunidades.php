@@ -108,26 +108,26 @@ if ($id) {
         <div class="col-md-12 mb-4">
           <label for="usuarioCadastro" class="form-label text-muted ml-2">Nome</label>
           <div class="input-group">
-            <input value="<?php $id ? print_r($unidade) : '' ?>" type="text" name="nome" class="form-control" id="inputCadUsuario" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
+            <input value="<?php $id ? print_r($unidade) : '' ?>" type="text" name="nome" class="form-control" id="inputNome" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
           </div>
         </div>
         <div class="col-md-12 mb-4">
           <div>
             <label for="exampleFormControlInput1" class="form-label text-muted ml-2">Código</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" name="codigo" value="<?php $id ? print_r($codigo) : '' ?>" required>
+            <input type="text" class="form-control" id="codigo" name="inputCodigo" value="<?php $id ? print_r($codigo) : '' ?>" required>
           </div>
         </div>
         <div class="col-md-12 mb-4">
           <div>
             <label for="exampleFormControlInput1" class="form-label text-muted ml-2">Sigla</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario"  name="sigla" value="<?php $id ? print_r($sigla) : '' ?>" required>
+            <input type="text" class="form-control" id="inputSigla" name="sigla" value="<?php echo isset($id) ? strtoupper($sigla) : ''; ?>" required style="text-transform: uppercase;">
           </div>
         </div>
         <div class="col-md-12 mb-4">
           <div>
             <label for="exampleFormControlInput1" class="form-label text-muted ml-2">Status</label>
             <select class="form-select" name="status" required>
-              <option value="<?php echo $status?>" hidden><?php echo $status?></option>
+              <option value="<?php $id ? print_r($status) : '' ?>" hidden><?php $id ? print_r($status) : '' ?></option>
               <option value="Ativo">Ativo</option>
               <option value="Inativo">Inativo</option>
             </select>
@@ -139,3 +139,22 @@ if ($id) {
     </form>
     <div class="hide" id="modal"></div>
 </body>
+<script>
+  function toUpperCase(event) {
+    event.target.value = event.target.value.toUpperCase();
+  }
+  const inputNome = document.getElementById('inputNome');
+  const inputSigla = document.getElementById('inputSigla');
+  inputNome.addEventListener('input', toUpperCase);
+  inputSigla.addEventListener('input', toUpperCase);
+
+  function validateNumberInput(event) {
+    const input = event.target;
+    const value = input.value;
+
+    input.value = value.replace(/[^0-9]/g, '');
+  }
+
+  const inputCodigo = document.getElementById('codigo');
+  inputCodigo.addEventListener('input', validateNumberInput);
+</script>

@@ -2,13 +2,9 @@
 session_start();
 include_once('componentes/verificacao.php');
 include_once('header.php');
-
-
-
-
 ?>
 <style>
-        @media (max-width: 1600px) {
+    @media (max-width: 1600px) {
         .conteudo {
             margin-left: 75px;
             width: 95%;
@@ -42,6 +38,7 @@ include_once('header.php');
         }
     }
 </style>
+
 <body>
     <?php
     include_once('menu.php');
@@ -68,90 +65,7 @@ include_once('header.php');
                         <div class="card lista-itens">
                             <ul class="list-group list-group-flush overflow-auto" id="ulItens" style="height: 600px;">
                                 <?php
-
-                                $itens = array(
-                                    "AMPLIFICADOR",
-                                    "ANTENA PARABÓLICA",
-                                    "ANTENA WIRELESS",
-                                    "AP TELEFONICO DIGITAL",
-                                    "APARELHO FAX",
-                                    "AR CONDICIONADO",
-                                    "ARMARIO",
-                                    "ARQUIVO DESLIZANTE",
-                                    "BALCAO",
-                                    "BATERIA",
-                                    "CADEIRA",
-                                    "CAIXA ACÚSTICA",
-                                    "CAIXAS DE SOM",
-                                    "CALCULADORA",
-                                    "CARRINHO PARA SUPERMERCADO",
-                                    "COMPRESSOR DE ÁUDIO COM DOIS CANAIS",
-                                    "COMPUTADOR",
-                                    "CONTROLADOR",
-                                    "CPU",
-                                    "DESKTOP SWITCH",
-                                    "ENCADERNADORA",
-                                    "ESCADA DE ALUMÍNIO",
-                                    "ESMERILHADEIRA",
-                                    "ESTABILIZADOR",
-                                    "ESTAÇÃO DE TRABALHO",
-                                    "ESTANTE",
-                                    "FRAGMENTADORA DE PAPEL",
-                                    "FREEZER",
-                                    "FURADEIRA",
-                                    "GAVETEIRO",
-                                    "GPS",
-                                    "GUILHOTINA DE ESCRITÓRIO",
-                                    "HARD DISK",
-                                    "HD EXTERNO",
-                                    "HORODATADOR PROTOCOLADOR",
-                                    "IMPRESSORA",
-                                    "LIXADEIRA DE CINTA",
-                                    "LONGARINA",
-                                    "MAPA",
-                                    "MAQUINA FOTOGRAFICA/ CÂMERA DIGITAL",
-                                    "MARTELETE ROMPEDOR",
-                                    "MEDIDOR DE DISTÂNCIA",
-                                    "MEDUSA",
-                                    "MESA",
-                                    "MESA DE SOM",
-                                    "MICROCOMPUTADOR",
-                                    "MICROFONES",
-                                    "MICRO-ONDAS",
-                                    "MINIGRAVADOR DIGITAL",
-                                    "MONITOR",
-                                    "MORSA",
-                                    "NOBREAK",
-                                    "NOTEBOOK",
-                                    "PAINEL ELETRÔNICO",
-                                    "PEDESTAL",
-                                    "PERSIANA",
-                                    "PLOTTER",
-                                    "POLTRONA",
-                                    "PROJETOR MULTIMÍDIA(DATA SHOW)",
-                                    "QUADRO DE AVISO",
-                                    "RACK",
-                                    "RELÓGIO",
-                                    "ROTEADOR",
-                                    "SCANNER",
-                                    "SERVIDOR",
-                                    "SOFA",
-                                    "SWITCH",
-                                    "TABLET MARCA SAMSUNG MODELO TAB S8 5G",
-                                    "TELA DE PROJEÇÃO RETRÁTIL",
-                                    "TELEVISOR",
-                                    "TRENA",
-                                    "TV",
-                                    "UNID. DE PROCESSAMENTO",
-                                    "VENTILADOR",
-                                    "WEBCAM FULL HD 1080P",
-                                    "WORKSTATION",
-                                    "OUTROS",
-                                );
-
-                                foreach ($itens as $item) {
-                                    echo "<li><a href=\"#\" class=\"list-group-item list-group-item-action\" onclick=\"botaoClicado('$item')\">$item</a></li>";
-                                }
+                                include 'query-tipos-dashboard.php';
                                 ?>
                             </ul>
                         </div>
@@ -164,35 +78,35 @@ include_once('header.php');
         </div>
     </div>
     <div class="hide" id="modal"></div>
-    <script>
-        $(document).ready(function() {
-            $("#textBusca").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#ulItens li").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
+</body>
+<script>
+    $(document).ready(function() {
+        $("#textBusca").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#ulItens li").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
+    });
 
-        function filterList() {
-            var input = document.getElementById('textBusca');
-            var filter = input.value.toUpperCase();
-            var ul = document.getElementById('ulItens');
-            var li = ul.getElementsByTagName('li');
-            var button = document.getElementById('btn');
-            for (var i = 0; i < li.length; i++) {
-                var item = li[i].innerText.toUpperCase();
-                if (item.indexOf(filter) > -1) {
-                    button.disabled = false;
-                    return;
-                }
+    function filterList() {
+        var input = document.getElementById('textBusca');
+        var filter = input.value.toUpperCase();
+        var ul = document.getElementById('ulItens');
+        var li = ul.getElementsByTagName('li');
+        var button = document.getElementById('btn');
+        for (var i = 0; i < li.length; i++) {
+            var item = li[i].innerText.toUpperCase();
+            if (item.indexOf(filter) > -1) {
+                button.disabled = false;
+                return;
             }
-            button.disabled = true;
         }
+        button.disabled = true;
+    }
 
-        function botaoClicado(item) {
-            document.getElementById('textBusca').value = item;
-            filterList();
-        }
-    </script>
-</body>
+    function botaoClicado(item) {
+        document.getElementById('textBusca').value = item;
+        filterList();
+    }
+</script>

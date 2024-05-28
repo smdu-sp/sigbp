@@ -33,6 +33,7 @@ $permissao = $_SESSION['Perm'];
                 <a href="./listaremovimentar.php" value="/listaremovimentar.php" id="botao4" class="btn-menu botoes admin"><img id="icon-lista" src="./images/icon-lista.png" alt="Icon Lista">Listar/Movimentar Bens</a>
                 <a href="./usuarios.php" value="/usuarios.php" id="botao5" class="btn-menu botoes admin"><img id="icon-usuario" src="./images/usuario.png" alt="Icon Usuario">Usuários</a>
                 <a href="./unidades.php" value="/unidades.php" id="botao6" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/unidades.png" alt="Icon Usuario">Unidades</a>
+                <a href="./tiposdebens.php" value="/tiposdebens.php" id="botao7" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/icon-tipos.png" alt="Icon Usuario">Tipos de Bens</a>
             </div>
             <div class="info-usuario">
                 <h3 class="nome-usuario"><?php
