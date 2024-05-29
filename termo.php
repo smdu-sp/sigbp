@@ -1,14 +1,12 @@
 <?php
 session_start();
 include_once('conexoes/config.php');
-include_once('header.php'); 
+include_once('header.php');
 include_once('componentes/verificacao.php');
 
 if (isset($_POST['submit'])) {
-
     $array1 = explode("\n", $_POST['textarea1']);
     $array2 = explode("\n", $_POST['textarea2']);
-
 
     $dataEntregue = $_POST['dataEntregue'];
     $unidadeEntregue = $_POST['unidadeEntregue'];
@@ -29,7 +27,7 @@ if (isset($_POST['submit'])) {
 }
 ?>
 <style>
-        @media (max-width: 1600px) {
+    @media (max-width: 1600px) {
         .conteudo {
             margin-left: 75px;
             width: 95%;
@@ -63,6 +61,7 @@ if (isset($_POST['submit'])) {
         }
     }
 </style>
+
 <body>
     <?php
     include_once('menu.php');
@@ -73,9 +72,6 @@ if (isset($_POST['submit'])) {
                 <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
                 <a href="./termo.php" class="text-primary ms-1 carrossel-text">Termo</a>
-            </div>
-            <div class="button-dark">
-                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
             </div>
         </div>
         <h2 class="mb-3 mt-2">Termo de Entrega/Retirada</h2>
@@ -115,7 +111,7 @@ if (isset($_POST['submit'])) {
                     <label for="unidadeEntregue" class="form-label text-muted">Unidade:</label>
                     <select class="form-select" id="unidadeEntregue" name="unidadeEntregue" required>
                         <option value="" hidden="hidden">Selecionar</option>
-                        <?php include 'query-unidades.php'?>
+                        <?php include 'query-unidades.php' ?>
                     </select>
                 </div>
             </div>
@@ -140,7 +136,7 @@ if (isset($_POST['submit'])) {
                     <label for="unidadeRecebimento" class="form-label text-muted">Unidade que Recebeu:</label>
                     <select class="form-select" id="unidadeRecebimento" name="unidadeRecebimento" required>
                         <option value="" hidden="hidden">Selecionar</option>
-                        <?php include 'query-unidades.php'?>
+                        <?php include 'query-unidades.php' ?>
                     </select>
                 </div>
             </div>
@@ -154,10 +150,30 @@ if (isset($_POST['submit'])) {
                     <input type="text" class="form-control" id="rfRecebimento" name="rfRecebimento" required>
                 </div>
             </div>
-            <div class="btn-baixar d-flex justify-content-end mr-2"><button type="submit" class="btn btn-primary mb-4" name="submit" id='btGerarPDF' onclick="enviar_session()">Visualizar Termo</button></div>
+            <div class="btn-baixar d-flex justify-content-end mr-2"><button type="submit" onclick="verificarTextarea()" class="btn btn-primary mb-4" name="submit" id='btGerarPDF' onclick="enviar_session()">Visualizar Termo</button></div>
         </form>
         <div class="hide" id="modal"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
+<script>
+    function verificarTextarea() {
+        var textarea1 = document.getElementById('textareaNumSerie');
+        var textarea2 = document.getElementById('textareaDescBem');
+
+        var textarea1Valor = textarea1.value;
+        var textarea2Valor = textarea2.value;
+
+        console.log(textarea1Valor);
+        console.log(textarea2Valor);
+
+        if (textarea1Valor.trim() === "" || textarea2Valor.trim() === "" ) {
+            var numPatriSerie = document.getElementById('numPatriSerie');
+            var descBem = document.getElementById('descBem');
+            numPatriSerie.toggleAttribute('required');
+            descBem.toggleAttribute('required');
+        } 
+    }
+</script>

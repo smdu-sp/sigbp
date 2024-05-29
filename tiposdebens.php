@@ -95,9 +95,6 @@ if (isset($_POST['submit'])) {
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
                 <a href="./dashboard.php" class="text-primary ms-1 carrossel-text">Tipos de Bens</a></li>
             </div>
-            <!-- <div class="button-dark">
-                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
-            </div> -->
         </div>
         <h2 class="mb-4">Tipos de Bens</h2>
         <div class="container d-flex justify-content-center">
@@ -188,6 +185,12 @@ if (isset($_POST['submit'])) {
             history.pushState({}, '', 'tiposdebens.php');
         }
     })
+
+    function toUpperCase(event) {
+        event.target.value = event.target.value.toUpperCase();
+    }
+    const inputTipo = document.getElementById('textBusca2');
+    inputTipo.addEventListener('input', toUpperCase);
 </script>
 
 </html>

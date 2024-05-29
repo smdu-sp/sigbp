@@ -114,9 +114,6 @@ if (isset($_POST['submit'])) {
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
                 <a href="./cadastrarbens.php" class="text-primary ms-1 carrossel-text">Cadastro de bens</a>
             </div>
-            <!-- <div class="button-dark">
-                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
-            </div> -->
         </div>
         <h2 class="mb-3 mt-4">Cadastro de bens</h2>
         <form method="POST" class="mt-5">
@@ -130,7 +127,7 @@ if (isset($_POST['submit'])) {
                     <select class="form-select" name="tipo" id="tipo" required>
                         <option value="" hidden="hidden">Selecionar</option>
                         <?php
-                        include 'query-tipos-dashboard.php';
+                        include 'query-tipos.php';
                         ?>
                     </select>
                 </div>
@@ -199,7 +196,7 @@ if (isset($_POST['submit'])) {
             <div class="row">
                 <div class="col-md-2 mb-4">
                     <label for="status" class="form-label text-muted">Num de Registro de Itens:</label>
-                    <input type="number" class="form-control" name="numRegistro" id="numRegistro" onchange="numRegistros()" min="1" required>
+                    <input type="number" class="form-control" name="numRegistro" id="numRegistro" onchange="numRegistros()" min="1" value="1" required>
                 </div>
                 <div class="col-md-10 mb-4 mt-4 d-flex justify-content-end align-items-start">
                     <input type="submit" class="btn btn-primary" id="btnCadBens" name="submit" value="Cadastrar"></input>

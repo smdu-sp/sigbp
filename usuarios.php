@@ -92,9 +92,6 @@ $sql_usuarios_query_exec = $conexao->query($sql_usuarios_query) or die($conexao-
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
                 <a href="./usuarios.php" class="text-primary ms-1 carrossel-text">Usuários</a>
             </div>
-            <!-- <div class="button-dark">
-                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
-            </div> -->
         </div>
         <h2 class="mb-3 mt-4">Usuários</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">

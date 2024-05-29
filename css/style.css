@@ -709,13 +709,13 @@ hr {
 
 #recordsPerPage {
     border: none;
-    margin-right: 20px;
+    margin-right: 2px;
     font-size: 14px;
 }
 
 .page-info {
-    margin-left: 10px;
-    margin-right: 20px;
+    margin-left:80px;
+    margin-right: 40px;
     margin-top: 10px;
     font-size: 14px;
 }

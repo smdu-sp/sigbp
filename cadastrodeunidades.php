@@ -98,9 +98,6 @@ if ($id) {
         <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
         <a href="#" class="text-primary ms-1 carrossel-text">Cadastro de Unidade</a>
       </div>
-      <!-- <div class="button-dark">
-        <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
-      </div> -->
     </div>
     <h3 class="mb-4 mt-4">Cadastro de Unidades</h3>
     <form method="POST" action="#">

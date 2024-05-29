@@ -106,9 +106,35 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
         width: 25px;
         height: 25px;
     }
+
+    #table {
+        max-height: 600px;
+    }
+
+    table {
+        overflow: auto;
+    }
+
+    .div-table {
+        max-width: 1530px;
+        overflow: auto;
+    }
+
+    .div-table::-webkit-scrollbar {
+        height: 7px;
+    }
+
+    .div-table::-webkit-scrollbar-track {
+        background-color: #fff;
+    }
+
+    .div-table::-webkit-scrollbar-thumb {
+        background: #d3d3d3;
+        border-radius: 5px;
+    }
 </style>
 
-<body>
+<body style="overflow-x: hidden;">
     <?php
     include_once('menu.php');
     ?>
@@ -120,9 +146,6 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
                 <a href="./listaremovimentar.php" class="text-primary ms-1 carrossel-text">Listar e Movimentar</a>
             </div>
-            <!-- <div class="button-dark">
-                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
-            </div> -->
         </div>
         <h2 class="mb-3 mt-4">Listar e Movimentar</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
@@ -148,85 +171,9 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                         <p class="mb-1 text-muted">Tipo:</p>
                         <select class="form-select" name="tipo" id="tipo">
                             <option value="" hidden="hidden">Selecionar</option>
-                            <option value="AMPLIFICADOR">AMPLIFICADOR</option>
-                            <option value="ANTENA PARABÓLICA">ANTENA PARABÓLICA</option>
-                            <option value="ANTENA WIRELESS">ANTENA WIRELESS</option>
-                            <option value="AP TELEFONICO DIGITAL">AP TELEFONICO DIGITAL</option>
-                            <option value="APARELHO FAX">APARELHO FAX</option>
-                            <option value="AR CONDICIONADO">AR CONDICIONADO</option>
-                            <option value="ARMARIO">ARMARIO</option>
-                            <option value="ARQUIVO DESLIZANTE">ARQUIVO DESLIZANTE</option>
-                            <option value="BALCAO">BALCAO</option>
-                            <option value="BATERIA">BATERIA</option>
-                            <option value="CADEIRA">CADEIRA</option>
-                            <option value="CAIXA ACÚSTICA">CAIXA ACÚSTICA</option>
-                            <option value="CAIXAS DE SOM">CAIXAS DE SOM</option>
-                            <option value="CALCULADORA">CALCULADORA</option>
-                            <option value="CARRINHO PARA SUPERMERCADO">CARRINHO PARA SUPERMERCADO</option>
-                            <option value="COMPRESSOR DE ÁUDIO COM DOIS CANAIS">COMPRESSOR DE ÁUDIO COM DOIS CANAIS</option>
-                            <option value="COMPUTADOR">COMPUTADOR</option>
-                            <option value="CONTROLADOR">CONTROLADOR</option>
-                            <option value="CPU">CPU</option>
-                            <option value="DESKTOP SWITCH">DESKTOP SWITCH</option>
-                            <option value="ENCADERNADORA">ENCADERNADORA</option>
-                            <option value="ESCADA DE ALUMÍNIO">ESCADA DE ALUMÍNIO</option>
-                            <option value="ESMERILHADEIRA">ESMERILHADEIRA</option>
-                            <option value="ESTABILIZADOR">ESTABILIZADOR</option>
-                            <option value="ESTAÇÃO DE TRABALHO">ESTAÇÃO DE TRABALHO</option>
-                            <option value="ESTANTE">ESTANTE</option>
-                            <option value="FRAGMENTADORA DE PAPEL">FRAGMENTADORA DE PAPEL</option>
-                            <option value="FREEZER">FREEZER</option>
-                            <option value="FURADEIRA">FURADEIRA</option>
-                            <option value="GAVETEIRO">GAVETEIRO</option>
-                            <option value="GPS">GPS</option>
-                            <option value="GUILHOTINA DE ESCRITÓRIO">GUILHOTINA DE ESCRITÓRIO</option>
-                            <option value="HARD DISCK">HARD DISK</option>
-                            <option value="HD EXTERNO">HD EXTERNO</option>
-                            <option value="HORODATADOR PROTOCOLADOR">HORODATADOR PROTOCOLADOR</option>
-                            <option value="IMPRESSORA">IMPRESSORA</option>
-                            <option value="LIXADEIRA DE CINTA">LIXADEIRA DE CINTA</option>
-                            <option value="LONGARINA">LONGARINA</option>
-                            <option value="MAPA">MAPA</option>
-                            <option value="MAQUINA FOTOGRAFICA/ CÂMERA DIGITAL">MAQUINA FOTOGRAFICA/ CÂMERA DIGITAL
-                            </option>
-                            <option value="MARTELETE ROMPEDOR">MARTELETE ROMPEDOR</option>
-                            <option value="MEDITOR DE DISTÂNCIA">MEDIDOR DE DISTÂNCIA</option>
-                            <option value="MEDUSA">MEDUSA</option>
-                            <option value="MESA">MESA</option>
-                            <option value="MESA DE SOM">MESA DE SOM</option>
-                            <option value="MICROCOMPUTADOR">MICROCOMPUTADOR</option>
-                            <option value="MICROFONES">MICROFONES</option>
-                            <option value="MICRO-ONDAS">MICRO-ONDAS</option>
-                            <option value="MINIGRAVADOR DIGITAL">MINIGRAVADOR DIGITAL</option>
-                            <option value="MONITOR">MONITOR</option>
-                            <option value="MORSA">MORSA</option>
-                            <option value="NOBREAK">NOBREAK</option>
-                            <option value="NOTEBOOK">NOTEBOOK</option>
-                            <option value="PAINEL ELETRÔNICO">PAINEL ELETRÔNICO</option>
-                            <option value="PEDESTAL">PEDESTAL</option>
-                            <option value="PERSIANA">PERSIANA</option>
-                            <option value="PLOTTER">PLOTTER</option>
-                            <option value="POLTRONA">POLTRONA</option>
-                            <option value="PROJETOR MULTIMÍDIA(DATA SHOW)">PROJETOR MULTIMÍDIA(DATA SHOW)</option>
-                            <option value="QUADRO DE AVISO">QUADRO DE AVISO</option>
-                            <option value="RACK">RACK</option>
-                            <option value="RELÓGIO">RELÓGIO</option>
-                            <option value="ROTEADOR">ROTEADOR</option>
-                            <option value="SCANNER">SCANNER</option>
-                            <option value="SERVIDOR">SERVIDOR</option>
-                            <option value="SOFA">SOFA</option>
-                            <option value="SWITCH">SWITCH</option>
-                            <option value="TABLET MARCA SAMSUNG MODELO TAB S8 5G">TABLET MARCA SAMSUNG MODELO TAB S8 5G
-                            </option>
-                            <option value="TELA DE PROJEÇÃO RETRÁTIL">TELA DE PROJEÇÃO RETRÁTIL</option>
-                            <option value="TELEVISOR">TELEVISOR</option>
-                            <option value="TRENA">TRENA</option>
-                            <option value="TV">TV</option>
-                            <option value="UNID. DE PROCESSAMENTO">UNID. DE PROCESSAMENTO</option>
-                            <option value="VENTILADOR">VENTILADOR</option>
-                            <option value="WEBCAM FULL HD 1080P">WEBCAM FULL HD 1080P</option>
-                            <option value="WORKSTATION">WORKSTATION</option>
-                            <option value="OUTROS">OUTROS</option>
+                            <?php
+                            include 'query-tipos.php';
+                            ?>
                         </select>
                     </div>
                     <div class="col-3 mb-2">
@@ -243,53 +190,56 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                     <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon" src="./images/icon-filtrar.png" alt="#"></button>
                 </form>
                 <br>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th hidden>Id</th>
-                            <th>Nº Patrimônio</th>
-                            <th>Nome</th>
-                            <th>Marca</th>
-                            <th>Tipo</th>
-                            <th>Desc. SBPM</th>
-                            <th>Modelo</th>
-                            <th>Núm. de Série</th>
-                            <th>Localização</th>
-                            <th>Servidor</th>
-                            <th>Num. Processo</th>
-                            <th>CIMBPM</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id='myTable'>
-                        <?php
-                        while ($user_data = $sql_item_query_exec->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td hidden>" . $user_data['idbem'] . "</td>";
-                            echo "<td>" . $user_data['patrimonio'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $user_data['marca'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $user_data['tipo'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $user_data['descsbpm'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $user_data['modelo'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $user_data['numserie'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $user_data['localizacao'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $user_data['servidor'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $user_data['numprocesso'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $user_data['statusitem'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . "<a href='movimentacao.php?id=$user_data[idbem]'><img src='./images/icon-seta.png' alt='Seta'></a>" . "<a href='alteracaodebens.php?id=$user_data[idbem]'><img src='./images/icon-lapis.png' alt='Seta'></a>" . '<span hidden>todos</span>' . "</td>";
-                            echo "</tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                <div class="div-table mb-1">
+                    <table class="table table-hover" id="table">
+                        <thead>
+                            <tr>
+                                <th hidden>Id</th>
+                                <th>Nº Patrimônio</th>
+                                <th>Nome</th>
+                                <th>Marca</th>
+                                <th>Tipo</th>
+                                <th>Desc. SBPM</th>
+                                <th>Modelo</th>
+                                <th>Núm. de Série</th>
+                                <th>Localização</th>
+                                <th>Servidor</th>
+                                <th>Num. Processo</th>
+                                <th>CIMBPM</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id='myTable'>
+                            <?php
+                            while ($user_data = $sql_item_query_exec->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td hidden>" . $user_data['idbem'] . "</td>";
+                                echo "<td>" . $user_data['patrimonio'] . '<span hidden>todos</span>' . "</td>";
+                                echo "<td>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
+                                echo "<td>" . $user_data['marca'] . '<span hidden>todos</span>' . "</td>";
+                                echo "<td>" . $user_data['tipo'] . '<span hidden>todos</span>' . "</td>";
+                                echo "<td>" . $user_data['descsbpm'] . '<span hidden>todos</span>' . "</td>";
+                                echo "<td>" . $user_data['modelo'] . '<span hidden>todos</span>' . "</td>";
+                                echo "<td>" . $user_data['numserie'] . '<span hidden>todos</span>' . "</td>";
+                                echo "<td>" . $user_data['localizacao'] . '<span hidden>todos</span>' . "</td>";
+                                echo "<td>" . $user_data['servidor'] . '<span hidden>todos</span>' . "</td>";
+                                echo "<td>" . $user_data['numprocesso'] . '<span hidden>todos</span>' . "</td>";
+                                echo "<td>" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
+                                echo "<td>" . $user_data['statusitem'] . '<span hidden>todos</span>' . "</td>";
+                                echo "<td>" . "<a href='movimentacao.php?id=$user_data[idbem]'><img src='./images/icon-seta.png' alt='Seta'></a>" . "<a href='alteracaodebens.php?id=$user_data[idbem]'><img src='./images/icon-lapis.png' alt='Seta'></a>" . '<span hidden>todos</span>' . "</td>";
+                                echo "</tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
             <div class='pagination-controls'>
-                
-                <input type="button" onclick="exportarArquivo(  'listaremovimentar')" value="Exportar" class="btn btn-primary" style="margin-right: 1010px;">
-                
+
+                <input type="button" onclick="exportarArquivo('listaremovimentar')" value="Exportar" class="btn btn-outline-primary" style="margin-right: 940px; height:40px">
+
                 <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
                     <select id='recordsPerPage' onchange="updateLimit()">
@@ -304,11 +254,11 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                 $opacidade_direita = ($page == $page_number) ? '0.5' : '1';
                 $disabled_esquerda = ($opacidade_esquerda == '0.5') ? 'disabled' : '';
                 $disabled_direita = ($opacidade_direita == '0.5') ? 'disabled' : '';
-                
+
                 echo "<a href='?page=" . ($page - 1) . '&limit=' . $limit . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
                 echo "<a href='?page=" . ($page + 1) . '&limit=' . $limit . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
-                
-                
+
+
                 ?>
             </div>
             <div class="col-2">
@@ -324,7 +274,6 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Inscrições');
 
         var data_atual = new Date();
-
         var dia = data_atual.getDate();
         var mes = data_atual.getMonth() + 1;
         var ano = data_atual.getFullYear();

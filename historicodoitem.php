@@ -40,9 +40,6 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
                 <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
                 <a href="#" class="text-primary ms-1 carrossel-text">Movimentações do Item</a>
             </div>
-            <!-- <div class="button-dark">
-                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
-            </div> -->
         </div>
         <h2 class="mb-1 mt-4">Movimentações do Item</h2>
         <div class="timeline">

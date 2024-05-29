@@ -121,11 +121,6 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
         width: 25px;
         height: 25px;
     }
-
-    /* .overflow {
-        max-height: 870px;
-        overflow: auto;
-    } */
 </style>
 
 <body>
@@ -139,9 +134,6 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
                 <a href="./home.php" class="text-primary ms-1 carrossel-text">Home</a>
             </div>
-            <!-- <div class="button-dark">
-                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
-            </div> -->
         </div>
         <h2 class="mb-3 mt-4">Últimas Movimentações</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">

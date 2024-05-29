@@ -106,11 +106,6 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
         width: 25px;
         height: 25px;
     }
-
-    /* .overflow {
-        max-height: 870px;
-        overflow: auto;
-    } */
 </style>
 
 <body>
@@ -124,9 +119,6 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
                 <a href="./unidades.php" class="text-primary ms-1 carrossel-text">Usuários</a>
             </div>
-            <!-- <div class="button-dark">
-                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
-            </div> -->
         </div>
         <h2 class="mb-3 mt-4">Unidades</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
@@ -152,7 +144,9 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                         <p class="mb-1 text-muted">Sigla:</p>
                         <select id="permissaoSelect" class="form-select" aria-label="Default select example" name="sigla">
                             <option value="<?php echo $_GET['sigla'] == '' ? '' : $_GET['sigla'] ?>" hidden><?php echo $_GET['sigla'] == '' ? 'Selecionar' : $_GET['sigla'] ?></option>
-                        <?php include 'query-unidades.php'?>
+                            <?php 
+                            include 'query-unidades.php'
+                            ?>
                         </select>
                     </div>
                     <div class="col-6 mb-2">

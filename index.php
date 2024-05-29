@@ -95,10 +95,26 @@ if (isset($_POST['submit'])) {
     <link rel="shortcut icon" href="./images/logo-cdsp.png" type="image/x-icon">
     <link rel="stylesheet" href="./css/login.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <style>
     .swal2-title {
     color: #fff;
+}
+
+#btn-senha {
+    position: absolute;
+    right: 10px;
+    font-size: 19px;
+    color: #636B74;
+    cursor: pointer;
+    padding: 3px 5px;
+    border-radius: 5px;
+}
+
+#btn-senha:hover {
+    background-color: #F0F4F8;
+    color: #000;
 }
 </style>
 <body>
@@ -113,6 +129,7 @@ if (isset($_POST['submit'])) {
                 <div class="input-box">
                     <img src="./images/chave.png" class="input-img" id="chave" alt="Chave">
                     <input type="password" name="senha" id="senha" class="text-pass" placeholder="Senha de rede" required>
+                    <i class="bi bi-eye-fill" id="btn-senha" onclick="mostrarSenha()"></i>
                 </div>
                 <input type="submit" name="submit" class="btn-login" value="Entrar" id="button">
             </form>
@@ -228,6 +245,19 @@ if (isset($_POST['submit'])) {
             history.pushState({}, '', 'index.php');
         }
     })
+    
+    function mostrarSenha() {
+    var inputPass = document.getElementById('senha');
+    var btnShowPass = document.getElementById('btn-senha');
+
+    if (inputPass.type === 'password') {
+        inputPass.setAttribute('type', 'text');
+        btnShowPass.classList.replace('bi-eye-fill', 'bi-eye-slash-fill');
+    } else {
+        inputPass.setAttribute('type', 'password');
+        btnShowPass.classList.replace('bi-eye-slash-fill', 'bi-eye-fill');
+    }
+}
 </script>
 
 </html>

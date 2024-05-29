@@ -120,9 +120,6 @@ if (isset($_POST['submit'])) {
                 <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
                 <a href="./cadastrodeusuario.php" class="text-primary ms-1 carrossel-text">Cadastro de Usuários</a>
             </div>
-            <!-- <div class="button-dark">
-                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
-            </div> -->
         </div>
         <h3 class="mb-4 mt-4">Cadastro de Usuários</h3>
         <form method="POST" action="#">

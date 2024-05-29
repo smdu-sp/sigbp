@@ -43,8 +43,8 @@ include_once('header.php');
     <?php
     include_once('menu.php');
     ?>
-    <div class="p-4 p-md-4 pt-3 conteudo">
-        <div class="carrossel-box mb-2">
+    <div class="p-4 p-md-4 pt-2 conteudo">
+        <div class="carrossel-box mb-4">
             <div class="carrossel">
                 <a href="./home.php" class="mb-3 me-1">
                     <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
@@ -52,10 +52,8 @@ include_once('header.php');
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
                 <a href="./dashboard.php" class="text-primary ms-1 carrossel-text">Dashboard</a></li>
             </div>
-            <!-- <div class="button-dark">
-                <a href="#"><img src="./images/icon-sun.png" class="icon-sun" alt="#"></a>
-            </div> -->
         </div>
+        <h2 class="mb-2">Dashboard</h2>
         <div class="container d-flex justify-content-center">
             <div class="card mb-3 me-3 rounded-0 shadow p-3 mb-5 bg-white rounded border-0">
                 <form action="resultadodash.php">
