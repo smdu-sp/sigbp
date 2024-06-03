@@ -5,8 +5,6 @@ include_once('componentes/verificacao.php');
 $permissao = $_SESSION['Perm'];
 
 ?>
-
-
 <body>
     <div class="conteudo_menu z-3">
         <nav class="menu-logout">

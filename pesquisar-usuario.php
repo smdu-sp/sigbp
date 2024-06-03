@@ -5,6 +5,22 @@ include_once('header.php');
 include_once('componentes/verificacao.php');
 include_once('componentes/permissao.php');
 
+if (isset($_GET['nome']) && isset($_GET['inativo'])) {
+    if (isset($_GET['limit'])) {
+        $limit = $_GET['limit'];
+    } else {
+        $limit = 10;
+    }
+    $nome = $_GET['nome'];
+    $inativo = $_GET['inativo'];
+
+    $result = mysqli_query($conexao, "UPDATE usuarios SET statususer = '$inativo' WHERE nome = '$nome'");
+
+    header("Location: pesquisar-usuario.php?limit=" . $limit . "&status=Ativo&permissao=4&unidade=&pesquisar=");
+} else {
+    $limit = 10;
+}
+
 $condicoes = [];
 
 if (isset($_GET['unidade']) && $_GET['unidade'] !== '') {
@@ -17,7 +33,7 @@ if (isset($_GET['pesquisar']) && $_GET['pesquisar'] !== '') {
 }
 
 if (isset($_GET['status']) && $_GET['status'] !== '') {
-    if($_GET['status'] != 'Todos') {
+    if ($_GET['status'] != 'Todos') {
         $condicoes[] = "statususer = '{$_GET['status']}'";
     }
 }
@@ -56,6 +72,78 @@ $unidade = isset($_GET['unidade']) ? $_GET['unidade'] : '';
 $status = isset($_GET['status']) ? $_GET['status'] : '';
 ?>
 <style>
+    .container-msg-inativo {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10000;
+    }
+
+    .msg-inativo {
+        width: 340px;
+        height: 170px;
+        background-color: #104EEF;
+        color: #fff;
+        border-radius: 8px;
+        padding: 20px 35px 20px 20px;
+        margin-top: 20px;
+        animation: msg-inativo 1s ease;
+    }
+
+    .msg-trocar {
+        display: none;
+    }
+
+    @keyframes msg-inativo {
+        from {
+            transform: translateY(-100%);
+        }
+
+        to {
+            transform: translateY(0%);
+        }
+    }
+
+    .msg-inativo>h3 {
+        font-size: 20px;
+        font-family: 'Lato', sans-serif;
+        font-weight: bolder;
+    }
+
+    .msg-inativo>p {
+        font-size: 18px;
+        font-family: 'Lato', sans-serif;
+        font-weight: 500;
+        margin: 10px 0px 18px;
+    }
+
+    .btn-msg-inativo {
+        font-size: 16px;
+        font-weight: bold;
+        font-family: 'Lato', sans-serif;
+        padding: 8px 16px;
+        color: white;
+        background-color: #104EEF;
+        border: 1px solid #4B7AF3;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-msg-inativo:hover {
+        text-decoration: none;
+    }
+
+    .btn-msg-inativo.inativo {
+        background-color: #fff;
+        color: #104EEF;
+        margin-right: 5px;
+        border: none;
+    }
+
     @media (max-width: 1600px) {
         .conteudo {
             margin-left: 75px;
@@ -106,13 +194,22 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
         width: 25px;
         height: 25px;
     }
-
 </style>
 
 <body>
     <?php
     include_once('menu.php');
     ?>
+    <div class="container-msg-inativo">
+        <div class="msg-inativo msg-trocar" id="box-inativo">
+            <h3>Você está trocando o usuário para inativo.</h3>
+            <p>Tem certeza de que deseja trocar?</p>
+            <div class="box-msg-inativo">
+                <a onclick="trocar()" href="#" class="btn-msg-inativo inativo">Sim</a>
+                <a onclick="fecharMsgInativo()" class="btn-msg-inativo">Não</a>
+            </div>
+        </div>
+    </div>
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel-box mb-4">
             <div class="carrossel">
@@ -155,7 +252,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                         <p class="mb-1 text-muted">Unidade:</p>
                         <select id="unidadeSelect" class="form-select" name="unidade">
                             <option value="<?php echo $_GET['unidade'] == '' ? '' : $_GET['unidade'] ?>" hidden><?php echo $_GET['unidade'] == '' ? 'Selecionar' : $_GET['unidade'] ?></option>
-                            <?php 
+                            <?php
                             include 'query-unidades.php';
                             ?>
                         </select>
@@ -179,7 +276,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                         </tr>
                     </thead>
                     <tbody id='myTable'>
-                    <?php
+                        <?php
                         while ($user_data = $sql_usuarios_query_exec->fetch_assoc()) {
                             echo "<tr>";
                             echo "<td hidden>" . $user_data['id'] . "</td>";
@@ -202,7 +299,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
 
                             echo "</td>";
                             echo "<td>";
-                            echo "<a class='x-image' id='tooltip2' href='#'><span id='tooltipText2'>Excluir</span><img class='img-usuario' src='./images/icons-x.png' alt='x'></a>";
+                            echo "<a class='x-image' id='tooltip2' onclick='mostrarMsgInativo(\"{$user_data['nome']}\")'><span id='tooltipText2'>Excluir</span><img class='img-usuario' src='./images/icons-x.png' alt='x'></a>";
                             echo "</td>";
                             echo "</tr>";
                         } ?>
@@ -246,6 +343,36 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     <div class="hide" id="modal"></div>
 </body>
 <script>
+     function mostrarMsgInativo(nome) {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        var paramValue = urlParams.get('limit');
+        if(paramValue == null) {
+            paramValue = '10';
+        } 
+        let newUrl = 'usuarios.php?nome=' + nome + '&limit=' + paramValue;
+        window.history.pushState({
+            path: newUrl
+        }, '', newUrl);
+        let msgSair = document.getElementById("box-inativo");
+        msgSair.style.display = "block";
+    }
+
+    function fecharMsgInativo() {
+        let msgSair = document.getElementById("box-inativo");
+        msgSair.style.display = "none";
+    }
+
+    function trocar() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const paramValue = urlParams.get('nome');
+        window.location.href = '?nome=' + paramValue + '&inativo=' + 'Inativo';
+
+        let msgSair = document.getElementById("box-inativo");
+        msgSair.style.display = "none";
+    }
+
     function limparInput() {
         window.location.href = 'usuarios.php';
     }
@@ -257,7 +384,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     function updateLimit() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const newLimit = document.getElementById('recordsPerPage').value; 
+        const newLimit = document.getElementById('recordsPerPage').value;
         const status = urlParams.get('status');
         const permissao = urlParams.get('permissao');
         const unidade = urlParams.get('unidade');

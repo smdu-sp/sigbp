@@ -108,15 +108,14 @@ if (isset($_POST['submit'])) {
                         </div>
                 </form>
                 <label for="card" class="form-label text-muted mb-2">Todos os tipos de bens:</label>
-                <div class="card lista-itens">
+                <div class="card lista-itens mb-2">
                     <ul class="list-group list-group-flush overflow-auto" id="ulItens" style="height: 500px;">
                         <?php
-                        include 'query-tipos-dashboard.php';
+                        include 'query-tipos-bens.php';
                         ?>
                     </ul>
                 </div>
             </div>
-
         </div>
     </div>
     </div>

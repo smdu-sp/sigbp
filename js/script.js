@@ -47,7 +47,6 @@ for (let i = 0; i < campos.length; i++) {
 
 var arrayNumSerie = [];
 var arrayDescBem = [];
-
 // MOSTRAR ITENS ADICIONADOS NO TERMO
 function adicionarItem() {
   let nPatriSerie = document.getElementById("numPatriSerie").value;

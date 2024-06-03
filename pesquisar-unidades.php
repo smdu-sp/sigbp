@@ -5,6 +5,21 @@ include_once('header.php');
 include_once('componentes/verificacao.php');
 include_once('componentes/permissao.php');
 
+if (isset($_GET['nome']) && isset($_GET['inativo'])) {
+    if (isset($_GET['limit'])) {
+        $limit = $_GET['limit'];
+    } else {
+        $limit = 10;
+    }
+
+    $nome = $_GET['nome'];
+    $inativo = $_GET['inativo'];
+
+    $result = mysqli_query($conexao, "UPDATE unidades SET statusunidade = '$inativo' WHERE unidades = '$nome'");
+
+    header("Location: pesquisar-unidades.php?limit=" . $limit . "&status=Ativo&permissao=4&unidade=&pesquisar=");
+}
+
 $condicoes = [];
 
 if (isset($_GET['nome']) && $_GET['nome'] !== '') {
@@ -56,6 +71,78 @@ $unidade = isset($_GET['unidade']) ? $_GET['unidade'] : '';
 $status = isset($_GET['status']) ? $_GET['status'] : '';
 ?>
 <style>
+    .container-msg-inativo {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10000;
+    }
+
+    .msg-inativo {
+        width: 340px;
+        height: 170px;
+        background-color: #104EEF;
+        color: #fff;
+        border-radius: 8px;
+        padding: 20px 35px 20px 20px;
+        margin-top: 20px;
+        animation: msg-inativo 1s ease;
+    }
+
+    .msg-trocar {
+        display: none;
+    }
+
+    @keyframes msg-inativo {
+        from {
+            transform: translateY(-100%);
+        }
+
+        to {
+            transform: translateY(0%);
+        }
+    }
+
+    .msg-inativo>h3 {
+        font-size: 20px;
+        font-family: 'Lato', sans-serif;
+        font-weight: bolder;
+    }
+
+    .msg-inativo>p {
+        font-size: 18px;
+        font-family: 'Lato', sans-serif;
+        font-weight: 500;
+        margin: 10px 0px 18px;
+    }
+
+    .btn-msg-inativo {
+        font-size: 16px;
+        font-weight: bold;
+        font-family: 'Lato', sans-serif;
+        padding: 8px 16px;
+        color: white;
+        background-color: #104EEF;
+        border: 1px solid #4B7AF3;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-msg-inativo:hover {
+        text-decoration: none;
+    }
+
+    .btn-msg-inativo.inativo {
+        background-color: #fff;
+        color: #104EEF;
+        margin-right: 5px;
+        border: none;
+    }
+
     @media (max-width: 1600px) {
         .conteudo {
             margin-left: 75px;
@@ -112,6 +199,16 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     <?php
     include_once('menu.php');
     ?>
+    <div class="container-msg-inativo">
+        <div class="msg-inativo msg-trocar" id="box-inativo">
+            <h3>Você está trocando o usuário para inativo.</h3>
+            <p>Tem certeza de que deseja trocar?</p>
+            <div class="box-msg-inativo">
+                <a onclick="trocar()" href="#" class="btn-msg-inativo inativo">Sim</a>
+                <a onclick="fecharMsgInativo()" class="btn-msg-inativo">Não</a>
+            </div>
+        </div>
+    </div>
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel-box mb-4">
             <div class="carrossel">
@@ -144,7 +241,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                         <p class="mb-1 text-muted">Sigla:</p>
                         <select id="permissaoSelect" class="form-select" aria-label="Default select example" name="sigla">
                             <option value="<?php echo $_GET['sigla'] == '' ? '' : $_GET['sigla'] ?>" hidden><?php echo $_GET['sigla'] == '' ? 'Selecionar' : $_GET['sigla'] ?></option>
-                            <?php 
+                            <?php
                             include 'query-unidades.php'
                             ?>
                         </select>
@@ -163,6 +260,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                             <th>Sigla</th>
                             <th>Codigo</th>
                             <th>Status</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id='myTable'>
@@ -173,6 +271,9 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                             echo "<td style=' cursor: pointer; background-color:hover: grey;' onclick=location.href='cadastrodeunidades.php?id=$user_data[id]'>" . $user_data['sigla'] . "</td>";
                             echo "<td style=' cursor: pointer; background-color:hover: grey;' onclick=location.href='cadastrodeunidades.php?id=$user_data[id]'>" . $user_data['codigo'] . "</td>";
                             echo "<td style='cursor: pointer; background-color:hover: grey;' onclick=location.href='cadastrodeunidades.php?id=$user_data[id]'>" . $user_data['statusunidade'] . "</td>";
+                            echo "<td>";
+                            echo "<a class='x-image' id='tooltip2' onclick='mostrarMsgInativo(\"{$user_data['unidades']}\")'><span id='tooltipText2'>Excluir</span><img class='img-usuario' src='./images/icons-x.png' alt='x'></a>";
+                            echo "</td>";
                             echo "</tr>";
                         }
                         ?>
@@ -199,7 +300,6 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                 $pesquisar = $_GET['pesquisar'];
                 $sigla = $_GET['sigla'];
 
-
                 echo "<a href='?page=" . ($page - 1) . "&limit=" . $limit . "&status=" . $status . "&sigla=" . $sigla  . "&pesquisar=" . $pesquisar . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
                 echo "<a href='?page=" . ($page + 1) . "&limit=" . $limit . "&status=" . $status . "&sigla=" . $sigla  . "&pesquisar=" . $pesquisar . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
 
@@ -215,6 +315,36 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     <div class="hide" id="modal"></div>
 </body>
 <script>
+    function mostrarMsgInativo(nome) {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        var paramValue = urlParams.get('limit');
+        if(paramValue == null) {
+            paramValue = '10';
+        } 
+        let newUrl = 'unidades.php?nome=' + nome + '&limit=' + paramValue;
+        window.history.pushState({
+            path: newUrl
+        }, '', newUrl);
+        let msgSair = document.getElementById("box-inativo");
+        msgSair.style.display = "block";
+    }
+
+    function fecharMsgInativo() {
+        let msgSair = document.getElementById("box-inativo");
+        msgSair.style.display = "none";
+    }
+
+    function trocar() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const paramValue = urlParams.get('nome');
+        window.location.href = '?nome=' + paramValue + '&inativo=' + 'Inativo';
+
+        let msgSair = document.getElementById("box-inativo");
+        msgSair.style.display = "none";
+    }
+
     function limparInput() {
         window.location.href = 'unidades.php';
     }
