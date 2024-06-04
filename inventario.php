@@ -4,11 +4,39 @@ include_once('conexoes/config.php');
 include_once('header.php');
 include_once('componentes/verificacao.php');
 
-$sql_home_count_query = "SELECT COUNT(*) as c FROM item, transferencia WHERE item.idbem = transferencia.iditem;";
-$sql_home_count_query_exec = $conexao->query($sql_home_count_query) or die($conexao->error);
+$ano = isset($_GET['ano']) ? $_GET['ano'] : 2024;
 
-$sql_home_count = $sql_home_count_query_exec->fetch_assoc();
-$home_count = $sql_home_count['c'];
+$sql_inventario_count_query = "WITH ranked_transferencia AS (
+    SELECT 
+        item.patrimonio, 
+        item.tipo, 
+        item.marca, 
+        item.modelo, 
+        item.nome, 
+        transferencia.cimbpm, 
+        transferencia.localnovo, 
+        transferencia.servidoratual, 
+        transferencia.usuario, 
+        transferencia.datatransf,
+        ROW_NUMBER() OVER (PARTITION BY item.patrimonio ORDER BY transferencia.datatransf DESC) as rn
+    FROM 
+        item
+    JOIN 
+        transferencia ON item.idbem = transferencia.iditem
+    WHERE 
+    YEAR(transferencia.datatransf) = '$ano'
+)
+SELECT 
+    COUNT(*) as c
+FROM 
+    ranked_transferencia
+WHERE 
+    rn = 1
+";
+$sql_inventario_count_query_exec = $conexao->query($sql_inventario_count_query) or die($conexao->error);
+
+$sql_inventario_count = $sql_inventario_count_query_exec->fetch_assoc();
+$inventario_count = $sql_inventario_count['c'];
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
@@ -18,11 +46,45 @@ if (isset($_GET['limit'])) {
     $limit = 7;
 }
 $offset = ($page - 1) * $limit;
-$page_number = ceil($home_count / $limit);
-$busca = "SELECT item.patrimonio, item.tipo, item.marca, item.modelo, item.nome, transferencia.cimbpm, transferencia.localnovo, transferencia.servidoratual, transferencia.usuario, transferencia.datatransf FROM item, transferencia WHERE item.idbem = transferencia.iditem ORDER BY transferencia.datatransf DESC";
-
-$sql_home_query = "$busca LIMIT {$limit} OFFSET {$offset}";
-$sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
+$page_number = ceil($inventario_count / $limit);
+$busca = "WITH ranked_transferencia AS (
+    SELECT 
+        item.patrimonio, 
+        item.tipo, 
+        item.marca, 
+        item.modelo, 
+        item.nome, 
+        transferencia.cimbpm, 
+        transferencia.localnovo, 
+        transferencia.servidoratual, 
+        transferencia.usuario, 
+        transferencia.datatransf,
+        ROW_NUMBER() OVER (PARTITION BY item.patrimonio ORDER BY transferencia.datatransf DESC) as rn
+    FROM 
+        item
+    JOIN 
+        transferencia ON item.idbem = transferencia.iditem
+    WHERE 
+        YEAR(transferencia.datatransf) = '$ano'
+)
+SELECT 
+    patrimonio, 
+    tipo, 
+    marca, 
+    modelo, 
+    nome, 
+    cimbpm, 
+    localnovo, 
+    servidoratual, 
+    usuario, 
+    datatransf
+FROM 
+    ranked_transferencia
+WHERE 
+    rn = 1
+";
+$sql_inventario_query = "$busca LIMIT {$limit} OFFSET {$offset}";
+$sql_inventario_query_exec = $conexao->query($sql_inventario_query) or die($conexao->error);
 ?>
 <style>
     @media (max-width: 1600px) {
@@ -91,18 +153,18 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
     <?php
     include_once('menu.php');
     ?>
-    <div class="p-4 p-md-4 pt-3 principal-home conteudo">
+    <div class="p-4 p-md-4 pt-3 principal-inventario conteudo">
         <div class="carrossel-box mb-4">
             <div class="carrossel">
-                <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
+                <a href="./inventario.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-                <a href="./home.php" class="text-primary ms-1 carrossel-text">Home</a>
+                <a href="./inventario.php" class="text-primary ms-1 carrossel-text">Inventário</a>
             </div>
         </div>
-        <h2 class="mb-3 mt-4">Últimas Movimentações</h2>
+        <h2 class="mb-3 mt-4">Inventário</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
             <div class="d-flex justify-content-center flex-column" style="width: 100%;">
-                <form class="d-flex justify-content-end align-items-end" action="pesquisar-home.php" method="GET" style="width: 100%;">
+                <form class="d-flex justify-content-end align-items-end" action="pesquisar-inventario.php" method="GET" style="width: 100%;">
                     <input type="hidden" name="limit" value="<?php echo $limit; ?>">
                     <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar" style="cursor: pointer;">
                         <img src="./images/icon-recarregar.png" alt="#" id='img-recarregar'>
@@ -113,16 +175,15 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
                     <div class="col-2 mb-2">
                         <p class="mb-1 text-muted">Ano:</p>
                         <select id="unidadeSelect" class="form-select" name="ano">
-                            <option value="" hidden>Selecionar</option>
+                            <option value="2024" selected>2024</option>
                             <option value="2023">2023</option>
-                            <option value="2024">2024</option>
                         </select>
                     </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
                         <select id="unidadeSelect" class="form-select" name="unidade">
                             <option value="" hidden="hidden">Selecionar</option>
-                            <?php include 'query-unidades.php'?>
+                            <?php include 'query-unidades.php' ?>
                         </select>
                     </div>
                     <div class="col-6 mb-2">
@@ -147,21 +208,21 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
                     </thead>
                     <tbody id='myTable'>
                         <?php
-                        while ($user_data = $sql_home_query_exec->fetch_assoc()) {
+                        while ($user_data = $sql_inventario_query_exec->fetch_assoc()) {
                             $marca = $user_data['marca'];
                             $modelo = $user_data['modelo'];
                             $tipo = $user_data['tipo'];
                             $patrimonio = $user_data['patrimonio'];
                             $desc = "$tipo $marca Modelo: $modelo";
                             echo "<tr>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['patrimonio'] . "<span hidden>todos</span></td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $desc . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['localnovo'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['servidoratual'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['datatransf'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td>" . $user_data['patrimonio'] . "<span hidden>todos</span></td>";
+                            echo "<td>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td>" . $desc . '<span hidden>todos</span>' . "</td>";
+                            echo "<td>" . $user_data['localnovo'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td>" . $user_data['servidoratual'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td>" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td>" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td>" . $user_data['datatransf'] . '<span hidden>todos</span>' . "</td>";
                             echo "</tr>";
                         } ?>
                     </tbody>
@@ -194,28 +255,27 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
     </div>
 </body>
 <script>
-function limparInput() {
-    window.location.href = 'home.php';
-}
+    function limparInput() {
+        window.location.href = 'inventario.php';
+    }
 
-function updateLimit() {
-    var selectElement = document.getElementById('recordsPerPage');
-    var selectedValue = selectElement.value;
-    window.location.href = '?limit=' + selectedValue;
-}
+    function updateLimit() {
+        var selectElement = document.getElementById('recordsPerPage');
+        var selectedValue = selectElement.value;
+        window.location.href = '?limit=' + selectedValue;
+    }
 
-function recarregar() {
-    window.location.reload(true);
-}
+    function recarregar() {
+        window.location.reload(true);
+    }
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {
-        button.addEventListener('click', function(event) {
-            event.preventDefault();
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+            });
         });
     });
-});
-
 </script>
 
 </html>

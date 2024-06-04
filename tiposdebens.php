@@ -5,26 +5,35 @@ include_once('header.php');
 include_once('componentes/verificacao.php');
 include_once('componentes/permissao.php');
 
-
+$status = isset($_GET['statustipos']) ? $_GET['statustipos'] : 'Ativo';
 
 if (isset($_POST['submit'])) {
     $tipo = $_POST['tipos'];
-    
+
     if ($tipo == '') {
         header("Location: tiposdebens.php?tipo=campoVazio");
     } else {
         $query = "SELECT COUNT(*) FROM tipos WHERE tipo = '$tipo'";
         $result = mysqli_query($conexao, $query);
         $row = mysqli_fetch_array($result);
-        
+
         if ($row[0] > 0) {
             header("Location: tiposdebens.php?tipo=jaCadastrado");
         } else {
-            $result = mysqli_query($conexao, "INSERT INTO tipos(tipo) VALUES ('$tipo')");
+            $result = mysqli_query($conexao, "INSERT INTO tipos(tipo, statustipo) VALUES ('$tipo', 'Ativo')");
 
             header("Location: tiposdebens.php?tipo=cadastrado");
         }
     }
+}
+
+if (isset($_POST['update'])) {
+    $tipo = $_POST['tipos'];
+    if($tipo )
+
+    $result = mysqli_query($conexao, "UPDATE tipos SET tipo = '$tipo', statustipo = 'Inativo' WHERE tipo='$tipo'");
+
+    header("Location: tiposdebens.php?tipo=alterado");
 }
 
 
@@ -80,6 +89,10 @@ if (isset($_POST['submit'])) {
         width: 25px;
         height: 25px;
     }
+
+    #btnDesCadTipos {
+        display: none;
+    }
 </style>
 
 <body>
@@ -104,10 +117,17 @@ if (isset($_POST['submit'])) {
                         <label for="card" class="form-label mt-1 text-primary mb-2">Cadastrar um Tipo:</label>
                         <input class="form-control mb-2" type="text" id="textBusca2" name="tipos">
                         <div class="d-flex justify-content-end mt-1 mb-1" id="bnt ">
+                            <input type="submit" class="btn btn-danger mr-1" id="btnDesCadTipos" name="update" value="Desativar" style="width: 90px;"></input>
                             <input type="submit" class="btn btn-primary" id="btnCadTipos" name="submit" value="Cadastrar"></input>
                         </div>
                 </form>
-                <label for="card" class="form-label text-muted mb-2">Todos os tipos de bens:</label>
+                <div class="d-flex align-items-baseline">
+                    <label for="card" class="form-label text-primary mb-2 mr-2">Todos os tipos de bens ativos:</label>
+                    <select class="form-select" name="tipo" id="AITipos" required style="width: 90px;border: none;outline: none;">
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo">Inativo</option>
+                    </select>
+                </div>
                 <div class="card lista-itens mb-2">
                     <ul class="list-group list-group-flush overflow-auto" id="ulItens" style="height: 500px;">
                         <?php
@@ -121,7 +141,39 @@ if (isset($_POST['submit'])) {
     </div>
     <div class="hide" id="modal"></div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+    function updateURLParameter() {
+        const select = document.getElementById('AITipos');
+        const selectedValue = select.value;
+        const url = new URL(window.location);
+        url.searchParams.set('statustipos', selectedValue);
+        history.pushState(null, '', url.toString());
+
+        $.ajax({
+            url: 'query-tipos-bens.php',
+            type: 'GET',
+            data: { statustipos: selectedValue },
+            success: function(response) {
+                $('#ulItens').html(response);
+            },
+            error: function(xhr) {
+                console.log('Erro ao buscar os dados: ' + xhr.status + ' ' + xhr.statusText);
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const select = document.getElementById('AITipos');
+        select.addEventListener('change', updateURLParameter);
+    });
+
+    function botaoClicado(item) {
+        document.getElementById('textBusca2').value = item;
+        var button = document.getElementById('btnDesCadTipos');
+        button.style.display = 'block';
+    }
+
     function alert(num) {
         if (num == 1) {
             const Toast = Swal.mixin({
@@ -163,6 +215,27 @@ if (isset($_POST['submit'])) {
                 background: "#104EEF",
                 iconColor: '#ffffff'
             });
+        } else if (num == 2) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Tipo cadastrado com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
+            });
         }
     }
 
@@ -180,6 +253,10 @@ if (isset($_POST['submit'])) {
             history.pushState({}, '', 'tiposdebens.php');
         } else if (data == 'campoVazio') {
             alert(3);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'tiposdebens.php');
+        } else if (data == 'alterado') {
+            alert(4);
             window.history.replaceState({}, document.title, window.location.pathname);
             history.pushState({}, '', 'tiposdebens.php');
         }

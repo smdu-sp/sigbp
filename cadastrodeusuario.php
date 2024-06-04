@@ -192,6 +192,42 @@ if (isset($_POST['submit'])) {
         url.searchParams.set('usuario', usuario);
         window.location.href = url;
     }
+
+    function alert(num) {
+        console.log(num);
+        if (num == 1) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "warning",
+                title: "Usuário já cadastrado!",
+                background: "#104EEF",
+                iconColor: '#ffffff'
+            });
+        }
+    }
+
+    window.addEventListener('load', function() {
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var data = url.searchParams.get("notificacao");
+        console.log(data);
+        if (data == 'jaCadastrado') {
+            console.log('teste');
+            alert(1);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'cadastrodeusuario.php');
+        } 
+    })
 </script>
 
 </html>

@@ -41,11 +41,41 @@ if (!empty($condicoes)) {
     $where = '';
 }
 
-$busca = "SELECT item.patrimonio, item.tipo, item.marca, item.modelo, item.nome, transferencia.cimbpm, transferencia.localnovo, transferencia.servidoratual, transferencia.usuario, transferencia.datatransf 
-FROM item
-INNER JOIN transferencia ON item.idbem = transferencia.iditem
-$where
-ORDER BY transferencia.datatransf DESC";
+$busca = "WITH ranked_transferencia AS (
+    SELECT 
+        item.patrimonio, 
+        item.tipo, 
+        item.marca, 
+        item.modelo, 
+        item.nome, 
+        transferencia.cimbpm, 
+        transferencia.localnovo, 
+        transferencia.servidoratual, 
+        transferencia.usuario, 
+        transferencia.datatransf,
+        ROW_NUMBER() OVER (PARTITION BY item.patrimonio ORDER BY transferencia.datatransf DESC) as rn
+    FROM 
+        item
+    JOIN 
+        transferencia ON item.idbem = transferencia.iditem
+    $where
+)
+SELECT 
+    patrimonio, 
+    tipo, 
+    marca, 
+    modelo, 
+    nome, 
+    cimbpm, 
+    localnovo, 
+    servidoratual, 
+    usuario, 
+    datatransf
+FROM 
+    ranked_transferencia
+WHERE 
+    rn = 1
+";
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 if (isset($_GET['limit'])) {
@@ -58,7 +88,32 @@ $offset = ($page - 1) * $limit;
 $sql_home_query = "$busca LIMIT {$limit} OFFSET {$offset}";
 $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
 
-$sql_home_count_query = "SELECT COUNT(*) as c FROM item INNER JOIN transferencia ON item.idbem = transferencia.iditem $where";
+$sql_home_count_query = "WITH ranked_transferencia AS (
+    SELECT 
+        item.patrimonio, 
+        item.tipo, 
+        item.marca, 
+        item.modelo, 
+        item.nome, 
+        transferencia.cimbpm, 
+        transferencia.localnovo, 
+        transferencia.servidoratual, 
+        transferencia.usuario, 
+        transferencia.datatransf,
+        ROW_NUMBER() OVER (PARTITION BY item.patrimonio ORDER BY transferencia.datatransf DESC) as rn
+    FROM 
+        item
+    JOIN 
+        transferencia ON item.idbem = transferencia.iditem
+    $where
+)
+SELECT 
+    COUNT(*) as c
+FROM 
+    ranked_transferencia
+WHERE 
+    rn = 1
+";
 $sql_home_count_query_exec = $conexao->query($sql_home_count_query) or die($conexao->error);
 
 $sql_home_count = $sql_home_count_query_exec->fetch_assoc();
@@ -130,12 +185,12 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel-box mb-4">
             <div class="carrossel">
-                <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
+                <a href="./inventario.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-                <a href="./home.php" class="text-primary ms-1 carrossel-text">Home</a>
+                <a href="./inventario.php" class="text-primary ms-1 carrossel-text">Inventário</a>
             </div>
         </div>
-        <h2 class="mb-3 mt-4">Últimas Movimentações</h2>
+        <h2 class="mb-3 mt-4">Inventário</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
             <div class="d-flex justify-content-center flex-column" style="width: 100%;">
                 <form class="d-flex justify-content-end align-items-end" action="pesquisar-home.php" method="GET" style="width: 100%;">
@@ -186,17 +241,16 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                             $marca = $user_data['marca'];
                             $modelo = $user_data['modelo'];
                             $tipo = $user_data['tipo'];
-                            $patrimonio = $user_data['patrimonio'];
                             $desc = "$tipo $marca Modelo: $modelo";
                             echo "<tr>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['patrimonio'] . "<span hidden>todos</span></td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $desc . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['localnovo'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['servidoratual'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['datatransf'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['patrimonio']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['nome']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$desc}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['localnovo']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['servidoratual']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['usuario']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['cimbpm']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['datatransf']}<span hidden>todos</span></td>";
                             echo "</tr>";
                         } ?>
                     </tbody>
@@ -233,7 +287,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
 </body>
 <script>
     function limparInput() {
-        window.location.href = 'home.php';
+        window.location.href = 'inventario.php';
     }
 
     function recarregar() {
