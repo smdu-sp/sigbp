@@ -6,6 +6,49 @@ include_once('componentes/verificacao.php');
 
 $ano = isset($_GET['ano']) ? $_GET['ano'] : 2024;
 
+$result = $conexao->query("WITH ranked_transferencia AS (
+    SELECT 
+        item.patrimonio AS `Patrimônio`, 
+        item.nome AS `Nome`, 
+        CONCAT(item.tipo, ' ', item.marca, ' Modelo: ', item.modelo) AS `Descricao do Bem`, 
+        transferencia.localnovo AS `Localização`, 
+        transferencia.servidoratual AS `Servidor`, 
+        transferencia.usuario AS `Responsável`, 
+        transferencia.cimbpm AS `CIMBPM`, 
+        transferencia.datatransf AS `DataTransf`,
+        ROW_NUMBER() OVER (PARTITION BY item.patrimonio ORDER BY transferencia.datatransf DESC) AS rn
+    FROM 
+        item
+    JOIN 
+        transferencia ON item.idbem = transferencia.iditem
+    WHERE 
+        YEAR(transferencia.datatransf) = '$ano'
+)
+SELECT 
+    `Patrimônio`, 
+    `Nome`, 
+    `Descricao do Bem`, 
+    `Localização`, 
+    `Servidor`, 
+    `Responsável`, 
+    `CIMBPM`, 
+    `DataTransf`
+FROM 
+    ranked_transferencia
+WHERE 
+    rn = 1
+ORDER BY 
+    `DataTransf` DESC
+");
+
+$registros = array();
+
+while ($row = $result->fetch_assoc()) {
+    $registros[] = $row;
+}
+
+echo "<script>const registros2=" . json_encode($registros) . ";</script>";
+
 $sql_inventario_count_query = "WITH ranked_transferencia AS (
     SELECT 
         item.patrimonio, 
@@ -82,6 +125,8 @@ FROM
     ranked_transferencia
 WHERE 
     rn = 1
+ORDER BY 
+    datatransf DESC
 ";
 $sql_inventario_query = "$busca LIMIT {$limit} OFFSET {$offset}";
 $sql_inventario_query_exec = $conexao->query($sql_inventario_query) or die($conexao->error);
@@ -229,6 +274,9 @@ $sql_inventario_query_exec = $conexao->query($sql_inventario_query) or die($cone
                 </table>
             </div>
             <div class='pagination-controls'>
+
+            <input type="button" onclick="exportarArquivo('listaremovimentar')" value="Exportar" class="btn btn-outline-primary" style="margin-right: 940px; height:40px">        
+
                 <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
                     <select id='recordsPerPage' onchange="updateLimit()">
@@ -255,6 +303,26 @@ $sql_inventario_query_exec = $conexao->query($sql_inventario_query) or die($cone
     </div>
 </body>
 <script>
+    function exportarArquivo() {
+        var worksheet = XLSX.utils.json_to_sheet(registros2);
+        var workbook = XLSX.utils.book_new(registros2);
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Inscrições');
+
+        var data_atual = new Date();
+        var dia = data_atual.getDate();
+        var mes = data_atual.getMonth() + 1;
+        var ano = data_atual.getFullYear();
+        var hora = data_atual.getHours();
+        var min = data_atual.getMinutes();
+        var seg = data_atual.getSeconds();
+
+        var dataFormatada = `inventario-${dia}-${mes}-${ano}`;
+        var nome;
+        XLSX.writeFile(workbook, dataFormatada + '.XLSX');
+        console.log(registros2);
+    }
+
+
     function limparInput() {
         window.location.href = 'inventario.php';
     }

@@ -7,15 +7,59 @@ include_once('componentes/verificacao.php');
 $condicoes = [];
 $joins = [];
 
+if (isset($_GET['ano']) && $_GET['ano'] !== '') {
+    $ano = $_GET['ano'];
+    $condicoes[] = "transferencia.datatransf LIKE '%$ano%'";
+}
+
+$result = $conexao->query("WITH ranked_transferencia AS (
+    SELECT 
+        item.patrimonio AS `Patrimônio`, 
+        item.nome AS `Nome`, 
+        CONCAT(item.tipo, ' ', item.marca, ' Modelo: ', item.modelo) AS `Descricao do Bem`, 
+        transferencia.localnovo AS `Localização`, 
+        transferencia.servidoratual AS `Servidor`, 
+        transferencia.usuario AS `Responsável`, 
+        transferencia.cimbpm AS `CIMBPM`, 
+        transferencia.datatransf AS `DataTransf`,
+        ROW_NUMBER() OVER (PARTITION BY item.patrimonio ORDER BY transferencia.datatransf DESC) AS rn
+    FROM 
+        item
+    JOIN 
+        transferencia ON item.idbem = transferencia.iditem
+    WHERE 
+        YEAR(transferencia.datatransf) = '$ano'
+)
+SELECT 
+    `Patrimônio`, 
+    `Nome`, 
+    `Descricao do Bem`, 
+    `Localização`, 
+    `Servidor`, 
+    `Responsável`, 
+    `CIMBPM`, 
+    `DataTransf`
+FROM 
+    ranked_transferencia
+WHERE 
+    rn = 1
+ORDER BY 
+    `DataTransf` DESC
+");
+
+$registros = array();
+
+while ($row = $result->fetch_assoc()) {
+    $registros[] = $row;
+}
+
+echo "<script>const registros2=" . json_encode($registros) . ";</script>";
+
 if (isset($_GET['unidade']) && $_GET['unidade'] !== '') {
     $unidade = $conexao->real_escape_string($_GET['unidade']);
     $condicoes[] = "localnovo = '$unidade'";
 }
 
-if (isset($_GET['ano']) && $_GET['ano'] !== '') {
-    $ano = $_GET['ano'];
-    $condicoes[] = "transferencia.datatransf LIKE '%$ano%'";
-}
 
 if (isset($_GET['pesquisar']) && $_GET['pesquisar'] !== '') {
     $valor_pesquisar = $conexao->real_escape_string($_GET['pesquisar']);
@@ -58,7 +102,8 @@ $busca = "WITH ranked_transferencia AS (
         item
     JOIN 
         transferencia ON item.idbem = transferencia.iditem
-    $where
+    WHERE 
+        YEAR(transferencia.datatransf) = '$ano'
 )
 SELECT 
     patrimonio, 
@@ -75,6 +120,8 @@ FROM
     ranked_transferencia
 WHERE 
     rn = 1
+ORDER BY 
+    datatransf DESC
 ";
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -85,10 +132,10 @@ if (isset($_GET['limit'])) {
 }
 $offset = ($page - 1) * $limit;
 
-$sql_home_query = "$busca LIMIT {$limit} OFFSET {$offset}";
-$sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
+$sql_inventario_query = "$busca LIMIT {$limit} OFFSET {$offset}";
+$sql_inventario_query_exec = $conexao->query($sql_inventario_query) or die($conexao->error);
 
-$sql_home_count_query = "WITH ranked_transferencia AS (
+$sql_inventario_count_query = "WITH ranked_transferencia AS (
     SELECT 
         item.patrimonio, 
         item.tipo, 
@@ -105,7 +152,8 @@ $sql_home_count_query = "WITH ranked_transferencia AS (
         item
     JOIN 
         transferencia ON item.idbem = transferencia.iditem
-    $where
+    WHERE 
+    YEAR(transferencia.datatransf) = '$ano'
 )
 SELECT 
     COUNT(*) as c
@@ -114,12 +162,12 @@ FROM
 WHERE 
     rn = 1
 ";
-$sql_home_count_query_exec = $conexao->query($sql_home_count_query) or die($conexao->error);
+$sql_inventario_count_query_exec = $conexao->query($sql_inventario_count_query) or die($conexao->error);
 
-$sql_home_count = $sql_home_count_query_exec->fetch_assoc();
-$home_count = $sql_home_count['c'];
+$sql_inventario_count = $sql_inventario_count_query_exec->fetch_assoc();
+$inventario_count = $sql_inventario_count['c'];
 
-$page_number = ceil($home_count / $limit);
+$page_number = ceil($inventario_count / $limit);
 
 $pagina = isset($_GET['pagina']) ? $conexao->real_escape_string($_GET['pagina']) : 1;
 $unidade = isset($_GET['unidade']) ? $conexao->real_escape_string($_GET['unidade']) : '';
@@ -193,7 +241,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
         <h2 class="mb-3 mt-4">Inventário</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
             <div class="d-flex justify-content-center flex-column" style="width: 100%;">
-                <form class="d-flex justify-content-end align-items-end" action="pesquisar-home.php" method="GET" style="width: 100%;">
+                <form class="d-flex justify-content-end align-items-end" action="pesquisar-inventario.php" method="GET" style="width: 100%;">
                     <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar" style="cursor: pointer;">
                         <img src="./images/icon-recarregar.png" alt="#" id='img-recarregar'>
                     </a>
@@ -237,7 +285,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                     </thead>
                     <tbody id='myTable'>
                         <?php
-                        while ($user_data = $sql_home_query_exec->fetch_assoc()) {
+                        while ($user_data = $sql_inventario_query_exec->fetch_assoc()) {
                             $marca = $user_data['marca'];
                             $modelo = $user_data['modelo'];
                             $tipo = $user_data['tipo'];
@@ -257,6 +305,9 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                 </table>
             </div>
             <div class='pagination-controls'>
+
+                <input type="button" onclick="exportarArquivo('listaremovimentar')" value="Exportar" class="btn btn-outline-primary" style="margin-right: 940px; height:40px">        
+
                 <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
                     <select id='recordsPerPage' onchange="updateLimit()">
@@ -286,6 +337,26 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
     <div class="hide" id="modal"></div>
 </body>
 <script>
+    function exportarArquivo() {
+        var worksheet = XLSX.utils.json_to_sheet(registros2);
+        var workbook = XLSX.utils.book_new(registros2);
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Inscrições');
+
+        var data_atual = new Date();
+        var dia = data_atual.getDate();
+        var mes = data_atual.getMonth() + 1;
+        var ano = data_atual.getFullYear();
+        var hora = data_atual.getHours();
+        var min = data_atual.getMinutes();
+        var seg = data_atual.getSeconds();
+
+        var dataFormatada = `inventario-${dia}-${mes}-${ano}`;
+        var nome;
+        XLSX.writeFile(workbook, dataFormatada + '.XLSX');
+        console.log(registros2);
+    }
+
+
     function limparInput() {
         window.location.href = 'inventario.php';
     }

@@ -29,11 +29,18 @@ if (isset($_POST['submit'])) {
 
 if (isset($_POST['update'])) {
     $tipo = $_POST['tipos'];
-    if($tipo )
 
     $result = mysqli_query($conexao, "UPDATE tipos SET tipo = '$tipo', statustipo = 'Inativo' WHERE tipo='$tipo'");
 
     header("Location: tiposdebens.php?tipo=alterado");
+}
+
+if (isset($_POST['reativar'])) {
+    $tipo = $_POST['tipos'];
+
+    $result = mysqli_query($conexao, "UPDATE tipos SET tipo = '$tipo', statustipo = 'Ativo' WHERE tipo='$tipo'");
+
+    header("Location: tiposdebens.php?tipo=reativado");
 }
 
 
@@ -93,6 +100,11 @@ if (isset($_POST['update'])) {
     #btnDesCadTipos {
         display: none;
     }
+
+
+    #btnRCadTipos {
+        display: none;
+    }
 </style>
 
 <body>
@@ -119,14 +131,19 @@ if (isset($_POST['update'])) {
                         <div class="d-flex justify-content-end mt-1 mb-1" id="bnt ">
                             <input type="submit" class="btn btn-danger mr-1" id="btnDesCadTipos" name="update" value="Desativar" style="width: 90px;"></input>
                             <input type="submit" class="btn btn-primary" id="btnCadTipos" name="submit" value="Cadastrar"></input>
+                            <input type="submit" class="btn btn-primary" id="btnRCadTipos" name="reativar" value="Reativar"></input>
                         </div>
                 </form>
                 <div class="d-flex align-items-baseline">
                     <label for="card" class="form-label text-primary mb-2 mr-2">Todos os tipos de bens ativos:</label>
-                    <select class="form-select" name="tipo" id="AITipos" required style="width: 90px;border: none;outline: none;">
+                    <select class="form-select" name="tipo" id="AITipos" required style="width: 100px; border: none; outline: none;">
+                        <option value="<?php echo isset($_GET['statustipos']) ? $_GET['statustipos'] : 'Ativo'; ?>" hidden>
+                            <?php echo isset($_GET['statustipos']) ? $_GET['statustipos'] : 'Ativo'; ?>
+                        </option>
                         <option value="Ativo">Ativo</option>
                         <option value="Inativo">Inativo</option>
                     </select>
+
                 </div>
                 <div class="card lista-itens mb-2">
                     <ul class="list-group list-group-flush overflow-auto" id="ulItens" style="height: 500px;">
@@ -153,7 +170,9 @@ if (isset($_POST['update'])) {
         $.ajax({
             url: 'query-tipos-bens.php',
             type: 'GET',
-            data: { statustipos: selectedValue },
+            data: {
+                statustipos: selectedValue
+            },
             success: function(response) {
                 $('#ulItens').html(response);
             },
@@ -169,10 +188,25 @@ if (isset($_POST['update'])) {
     });
 
     function botaoClicado(item) {
-        document.getElementById('textBusca2').value = item;
-        var button = document.getElementById('btnDesCadTipos');
-        button.style.display = 'block';
+        var select = document.getElementById('AITipos').value;
+        var textBusca = document.getElementById('textBusca2');
+        var buttonCad = document.getElementById('btnCadTipos');
+        var buttonReativar = document.getElementById('btnRCadTipos');
+        var buttonTrocar = document.getElementById('btnDesCadTipos');
+
+        if (select == 'Ativo') {
+            textBusca.value = item;
+            buttonCad.style.display = 'block';
+            buttonTrocar.style.display = 'block';
+            buttonReativar.style.display = 'none'
+        } else {
+            textBusca.value = item;
+            buttonReativar.style.display = 'block';
+            buttonCad.style.display = 'none';
+            buttonTrocar.style.display = 'none'
+        }
     }
+
 
     function alert(num) {
         if (num == 1) {
@@ -197,24 +231,6 @@ if (isset($_POST['update'])) {
                 background: 'red',
                 iconColor: '#ffffff'
             });
-        } else if (num == 3) {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "warning",
-                title: "Por favor, insira um tipo válido",
-                background: "#104EEF",
-                iconColor: '#ffffff'
-            });
         } else if (num == 2) {
             const Toast = Swal.mixin({
                 toast: true,
@@ -232,7 +248,46 @@ if (isset($_POST['update'])) {
                     title: 'swal2-title'
                 }),
                 icon: "success",
-                title: "Tipo cadastrado com sucesso!",
+                title: "Novo produto cadastrado com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
+            });
+        } else if (num == 3) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "warning",
+                title: "Por favor, insira um tipo válido!",
+                background: "#104EEF",
+                iconColor: '#ffffff'
+            });
+        } else if (num == 4 || num == 5) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Produto alterado com sucesso!",
                 background: 'green',
                 iconColor: '#ffffff'
             });
@@ -257,6 +312,10 @@ if (isset($_POST['update'])) {
             history.pushState({}, '', 'tiposdebens.php');
         } else if (data == 'alterado') {
             alert(4);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'tiposdebens.php');
+        } else if (data == 'reativado') {
+            alert(5);
             window.history.replaceState({}, document.title, window.location.pathname);
             history.pushState({}, '', 'tiposdebens.php');
         }
