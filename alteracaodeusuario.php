@@ -137,7 +137,7 @@ if (!empty($_GET['id'])) {
                     <input type="email" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="name@example.com" name="email" value="<?php echo $emailfr; ?>" required>
                 </div>
                 <div class="d-flex flex-row-reverse">
-                    <input type="submit" class="btn btn-primary ml-3 pe-auto mr-2 " id="btn-cadUsuario" name="update" value="Alterar"></input>
+                    <input type="submit" class="btn btn-primary ml-3 pe-auto mr-2 " id="btn-cadUsuario" name="update" value="Editar"></input>
                 </div>
                 <input type="hidden" name="id" value="<?php echo $id ?>">
         </form>

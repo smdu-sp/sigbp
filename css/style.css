@@ -699,19 +699,7 @@ hr {
     font-size: 14px;
 }
 
-.records-per-page {
-    margin-top: 10px;
-}
 
-.records-per-page > label {
-    margin-right: 10px;
-}
-
-#recordsPerPage {
-    border: none;
-    margin-right: 2px;
-    font-size: 14px;
-}
 
 .page-info {
     margin-left:80px;

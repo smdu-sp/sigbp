@@ -4,6 +4,15 @@ include_once('conexoes/config.php');
 include_once('header.php');
 include_once('componentes/verificacao.php');
 
+if (isset($_GET['limit'])) {
+    $limit = $_GET['limit'];
+    setcookie('recordsPerPage', $limit, time() + (86400 * 30), "/");
+} else if (isset($_COOKIE['recordsPerPage'])) {
+    $limit = $_COOKIE['recordsPerPage'];
+} else {
+    $limit = 7;
+}
+
 $sql_home_count_query = "SELECT COUNT(*) as c FROM item, transferencia WHERE item.idbem = transferencia.iditem;";
 $sql_home_count_query_exec = $conexao->query($sql_home_count_query) or die($conexao->error);
 
@@ -12,11 +21,6 @@ $home_count = $sql_home_count['c'];
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
-if (isset($_GET['limit'])) {
-    $limit = $_GET['limit'];
-} else {
-    $limit = 7;
-}
 $offset = ($page - 1) * $limit;
 $page_number = ceil($home_count / $limit);
 $busca = "SELECT item.patrimonio, item.tipo, item.marca, item.modelo, item.nome, transferencia.cimbpm, transferencia.localnovo, transferencia.servidoratual, transferencia.usuario, transferencia.datatransf FROM item, transferencia WHERE item.idbem = transferencia.iditem ORDER BY transferencia.datatransf DESC";
@@ -24,6 +28,8 @@ $busca = "SELECT item.patrimonio, item.tipo, item.marca, item.modelo, item.nome,
 $sql_home_query = "$busca LIMIT {$limit} OFFSET {$offset}";
 $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
 ?>
+
+
 <style>
     @media (max-width: 1600px) {
         .conteudo {
@@ -85,6 +91,20 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
         height: 100vh;
         display: none;
     }
+
+    .records-per-page {
+        margin-top: 10px;
+    }
+
+    .records-per-page>label {
+        margin-right: 10px;
+    }
+
+    #recordsPerPage {
+        border: none;
+        margin-right: 2px;
+        font-size: 14px;
+    }
 </style>
 
 <body>
@@ -122,7 +142,7 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
                         <p class="mb-1 text-muted">Unidade:</p>
                         <select id="unidadeSelect" class="form-select" name="unidade">
                             <option value="" hidden="hidden">Selecionar</option>
-                            <?php include 'query-unidades.php'?>
+                            <?php include 'query-unidades.php' ?>
                         </select>
                     </div>
                     <div class="col-6 mb-2">
@@ -153,6 +173,9 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
                             $tipo = $user_data['tipo'];
                             $patrimonio = $user_data['patrimonio'];
                             $desc = "$tipo $marca Modelo: $modelo";
+                            $datatransf = explode(' ', $user_data['datatransf']);
+                            $datatransf_brasil = implode('/', array_reverse(explode('-', $datatransf[0])));
+
                             echo "<tr>";
                             echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['patrimonio'] . "<span hidden>todos</span></td>";
                             echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
@@ -161,9 +184,11 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
                             echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['servidoratual'] . '<span hidden>todos</span>' . "</td>";
                             echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
                             echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['datatransf'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $datatransf_brasil . '<br>' . $datatransf[1] . '<span hidden>todos</span>' . "</td>";
                             echo "</tr>";
-                        } ?>
+                        }
+                        ?>
+
                     </tbody>
                 </table>
             </div>
@@ -171,7 +196,6 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
                 <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
                     <select id='recordsPerPage' onchange="updateLimit()">
-                        <option value='<?php echo $limit ?>' hidden> <?php echo $limit ?></option>
                         <option value='7'>7</option>
                         <option value='14'>14</option>
                     </select>
@@ -194,28 +218,33 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
     </div>
 </body>
 <script>
-function limparInput() {
-    window.location.href = 'home.php';
-}
+    function limparInput() {
+        window.location.href = 'home.php';
+    }
 
-function updateLimit() {
-    var selectElement = document.getElementById('recordsPerPage');
-    var selectedValue = selectElement.value;
-    window.location.href = '?limit=' + selectedValue;
-}
+    function recarregar() {
+        window.location.reload(true);
+    }
 
-function recarregar() {
-    window.location.reload(true);
-}
+    function updateLimit() {
+        var selectElement = document.getElementById('recordsPerPage');
+        var selectedValue = selectElement.value;
+        localStorage.setItem('recordsPerPage', selectedValue);
+        window.location.href = '?limit=' + selectedValue;
+    }
 
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {
-        button.addEventListener('click', function(event) {
-            event.preventDefault();
+    document.addEventListener('DOMContentLoaded', function() {
+        var storedLimit = localStorage.getItem('recordsPerPage');
+        if (storedLimit) {
+            document.getElementById('recordsPerPage').value = storedLimit;
+        }
+
+        document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+            });
         });
     });
-});
-
 </script>
 
 </html>

@@ -36,7 +36,7 @@ $offset = ($page - 1) * $limit;
 
 $page_number = ceil($unidades_count / $limit);
 
-$busca = "SELECT * FROM unidades WHERE statusunidade = 'Ativo' ORDER BY id ASC";
+$busca = "SELECT * FROM unidades WHERE statusunidade = 'Ativo' ORDER BY sigla ASC";
 
 $sql_unidades_query = "$busca LIMIT {$limit} OFFSET {$offset}";
 $sql_unidades_query_exec = $conexao->query($sql_unidades_query) or die($conexao->error);
@@ -365,11 +365,11 @@ $sql_unidades_query_exec = $conexao->query($sql_unidades_query) or die($conexao-
         if (data == 'cadastrado') {
             alert(1);
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'cadastrarbens.php');
+            history.pushState({}, '', 'unidades.php');
         } else if (data == 'alterado') {
             alert(2);
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'cadastrarbens.php');
+            history.pushState({}, '', 'unidades.php');
         }
     })
 

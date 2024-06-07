@@ -46,7 +46,7 @@ if (!empty($condicoes)) {
     $where = " WHERE " . implode(" AND ", $condicoes);
 }
 
-$busca = "SELECT * FROM unidades $where ORDER BY id ASC";
+$busca = "SELECT * FROM unidades $where ORDER BY sigla ASC";
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 if (isset($_GET['limit'])) {

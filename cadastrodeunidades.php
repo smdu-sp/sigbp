@@ -111,7 +111,7 @@ if ($id) {
         <div class="col-md-12 mb-4">
           <div>
             <label for="exampleFormControlInput1" class="form-label text-muted ml-2">Código</label>
-            <input type="text" class="form-control" id="codigo" name="inputCodigo" value="<?php $id ? print_r($codigo) : '' ?>" required>
+            <input type="text" class="form-control" id="codigo" name="codigo" value="<?php $id ? print_r($codigo) : '' ?>" required>
           </div>
         </div>
         <div class="col-md-12 mb-4">
@@ -131,7 +131,7 @@ if ($id) {
           </div>
         </div>
         <div class="d-flex flex-row-reverse">
-          <input type="submit" class="btn btn-primary ml-3 pe-auto mr-2 " id="btn-cadUsuario" name="submit" value="Cadastrar"></input>
+        <input type="submit" class="btn btn-primary ml-3 pe-auto mr-2" id="btn-cadUsuario" name="submit" value="<?php echo isset($_GET['id']) ? 'Editar' : 'Cadastrar'; ?>">
         </div>
     </form>
     <div class="hide" id="modal"></div>

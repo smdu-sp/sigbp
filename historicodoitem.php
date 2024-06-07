@@ -47,7 +47,7 @@ $sql_home_query_exec = $conexao->query($sql_home_query) or die($conexao->error);
                 <?php 
                 $index = 0;
                 while ($row = $sql_home_query_exec->fetch_assoc()) { 
-                    $formattedDate = date('d-m-Y', strtotime($row['datatransf']));
+                    $formattedDate = date('d/m/Y', strtotime($row['datatransf']));
                     $sideClass = ($index % 2 == 0) ? 'left' : 'right';
                 ?>
                 <li class="<?php echo $sideClass; ?>">

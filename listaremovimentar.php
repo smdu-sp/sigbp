@@ -41,9 +41,13 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 if (isset($_GET['limit'])) {
     $limit = $_GET['limit'];
+    setcookie('recordsPerPage', $limit, time() + (86400 * 30), "/"); 
+} else if (isset($_COOKIE['recordsPerPage'])) {
+    $limit = $_COOKIE['recordsPerPage'];
 } else {
     $limit = 5;
 }
+
 $offset = ($page - 1) * $limit;
 
 $page_number = ceil($item_count / $limit);
@@ -56,6 +60,7 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
 
 ?>
 <style>
+
     @media (max-width: 1600px) {
         .conteudo {
             margin-left: 75px;
@@ -116,7 +121,7 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
     }
 
     .div-table {
-        max-width: 1530px;
+        width: 100%;
         overflow: auto;
     }
 
@@ -131,6 +136,14 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
     .div-table::-webkit-scrollbar-thumb {
         background: #d3d3d3;
         border-radius: 5px;
+    }
+
+    .action-links {
+        display: flex;
+        gap: 10px; 
+    }
+    .action-links a {
+        display: inline-block;
     }
 </style>
 
@@ -227,7 +240,7 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                                 echo "<td>" . $user_data['numprocesso'] . '<span hidden>todos</span>' . "</td>";
                                 echo "<td>" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
                                 echo "<td>" . $user_data['statusitem'] . '<span hidden>todos</span>' . "</td>";
-                                echo "<td>" . "<a href='movimentacao.php?id=$user_data[idbem]'><img src='./images/icon-seta.png' alt='Seta'></a>" . "<a href='alteracaodebens.php?id=$user_data[idbem]'><img src='./images/icon-lapis.png' alt='Seta'></a>" . '<span hidden>todos</span>' . "</td>";
+                                echo "<td><div class='action-links'>" . "<a href='movimentacao.php?id=$user_data[idbem]' class='border-0'><img src='./images/icon-seta.png' alt='Seta'></a>" . "<a href='alteracaodebens.php?id=$user_data[idbem]'><img src='./images/icon-lapis.png' alt='Seta'></a>" . "<span hidden>todos</span></div></td>";
                                 echo "</tr>";
                             }
                             ?>
@@ -236,30 +249,29 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
                 </div>
 
             </div>
-            <div class='pagination-controls'>
+            <div class='pagination-controls d-flex justify-content-between'>
 
-                <input type="button" onclick="exportarArquivo('listaremovimentar')" value="Exportar" class="btn btn-outline-primary" style="margin-right: 940px; height:40px">
+                <input type="button" onclick="exportarArquivo('listaremovimentar')" value="Exportar" class="btn btn-outline-primary" style="height:40px">
 
-                <div class='records-per-page'>
-                    <label for='recordsPerPage'>Registros por página:</label>
-                    <select id='recordsPerPage' onchange="updateLimit()">
-                        <option value='<?php echo $limit ?>' hidden> <?php echo $limit ?></option>
-                        <option value='5'>5</option>
-                        <option value='10'>10</option>
-                    </select>
+                <div class="d-flex flex-row">
+                    <div class='recorde-por-pagina'>
+                        <label for='recordsPerPage'>Registros por página:</label>
+                        <select id='recordsPerPage' onchange="updateLimit()">
+                            <option value='<?php echo $limit ?>' hidden> <?php echo $limit ?></option>
+                            <option value='5'>5</option>
+                            <option value='10'>10</option>
+                        </select>
+                    </div>
+                    <div class='page-info'>Página <?php echo $page; ?> de <?php echo $page_number; ?></div>
+                    <?php
+                    $opacidade_esquerda = ($page == 1) ? '0.5' : '1';
+                    $opacidade_direita = ($page == $page_number) ? '0.5' : '1';
+                    $disabled_esquerda = ($opacidade_esquerda == '0.5') ? 'disabled' : '';
+                    $disabled_direita = ($opacidade_direita == '0.5') ? 'disabled' : '';
+                    echo "<a href='?page=" . ($page - 1) . '&limit=' . $limit . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
+                    echo "<a href='?page=" . ($page + 1) . '&limit=' . $limit . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";    
+                    ?>
                 </div>
-                <div class='page-info'>Página <?php echo $page; ?> de <?php echo $page_number; ?></div>
-                <?php
-                $opacidade_esquerda = ($page == 1) ? '0.5' : '1';
-                $opacidade_direita = ($page == $page_number) ? '0.5' : '1';
-                $disabled_esquerda = ($opacidade_esquerda == '0.5') ? 'disabled' : '';
-                $disabled_direita = ($opacidade_direita == '0.5') ? 'disabled' : '';
-
-                echo "<a href='?page=" . ($page - 1) . '&limit=' . $limit . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
-                echo "<a href='?page=" . ($page + 1) . '&limit=' . $limit . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
-
-
-                ?>
             </div>
             <div class="col-2">
             </div>
@@ -302,6 +314,11 @@ $sql_item_query_exec = $conexao->query($sql_item_query) or die($conexao->error);
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+        var storedLimit = localStorage.getItem('recordsPerPage');
+        if (storedLimit) {
+            document.getElementById('recordsPerPage').value = storedLimit;
+        }
+
         document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 event.preventDefault();

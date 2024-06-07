@@ -259,6 +259,9 @@ $sql_inventario_query_exec = $conexao->query($sql_inventario_query) or die($cone
                             $tipo = $user_data['tipo'];
                             $patrimonio = $user_data['patrimonio'];
                             $desc = "$tipo $marca Modelo: $modelo";
+                            $datatransf = explode(' ', $user_data['datatransf']);
+                            $datatransf_brasil = implode('/', array_reverse(explode('-', $datatransf[0])));
+
                             echo "<tr>";
                             echo "<td>" . $user_data['patrimonio'] . "<span hidden>todos</span></td>";
                             echo "<td>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
@@ -267,36 +270,35 @@ $sql_inventario_query_exec = $conexao->query($sql_inventario_query) or die($cone
                             echo "<td>" . $user_data['servidoratual'] . '<span hidden>todos</span>' . "</td>";
                             echo "<td>" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
                             echo "<td>" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $user_data['datatransf'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td>" . $datatransf_brasil . '<br>' . $datatransf[1] . '<span hidden>todos</span>' . "</td>";
                             echo "</tr>";
                         } ?>
                     </tbody>
                 </table>
             </div>
-            <div class='pagination-controls'>
+            <div class='pagination-controls d-flex justify-content-between'>
 
-            <input type="button" onclick="exportarArquivo('listaremovimentar')" value="Exportar" class="btn btn-outline-primary" style="margin-right: 940px; height:40px">        
+                <input type="button" onclick="exportarArquivo('listaremovimentar')" value="Exportar" class="btn btn-outline-primary" style="margin-right: 940px; height:40px">        
 
-                <div class='records-per-page'>
-                    <label for='recordsPerPage'>Registros por página:</label>
-                    <select id='recordsPerPage' onchange="updateLimit()">
-                        <option value='<?php echo $limit ?>' hidden> <?php echo $limit ?></option>
-                        <option value='7'>7</option>
-                        <option value='14'>14</option>
-                    </select>
+                <div class="d-flex flex-row">
+                    <div class='records-per-page'>
+                        <label for='recordsPerPage'>Registros por página:</label>
+                        <select id='recordsPerPage' onchange="updateLimit()">
+                            <option value='<?php echo $limit ?>' hidden> <?php echo $limit ?></option>
+                            <option value='7'>7</option>
+                            <option value='14'>14</option>
+                        </select>
+                    </div>
+                    <div class='page-info'>Página <?php echo $page; ?> de <?php echo $page_number; ?></div>
+                    <?php
+                    $opacidade_esquerda = ($page == 1) ? '0.5' : '1';
+                    $opacidade_direita = ($page == $page_number) ? '0.5' : '1';
+                    $disabled_esquerda = ($opacidade_esquerda == '0.5') ? 'disabled' : '';
+                    $disabled_direita = ($opacidade_direita == '0.5') ? 'disabled' : '';
+                    echo "<a href='?page=" . ($page - 1) . '&limit=' . $limit . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
+                    echo "<a href='?page=" . ($page + 1) . '&limit=' . $limit . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
+                    ?>
                 </div>
-                <div class='page-info'>Página <?php echo $page; ?> de <?php echo $page_number; ?></div>
-                <?php
-                $opacidade_esquerda = ($page == 1) ? '0.5' : '1';
-                $opacidade_direita = ($page == $page_number) ? '0.5' : '1';
-                $disabled_esquerda = ($opacidade_esquerda == '0.5') ? 'disabled' : '';
-                $disabled_direita = ($opacidade_direita == '0.5') ? 'disabled' : '';
-
-                echo "<a href='?page=" . ($page - 1) . '&limit=' . $limit . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
-                echo "<a href='?page=" . ($page + 1) . '&limit=' . $limit . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
-
-
-                ?>
             </div>
         </div>
         <div class="overlay"></div>

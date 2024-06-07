@@ -4,6 +4,15 @@ include_once('conexoes/config.php');
 include_once('header.php');
 include_once('componentes/verificacao.php');
 
+if (isset($_GET['limit'])) {
+    $limit = $_GET['limit'];
+    setcookie('recordsPerPage', $limit, time() + (86400 * 30), "/");
+} else if (isset($_COOKIE['recordsPerPage'])) {
+    $limit = $_COOKIE['recordsPerPage'];
+} else {
+    $limit = 7;
+}
+
 $condicoes = [];
 $joins = [];
 
@@ -48,11 +57,6 @@ $where
 ORDER BY transferencia.datatransf DESC";
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-if (isset($_GET['limit'])) {
-    $limit = $conexao->real_escape_string($_GET['limit']);
-} else {
-    $limit = 7;
-}
 $offset = ($page - 1) * $limit;
 
 $sql_home_query = "$busca LIMIT {$limit} OFFSET {$offset}";
@@ -69,6 +73,7 @@ $page_number = ceil($home_count / $limit);
 $pagina = isset($_GET['pagina']) ? $conexao->real_escape_string($_GET['pagina']) : 1;
 $unidade = isset($_GET['unidade']) ? $conexao->real_escape_string($_GET['unidade']) : '';
 $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano']) : '';
+print_r($limit);
 ?>
 <style>
     @media (max-width: 1600px) {
@@ -121,6 +126,20 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
         width: 25px;
         height: 25px;
     }
+
+    .records-per-page {
+        margin-top: 10px;
+    }
+
+    .records-per-page>label {
+        margin-right: 10px;
+    }
+
+    #recordsPerPage {
+        border: none;
+        margin-right: 2px;
+        font-size: 14px;
+    }
 </style>
 
 <body>
@@ -148,7 +167,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                     <div class="col-2 mb-2">
                         <p class="mb-1 text-muted">Ano:</p>
                         <select id="anoSelect" class="form-select" name="ano">
-                        <option value="<?php echo htmlspecialchars($ano) == '' ? '' : htmlspecialchars($ano) ?>" hidden><?php echo htmlspecialchars($ano) == '' ? 'Selecionar' : htmlspecialchars($ano) ?></option>
+                            <option value="<?php echo htmlspecialchars($ano) == '' ? '' : htmlspecialchars($ano) ?>" hidden><?php echo htmlspecialchars($ano) == '' ? 'Selecionar' : htmlspecialchars($ano) ?></option>
                             <option value="2023">2023</option>
                             <option value="2024">2024</option>
                         </select>
@@ -188,6 +207,8 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                             $tipo = $user_data['tipo'];
                             $patrimonio = $user_data['patrimonio'];
                             $desc = "$tipo $marca Modelo: $modelo";
+                            $datatransf = explode(' ', $user_data['datatransf']);
+                            $datatransf_brasil = implode('/', array_reverse(explode('-', $datatransf[0])));
                             echo "<tr>";
                             echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['patrimonio'] . "<span hidden>todos</span></td>";
                             echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
@@ -196,7 +217,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                             echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['servidoratual'] . '<span hidden>todos</span>' . "</td>";
                             echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
                             echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $user_data['datatransf'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='historicodoitem.php?patrimonio=$patrimonio'>" . $datatransf_brasil . '<br>' . $datatransf[1] . '<span hidden>todos</span>' . "</td>";
                             echo "</tr>";
                         } ?>
                     </tbody>
@@ -206,10 +227,12 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                 <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
                     <select id='recordsPerPage' onchange="updateLimit()">
-                        <option value='<?php echo $limit ?>' selected hidden> <?php echo $limit ?></option>
-                        <option value='7'>7</option>
-                        <option value='14'>14</option>
+                        <option value='' <?php echo ($_GET['limit'] == '') ? 'selected' : ''; ?> hidden> <?php echo $_GET['limit'] ?></option>
+                        <option value='7' <?php echo ($_GET['limit'] == '7') ? 'selected' : ''; ?>>7</option>
+                        <option value='14' <?php echo ($_GET['limit'] == '14') ? 'selected' : ''; ?>>14</option>
                     </select>
+
+
                 </div>
                 <div class='page-info'>Página <?php echo $page; ?> de <?php echo $page_number; ?></div>
                 <?php
@@ -252,6 +275,11 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
 
 
     document.addEventListener('DOMContentLoaded', function() {
+        var storedLimit = localStorage.getItem('recordsPerPage');
+        if (storedLimit) {
+            document.getElementById('recordsPerPage').value = storedLimit;
+        }
+
         document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 event.preventDefault();
