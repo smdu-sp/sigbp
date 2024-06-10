@@ -4,7 +4,24 @@ include_once('conexoes/config.php');
 include_once('header.php');
 include_once('componentes/verificacao.php');
 
+if (isset($_GET['limit'])) {
+    $limit = $_GET['limit'];
+    setcookie('recordsPerPage_inventario', $limit, time() + (86400 * 30), "/");
+} else if (isset($_COOKIE['recordsPerPage_inventario'])) {
+    $limit = $_COOKIE['recordsPerPage_inventario'];
+} else {
+    $limit = 7;
+}
+
+$condicoes = [];
+$joins = [];
+
 $ano = isset($_GET['ano']) ? $_GET['ano'] : 2024;
+
+if (isset($_GET['ano']) && $_GET['ano'] !== '') {
+    $ano = $_GET['ano'];
+    $condicoes[] = "transferencia.datatransf LIKE '%$ano%'";
+}
 
 $result = $conexao->query("WITH ranked_transferencia AS (
     SELECT 
@@ -49,47 +66,36 @@ while ($row = $result->fetch_assoc()) {
 
 echo "<script>const registros2=" . json_encode($registros) . ";</script>";
 
-$sql_inventario_count_query = "WITH ranked_transferencia AS (
-    SELECT 
-        item.patrimonio, 
-        item.tipo, 
-        item.marca, 
-        item.modelo, 
-        item.nome, 
-        transferencia.cimbpm, 
-        transferencia.localnovo, 
-        transferencia.servidoratual, 
-        transferencia.usuario, 
-        transferencia.datatransf,
-        ROW_NUMBER() OVER (PARTITION BY item.patrimonio ORDER BY transferencia.datatransf DESC) as rn
-    FROM 
-        item
-    JOIN 
-        transferencia ON item.idbem = transferencia.iditem
-    WHERE 
-    YEAR(transferencia.datatransf) = '$ano'
-)
-SELECT 
-    COUNT(*) as c
-FROM 
-    ranked_transferencia
-WHERE 
-    rn = 1
-";
-$sql_inventario_count_query_exec = $conexao->query($sql_inventario_count_query) or die($conexao->error);
-
-$sql_inventario_count = $sql_inventario_count_query_exec->fetch_assoc();
-$inventario_count = $sql_inventario_count['c'];
-
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-
-if (isset($_GET['limit'])) {
-    $limit = $_GET['limit'];
-} else {
-    $limit = 7;
+if (isset($_GET['unidade']) && $_GET['unidade'] !== '') {
+    $unidade = $conexao->real_escape_string($_GET['unidade']);
+    $condicoes[] = "localnovo = '$unidade'";
 }
-$offset = ($page - 1) * $limit;
-$page_number = ceil($inventario_count / $limit);
+
+
+if (isset($_GET['pesquisar']) && $_GET['pesquisar'] !== '') {
+    $valor_pesquisar = $conexao->real_escape_string($_GET['pesquisar']);
+    $palavras = explode(' ', $valor_pesquisar);
+    if (count($palavras) >= 1) {
+        $condicao_individual = [];
+        foreach ($palavras as $palavra) {
+            if (DateTime::createFromFormat('Y-m-d', $palavra) !== false) {
+                $data_formatada = date('Y-m-d', strtotime($palavra));
+                $condicao_individual[] = "transferencia.datatransf LIKE '%$data_formatada%'";
+            } else {
+                $palavra = $conexao->real_escape_string($palavra);
+                $condicao_individual[] = "(item.patrimonio LIKE '%$palavra%' OR item.nome LIKE '%$palavra%' OR transferencia.localnovo LIKE '%$palavra%' OR transferencia.cimbpm LIKE '" . '%' . str_replace('-', '.', $palavra) . '%' . "' OR transferencia.servidoratual LIKE '%$palavra%' OR transferencia.datatransf LIKE '%$palavra%')";
+            }
+        }
+        $condicoes[] = "(" . implode(" OR ", $condicao_individual) . ")";
+    }
+}
+
+if (!empty($condicoes)) {
+    $where = " WHERE " . implode(" AND ", $condicoes);
+} else {
+    $where = '';
+}
+
 $busca = "WITH ranked_transferencia AS (
     SELECT 
         item.patrimonio, 
@@ -128,8 +134,50 @@ WHERE
 ORDER BY 
     datatransf DESC
 ";
+
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$offset = ($page - 1) * $limit;
+
 $sql_inventario_query = "$busca LIMIT {$limit} OFFSET {$offset}";
 $sql_inventario_query_exec = $conexao->query($sql_inventario_query) or die($conexao->error);
+
+$sql_inventario_count_query = "WITH ranked_transferencia AS (
+    SELECT 
+        item.patrimonio, 
+        item.tipo, 
+        item.marca, 
+        item.modelo, 
+        item.nome, 
+        transferencia.cimbpm, 
+        transferencia.localnovo, 
+        transferencia.servidoratual, 
+        transferencia.usuario, 
+        transferencia.datatransf,
+        ROW_NUMBER() OVER (PARTITION BY item.patrimonio ORDER BY transferencia.datatransf DESC) as rn
+    FROM 
+        item
+    JOIN 
+        transferencia ON item.idbem = transferencia.iditem
+    WHERE 
+    YEAR(transferencia.datatransf) = '$ano'
+)
+SELECT 
+    COUNT(*) as c
+FROM 
+    ranked_transferencia
+WHERE 
+    rn = 1
+";
+$sql_inventario_count_query_exec = $conexao->query($sql_inventario_count_query) or die($conexao->error);
+
+$sql_inventario_count = $sql_inventario_count_query_exec->fetch_assoc();
+$inventario_count = $sql_inventario_count['c'];
+
+$page_number = ceil($inventario_count / $limit);
+
+$pagina = isset($_GET['pagina']) ? $conexao->real_escape_string($_GET['pagina']) : 1;
+$unidade = isset($_GET['unidade']) ? $conexao->real_escape_string($_GET['unidade']) : '';
+$ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano']) : '';
 ?>
 <style>
     @media (max-width: 1600px) {
@@ -183,22 +231,26 @@ $sql_inventario_query_exec = $conexao->query($sql_inventario_query) or die($cone
         height: 25px;
     }
 
-    .modal {
-        background-color: rgba(0, 0, 0, 0.5);
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        display: none;
+    .records-per-page_inventario {
+        margin-top: 10px;
+    }
+
+    .records-per-page_inventario > label {
+        margin-right: 10px;
+    }
+
+    #recordsPerPage_inventario {
+        border: none;
+        margin-right: 2px;
+        font-size: 14px;
     }
 </style>
 
 <body>
     <?php
-    include_once('menu.php');
+        include_once('menu.php');
     ?>
-    <div class="p-4 p-md-4 pt-3 principal-inventario conteudo">
+    <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel-box mb-4">
             <div class="carrossel">
                 <a href="./inventario.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
@@ -209,8 +261,7 @@ $sql_inventario_query_exec = $conexao->query($sql_inventario_query) or die($cone
         <h2 class="mb-3 mt-4">Inventário</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
             <div class="d-flex justify-content-center flex-column" style="width: 100%;">
-                <form class="d-flex justify-content-end align-items-end" action="pesquisar-inventario.php" method="GET" style="width: 100%;">
-                    <input type="hidden" name="limit" value="<?php echo $limit; ?>">
+                <form class="d-flex justify-content-end align-items-end" action="inventario.php" method="GET" style="width: 100%;">
                     <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar" style="cursor: pointer;">
                         <img src="./images/icon-recarregar.png" alt="#" id='img-recarregar'>
                     </a>
@@ -219,21 +270,22 @@ $sql_inventario_query_exec = $conexao->query($sql_inventario_query) or die($cone
                     </a>
                     <div class="col-2 mb-2">
                         <p class="mb-1 text-muted">Ano:</p>
-                        <select id="unidadeSelect" class="form-select" name="ano">
-                            <option value="2024" selected>2024</option>
+                        <select id="anoSelect" class="form-select" name="ano">
+                        <option value="<?php echo htmlspecialchars($ano) == '' ? '' : htmlspecialchars($ano) ?>" hidden><?php echo htmlspecialchars($ano) == '' ? 'Selecionar' : htmlspecialchars($ano) ?></option>
                             <option value="2023">2023</option>
+                            <option value="2024">2024</option>
                         </select>
                     </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
                         <select id="unidadeSelect" class="form-select" name="unidade">
-                            <option value="" hidden="hidden">Selecionar</option>
+                            <option value="<?php echo empty($_GET['unidade']) ? '' : $_GET['unidade']; ?>" hidden><?php echo empty($_GET['unidade']) ? 'Selecionar' : $_GET['unidade']; ?></option>
                             <?php include 'query-unidades.php' ?>
                         </select>
                     </div>
                     <div class="col-6 mb-2">
                         <p class="mb-1 text-muted">Buscar:</p>
-                        <input class="form-control buscar" id="myInput" name="pesquisar" type="text" placeholder="Procurar...">
+                        <input class="form-control" id="myInput" name="pesquisar" type="text" value="<?php echo isset($_GET['pesquisar']) ? htmlspecialchars($_GET['pesquisar']) : ''; ?>" placeholder="Procurar...">
                     </div>
                     <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon" src="./images/icon-filtrar.png" alt="#"></button>
                 </form>
@@ -257,33 +309,28 @@ $sql_inventario_query_exec = $conexao->query($sql_inventario_query) or die($cone
                             $marca = $user_data['marca'];
                             $modelo = $user_data['modelo'];
                             $tipo = $user_data['tipo'];
-                            $patrimonio = $user_data['patrimonio'];
                             $desc = "$tipo $marca Modelo: $modelo";
                             $datatransf = explode(' ', $user_data['datatransf']);
                             $datatransf_brasil = implode('/', array_reverse(explode('-', $datatransf[0])));
-
                             echo "<tr>";
-                            echo "<td>" . $user_data['patrimonio'] . "<span hidden>todos</span></td>";
-                            echo "<td>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $desc . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $user_data['localnovo'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $user_data['servidoratual'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td>" . $datatransf_brasil . '<br>' . $datatransf[1] . '<span hidden>todos</span>' . "</td>";
-                            echo "</tr>";
+                            echo "<td style='cursor: pointer;'>{$user_data['patrimonio']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['nome']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$desc}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['localnovo']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['servidoratual']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['usuario']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>{$user_data['cimbpm']}<span hidden>todos</span></td>";
+                            echo "<td style='cursor: pointer;'>" . $datatransf_brasil . '<br>' . $datatransf[1] . '<span hidden>todos</span>' . "</td>";                            echo "</tr>";
                         } ?>
                     </tbody>
                 </table>
             </div>
             <div class='pagination-controls d-flex justify-content-between'>
-
-                <input type="button" onclick="exportarArquivo('listaremovimentar')" value="Exportar" class="btn btn-outline-primary" style="margin-right: 940px; height:40px">        
-
+                <input type="button" onclick="exportarArquivo('inventario')" value="Exportar" class="btn btn-outline-primary" style="margin-right: 940px; height:40px">        
                 <div class="d-flex flex-row">
-                    <div class='records-per-page'>
-                        <label for='recordsPerPage'>Registros por página:</label>
-                        <select id='recordsPerPage' onchange="updateLimit()">
+                    <div class='records-per-page_inventario'>
+                        <label for='recordsPerPage_inventario'>Registros por página:</label>
+                        <select id='recordsPerPage_inventario' onchange="updateLimit()">
                             <option value='<?php echo $limit ?>' hidden> <?php echo $limit ?></option>
                             <option value='7'>7</option>
                             <option value='14'>14</option>
@@ -295,14 +342,19 @@ $sql_inventario_query_exec = $conexao->query($sql_inventario_query) or die($cone
                     $opacidade_direita = ($page == $page_number) ? '0.5' : '1';
                     $disabled_esquerda = ($opacidade_esquerda == '0.5') ? 'disabled' : '';
                     $disabled_direita = ($opacidade_direita == '0.5') ? 'disabled' : '';
-                    echo "<a href='?page=" . ($page - 1) . '&limit=' . $limit . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
-                    echo "<a href='?page=" . ($page + 1) . '&limit=' . $limit . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
+   
+                    $ano =  isset($_GET['ano']) ? $_GET['ano'] : '';
+                    $unidade =  isset($_GET['unidade']) ? $_GET['unidade'] : '';
+                    $pesquisar = isset($_GET['pesquisar']) ? $_GET['pesquisar'] : '';
+
+                    echo "<a href='?page=" . ($page - 1) . '&limit=' . $limit . '&ano=' . $ano . '&unidade=' . $unidade . '&pesquisar=' . $pesquisar . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
+                    echo "<a href='?page=" . ($page + 1) . '&limit=' . $limit . '&ano=' . $ano . '&unidade=' . $unidade . '&pesquisar=' . $pesquisar . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
                     ?>
                 </div>
             </div>
         </div>
-        <div class="overlay"></div>
     </div>
+    <div class="hide" id="modal"></div>
 </body>
 <script>
     function exportarArquivo() {
@@ -326,20 +378,30 @@ $sql_inventario_query_exec = $conexao->query($sql_inventario_query) or die($cone
 
 
     function limparInput() {
-        window.location.href = 'inventario.php';
-    }
-
-    function updateLimit() {
-        var selectElement = document.getElementById('recordsPerPage');
-        var selectedValue = selectElement.value;
-        window.location.href = '?limit=' + selectedValue;
+        window.location.href = 'inventario.php?ano=2024';
     }
 
     function recarregar() {
         window.location.reload(true);
     }
 
+    function updateLimit() {
+        var selectElement = document.getElementById('recordsPerPage_inventario');
+        var selectedValue = selectElement.value;
+        const ano = document.getElementById('anoSelect').value;
+        const unidade = document.getElementById('unidadeSelect').value;
+        const pesquisar = document.getElementById('myInput').value;
+        localStorage.setItem('recordsPerPage_inventario', selectedValue);
+        window.location.href = '?limit=' + selectedValue + '&ano=' + ano + '&unidade=' + unidade + '&pesquisar=' + pesquisar;
+    }
+
+
     document.addEventListener('DOMContentLoaded', function() {
+        var storedLimit = localStorage.getItem('recordsPerPage_inventario');
+        if (storedLimit) {
+            document.getElementById('recordsPerPage_inventario').value = storedLimit;
+        }
+
         document.querySelectorAll('.arrow-button.disabled').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 event.preventDefault();
@@ -347,5 +409,3 @@ $sql_inventario_query_exec = $conexao->query($sql_inventario_query) or die($cone
         });
     });
 </script>
-
-</html>

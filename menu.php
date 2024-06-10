@@ -28,11 +28,11 @@ $permissao = $_SESSION['Perm'];
                 </div>
                 <p class="title-menu admin">Administração</p>
                 <a href="./cadastrarbens.php" value="/cadastrarbens.php" id="botao2" class="btn-menu botoes admin"><img id="icon-computador" src="./images/icon-computador.png" alt="Icon Computador">Cadastro de Bens</a>
-                <a href="./listaremovimentar.php" value="/listaremovimentar.php" id="botao4" class="btn-menu botoes admin"><img id="icon-lista" src="./images/icon-lista.png" alt="Icon Lista">Listar/Movimentar Bens</a>
-                <a href="./usuarios.php" value="/usuarios.php" id="botao5" class="btn-menu botoes admin"><img id="icon-usuario" src="./images/usuario.png" alt="Icon Usuario">Usuários</a>
-                <a href="./unidades.php" value="/unidades.php" id="botao6" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/unidades.png" alt="Icon Usuario">Unidades</a>
+                <a href="./listaremovimentar.php?status=Ativo" value="/listaremovimentar.php" id="botao4" class="btn-menu botoes admin"><img id="icon-lista" src="./images/icon-lista.png" alt="Icon Lista">Listar/Movimentar Bens</a>
+                <a href="./usuarios.php?status=Ativo&permissao=4" value="/usuarios.php" id="botao5" class="btn-menu botoes admin"><img id="icon-usuario" src="./images/usuario.png" alt="Icon Usuario">Usuários</a>
+                <a href="./unidades.php?status=Ativo" value="/unidades.php" id="botao6" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/unidades.png" alt="Icon Usuario">Unidades</a>
                 <a href="./tiposdebens.php" value="/tiposdebens.php" id="botao7" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/icon-tipos.png" alt="Icon Usuario">Tipos de Bens</a>
-                <a href="./inventario.php" value="/inventario.php" id="botao8" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/icons-inventory.png" alt="Icon Usuario">Inventário</a>
+                <a href="./inventario.php?ano=2024" value="/inventario.php" id="botao8" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/icons-inventory.png" alt="Icon Usuario">Inventário</a>
             </div>
             <div class="info-usuario">
                 <h3 class="nome-usuario"><?php
