@@ -11,7 +11,24 @@ if (isset($_GET['limit'])) {
 } else if (isset($_COOKIE['recordsPerPage_item'])) {
     $limit = $_COOKIE['recordsPerPage_item'];
 } else {
-    $limit = 7;
+    $limit = 5;
+}
+
+if (isset($_GET['id']) && isset($_GET['excluir'])) {
+    if (isset($_GET['limit'])) {
+        $limit = $_GET['limit'];
+    } else {
+        $limit = 5;
+    }
+
+    $idbem = $_GET['id'];
+    $excluir = $_GET['excluir'];
+    $responsavel = $_SESSION['SesID'];
+    print_r($idbem);
+
+    $result = mysqli_query($conexao, "UPDATE item SET excluido = 1 WHERE idbem = '$idbem'");
+    $result = mysqli_query($conexao, "INSERT INTO historicoexclusao(idbem_excluido, responsavel) VALUES ('$idbem', '$responsavel')");
+    header("Location: listaremovimentar.php?limit=" . $limit . "&status=Ativo&tipo=&unidade=&pesquisar=");
 }
 
 $result = $conexao->query('SELECT
@@ -56,16 +73,17 @@ if (isset($_GET['tipo']) && $_GET['tipo'] !== '') {
 if (isset($_GET['status']) && $_GET['status'] !== '') {
     if ($_GET['status'] != 'Todos') {
         $condicoes[] = "statusitem = '{$_GET['status']}'";
+    } else {
+        $condicoes[] = "statusitem != 'Inativo'";
     }
 }
 
 $where = '';
 if (!empty($condicoes)) {
-    $where = " WHERE " . implode(" AND ", $condicoes);
+    $where = " WHERE ". "excluido = 0 AND " . implode(" AND ", $condicoes);
 }
 
-$busca = "SELECT * FROM item $where ORDER BY idbem ASC";
-
+$busca = "SELECT * FROM item $where ORDER BY idbem DESC";
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 
@@ -149,7 +167,6 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
 
     .div-table {
         width: 100%;
-        overflow: auto;
     }
 
     .div-table::-webkit-scrollbar {
@@ -187,12 +204,94 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
         margin-right: 2px;
         font-size: 14px;
     }
+
+    .container-msg-inativo {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10000;
+    }
+
+    .msg-inativo {
+        width: 340px;
+        height: 170px;
+        background-color: #104EEF;
+        color: #fff;
+        border-radius: 8px;
+        padding: 20px 35px 20px 20px;
+        margin-top: 25px;
+        animation: msg-inativo 1s ease;
+    }
+
+    .msg-trocar {
+        display: none;
+    }
+
+    @keyframes msg-inativo {
+        from {
+            transform: translateY(-100%);
+        }
+
+        to {
+            transform: translateY(0%);
+        }
+    }
+
+    .msg-inativo>h3 {
+        font-size: 24px;
+        font-family: 'Lato', sans-serif;
+        font-weight: bolder;
+    }
+
+    .msg-inativo>p {
+        font-size: 18px;
+        font-family: 'Lato', sans-serif;
+        font-weight: 500;
+        margin: 10px 0px 15px;
+    }
+
+    .btn-msg-inativo {
+        font-size: 16px;
+        font-weight: bold;
+        font-family: 'Lato', sans-serif;
+        padding: 8px 16px;
+        color: white;
+        background-color: #104EEF;
+        border: 1px solid #4B7AF3;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-msg-inativo:hover {
+        text-decoration: none;
+    }
+
+    .btn-msg-inativo.inativo {
+        background-color: #fff;
+        color: #104EEF;
+        margin-right: 5px;
+        border: none;
+    }
 </style>
 
 <body>
     <?php
     include_once('menu.php');
     ?>
+    <div class="container-msg-inativo">
+        <div class="msg-inativo msg-trocar" id="box-inativo">
+            <h3>Você está excluindo o item.</h3>
+            <p>Tem certeza de que deseja excluir?</p>
+            <div class="box-msg-inativo">
+                <a onclick="trocarInativo()" href="#" class="btn-msg-inativo inativo">Sim</a>
+                <a onclick="fecharMsgInativo()" class="btn-msg-inativo">Não</a>
+            </div>
+        </div>
+    </div>
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel-box mb-4">
             <div class="carrossel">
@@ -217,15 +316,19 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                         <select id="statusSelect" class="form-select" aria-label="Default select example" name="status">
                             <option value="<?php echo empty($_GET['status']) ? 'Ativo' : $_GET['status']; ?>" hidden><?php echo empty($_GET['status']) ? 'Ativo' : $_GET['status']; ?></option>
                             <option value="Ativo">Ativo</option>
-                            <option value="Inativo">Inativo</option>
+                            <option value="Baixado">Baixado</option>
+                            <option value="Para Doação">Para Doação</option>
+                            <option value="Ativo">Para Descarte</option>
+                            <option value="Ativo">Doado</option>
+                            <option value="Descartado">Descartado</option>
                             <option value="Todos">Todos</option>
                         </select>
                     </div>
                     <div class="col-3 ml-2 mb-2">
                         <p class="mb-1 text-muted">Tipo:</p>
                         <select class="form-select" name="tipo" id="tipo">
-                        <option value="<?php echo empty($_GET['tipo']) ? '' : $_GET['tipo']; ?>" hidden><?php echo empty($_GET['tipo']) ? 'Selecionar' : $_GET['tipo']; ?></option>
-                        <?php
+                            <option value="<?php echo empty($_GET['tipo']) ? '' : $_GET['tipo']; ?>" hidden><?php echo empty($_GET['tipo']) ? 'Selecionar' : $_GET['tipo']; ?></option>
+                            <?php
                             include 'query-tipos.php';
                             ?>
                         </select>
@@ -233,8 +336,8 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
                         <select id="unidadeSelect" class="form-select" name="unidade">
-                        <option value="<?php echo empty($_GET['unidade']) ? '' : $_GET['unidade']; ?>" hidden><?php echo empty($_GET['unidade']) ? 'Selecionar' : $_GET['unidade']; ?></option>
-                        <?php
+                            <option value="<?php echo empty($_GET['unidade']) ? '' : $_GET['unidade']; ?>" hidden><?php echo empty($_GET['unidade']) ? 'Selecionar' : $_GET['unidade']; ?></option>
+                            <?php
                             include 'query-unidades.php'
                             ?>
                         </select>
@@ -264,6 +367,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                                 <th>CIMBPM</th>
                                 <th>Status</th>
                                 <th>Ações</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody id='myTable'>
@@ -283,7 +387,12 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                                 echo "<td>" . $user_data['numprocesso'] . '<span hidden>todos</span>' . "</td>";
                                 echo "<td>" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
                                 echo "<td>" . $user_data['statusitem'] . '<span hidden>todos</span>' . "</td>";
-                                echo "<td>" . "<a href='movimentacao.php?id=$user_data[idbem]'><img src='./images/icon-seta.png' alt='Seta'></a>" . "<a href='alteracaodebens.php?id=$user_data[idbem]'><img src='./images/icon-lapis.png' alt='Seta'></a>" . '<span hidden>todos</span>' . "</td>";
+                                echo "<td>" . "<div class='d-flex'><a href='movimentacao.php?id=$user_data[idbem]'><img src='./images/icon-seta.png' alt='Seta'></a>" . "<a href='alteracaodebens.php?id=$user_data[idbem]'><img src='./images/icon-lapis.png' alt='Seta'></a>" . '<span hidden>todos</span>' . "</div></td>";
+                                echo "<td>";
+                                if ($user_data['statusitem'] == 'Ativo') {
+                                    echo "<a class='x-image' id='tooltip2' onclick='mostrarMsgInativo(\"{$user_data['idbem']}\")'><span id='tooltipText2'>Excluir</span><img class='img-usuario' src='./images/icons-x.png' alt='x'></a>";
+                                }
+                                echo "</td>";
                                 echo "</tr>";
                             }
                             ?>
@@ -316,8 +425,8 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     $ano = isset($_GET['ano']) ? $_GET['ano'] : '';
                     $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : '';
 
-                    echo "<a href='?page=" . ($page - 1) . '&limit=' . $limit . '&status' . $status . '&tipo=' . $tipo . '&unidade=' . $unidade . '&pesquisar=' . $pesquisar ."' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
-                    echo "<a href='?page=" . ($page + 1) . '&limit=' . $limit . '&status' . $status . '&tipo=' . $tipo . '&unidade=' . $unidade . '&pesquisar=' . $pesquisar ."' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
+                    echo "<a href='?page=" . ($page - 1) . '&limit=' . $limit . '&status' . $status . '&tipo=' . $tipo . '&unidade=' . $unidade . '&pesquisar=' . $pesquisar . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
+                    echo "<a href='?page=" . ($page + 1) . '&limit=' . $limit . '&status' . $status . '&tipo=' . $tipo . '&unidade=' . $unidade . '&pesquisar=' . $pesquisar . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
                     ?>
                 </div>
             </div>
@@ -331,6 +440,38 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     <div class="hide" id="modal"></div>
 </body>
 <script>
+    function mostrarMsgInativo(nome) {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        var paramValue = urlParams.get('limit');
+        if (paramValue == null) {
+            paramValue = '10';
+        }
+        let newUrl = 'listaremovimentar.php?id=' + nome + '&limit=' + paramValue;
+        console.log(newUrl);
+        window.history.pushState({
+            path: newUrl
+        }, '', newUrl);
+        let msgSair = document.getElementById("box-inativo");
+        msgSair.style.display = "block";
+    }
+
+    function trocarInativo() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const paramValue = urlParams.get('id');
+        window.location.href = '?id=' + paramValue + '&excluir=' + 'Inativo';
+
+        let msgSair = document.getElementById("box-inativo");
+        msgSair.style.display = "none";
+    }
+
+    function fecharMsgInativo() {
+        let msgSair = document.getElementById("box-inativo");
+        msgSair.style.display = "none";
+        window.location.href = '?status=Ativo';
+    }
+
     function exportarArquivo() {
         var worksheet = XLSX.utils.json_to_sheet(registros2);
         var workbook = XLSX.utils.book_new(registros2);
@@ -351,7 +492,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     }
 
     function limparInput() {
-        window.location.href = 'listaremovimentar.php';
+        window.location.href = 'listaremovimentar.php?status=Ativo';
     }
 
     function updateLimit() {

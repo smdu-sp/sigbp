@@ -3,6 +3,7 @@ session_start();
 include_once('conexoes/config.php');
 include_once('header.php');
 include_once('componentes/verificacao.php');
+include_once('componentes/permissao.php');
 
 if (isset($_GET['limit'])) {
     $limit = $_GET['limit'];
@@ -137,13 +138,11 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
         height: 100vh;
         display: none;
     }
-
-
 </style>
 
 <body>
     <?php
-        include_once('menu.php');
+    include_once('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel-box mb-4">
@@ -156,7 +155,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
         <h2 class="mb-3 mt-4">Últimas Movimentações</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
             <div class="d-flex justify-content-center flex-column" style="width: 100%;">
-                <form class="d-flex justify-content-end align-items-end" action="home.php" method="GET" style="width: 100%;">
+                <div class="d-flex justify-content-end align-items-end" style="width: 100%;">
                     <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar" style="cursor: pointer;">
                         <img src="./images/icon-recarregar.png" alt="#" id='img-recarregar'>
                     </a>
@@ -165,7 +164,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                     </a>
                     <div class="col-2 mb-2">
                         <p class="mb-1 text-muted">Ano:</p>
-                        <select id="anoSelect" class="form-select" name="ano">
+                        <select id="anoSelect" class="form-select" onchange="filtrarAno()" name="ano">
                             <option value="<?php echo empty($_GET['ano']) ? '' : $_GET['ano']; ?>" hidden><?php echo empty($_GET['ano']) ? 'Selecionar' : $_GET['ano']; ?></option>
                             <option value="2023">2023</option>
                             <option value="2024">2024</option>
@@ -173,17 +172,16 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                     </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
-                        <select id="unidadeSelect" class="form-select" name="unidade">
+                        <select id="unidadeSelect" class="form-select" onchange="filtrarUnidade()" name="unidade">
                             <option value="<?php echo empty($_GET['unidade']) ? '' : $_GET['unidade']; ?>" hidden><?php echo empty($_GET['unidade']) ? 'Selecionar' : $_GET['unidade']; ?></option>
                             <?php include 'query-unidades.php' ?>
                         </select>
                     </div>
                     <div class="col-6 mb-2">
                         <p class="mb-1 text-muted">Buscar:</p>
-                        <input class="form-control buscar" id="myInput" name="pesquisar" type="text" placeholder="Procurar..." value="<?php isset($_GET['pesquisar']) ? $_GET['pesquisar'] : '' ?>">
+                        <input class="form-control buscar" id="myInput" onchange="filtrarBuscar()" name="pesquisar" type="text" placeholder="Procurar..." value="<?php isset($_GET['pesquisar']) ? $_GET['pesquisar'] : '' ?>">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon" src="./images/icon-filtrar.png" alt="#"></button>
-                </form>
+                </div>
                 <br>
                 <table class="table table-hover">
                     <thead>
@@ -226,7 +224,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                 <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
                     <select id='recordsPerPage' onchange="updateLimit()">
-                        <option value="<?php echo $limit ?>" selected hidden><?php echo $limit ?></option>
+                        <option value="<?php echo $limit ?>" hidden><?php echo $limit ?></option>
                         <option value='7'>7</option>
                         <option value='14'>14</option>
                     </select>
@@ -257,6 +255,20 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
 
     function recarregar() {
         window.location.reload(true);
+    }
+
+    function filtrarAno() {
+        var selectAno = document.getElementById('anoSelect');
+        var selectAnoValor = selectAno.value;
+        var selectedPesquisar = document.getElementById('myInput').value;
+        var selectedUnidade = document.getElementById('unidadeSelect').value;
+        var selectElement = document.getElementById('recordsPerPage');
+        localStorage.setItem('recordsPerPage', selectedValue);
+        var selectedValue = selectElement.value;
+        // var url = 'home.php?inputText=' + encodeURIComponent(selectValorAno.value);
+        window.location.href = '?limit=' + selectedValue + '&ano=' + selectAnoValor + '&unidade=' + selectedUnidade + '&pesquisar=' + selectedPesquisar;
+        // window.history.replaceState({}, '', url);
+        // window.location.reload(true);
     }
 
     function updateLimit() {

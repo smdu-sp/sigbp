@@ -3,6 +3,7 @@ session_start();
 include_once('conexoes/config.php');
 include_once('header.php');
 include_once('componentes/verificacao.php');
+include_once('componentes/permissao.php');
 
 $patrimonio = $_GET['patrimonio'];
 

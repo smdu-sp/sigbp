@@ -24,7 +24,7 @@ if (isset($_GET['nome']) && isset($_GET['inativo'])) {
     $nome = $_GET['nome'];
     $inativo = $_GET['inativo'];
 
-    $result = mysqli_query($conexao, "UPDATE unidades SET statusunidade = '$inativo' WHERE unidades = '$nome'");
+    $result = mysqli_query($conexao, "UPDATE unidades SET statusunidade = '$inativo' WHERE sigla = '$nome'");
 
     header("Location: unidades.php?limit=" . $limit . "&status=Ativo&permissao=4&unidade=&pesquisar=");
 }
@@ -37,9 +37,9 @@ if (isset($_GET['nome']) && isset($_GET['reativar'])) {
     }
 
     $nome = $_GET['nome'];
-    $inativo = $_GET['reativar'];
+    $reativar = $_GET['reativar'];
 
-    $result = mysqli_query($conexao, "UPDATE unidades SET statusunidade = '$inativo' WHERE unidades = '$nome'");
+    $result = mysqli_query($conexao, "UPDATE unidades SET statusunidade = '$reativar' WHERE sigla = '$nome'");
 
     header("Location: unidades.php?limit=" . $limit . "&status=Ativo&permissao=4&unidade=&pesquisar=");
 }
@@ -242,10 +242,10 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     ?>
     <div class="container-msg-inativo">
         <div class="msg-inativo msg-trocar" id="box-inativo">
-            <h3>Você está trocando o usuário para inativo.</h3>
+            <h3>Você está trocando o usuário para Inativo.</h3>
             <p>Tem certeza de que deseja trocar?</p>
             <div class="box-msg-inativo">
-                <a onclick="trocar()" href="#" class="btn-msg-inativo inativo">Sim</a>
+                <a onclick="trocarInativo()" href="#" class="btn-msg-inativo inativo">Sim</a>
                 <a onclick="fecharMsgInativo()" class="btn-msg-inativo">Não</a>
             </div>
         </div>
@@ -400,17 +400,17 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
         msgSair.style.display = "block";
     }
 
-    function fecharMsgInativo() {
-        let msgSair = document.getElementById("box-inativo");
+    function trocarReativar() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const paramValue = urlParams.get('nome');
+        window.location.href = '?nome=' + paramValue + '&reativar=' + 'Ativo';
+
+        let msgSair = document.getElementById("box-reativar");
         msgSair.style.display = "none";
     }
 
-    function fecharMsgInativo() {
-        let msgSair = document.getElementById("box-inativo");
-        msgSair.style.display = "none";
-    }
-
-    function trocar() {
+    function trocarInativo() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const paramValue = urlParams.get('nome');
@@ -420,24 +420,35 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
         msgSair.style.display = "none";
     }
 
-    function limparInput() {
-        window.location.href = 'unidades.php';
+    function fecharMsgInativo() {
+        let msgSair = document.getElementById("box-inativo");
+        msgSair.style.display = "none";
     }
 
-    function recarregar() {
-        window.location.reload(true);
+    function fecharMsgReativar() {
+        let msgSair = document.getElementById("box-reativar");
+        msgSair.style.display = "none";
     }
+
+
+    function limparInput() {
+        window.location.href = 'unidades.php?status=Ativo';
+    }
+
 
     function updateLimit() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const newLimit = document.getElementById('recordsPerPage_unidade').value;
-        const status = document.getElementById('statusSelect').value;
-        const sigla = document.getElementById('siglaSelect').value;
-        const pesquisar = document.getElementById('myInput').value;
+        var status = document.getElementById('statusSelect').value;
+        var sigla = document.getElementById('siglaSelect').value;
+        var pesquisar = document.getElementById('myInput').value;
         window.location.href = '?limit=' + newLimit + '&status=' + status + '&sigla=' + sigla + '&pesquisar=' + pesquisar;
     }
 
+    function recarregar() {
+        window.location.reload(true);
+    }
 
     document.addEventListener('DOMContentLoaded', function() {
         var storedLimit = localStorage.getItem('recordsPerPage_unidade');

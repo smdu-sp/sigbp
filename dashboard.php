@@ -1,7 +1,9 @@
 <?php
 session_start();
-include_once('componentes/verificacao.php');
+include_once('conexoes/config.php');
 include_once('header.php');
+include_once('componentes/verificacao.php');
+include_once('componentes/permissao.php');
 ?>
 <style>
     @media (max-width: 1600px) {
@@ -56,37 +58,22 @@ include_once('header.php');
         <h2 class="mb-2">Dashboard</h2>
         <div class="container d-flex justify-content-center">
             <div class="card mb-3 me-3 rounded-0 shadow p-3 mb-5 bg-white rounded border-0">
-                <form action="resultadodash.php">
-                    <div class="card-body d-flex flex-column" style="width: 800px; height: 700px">
-                        <label for="card" class="form-label mt-1 text-primary">Selecione um Item:</label>
-                        <input class="form-control mb-2" type="text" id="textBusca" name="inputText">
-                        <div class="card lista-itens">
-                            <ul class="list-group list-group-flush overflow-auto" id="ulItens" style="height: 600px;">
-                                <?php
-                                include 'query-tipos-dashboard.php';
-                                ?>
-                            </ul>
-                        </div>
+                <div class="card-body d-flex flex-column" style="width: 800px; height: 700px">
+                    <label for="card" class="form-label mt-1 text-primary">Selecione um Item:</label>
+                    <div class="card lista-itens">
+                        <ul class="list-group list-group-flush overflow-auto" id="ulItens" style="height: 650px;">
+                            <?php
+                            include 'query-tipos-dashboard.php';
+                            ?>
+                        </ul>
                     </div>
-                    <div class="d-flex justify-content-end mr-3 mt-1" id="bnt ">
-                        <button type="submit" class="btn btn-primary mb-2" id="btn" disabled>Verificar Item</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
     <div class="hide" id="modal"></div>
 </body>
 <script>
-    $(document).ready(function() {
-        $("#textBusca").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#ulItens li").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-
     function filterList() {
         var input = document.getElementById('textBusca');
         var filter = input.value.toUpperCase();
@@ -104,7 +91,6 @@ include_once('header.php');
     }
 
     function botaoClicado(item) {
-        document.getElementById('textBusca').value = item;
-        filterList();
+        window.location.href = 'resultadodash.php?inputText=' + item;
     }
 </script>

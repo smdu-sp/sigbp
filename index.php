@@ -52,7 +52,6 @@ if (isset($_POST['submit'])) {
                 $nomefr = mysqli_real_escape_string($conexao, $data[$i]["givenname"][0]) . " " . mysqli_real_escape_string($conexao, $data[$i]["sn"][0]);
                 $emailfr = mysqli_real_escape_string($conexao, strtolower($data[$i]["mail"][0]));
             }
-
     
             $_SESSION['SesID'] = $inicial;
             $_SESSION['SesNome'] = $nomefr;

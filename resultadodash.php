@@ -1,10 +1,12 @@
 <?php
 session_start();
-include_once('componentes/verificacao.php');
+include_once('conexoes/config.php');
 include_once('header.php');
+include_once('componentes/verificacao.php');
+include_once('componentes/permissao.php');
 ?>
 <style>
-        @media (max-width: 1600px) {
+    @media (max-width: 1600px) {
         .conteudo {
             margin-left: 75px;
             width: 95%;
@@ -38,6 +40,7 @@ include_once('header.php');
         }
     }
 </style>
+
 <body>
     <?php
     include_once('menu.php');
@@ -65,17 +68,22 @@ include_once('header.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $atic = ceil($row_pg['atic']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS gab FROM item WHERE tipo = '$item' AND localizacao = 'GABINETE';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS gab FROM item WHERE tipo = '$item' AND (localizacao = 'GABINETE' OR localizacao = 'AUDITÓRIO/GAB' OR localizacao='GAB');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $gab = ceil($row_pg['gab']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS stel FROM item WHERE tipo = '$item' AND localizacao = 'STEL';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS stel FROM item WHERE tipo = '$item' AND (localizacao = 'STEL' OR localizacao = ' STEL');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $stel = ceil($row_pg['stel']);
 
-    $gabinete = $ascom + $atecc + $atic + $gab + $stel;
+    $buscar_produtos = "SELECT COUNT(idbem) AS ataj FROM item WHERE tipo = '$item' AND localizacao = 'ATAJ';";
+    $query_produto = mysqli_query($conexao, $buscar_produtos);
+    $row_pg = mysqli_fetch_assoc($query_produto);
+    $ataj = ceil($row_pg['ataj']);
+
+    $gabinete = $ascom + $atecc + $atic + $gab + $stel + $ataj;
 
     $buscar_produtos = "SELECT COUNT(idbem) AS caf_g FROM item WHERE tipo = '$item' AND localizacao = 'CAF';";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
@@ -87,22 +95,17 @@ include_once('header.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dgp = ceil($row_pg['dgp']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dlc FROM item WHERE tipo = '$item' AND localizacao = 'DLC';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dlc FROM item WHERE tipo = '$item' AND (localizacao = 'DLC' OR localizacao = 'CAF/DLC');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dlc = ceil($row_pg['dlc']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dof FROM item WHERE tipo = '$item' AND localizacao = 'DOF';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dof FROM item WHERE tipo = '$item' AND (localizacao = 'DOF' OR localizacao = 'CAF/DOF');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dof = ceil($row_pg['dof']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS gabinete FROM item WHERE tipo = '$item' AND localizacao = 'GABINETE';";
-    $query_produto = mysqli_query($conexao, $buscar_produtos);
-    $row_pg = mysqli_fetch_assoc($query_produto);
-    $a = ceil($row_pg['gabinete']);
-
-    $buscar_produtos = "SELECT COUNT(idbem) AS dsup FROM item WHERE tipo = '$item' AND localizacao = 'DSUP';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dsup FROM item WHERE tipo = '$item' AND (localizacao = 'DSUP' OR localizacao = 'CAF/DSUP');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dsup = ceil($row_pg['dsup']);
@@ -124,27 +127,22 @@ include_once('header.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $cap_g = ceil($row_pg['cap_g']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS gabinete FROM item WHERE tipo = '$item' AND localizacao = 'GABINETE';";
-    $query_produto = mysqli_query($conexao, $buscar_produtos);
-    $row_pg = mysqli_fetch_assoc($query_produto);
-    $a = ceil($row_pg['gabinete']);
-
-    $buscar_produtos = "SELECT COUNT(idbem) AS arthur FROM item WHERE tipo = '$item' AND localizacao = 'ARTHUR SABOYA';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS arthur FROM item WHERE tipo = '$item' AND (localizacao = 'ARTHUR SABOYA' OR localizacao = 'CAP/ARTHUR SABOYA');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $arthur = ceil($row_pg['arthur']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS deprot FROM item WHERE tipo = '$item' AND localizacao = 'DEPROT';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS deprot FROM item WHERE tipo = '$item' AND (localizacao = 'DEPROT' OR localizacao = 'CAP/DEPROT');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $deprot = ceil($row_pg['deprot']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dpci FROM item WHERE tipo = '$item' AND localizacao = 'DPCI';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dpci FROM item WHERE tipo = '$item' AND (localizacao = 'DPCI' OR localizacao = 'CAP/DPCI');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dpci = ceil($row_pg['dpci']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dpd FROM item WHERE tipo = '$item' AND localizacao = 'DPD';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dpd FROM item WHERE tipo = '$item' AND (localizacao = 'DPD' OR localizacao = 'CAP/DPD' OR localizacao = 'CAP/GAB/DPD');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dpd = ceil($row_pg['dpd']);
@@ -161,27 +159,22 @@ include_once('header.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $case_g = ceil($row_pg['case_g']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS case_dle FROM item WHERE tipo = '$item' AND localizacao = 'CASE/DLE';";
-    $query_produto = mysqli_query($conexao, $buscar_produtos);
-    $row_pg = mysqli_fetch_assoc($query_produto);
-    $case_dle = ceil($row_pg['case_dle']);
-
-    $buscar_produtos = "SELECT COUNT(idbem) AS dcad FROM item WHERE tipo = '$item' AND localizacao = 'DCAD';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dcad FROM item WHERE tipo = '$item' AND (localizacao = 'DCAD' OR localizacao='CASE/DCAD');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dcad = ceil($row_pg['dcad']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS ddu FROM item WHERE tipo = '$item' AND localizacao = 'DDU';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS ddu FROM item WHERE tipo = '$item' AND (localizacao = 'DDU' OR localizacao='CASE/DDU');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $ddu = ceil($row_pg['ddu']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dle FROM item WHERE tipo = '$item' AND localizacao = 'DLE';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dle FROM item WHERE tipo = '$item' AND (localizacao = 'DLE' OR localizacao='CASE/DLE');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dle = ceil($row_pg['dle']);
 
-    $case = $case_g + $case_dle + $dcad + $ddu + $dle;
+    $case = $case_g + $dcad + $ddu + $dle;
 
     $buscar_produtos = "SELECT COUNT(idbem) AS cepeuc FROM item WHERE tipo = '$item' AND localizacao = 'CEPEUC';";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
@@ -193,12 +186,12 @@ include_once('header.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $comin_g = ceil($row_pg['comin_g']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dcigp FROM item WHERE tipo = '$item' AND localizacao = 'DCIGP';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dcigp FROM item WHERE tipo = '$item' AND (localizacao = 'DCIGP' OR localizacao='COMIN/DCIGP');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dcigp = ceil($row_pg['dcigp']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dcimp FROM item WHERE tipo = '$item' AND localizacao = 'DCIMP';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dcimp FROM item WHERE tipo = '$item' AND (localizacao = 'DCIMP' OR localizacao='COMIN/DCIMP');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dcimp = ceil($row_pg['dcimp']);
@@ -210,22 +203,22 @@ include_once('header.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $contru_g = ceil($row_pg['contru_g']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dacess FROM item WHERE tipo = '$item' AND localizacao = 'DACESS';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dacess FROM item WHERE tipo = '$item' AND (localizacao = 'DACESS' OR localizacao = 'CONTRUDACESS' OR localizacao = 'CONTRU/DACESS');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dacess = ceil($row_pg['dacess']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dins FROM item WHERE tipo = '$item' AND localizacao = 'DINS';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dins FROM item WHERE tipo = '$item' AND (localizacao = 'DINS' OR localizacao = 'CONTRU/DINS');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dins = ceil($row_pg['dins']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dlr FROM item WHERE tipo = '$item' AND localizacao = 'DLR';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dlr FROM item WHERE tipo = '$item' AND (localizacao = 'DLR' OR localizacao = 'CONTRU/DLR');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dlr = ceil($row_pg['dlr']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dsus FROM item WHERE tipo = '$item' AND localizacao = 'DSUS';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dsus FROM item WHERE tipo = '$item' AND (localizacao = 'DSUS' OR localizacao = 'CONTRU/DSUS');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dsus = ceil($row_pg['dsus']);
@@ -237,17 +230,17 @@ include_once('header.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $deuso_g = ceil($row_pg['deuso_g']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dmus FROM item WHERE tipo = '$item' AND localizacao = 'DMUS';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dmus FROM item WHERE tipo = '$item' AND (localizacao = 'DMUS' OR localizacao = 'DEUSO/DMUS');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dmus = ceil($row_pg['dmus']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dnus FROM item WHERE tipo = '$item' AND localizacao = 'DNUS';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dnus FROM item WHERE tipo = '$item' AND (localizacao = 'DNUS' OR localizacao = 'DEUSO/DNUS');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dnus = ceil($row_pg['dnus']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dsiz FROM item WHERE tipo = '$item' AND localizacao = 'DSIZ';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dsiz FROM item WHERE tipo = '$item' AND (localizacao = 'DSIZ' OR localizacao = 'DEUSO/DSIZ');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dsiz = ceil($row_pg['dsiz']);
@@ -270,17 +263,17 @@ include_once('header.php');
     $parhis_g = ceil($row_pg['parhis_g']);
 
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dhis FROM item WHERE tipo = '$item' AND localizacao = 'DHIS';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dhis FROM item WHERE tipo = '$item' AND (localizacao = 'DHIS' OR localizacao='PARHIS/DHIS');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dhis = ceil($row_pg['dhis']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dhmp FROM item WHERE tipo = '$item' AND localizacao = 'DHMP';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dhmp FROM item WHERE tipo = '$item' AND (localizacao = 'DHMP' OR localizacao='PARHIS/DHMP');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dhmp = ceil($row_pg['dhmp']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dps FROM item WHERE tipo = '$item' AND localizacao = 'DPS';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dps FROM item WHERE tipo = '$item' AND (localizacao = 'DPS' OR localizacao='PARHIS/DPS');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dps = ceil($row_pg['dps']);
@@ -297,17 +290,17 @@ include_once('header.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $resid_g = ceil($row_pg['resid_g']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS drgp FROM item WHERE tipo = '$item' AND localizacao = 'DRGP';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS drgp FROM item WHERE tipo = '$item' AND (localizacao = 'DRGP' OR localizacao='RESID/DRGP');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $drgp = ceil($row_pg['drgp']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS drpm FROM item WHERE tipo = '$item' AND localizacao = 'DRPM';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS drpm FROM item WHERE tipo = '$item' AND (localizacao = 'DRPM' OR localizacao='RESID/DRPM');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $drpm = ceil($row_pg['drpm']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dru FROM item WHERE tipo = '$item' AND localizacao = 'DRU';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dru FROM item WHERE tipo = '$item' AND (localizacao = 'DRU' OR localizacao='RESID/DRU');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dru = ceil($row_pg['dru']);
@@ -319,12 +312,12 @@ include_once('header.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $servin_g = ceil($row_pg['servin_g']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dsigp FROM item WHERE tipo = '$item' AND localizacao = 'DSIGP';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dsigp FROM item WHERE tipo = '$item' AND (localizacao = 'DSIGP' OR localizacao='SERVIN/DSIGP');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dsigp = ceil($row_pg['dsigp']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dsimp FROM item WHERE tipo = '$item' AND localizacao = 'DSIMP';";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dsimp FROM item WHERE tipo = '$item' AND (localizacao = 'DSIMP' OR localizacao='SERVIN/DSIMP');";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dsimp = ceil($row_pg['dsimp']);
@@ -348,7 +341,12 @@ include_once('header.php');
             <div class="card mb-3 me-3 rounded-0 shadow p-3 mb-5 bg-white rounded border-0">
                 <div class="card-body d-flex flex-column" style="width: 450px;">
                     <label for="card" class="form-label mt-1 text-primary">Item selecionado:</label>
-                    <input class="form-control mb-2" type="text" id="textResultado" readonly>
+                    <select class="form-select" name="tipo" id="tipo" onchange="trocouItem()" required>
+                        <option value="<?php echo $_GET['inputText'] ?>" hidden="hidden"><?php echo $_GET['inputText'] ?></option>
+                        <?php
+                        include 'query-tipos.php';
+                        ?>
+                    </select>
                 </div>
                 <p class="card-text mb-3 mt-2 m-auto" style="font-size: 20px;"><strong class="mr-2">Total:</strong>
                     <?php echo "<span>$totalItem</span>" ?></p>
@@ -364,8 +362,18 @@ include_once('header.php');
                         <li class="list-group-item d-flex justify-content-start">ATIC: <?php echo "<span class='margin-atic'>" . $atic . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">GAB: <?php echo "<span class='margin-gab'>" . $gab . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">STEL: <?php echo "<span class='margin-stel'>" . $stel . "</span>" ?></li>
-                        <li class="list-group-item">ㅤ</li>
-                        <li class="list-group-item">ㅤ</li>
+                        <?php
+                        if ($_GET['inputText'] != 'MICROCOMPUTADOR') {
+                        ?>
+                            <li class="list-group-item d-flex justify-content-start">ATAJ: <span class='margin-stel'><?php echo $ataj; ?></span></li>
+                            <li class="list-group-item">ㅤ</li>
+                        <?php
+                        } else {
+                        ?>
+                            <li class="list-group-item d-flex justify-content-start">ATAJ: <span class='margin-ataj'><?php echo $ataj; ?></span></li>
+                        <?php
+                        }
+                        ?>
                     </ul>
                 </div>
                 <div class="col">
@@ -374,14 +382,14 @@ include_once('header.php');
                         <li class="list-group-item d-flex justify-content-start">ALMOXARIFADO: <?php echo "<span class='ml-3'>" . $almoxarifado . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">AUDITÓRIO: <?php echo "<span class='ml-3'>" . $auditorio . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">CAF-G: <?php echo "<span class='ml-4'>" . $caf_g . "</span>" ?></li>
-                        <li class="list-group-item d-flex justify-content-start">DGP: <?php  echo "<span class='margin-dgp'>" . $dgp . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DGP: <?php echo "<span class='margin-dgp'>" . $dgp . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DLC: <?php echo "<span class='margin-dlc'>" . $dlc . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DOF: <?php echo "<span class='margin-dof'>" . $dof . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DSUP: <?php echo "<span class='margin-dsup'>" . $dsup . "</span>" ?></li>
                     </ul>
                 </div>
                 <div class="col">
-                    <ul class="list-group d-flex justify-content-evenly" >
+                    <ul class="list-group d-flex justify-content-evenly">
                         <li class="list-group-item list-group-item-primary"><strong>CAP (total: <?php echo $cap; ?>)</strong></li>
                         <li class="list-group-item d-flex justify-content-start">ARTHUR SABOYA: <?php echo "<span class='ml-3'>" . $arthur . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">CAP-G: <?php echo "<span class='ml-5'>" . $cap_g . "</span>"  ?></li>
@@ -396,10 +404,9 @@ include_once('header.php');
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-primary" aria-current="true"><strong>CASE (total: <?php echo $case; ?>)</strong></li>
                         <li class="list-group-item d-flex justify-content-start">CASE-G: <?php echo "<span class='ml-4'>" . $case_g . "</span>" ?></li>
-                        <li class="list-group-item d-flex justify-content-start">CASE/DLE: <?php echo "<span class='ml-4'>" . $case_dle . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DLE: <?php echo "<span class='margin-dle'>" . $dle . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DCAD: <?php echo "<span class='margin-dcad'>" . $dcad . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DDU: <?php echo "<span class='margin-ddu'>" . $ddu . "</span>" ?></li>
-                        <li class="list-group-item d-flex justify-content-start">DLE: <?php echo "<span class='margin-dle'>" . $dle . "</span>" ?></li>
                         <li class="list-group-item">ㅤ</li>
                         <li class="list-group-item">ㅤ</li>
                     </ul>
@@ -509,14 +516,14 @@ include_once('header.php');
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-end mr-2">
-            <a href="dashboard.php" class="btn btn-primary">Escolher outro item</a>
-        </div>
     </div>
     <div class="hide" id="modal"></div>
 </body>
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const valorItem = urlParams.get("inputText");
-    document.getElementById('textResultado').value = valorItem;
+    function trocouItem() {
+        var select = document.getElementById('tipo');
+        var url = 'resultadodash.php?inputText=' + encodeURIComponent(select.value);
+        window.history.replaceState({}, '', url);
+        window.location.reload(true);
+    }
 </script>
