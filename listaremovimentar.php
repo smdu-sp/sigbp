@@ -80,7 +80,7 @@ if (isset($_GET['status']) && $_GET['status'] !== '') {
 
 $where = '';
 if (!empty($condicoes)) {
-    $where = " WHERE ". "excluido = 0 AND " . implode(" AND ", $condicoes);
+    $where = " WHERE " . "excluido = 0 AND " . implode(" AND ", $condicoes);
 }
 
 $busca = "SELECT * FROM item $where ORDER BY idbem DESC";
@@ -297,13 +297,13 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
             <div class="carrossel">
                 <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-                <a href="./usuarios.php" class="text-primary ms-1 carrossel-text">Usuários</a>
+                <a href="./listaremovimentar.php" class="text-primary ms-1 carrossel-text">Listar e Movimentar</a>
             </div>
         </div>
         <h2 class="mb-3 mt-4">Listar e Movimentar</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
             <div class="d-flex justify-content-center flex-column" style="width: 100%;">
-                <form class="d-flex justify-content-end align-items-end" action="listaremovimentar.php" method="GET" style="width: 100%;">
+                <div class="d-flex justify-content-end align-items-end" action="listaremovimentar.php" method="GET" style="width: 100%;">
                     <input type="hidden" name="limit" value="<?php echo $limit; ?>">
                     <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar" style="cursor: pointer;">
                         <img src="./images/icon-recarregar.png" alt="#" id='img-recarregar'>
@@ -313,41 +313,40 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     </a>
                     <div class="col-2 ml-2 mb-2">
                         <p class="mb-1 text-muted">Status:</p>
-                        <select id="statusSelect" class="form-select" aria-label="Default select example" name="status">
+                        <select id="statusSelect" onchange="filtrar()" class="form-select" aria-label="Default select example" name="status">
                             <option value="<?php echo empty($_GET['status']) ? 'Ativo' : $_GET['status']; ?>" hidden><?php echo empty($_GET['status']) ? 'Ativo' : $_GET['status']; ?></option>
                             <option value="Ativo">Ativo</option>
                             <option value="Baixado">Baixado</option>
                             <option value="Para Doação">Para Doação</option>
-                            <option value="Ativo">Para Descarte</option>
-                            <option value="Ativo">Doado</option>
+                            <option value="Para Descarte">Para Descarte</option>
+                            <option value="Doado">Doado</option>
                             <option value="Descartado">Descartado</option>
                             <option value="Todos">Todos</option>
                         </select>
                     </div>
-                    <div class="col-3 ml-2 mb-2">
-                        <p class="mb-1 text-muted">Tipo:</p>
-                        <select class="form-select" name="tipo" id="tipo">
-                            <option value="<?php echo empty($_GET['tipo']) ? '' : $_GET['tipo']; ?>" hidden><?php echo empty($_GET['tipo']) ? 'Selecionar' : $_GET['tipo']; ?></option>
-                            <?php
-                            include 'query-tipos.php';
-                            ?>
-                        </select>
-                    </div>
-                    <div class="col-3 mb-2">
+                    <div class="col-2 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
-                        <select id="unidadeSelect" class="form-select" name="unidade">
+                        <select id="unidadeSelect" onchange="filtrar()" class="form-select" name="unidade">
                             <option value="<?php echo empty($_GET['unidade']) ? '' : $_GET['unidade']; ?>" hidden><?php echo empty($_GET['unidade']) ? 'Selecionar' : $_GET['unidade']; ?></option>
                             <?php
                             include 'query-unidades.php'
                             ?>
                         </select>
                     </div>
-                    <div class="col-3 mb-2">
-                        <p class="mb-1 text-muted">Buscar:</p>
-                        <input class="form-control buscar" id="myInput" name="pesquisar" type="text" placeholder="Procurar..." value="<?php echo empty($pesquisar) ? '' : htmlspecialchars($pesquisar); ?>">
+                    <div class="col-3 ml-2 mb-2">
+                        <p class="mb-1 text-muted">Tipo:</p>
+                        <select class="form-select" onchange="filtrar()" name="tipo" id="tipo">
+                            <option value="<?php echo empty($_GET['tipo']) ? '' : $_GET['tipo']; ?>" hidden><?php echo empty($_GET['tipo']) ? 'Selecionar' : $_GET['tipo']; ?></option>
+                            <?php
+                            include 'query-tipos.php';
+                            ?>
+                        </select>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon" src="./images/icon-filtrar.png" alt="#"></button>
-                </form>
+                    <div class="col-4 mb-2">
+                        <p class="mb-1 text-muted">Buscar:</p>
+                        <input class="form-control buscar" onchange="filtrar()" id="myInput" name="pesquisar" type="text" placeholder="Procurar..." value="<?php echo isset($_GET['pesquisar']) ? htmlspecialchars($_GET['pesquisar']) : ''; ?>">
+                    </div>
+                </div>
                 <br>
                 <div class="div-table mb-1">
                     <table class="table table-hover" id="table">
@@ -407,7 +406,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                 <div class="d-flex flex-row">
                     <div class='records-per-page_item'>
                         <label for='recordsPerPage_item'>Registros por página:</label>
-                        <select id='recordsPerPage_item' onchange="updateLimit()">
+                        <select id='recordsPerPage_item' onchange="filtrar()">
                             <option value='<?php echo $limit ?>' hidden> <?php echo $limit ?></option>
                             <option value='5'>5</option>
                             <option value='10'>10</option>
@@ -440,6 +439,17 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     <div class="hide" id="modal"></div>
 </body>
 <script>
+    function filtrar() {
+        var selectElement = document.getElementById('recordsPerPage_item');
+        var selectedValue = selectElement.value;
+        var status = document.getElementById('statusSelect').value;
+        var unidade = document.getElementById('unidadeSelect').value;
+        var pesquisar = document.getElementById('myInput').value;
+        var tipo = document.getElementById('tipo').value;
+        localStorage.setItem('recordsPerPage_item', selectedValue);
+        window.location.href = '?limit=' + selectedValue + '&status=' + status + '&unidade=' + unidade + '&tipo=' + tipo + '&pesquisar=' + pesquisar;
+    }
+
     function mostrarMsgInativo(nome) {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
@@ -493,17 +503,6 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
 
     function limparInput() {
         window.location.href = 'listaremovimentar.php?status=Ativo';
-    }
-
-    function updateLimit() {
-        var selectElement = document.getElementById('recordsPerPage_item');
-        var selectedValue = selectElement.value;
-        var selectedStatus = document.getElementById('statusSelect').value;
-        var selectedTipo = document.getElementById('tipo').value;
-        var selectedUnidade = document.getElementById('unidadeSelect').value;
-        var selectedPesquisar = document.getElementById('myInput').value;
-        localStorage.setItem('recordsPerPage', selectedValue);
-        window.location.href = '?limit=' + selectedValue + '&status=' + selectedStatus + '&tipo=' + selectedTipo + '&unidade=' + selectedUnidade + '&pesquisar=' + selectedPesquisar;
     }
 
     function recarregar() {

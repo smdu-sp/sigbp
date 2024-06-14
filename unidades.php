@@ -265,13 +265,13 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
             <div class="carrossel">
                 <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-                <a href="./unidades.php" class="text-primary ms-1 carrossel-text">Usuários</a>
+                <a href="./unidades.php" class="text-primary ms-1 carrossel-text">Unidades</a>
             </div>
         </div>
         <h2 class="mb-3 mt-4">Unidades</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
             <div class="d-flex justify-content-center flex-column" style="width: 100%;">
-                <form class="d-flex justify-content-end align-items-end" action="unidades.php" method="GET" style="width: 100%;">
+                <div class="d-flex justify-content-end align-items-end" action="unidades.php" method="GET" style="width: 100%;">
                     <input type="hidden" name="limit" value="<?php echo $limit; ?>">
                     <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar" style="cursor: pointer;">
                         <img src="./images/icon-recarregar.png" alt="#" id='img-recarregar'>
@@ -301,8 +301,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                         <p class="mb-1 text-muted">Buscar:</p>
                         <input class="form-control buscar" onchange="filtrar()" id="myInput" name="pesquisar" type="text" placeholder="Procurar..." value="<?php echo isset($_GET['pesquisar']) ? htmlspecialchars($_GET['pesquisar']) : ''; ?>">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon" src="./images/icon-filtrar.png" alt="#"></button>
-                </form>
+                </div>
                 <br>
                 <table class="table table-hover">
                     <thead>

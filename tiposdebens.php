@@ -118,7 +118,7 @@ if (isset($_POST['reativar'])) {
                     <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
                 </a></li>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-                <a href="./dashboard.php" class="text-primary ms-1 carrossel-text">Tipos de Bens</a></li>
+                <a href="./tiposdebens.php" class="text-primary ms-1 carrossel-text">Tipos de Bens</a></li>
             </div>
         </div>
         <h2 class="mb-4">Tipos de Bens</h2>

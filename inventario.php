@@ -258,7 +258,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel-box mb-4">
             <div class="carrossel">
-                <a href="./inventario.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
+                <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
                 <a href="./inventario.php" class="text-primary ms-1 carrossel-text">Inventário</a>
             </div>
@@ -266,7 +266,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
         <h2 class="mb-3 mt-4">Inventário</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
             <div class="d-flex justify-content-center flex-column" style="width: 100%;">
-                <form class="d-flex justify-content-end align-items-end" action="inventario.php" method="GET" style="width: 100%;">
+                <div class="d-flex justify-content-end align-items-end" action="inventario.php" method="GET" style="width: 100%;">
                     <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar" style="cursor: pointer;">
                         <img src="./images/icon-recarregar.png" alt="#" id='img-recarregar'>
                     </a>
@@ -292,8 +292,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                         <p class="mb-1 text-muted">Buscar:</p>
                         <input class="form-control" onchange="filtrar()" id="myInput" name="pesquisar" type="text" value="<?php echo isset($_GET['pesquisar']) ? htmlspecialchars($_GET['pesquisar']) : ''; ?>" placeholder="Procurar...">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon" src="./images/icon-filtrar.png" alt="#"></button>
-                </form>
+                </div>
                 <br>
                 <table class="table table-hover">
                     <thead>
