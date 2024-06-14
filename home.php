@@ -5,11 +5,11 @@ include_once('header.php');
 include_once('componentes/verificacao.php');
 include_once('componentes/permissao.php');
 
-if (isset($_GET['limit'])) {
-    $limit = $_GET['limit'];
+if (isset($_GET['limit']) && is_numeric($_GET['limit'])) {
+    $limit = intval($_GET['limit']);
     setcookie('recordsPerPage', $limit, time() + (86400 * 30), "/");
-} else if (isset($_COOKIE['recordsPerPage'])) {
-    $limit = $_COOKIE['recordsPerPage'];
+} else if (isset($_COOKIE['recordsPerPage']) && is_numeric($_COOKIE['recordsPerPage'])) {
+    $limit = intval($_COOKIE['recordsPerPage']);
 } else {
     $limit = 7;
 }
@@ -30,17 +30,24 @@ if (isset($_GET['ano']) && $_GET['ano'] !== '') {
 if (isset($_GET['pesquisar']) && $_GET['pesquisar'] !== '') {
     $valor_pesquisar = $conexao->real_escape_string($_GET['pesquisar']);
     $palavras = explode(' ', $valor_pesquisar);
-    if (count($palavras) >= 1) {
-        $condicao_individual = [];
-        foreach ($palavras as $palavra) {
-            if (DateTime::createFromFormat('Y-m-d', $palavra) !== false) {
-                $data_formatada = date('Y-m-d', strtotime($palavra));
-                $condicao_individual[] = "transferencia.datatransf LIKE '%$data_formatada%'";
-            } else {
-                $palavra = $conexao->real_escape_string($palavra);
-                $condicao_individual[] = "(item.patrimonio LIKE '%$palavra%' OR item.nome LIKE '%$palavra%' OR transferencia.localnovo LIKE '%$palavra%' OR transferencia.cimbpm LIKE '" . '%' . str_replace('-', '.', $palavra) . '%' . "' OR transferencia.servidoratual LIKE '%$palavra%' OR transferencia.datatransf LIKE '%$palavra%')";
-            }
+    $condicao_frase_completa = [];
+    $condicao_individual = [];
+    $condicao_frase_completa[] = "(item.patrimonio LIKE '%$valor_pesquisar%' OR item.nome LIKE '%$valor_pesquisar%' OR transferencia.localnovo LIKE '%$valor_pesquisar%' OR transferencia.cimbpm LIKE '%$valor_pesquisar%' OR transferencia.servidoratual LIKE '%$valor_pesquisar%' OR transferencia.datatransf LIKE '%$valor_pesquisar%')";
+
+    foreach ($palavras as $palavra) {
+        if (DateTime::createFromFormat('Y-m-d', $palavra) !== false) {
+            $data_formatada = date('Y-m-d', strtotime($palavra));
+            $condicao_individual[] = "transferencia.datatransf LIKE '%$data_formatada%'";
+        } else {
+            $palavra = $conexao->real_escape_string($palavra);
+            $condicao_individual[] = "(item.patrimonio LIKE '%$palavra%' OR item.nome LIKE '%$palavra%' OR transferencia.localnovo LIKE '%$palavra%' OR transferencia.cimbpm LIKE '%" . str_replace('-', '.', $palavra) . "%' OR transferencia.servidoratual LIKE '%$palavra%' OR transferencia.datatransf LIKE '%$palavra%')";
         }
+    }
+
+    if (count($condicao_frase_completa) > 0) {
+        $condicoes[] = "(" . implode(" OR ", $condicao_frase_completa) . ")";
+    }
+    if (count($condicao_individual) > 0) {
         $condicoes[] = "(" . implode(" OR ", $condicao_individual) . ")";
     }
 }
@@ -73,7 +80,8 @@ $page_number = ceil($home_count / $limit);
 
 $pagina = isset($_GET['pagina']) ? $conexao->real_escape_string($_GET['pagina']) : 1;
 $unidade = isset($_GET['unidade']) ? $conexao->real_escape_string($_GET['unidade']) : '';
-$ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano']) : '';
+$ano = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano']) : '';
+$pesquisar = isset($_GET['pesquisar']) ? $conexao->real_escape_string($_GET['pesquisar']) : '';
 ?>
 
 
@@ -164,7 +172,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                     </a>
                     <div class="col-2 mb-2">
                         <p class="mb-1 text-muted">Ano:</p>
-                        <select id="anoSelect" class="form-select" onchange="filtrarAno()" name="ano">
+                        <select id="anoSelect" class="form-select" onchange="filtrar()" name="ano">
                             <option value="<?php echo empty($_GET['ano']) ? '' : $_GET['ano']; ?>" hidden><?php echo empty($_GET['ano']) ? 'Selecionar' : $_GET['ano']; ?></option>
                             <option value="2023">2023</option>
                             <option value="2024">2024</option>
@@ -172,14 +180,14 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                     </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
-                        <select id="unidadeSelect" class="form-select" onchange="filtrarUnidade()" name="unidade">
+                        <select id="unidadeSelect" class="form-select" onchange="filtrar()" name="unidade">
                             <option value="<?php echo empty($_GET['unidade']) ? '' : $_GET['unidade']; ?>" hidden><?php echo empty($_GET['unidade']) ? 'Selecionar' : $_GET['unidade']; ?></option>
                             <?php include 'query-unidades.php' ?>
                         </select>
                     </div>
                     <div class="col-6 mb-2">
                         <p class="mb-1 text-muted">Buscar:</p>
-                        <input class="form-control buscar" id="myInput" onchange="filtrarBuscar()" name="pesquisar" type="text" placeholder="Procurar..." value="<?php isset($_GET['pesquisar']) ? $_GET['pesquisar'] : '' ?>">
+                        <input class="form-control buscar" id="myInput" onchange="filtrar()" name="pesquisar" type="text" placeholder="Procurar..." value="<?php echo $pesquisar ?>">
                     </div>
                 </div>
                 <br>
@@ -223,7 +231,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
             <div class='pagination-controls'>
                 <div class='records-per-page'>
                     <label for='recordsPerPage'>Registros por página:</label>
-                    <select id='recordsPerPage' onchange="updateLimit()">
+                    <select id='recordsPerPage' onchange="filtrar()">
                         <option value="<?php echo $limit ?>" hidden><?php echo $limit ?></option>
                         <option value='7'>7</option>
                         <option value='14'>14</option>
@@ -257,28 +265,14 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
         window.location.reload(true);
     }
 
-    function filtrarAno() {
-        var selectAno = document.getElementById('anoSelect');
-        var selectAnoValor = selectAno.value;
-        var selectedPesquisar = document.getElementById('myInput').value;
-        var selectedUnidade = document.getElementById('unidadeSelect').value;
-        var selectElement = document.getElementById('recordsPerPage');
-        localStorage.setItem('recordsPerPage', selectedValue);
-        var selectedValue = selectElement.value;
-        // var url = 'home.php?inputText=' + encodeURIComponent(selectValorAno.value);
-        window.location.href = '?limit=' + selectedValue + '&ano=' + selectAnoValor + '&unidade=' + selectedUnidade + '&pesquisar=' + selectedPesquisar;
-        // window.history.replaceState({}, '', url);
-        // window.location.reload(true);
-    }
-
-    function updateLimit() {
+    function filtrar() {
         var selectElement = document.getElementById('recordsPerPage');
         var selectedValue = selectElement.value;
-        var selectedAno = document.getElementById('anoSelect').value;
+        var selectAno = document.getElementById('anoSelect').value;
         var selectedUnidade = document.getElementById('unidadeSelect').value;
         var selectedPesquisar = document.getElementById('myInput').value;
         localStorage.setItem('recordsPerPage', selectedValue);
-        window.location.href = '?limit=' + selectedValue + '&ano=' + selectedAno + '&unidade=' + selectedUnidade + '&pesquisar=' + selectedPesquisar;
+        window.location.href = '?limit=' + selectedValue + '&ano=' + selectAno + '&unidade=' + selectedUnidade + '&pesquisar=' + selectedPesquisar;
     }
 
     document.addEventListener('DOMContentLoaded', function() {

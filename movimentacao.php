@@ -110,7 +110,6 @@ if (isset($_POST['submit'])) {
         <div class="mb-1 mt-1">
             <h2 class="mb-4">Movimentação do Item</h2>
         </div>
-        <!-- <hr class="mb-4"> -->
         <h5 class="mb-3">Dados do Item</h5>
         <hr class="mb-3">
             <form method="POST">

@@ -23,6 +23,43 @@ if (isset($_GET['ano']) && $_GET['ano'] !== '') {
     $ano = $_GET['ano'];
     $condicoes[] = "transferencia.datatransf LIKE '%$ano%'";
 }
+if (isset($_GET['unidade']) && $_GET['unidade'] !== '') {
+    $unidade = $conexao->real_escape_string($_GET['unidade']);
+    $condicoes[] = "localnovo = '$unidade'";
+}
+
+
+if (isset($_GET['pesquisar']) && $_GET['pesquisar'] !== '') {
+    $valor_pesquisar = $conexao->real_escape_string($_GET['pesquisar']);
+    $palavras = explode(' ', $valor_pesquisar);
+    $condicao_frase_completa = [];
+    $condicao_individual = [];
+    $condicao_frase_completa[] = "(item.patrimonio LIKE '%$valor_pesquisar%' OR item.nome LIKE '%$valor_pesquisar%' OR transferencia.localnovo LIKE '%$valor_pesquisar%' OR transferencia.cimbpm LIKE '%$valor_pesquisar%' OR transferencia.servidoratual LIKE '%$valor_pesquisar%' OR transferencia.datatransf LIKE '%$valor_pesquisar%')";
+
+    foreach ($palavras as $palavra) {
+        if (DateTime::createFromFormat('Y-m-d', $palavra) !== false) {
+            $data_formatada = date('Y-m-d', strtotime($palavra));
+            $condicao_individual[] = "transferencia.datatransf LIKE '%$data_formatada%'";
+        } else {
+            $palavra = $conexao->real_escape_string($palavra);
+            $condicao_individual[] = "(item.patrimonio LIKE '%$palavra%' OR item.nome LIKE '%$palavra%' OR transferencia.localnovo LIKE '%$palavra%' OR transferencia.cimbpm LIKE '%" . str_replace('-', '.', $palavra) . "%' OR transferencia.servidoratual LIKE '%$palavra%' OR transferencia.datatransf LIKE '%$palavra%')";
+        }
+    }
+
+    if (count($condicao_frase_completa) > 0) {
+        $condicoes[] = "(" . implode(" OR ", $condicao_frase_completa) . ")";
+    }
+    if (count($condicao_individual) > 0) {
+        $condicoes[] = "(" . implode(" OR ", $condicao_individual) . ")";
+    }
+}
+
+if (!empty($condicoes)) {
+    $where = " WHERE " . implode(" AND ", $condicoes);
+} else {
+    $where = '';
+}
+
 
 $result = $conexao->query("WITH ranked_transferencia AS (
     SELECT 
@@ -39,8 +76,7 @@ $result = $conexao->query("WITH ranked_transferencia AS (
         item
     JOIN 
         transferencia ON item.idbem = transferencia.iditem
-    WHERE 
-        YEAR(transferencia.datatransf) = '$ano'
+    $where
 )
 SELECT 
     `Patrimônio`, 
@@ -67,36 +103,6 @@ while ($row = $result->fetch_assoc()) {
 
 echo "<script>const registros2=" . json_encode($registros) . ";</script>";
 
-if (isset($_GET['unidade']) && $_GET['unidade'] !== '') {
-    $unidade = $conexao->real_escape_string($_GET['unidade']);
-    $condicoes[] = "localnovo = '$unidade'";
-}
-
-
-if (isset($_GET['pesquisar']) && $_GET['pesquisar'] !== '') {
-    $valor_pesquisar = $conexao->real_escape_string($_GET['pesquisar']);
-    $palavras = explode(' ', $valor_pesquisar);
-    if (count($palavras) >= 1) {
-        $condicao_individual = [];
-        foreach ($palavras as $palavra) {
-            if (DateTime::createFromFormat('Y-m-d', $palavra) !== false) {
-                $data_formatada = date('Y-m-d', strtotime($palavra));
-                $condicao_individual[] = "transferencia.datatransf LIKE '%$data_formatada%'";
-            } else {
-                $palavra = $conexao->real_escape_string($palavra);
-                $condicao_individual[] = "(item.patrimonio LIKE '%$palavra%' OR item.nome LIKE '%$palavra%' OR transferencia.localnovo LIKE '%$palavra%' OR transferencia.cimbpm LIKE '" . '%' . str_replace('-', '.', $palavra) . '%' . "' OR transferencia.servidoratual LIKE '%$palavra%' OR transferencia.datatransf LIKE '%$palavra%')";
-            }
-        }
-        $condicoes[] = "(" . implode(" OR ", $condicao_individual) . ")";
-    }
-}
-
-if (!empty($condicoes)) {
-    $where = " WHERE " . implode(" AND ", $condicoes);
-} else {
-    $where = '';
-}
-
 $busca = "WITH ranked_transferencia AS (
     SELECT 
         item.patrimonio, 
@@ -114,8 +120,7 @@ $busca = "WITH ranked_transferencia AS (
         item
     JOIN 
         transferencia ON item.idbem = transferencia.iditem
-    WHERE 
-        YEAR(transferencia.datatransf) = '$ano'
+    $where
 )
 SELECT 
     patrimonio, 
@@ -159,8 +164,7 @@ $sql_inventario_count_query = "WITH ranked_transferencia AS (
         item
     JOIN 
         transferencia ON item.idbem = transferencia.iditem
-    WHERE 
-    YEAR(transferencia.datatransf) = '$ano'
+    $where
 )
 SELECT 
     COUNT(*) as c
@@ -236,7 +240,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
         margin-top: 10px;
     }
 
-    .records-per-page_inventario > label {
+    .records-per-page_inventario>label {
         margin-right: 10px;
     }
 
@@ -249,7 +253,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
 
 <body>
     <?php
-        include_once('menu.php');
+    include_once('menu.php');
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel-box mb-4">
@@ -271,22 +275,22 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                     </a>
                     <div class="col-2 mb-2">
                         <p class="mb-1 text-muted">Ano:</p>
-                        <select id="anoSelect" class="form-select" name="ano">
-                        <option value="<?php echo htmlspecialchars($ano) == '' ? '' : htmlspecialchars($ano) ?>" hidden><?php echo htmlspecialchars($ano) == '' ? 'Selecionar' : htmlspecialchars($ano) ?></option>
+                        <select id="anoSelect" onchange="filtrar()" class="form-select" name="ano">
+                            <option value="<?php echo htmlspecialchars($ano) == '' ? '' : htmlspecialchars($ano) ?>" hidden><?php echo htmlspecialchars($ano) == '' ? 'Selecionar' : htmlspecialchars($ano) ?></option>
                             <option value="2023">2023</option>
                             <option value="2024">2024</option>
                         </select>
                     </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
-                        <select id="unidadeSelect" class="form-select" name="unidade">
+                        <select id="unidadeSelect" onchange="filtrar()" class="form-select" name="unidade">
                             <option value="<?php echo empty($_GET['unidade']) ? '' : $_GET['unidade']; ?>" hidden><?php echo empty($_GET['unidade']) ? 'Selecionar' : $_GET['unidade']; ?></option>
                             <?php include 'query-unidades.php' ?>
                         </select>
                     </div>
                     <div class="col-6 mb-2">
                         <p class="mb-1 text-muted">Buscar:</p>
-                        <input class="form-control" id="myInput" name="pesquisar" type="text" value="<?php echo isset($_GET['pesquisar']) ? htmlspecialchars($_GET['pesquisar']) : ''; ?>" placeholder="Procurar...">
+                        <input class="form-control" onchange="filtrar()" id="myInput" name="pesquisar" type="text" value="<?php echo isset($_GET['pesquisar']) ? htmlspecialchars($_GET['pesquisar']) : ''; ?>" placeholder="Procurar...">
                     </div>
                     <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon" src="./images/icon-filtrar.png" alt="#"></button>
                 </form>
@@ -321,17 +325,18 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                             echo "<td style='cursor: pointer;'>{$user_data['servidoratual']}<span hidden>todos</span></td>";
                             echo "<td style='cursor: pointer;'>{$user_data['usuario']}<span hidden>todos</span></td>";
                             echo "<td style='cursor: pointer;'>{$user_data['cimbpm']}<span hidden>todos</span></td>";
-                            echo "<td style='cursor: pointer;'>" . $datatransf_brasil . '<br>' . $datatransf[1] . '<span hidden>todos</span>' . "</td>";                            echo "</tr>";
+                            echo "<td style='cursor: pointer;'>" . $datatransf_brasil . '<br>' . $datatransf[1] . '<span hidden>todos</span>' . "</td>";
+                            echo "</tr>";
                         } ?>
                     </tbody>
                 </table>
             </div>
             <div class='pagination-controls d-flex justify-content-between'>
-                <input type="button" onclick="exportarArquivo('inventario')" value="Exportar" class="btn btn-outline-primary" style="margin-right: 940px; height:40px">        
+                <input type="button" onclick="exportarArquivo('inventario')" value="Exportar" class="btn btn-outline-primary" style="margin-right: 940px; height:40px">
                 <div class="d-flex flex-row">
                     <div class='records-per-page_inventario'>
                         <label for='recordsPerPage_inventario'>Registros por página:</label>
-                        <select id='recordsPerPage_inventario' onchange="updateLimit()">
+                        <select id='recordsPerPage_inventario' onchange="filtrar()">
                             <option value='<?php echo $limit ?>' hidden> <?php echo $limit ?></option>
                             <option value='7'>7</option>
                             <option value='14'>14</option>
@@ -343,7 +348,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                     $opacidade_direita = ($page == $page_number) ? '0.5' : '1';
                     $disabled_esquerda = ($opacidade_esquerda == '0.5') ? 'disabled' : '';
                     $disabled_direita = ($opacidade_direita == '0.5') ? 'disabled' : '';
-   
+
                     $ano =  isset($_GET['ano']) ? $_GET['ano'] : '';
                     $unidade =  isset($_GET['unidade']) ? $_GET['unidade'] : '';
                     $pesquisar = isset($_GET['pesquisar']) ? $_GET['pesquisar'] : '';
@@ -386,16 +391,15 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
         window.location.reload(true);
     }
 
-    function updateLimit() {
+    function filtrar() {
         var selectElement = document.getElementById('recordsPerPage_inventario');
         var selectedValue = selectElement.value;
-        const ano = document.getElementById('anoSelect').value;
-        const unidade = document.getElementById('unidadeSelect').value;
-        const pesquisar = document.getElementById('myInput').value;
+        var ano = document.getElementById('anoSelect').value;
+        var unidade = document.getElementById('unidadeSelect').value;
+        var pesquisar = document.getElementById('myInput').value;
         localStorage.setItem('recordsPerPage_inventario', selectedValue);
         window.location.href = '?limit=' + selectedValue + '&ano=' + ano + '&unidade=' + unidade + '&pesquisar=' + pesquisar;
     }
-
 
     document.addEventListener('DOMContentLoaded', function() {
         var storedLimit = localStorage.getItem('recordsPerPage_inventario');

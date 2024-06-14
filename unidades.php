@@ -281,7 +281,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     </a>
                     <div class="col-2 ml-2 mb-2">
                         <p class="mb-1 text-muted">Status:</p>
-                        <select id="statusSelect" class="form-select" aria-label="Default select example" name="status">
+                        <select id="statusSelect" class="form-select" onchange="filtrar()" aria-label="Default select example" name="status">
                             <option value="<?php echo empty($status) ? 'Ativo' : htmlspecialchars($status); ?>" hidden><?php echo empty($status) ? 'Ativo' : htmlspecialchars($status); ?></option>
                             <option value="Ativo">Ativo</option>
                             <option value="Inativo">Inativo</option>
@@ -290,7 +290,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Sigla:</p>
-                        <select id="siglaSelect" class="form-select" aria-label="Default select example" name="sigla">
+                        <select id="siglaSelect" class="form-select" onchange="filtrar()" aria-label="Default select example" name="sigla">
                             <option value="<?php echo empty($_GET['sigla']) ? '' : $_GET['sigla']; ?>" hidden><?php echo empty($_GET['sigla']) ? 'Selecionar' : $_GET['sigla']; ?></option>
                             <?php
                             include 'query-unidades.php'
@@ -299,7 +299,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     </div>
                     <div class="col-6 mb-2">
                         <p class="mb-1 text-muted">Buscar:</p>
-                        <input class="form-control buscar" id="myInput" name="pesquisar" type="text" placeholder="Procurar...">
+                        <input class="form-control buscar" onchange="filtrar()" id="myInput" name="pesquisar" type="text" placeholder="Procurar..." value="<?php echo isset($_GET['pesquisar']) ? htmlspecialchars($_GET['pesquisar']) : ''; ?>">
                     </div>
                     <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon" src="./images/icon-filtrar.png" alt="#"></button>
                 </form>
@@ -338,7 +338,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
             <div class='pagination-controls'>
                 <div class='records-per-page_unidade'>
                     <label for='recordsPerPage_unidade'>Registros por página:</label>
-                    <select id='recordsPerPage_unidade' onchange="updateLimit()">
+                    <select id='recordsPerPage_unidade' onchange="filtrar()">
                         <option value='<?php echo $limit ?>' selected hidden> <?php echo $limit ?></option>
                         <option value='5'>5</option>
                         <option value='10'>10</option>
@@ -400,6 +400,16 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
         msgSair.style.display = "block";
     }
 
+    function filtrar() {
+        var selectElement = document.getElementById('recordsPerPage_unidade');
+        var selectedValue = selectElement.value;
+        var selectedStatus = document.getElementById('statusSelect').value;
+        var selectedSigla = document.getElementById('siglaSelect').value;
+        var selectedPesquisar = document.getElementById('myInput').value;
+        localStorage.setItem('recordsPerPage_unidade', selectedValue);
+        window.location.href = '?limit=' + selectedValue + '&status=' + selectedStatus + '&sigla=' + selectedSigla + '&pesquisar=' + selectedPesquisar;
+    }
+
     function trocarReativar() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
@@ -433,17 +443,6 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
 
     function limparInput() {
         window.location.href = 'unidades.php?status=Ativo';
-    }
-
-
-    function updateLimit() {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const newLimit = document.getElementById('recordsPerPage_unidade').value;
-        var status = document.getElementById('statusSelect').value;
-        var sigla = document.getElementById('siglaSelect').value;
-        var pesquisar = document.getElementById('myInput').value;
-        window.location.href = '?limit=' + newLimit + '&status=' + status + '&sigla=' + sigla + '&pesquisar=' + pesquisar;
     }
 
     function recarregar() {

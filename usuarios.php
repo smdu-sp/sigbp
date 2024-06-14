@@ -100,7 +100,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
         z-index: 10000;
     }
 
-    .msg-inativo, 
+    .msg-inativo,
     .msg-reativar {
         width: 340px;
         height: 170px;
@@ -112,7 +112,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
         animation: msg-inativo 1s ease;
     }
 
-    .msg-trocar, 
+    .msg-trocar,
     .msg-reativar {
         display: none;
     }
@@ -128,17 +128,15 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     }
 
 
-    .msg-inativo>h3, 
-    .msg-reativar>h3
-    {
+    .msg-inativo>h3,
+    .msg-reativar>h3 {
         font-size: 20px;
         font-family: 'Lato', sans-serif;
         font-weight: bolder;
     }
 
-    .msg-inativo > p,
-    .msg-reativar > p
-    {
+    .msg-inativo>p,
+    .msg-reativar>p {
         font-size: 18px;
         font-family: 'Lato', sans-serif;
         font-weight: 500;
@@ -273,7 +271,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
         <h2 class="mb-3 mt-4">Usuários</h2>
         <div class="conteudo ml-1 mt-4" style="width: 100%;">
             <div class="d-flex justify-content-center flex-column" style="width: 100%;">
-                <form class="d-flex justify-content-end align-items-end" action="usuarios.php" method="GET" style="width: 100%;">
+                <div class="d-flex justify-content-end align-items-end" style="width: 100%;">
                     <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar" style="cursor: pointer;">
                         <img src="./images/icon-recarregar.png" alt="#" id='img-recarregar'>
                     </a>
@@ -282,7 +280,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     </a>
                     <div class="col-2 ml-2 mb-2">
                         <p class="mb-1 text-muted">Status:</p>
-                        <select id="statusSelect" class="form-select" aria-label="Default select example" name="status">
+                        <select id="statusSelect" class="form-select" onchange="filtrar()" aria-label="Default select example" name="status">
                             <option value="<?php echo empty($_GET['status']) ? 'Ativo' : $_GET['status']; ?>" hidden><?php echo empty($_GET['status']) ? 'Ativo' : $_GET['status']; ?></option>
                             <option value="Ativo">Ativo</option>
                             <option value="Inativo">Inativo</option>
@@ -291,7 +289,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     </div>
                     <div class="col-2 mb-2">
                         <p class="mb-1 text-muted">Permissão:</p>
-                        <select id="permissaoSelect" class="form-select" aria-label="Default select example" name="permissao">
+                        <select id="permissaoSelect" class="form-select" onchange="filtrar()" aria-label="Default select example" name="permissao">
                             <option value="1" <?php echo (isset($_GET['permissao']) && $_GET['permissao'] == 1) ? 'selected' : ''; ?>>Administrador</option>
                             <option value="2" <?php echo (isset($_GET['permissao']) && $_GET['permissao'] == 2) ? 'selected' : ''; ?>>Usuário</option>
                             <option value="3" <?php echo (isset($_GET['permissao']) && $_GET['permissao'] == 3) ? 'selected' : ''; ?>>Sem Permissão</option>
@@ -301,7 +299,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
-                        <select id="unidadeSelect" class="form-select" name="unidade">
+                        <select id="unidadeSelect" onchange="filtrar()" class="form-select" name="unidade">
                             <option value="<?php echo empty($_GET['unidade']) ? '' : $_GET['unidade']; ?>" hidden><?php echo empty($_GET['unidade']) ? 'Selecionar' : $_GET['unidade']; ?></option>
                             <?php
                             include 'query-unidades.php';
@@ -310,10 +308,9 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     </div>
                     <div class="col-4 mb-2">
                         <p class="mb-1 text-muted">Buscar:</p>
-                        <input class="form-control" id="myInput" name="pesquisar" type="text" value="<?php echo isset($_GET['pesquisar']) ? htmlspecialchars($_GET['pesquisar']) : ''; ?>" placeholder="Procurar...">
+                        <input class="form-control" id="myInput" onchange="filtrar()" name="pesquisar" type="text" value="<?php echo isset($_GET['pesquisar']) ? htmlspecialchars($_GET['pesquisar']) : ''; ?>" placeholder="Procurar...">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-filtrar"><img class="icon" src="./images/icon-filtrar.png" alt="#"></button>
-                </form>
+                </div>
                 <br>
                 <table class="table table-hover">
                     <thead>
@@ -365,7 +362,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
             <div class='pagination-controls'>
                 <div class='records-per-page_usuario'>
                     <label for='recordsPerPage_usuario'>Registros por página:</label>
-                    <select id='recordsPerPage_usuario' onchange="updateLimit()">
+                    <select id='recordsPerPage_usuario' onchange="filtrar()">
                         <option value='<?php echo $limit ?>' selected hidden> <?php echo $limit ?></option>
                         <option value='5'>5</option>
                         <option value='10'>10</option>
@@ -397,6 +394,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     </div>
     <div class="hide" id="modal"></div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function mostrarMsgInativo(nome) {
         const queryString = window.location.search;
@@ -426,6 +424,17 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
         }, '', newUrl);
         let msgSair = document.getElementById("box-reativar");
         msgSair.style.display = "block";
+    }
+
+    function filtrar() {
+        var selectElement = document.getElementById('recordsPerPage_usuario');
+        var selectedValue = selectElement.value;
+        var selectedStatus = document.getElementById('statusSelect').value;
+        var selectedPermissao = document.getElementById('permissaoSelect').value;
+        var selectedUnidade = document.getElementById('unidadeSelect').value;
+        var selectedPesquisar = document.getElementById('myInput').value;
+        localStorage.setItem('recordsPerPage_usuario', selectedValue);
+        window.location.href = '?limit=' + selectedValue + '&status=' + selectedStatus + '&permissao=' + selectedPermissao + '&unidade=' + selectedUnidade + '&pesquisar=' + selectedPesquisar;
     }
 
 
@@ -462,18 +471,6 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     function limparInput() {
         window.location.href = 'usuarios.php?status=Ativo&permissao=4';
     }
-
-    function updateLimit() {
-        var selectElement = document.getElementById('recordsPerPage_usuario');
-        var selectedValue = selectElement.value;
-        var selectedStatus = document.getElementById('statusSelect').value;
-        var selectedPermissao = document.getElementById('permissaoSelect').value;
-        var selectedUnidade = document.getElementById('unidadeSelect').value;
-        var selectedPesquisar = document.getElementById('myInput').value;
-        localStorage.setItem('recordsPerPage_usuario', selectedValue);
-        window.location.href = '?limit=' + selectedValue + '&status=' + selectedStatus + '&permissao=' + selectedPermissao + '&unidade=' + selectedUnidade + '&pesquisar=' + selectedPesquisar;
-    }
-
 
     function recarregar() {
         window.location.reload(true);
