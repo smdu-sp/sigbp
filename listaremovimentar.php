@@ -106,6 +106,10 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
 
 ?>
 <style>
+    table {
+        font-size: 14px;
+    }
+
     @media (max-width: 1600px) {
         .conteudo {
             margin-left: 75px;
@@ -136,6 +140,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
             display: block;
             cursor: pointer;
         }
+
     }
 
     #img-recarregar {
@@ -155,18 +160,6 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     .btn-filtrar>img {
         width: 25px;
         height: 25px;
-    }
-
-    #table {
-        max-height: 600px;
-    }
-
-    table {
-        overflow: auto;
-    }
-
-    .div-table {
-        width: 100%;
     }
 
     .div-table::-webkit-scrollbar {
@@ -278,7 +271,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     }
 </style>
 
-<body>
+<body style="overflow-x: hidden;">
     <?php
     include_once('menu.php');
     ?>
@@ -292,7 +285,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
             </div>
         </div>
     </div>
-    <div class="p-4 p-md-4 pt-3 conteudo">
+    <div class="p-4 p-md-2 pt-3 conteudo">
         <div class="carrossel-box mb-4">
             <div class="carrossel">
                 <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
@@ -301,8 +294,8 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
             </div>
         </div>
         <h2 class="mb-3 mt-4">Listar e Movimentar</h2>
-        <div class="conteudo ml-1 mt-4" style="width: 100%;">
-            <div class="d-flex justify-content-center flex-column" style="width: 100%;">
+        <div class="conteudo ml-1 mt-4">
+            <div class="d-flex justify-content-center flex-column">
                 <div class="d-flex justify-content-end align-items-end" action="listaremovimentar.php" method="GET" style="width: 100%;">
                     <input type="hidden" name="limit" value="<?php echo $limit; ?>">
                     <a href="#" onclick="recarregar()" class="mb-2 mr-2 usuario-img" id="recarregar" style="cursor: pointer;">
@@ -348,56 +341,57 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     </div>
                 </div>
                 <br>
-                <div class="div-table mb-1">
-                    <table class="table table-hover" id="table">
-                        <thead>
-                            <tr>
-                                <th hidden>Id</th>
-                                <th>Nº Patrimônio</th>
-                                <th>Nome</th>
-                                <th>Marca</th>
-                                <th>Tipo</th>
-                                <th>Desc. SBPM</th>
-                                <th>Modelo</th>
-                                <th>Núm. de Série</th>
-                                <th>Localização</th>
-                                <th>Servidor</th>
-                                <th>Num. Processo</th>
-                                <th>CIMBPM</th>
-                                <th>Status</th>
-                                <th>Ações</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id='myTable'>
-                            <?php
-                            while ($user_data = $sql_item_query_exec->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td hidden>" . $user_data['idbem'] . "</td>";
-                                echo "<td>" . $user_data['patrimonio'] . '<span hidden>todos</span>' . "</td>";
-                                echo "<td>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
-                                echo "<td>" . $user_data['marca'] . '<span hidden>todos</span>' . "</td>";
-                                echo "<td>" . $user_data['tipo'] . '<span hidden>todos</span>' . "</td>";
-                                echo "<td>" . $user_data['descsbpm'] . '<span hidden>todos</span>' . "</td>";
-                                echo "<td>" . $user_data['modelo'] . '<span hidden>todos</span>' . "</td>";
-                                echo "<td>" . $user_data['numserie'] . '<span hidden>todos</span>' . "</td>";
-                                echo "<td>" . $user_data['localizacao'] . '<span hidden>todos</span>' . "</td>";
-                                echo "<td>" . $user_data['servidor'] . '<span hidden>todos</span>' . "</td>";
-                                echo "<td>" . $user_data['numprocesso'] . '<span hidden>todos</span>' . "</td>";
-                                echo "<td>" . $user_data['cimbpm'] . '<span hidden>todos</span>' . "</td>";
-                                echo "<td>" . $user_data['statusitem'] . '<span hidden>todos</span>' . "</td>";
-                                echo "<td>" . "<div class='d-flex'><a href='movimentacao.php?id=$user_data[idbem]'><img src='./images/icon-seta.png' alt='Seta'></a>" . "<a href='alteracaodebens.php?id=$user_data[idbem]'><img src='./images/icon-lapis.png' alt='Seta'></a>" . '<span hidden>todos</span>' . "</div></td>";
-                                echo "<td>";
-                                if ($user_data['statusitem'] == 'Ativo') {
-                                    echo "<a class='x-image' id='tooltip2' onclick='mostrarMsgInativo(\"{$user_data['idbem']}\")'><span id='tooltipText2'>Excluir</span><img class='img-usuario' src='./images/icons-x.png' alt='x'></a>";
-                                }
-                                echo "</td>";
-                                echo "</tr>";
+                <table class="table table-hover">
+                    <thead>
+                        <th hidden>Id</th>
+                        <th>Nº Patrimônio</th>
+                        <th>Nome</th>
+                        <th>Marca</th>
+                        <th>Tipo</th>
+                        <th>Desc. SBPM</th>
+                        <th>Modelo</th>
+                        <th>Núm. de Série</th>
+                        <th>Localização</th>
+                        <th>Servidor</th>
+                        <th>Num. Processo</th>
+                        <th>CIMBPM</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <?php
+                        while ($user_data = $sql_item_query_exec->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td hidden>" . $user_data['idbem'] . "</td>";
+                            echo "<td data-th='Nº Patrimônio'>" . $user_data['patrimonio'] . "</td>";
+                            echo "<td data-th='Nome'>" . $user_data['nome'] . "</td>";
+                            echo "<td data-th='Marca'>" . $user_data['marca'] . "</td>";
+                            echo "<td data-th='Tipo'>" . $user_data['tipo'] . "</td>";
+                            echo "<td data-th='Desc. SBPM'>" . $user_data['descsbpm'] . "</td>";
+                            echo "<td data-th='Modelo'>" . $user_data['modelo'] . "</td>";
+                            echo "<td data-th='Núm. de Série'>" . $user_data['numserie'] . "</td>";
+                            echo "<td data-th='Localização'>" . $user_data['localizacao'] . "</td>";
+                            echo "<td data-th='Servidor'>" . $user_data['servidor'] . "</td>";
+                            echo "<td data-th='Num. Processo'>" . $user_data['numprocesso'] . "</td>";
+                            echo "<td data-th='CIMBPM'>" . $user_data['cimbpm'] . "</td>";
+                            echo "<td data-th='Status'>" . $user_data['statusitem'] . "</td>";
+                            echo "<td data-th='Ações'>";
+                            echo "<div class='d-flex'>";
+                            echo "<a href='movimentacao.php?id=$user_data[idbem]'><img src='./images/icon-seta.png' alt='Seta'></a>";
+                            echo "<a href='alteracaodebens.php?id=$user_data[idbem]'><img src='./images/icon-lapis.png' alt='Lápis'></a>";
+                            echo "</div>";
+                            echo "</td>";
+                            echo "<td data-th='Excluir'>";
+                            if ($user_data['statusitem'] == 'Ativo') {
+                                echo "<a class='x-image' id='tooltip2' onclick='mostrarMsgInativo(\"{$user_data['idbem']}\")'><span id='tooltipText2'>Excluir</span><img class='img-usuario' src='./images/icons-x.png' alt='x'></a>";
                             }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
+                            echo "</td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
             <div class='pagination-controls d-flex justify-content-between'>
 
@@ -424,8 +418,8 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     $ano = isset($_GET['ano']) ? $_GET['ano'] : '';
                     $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : '';
 
-                    echo "<a href='?page=" . ($page - 1) . '&limit=' . $limit . '&status' . $status . '&tipo=' . $tipo . '&unidade=' . $unidade . '&pesquisar=' . $pesquisar . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
-                    echo "<a href='?page=" . ($page + 1) . '&limit=' . $limit . '&status' . $status . '&tipo=' . $tipo . '&unidade=' . $unidade . '&pesquisar=' . $pesquisar . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
+                    echo "<a href='?page=" . ($page - 1) . '&limit=' . $limit . '&status=' . $status . '&tipo=' . $tipo . '&unidade=' . $unidade . '&pesquisar=' . $pesquisar . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
+                    echo "<a href='?page=" . ($page + 1) . '&limit=' . $limit . '&status=' . $status . '&tipo=' . $tipo . '&unidade=' . $unidade . '&pesquisar=' . $pesquisar . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
                     ?>
                 </div>
             </div>
@@ -441,6 +435,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
 <script>
     function filtrar() {
         var selectElement = document.getElementById('recordsPerPage_item');
+        console.log('teste');
         var selectedValue = selectElement.value;
         var status = document.getElementById('statusSelect').value;
         var unidade = document.getElementById('unidadeSelect').value;
@@ -449,6 +444,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
         localStorage.setItem('recordsPerPage_item', selectedValue);
         window.location.href = '?limit=' + selectedValue + '&status=' + status + '&unidade=' + unidade + '&tipo=' + tipo + '&pesquisar=' + pesquisar;
     }
+
 
     function mostrarMsgInativo(nome) {
         const queryString = window.location.search;

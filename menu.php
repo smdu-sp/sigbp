@@ -28,7 +28,7 @@ $permissao = $_SESSION['Perm'];
                 <a href="./inventario.php?ano=2024" value="/inventario.php" id="botao8" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/icons-inventory.png" alt="Icon Usuario">Inventário</a>
                 <a href="./listaremovimentar.php?status=Ativo" value="/listaremovimentar.php" id="botao4" class="btn-menu botoes admin"><img id="icon-lista" src="./images/icon-lista.png" alt="Icon Lista">Listar/Movimentar Bens</a>
                 <a href="./termo.php" value="/termo.php" id="botao3" class="btn-menu botoes mb-2"><img id="icon-termo" src="./images/icon-termo.png" alt="Icon Ferramentas">Termo Entrega/Retirada</a>
-                <a href="./dashboard.php" value="/dashboard.php" id="botao7" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">Dashboard</a>
+                <a href="./dashboard.php" value="/dashboard.php" id="botao9" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">Dashboard</a>
             </div>
             <div class="info-usuario">
                 <h3 class="nome-usuario"><?php
@@ -105,6 +105,10 @@ $permissao = $_SESSION['Perm'];
 
         if (pathName == '/historicodoitem.php') {
             document.getElementById('botao1').style.background = '#DDE7EE';
+        }
+
+        if (pathName == '/resultadodash.php') {
+            document.getElementById('botao9').style.background = '#DDE7EE';
         }
 
         if (pathName === valorBotao) {
