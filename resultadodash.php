@@ -324,6 +324,11 @@ include_once('componentes/permissao.php');
 
     $servin = $servin_g + $dsigp + $dsimp;
 
+    $buscar_produtos = "SELECT COUNT(idbem) AS semLocalizacao FROM item WHERE tipo = '$item' AND (localizacao = '' OR localizacao='?');";
+    $query_produto = mysqli_query($conexao, $buscar_produtos);
+    $row_pg = mysqli_fetch_assoc($query_produto);
+    $semLocalizacao = ceil($row_pg['semLocalizacao']);
+
     ?>
     <div class="p-4 p-md-4 pt-3 conteudo">
         <div class="carrossel-box mb-2">
@@ -407,6 +412,7 @@ include_once('componentes/permissao.php');
                         <li class="list-group-item d-flex justify-content-start">DLE: <?php echo "<span class='margin-dle'>" . $dle . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DCAD: <?php echo "<span class='margin-dcad'>" . $dcad . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DDU: <?php echo "<span class='margin-ddu'>" . $ddu . "</span>" ?></li>
+                        <li class="list-group-item">ㅤ</li>
                         <li class="list-group-item">ㅤ</li>
                         <li class="list-group-item">ㅤ</li>
                     </ul>
@@ -516,6 +522,7 @@ include_once('componentes/permissao.php');
                 </div>
             </div>
         </div>
+        <div class="d-flex justify-content-end mr-3"><p class="mr-2">Outros/Sem localização: </p> <?php echo '<span>' . $semLocalizacao . '</span>' ?> </div>
     </div>
     <div class="hide" id="modal"></div>
 </body>

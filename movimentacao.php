@@ -171,7 +171,7 @@ if (isset($_POST['submit'])) {
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="cimbpm" class="form-label text-muted">CIMBPM:</label>
-                            <input type="text" class="form-control" id="cimbpm" name="cimbpm" value="<?php echo $cimbpm ?>" readonly>
+                            <input type="text" class="form-control" id="cimbpm" name="cimbpm">
                         </div>
                     </div>
                     <div class="row">
