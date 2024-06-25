@@ -445,11 +445,11 @@ include_once('componentes/permissao.php');
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-primary" aria-current="true"><strong>RESID (total: <?php echo $resid; ?>)</strong></li>
                         <li class="list-group-item d-flex justify-content-start">RESID-G: <?php echo "<span class='ml-4'>" . $resid_g . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DRG: <?php echo "<span class='margin-dru'>" . $dru . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DRGP: <?php echo "<span class='margin-drgp'>" . $drgp . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DRPM: <?php echo "<span class='margin-drpm'>" . $drpm . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DRU: <?php echo "<span class='margin-dru'>" . $dru . "</span>" ?></li>
-                        <li class="list-group-item">ㅤ</li>
-                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item d-flex justify-content-start">DRVE: <?php echo "<span class='margin-dru'>" . $dru . "</span>" ?></li>
                         <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
@@ -506,8 +506,9 @@ include_once('componentes/permissao.php');
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-primary" aria-current="true"><strong>PLANURB (total: <?php echo $planurb; ?>)</strong></li>
                         <li class="list-group-item d-flex justify-content-start">PLANURB: <?php echo "<span class='ml-4'>" . $planurb . "</span>"; ?></li>
-                        <li class="list-group-item">ㅤ</li>
-                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item d-flex justify-content-start">DAR: <?php echo "<span class='ml-4'>" . $planurb . "</span>"; ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DMA: <?php echo "<span class='ml-4'>" . $planurb . "</span>"; ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DOT: <?php echo "<span class='ml-4'>" . $planurb . "</span>"; ?></li>
                         <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>

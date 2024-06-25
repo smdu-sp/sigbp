@@ -173,7 +173,7 @@ $pesquisar = isset($_GET['pesquisar']) ? $conexao->real_escape_string($_GET['pes
                     <div class="col-2 mb-2">
                         <p class="mb-1 text-muted">Ano:</p>
                         <select id="anoSelect" class="form-select" onchange="filtrar()" name="ano">
-                            <option value="<?php echo empty($_GET['ano']) ? '' : $_GET['ano']; ?>" hidden><?php echo empty($_GET['ano']) ? 'Selecionar' : $_GET['ano']; ?></option>
+                            <option value="<?php echo empty($_GET['ano']) ? '' : strtoupper($_GET['ano']); ?>" hidden><?php echo empty($_GET['ano']) ? 'Selecionar' : strtoupper($_GET['ano']); ?></option>
                             <option value="2023">2023</option>
                             <option value="2024">2024</option>
                         </select>
@@ -181,7 +181,7 @@ $pesquisar = isset($_GET['pesquisar']) ? $conexao->real_escape_string($_GET['pes
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
                         <select id="unidadeSelect" class="form-select" onchange="filtrar()" name="unidade">
-                            <option value="<?php echo empty($_GET['unidade']) ? '' : $_GET['unidade']; ?>" hidden><?php echo empty($_GET['unidade']) ? 'Selecionar' : $_GET['unidade']; ?></option>
+                            <option value="<?php echo empty($_GET['unidade']) ? '' : strtoupper($_GET['unidade']); ?>" hidden><?php echo empty($_GET['unidade']) ? 'Selecionar' : strtoupper($_GET['unidade']); ?></option>
                             <?php include 'query-unidades.php' ?>
                         </select>
                     </div>

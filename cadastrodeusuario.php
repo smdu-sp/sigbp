@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
 
         $result = mysqli_query($conexao, "INSERT INTO usuarios(usuario, nome, permissao, statususer, email, unidade) VALUES ('$usuario', '$nome', '$permissao', '$status', '$email', '$unidade')");
 
-        header('Location: usuarios.php?notificacao=cadastrado');
+        header('Location: usuarios.php?notificacao=cadastrado&status=ATIVO&permissao=4');
     }
 }
 ?>
@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
                 <div class="col-md-12 mb-4">
                     <label for="usuarioCadastro" class="form-label text-muted ml-2">Login de rede</label>
                     <div class="input-group">
-                        <input value="<?php echo $usuario; ?>" type="text" name="loginRede" class="form-control" id="inputCadUsuario" placeholder="Buscar por login de rede" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
+                        <input value="<?php echo $usuario ?>" type="text" name="loginRede" class="form-control" id="inputCadUsuario" placeholder="Buscar por login de rede" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary" name="buscar" id="btn-CadUsuario" type="button" onclick="buscarUsuario()">Buscar</button>
                         </div>
@@ -157,7 +157,7 @@ if (isset($_POST['submit'])) {
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/unidades.png" alt="" class="imgCadastro"></div>
                         <select class="form-select" name="unidade" required>
-                            <option value="<?php echo $unidade ?>"><?php echo $unidade ?></option>
+                            <option value="<?php echo strtoupper($unidade) ?>" hidden><?php echo strtoupper($unidade) ?></option>
                             <?php include 'query-unidades.php' ?>
                         </select>
                     </div>
@@ -167,16 +167,16 @@ if (isset($_POST['submit'])) {
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-status.png" alt="" class="imgCadastro"></div>
                         <select class="form-select" name="status" required>
-                            <option value="<?php echo $status ?>" hidden><?php echo $status != null ? $status : '' ?></option>
-                            <option value="Ativo">Ativo</option>
-                            <option value="Inativo">Inativo</option>
+                            <option value="<?php echo strtoupper($status) ?>" hidden><?php echo strtoupper($status) != null ? strtoupper($status) : '' ?></option>
+                            <option value="ATIVO">Ativo</option>
+                            <option value="INATIVO">Inativo</option>
                         </select>
                         
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="usuarioCadastro" class="form-label text-muted ml-2">Email</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="name@example.com" name="email" value="<?php echo $emailfr; ?>" required>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="name@example.com" name="email" value="<?php echo $emailfr ?>" required>
                 </div>
                 <div class="d-flex flex-row-reverse">
                     <input type="submit" class="btn btn-primary ml-3 pe-auto mr-2 " id="btn-cadUsuario" name="submit" value="Cadastrar"></input>

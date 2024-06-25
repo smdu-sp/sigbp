@@ -184,12 +184,12 @@ if (isset($_POST['submit'])) {
                     <label for="status" class="form-label text-muted">Status:</label>
                     <select class="form-select" id="status" name="status" required>
                         <option value="" hidden="hidden">Selecionar</option>
-                        <option value="Ativo">Ativo</option>
-                        <option value="Baixado">Baixado</option>
-                        <option value="Para Doação">Para Doação</option>
-                        <option value="Ativo">Para Descarte</option>
-                        <option value="Ativo">Doado</option>
-                        <option value="Descartado">Descartado</option>
+                        <option value="ATIVO">Ativo</option>
+                        <option value="BAIXADO">Baixado</option>
+                        <option value="PARA DOAÇÃO">Para Doação</option>
+                        <option value="PARA DESCARTE">Para Descarte</option>
+                        <option value="DOADO">Doado</option>
+                        <option value="DESCARTADO">Descartado</option>
                     </select>
                 </div>
             </div>

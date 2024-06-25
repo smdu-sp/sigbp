@@ -116,7 +116,7 @@ if (!empty($_GET['id'])) {
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/unidades.png" alt="" class="imgCadastro"></div>
                         <select class="form-select" name="unidade" required>
-                            <option value="<?php echo $unidade ?>" hidden><?php echo $unidade ?></option>
+                            <option value="<?php echo strtoupper($unidade) ?>" hidden><?php echo strtoupper($unidade) ?></option>
                             <?php include 'query-unidades.php' ?>
                         </select>
                     </div>
@@ -126,15 +126,15 @@ if (!empty($_GET['id'])) {
                     <div class="input-group">
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-status.png" alt="" class="imgCadastro"></div>
                         <select class="form-select" name="status" required>
-                            <option value="<?php echo $status ?>" hidden><?php echo $status != null ? $status : '' ?></option>
-                            <option value="Ativo">Ativo</option>
-                            <option value="Inativo">Inativo</option>
+                            <option value="<?php echo strtoupper($status) ?>" hidden><?php echo strtoupper($status) != null ? strtoupper($status) : '' ?></option>
+                            <option value="ATIVO">Ativo</option>
+                            <option value="INATIVO">Inativo</option>
                         </select>
                     </div>
                 </div>
                 <div class="mb-4">
                     <label for="usuarioCadastro" class="form-label text-muted">Email</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="name@example.com" name="email" value="<?php echo $emailfr; ?>" required>
+                    <input type="email" class="form-control" id="exampleFormControlInput1" id="inputCadUsuario" placeholder="name@example.com" name="email" value="<?php echo strtoupper($emailfr) ?>" required>
                 </div>
                 <div class="d-flex flex-row-reverse">
                     <input type="submit" class="btn btn-primary ml-3 pe-auto mr-2 " id="btn-cadUsuario" name="update" value="Editar"></input>

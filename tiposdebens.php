@@ -136,12 +136,12 @@ if (isset($_POST['reativar'])) {
                 </form>
                 <div class="d-flex align-items-baseline">
                     <label for="card" class="form-label text-primary mb-2 mr-2">Todos os tipos de bens ativos:</label>
-                    <select class="form-select" name="tipo" id="AITipos" required style="width: 100px; border: none; outline: none;">
+                    <select class="form-select" onchange="mudou()" name="tipo" id="AITipos" required style="width: 100px; border: none; outline: none;">
                         <option value="<?php echo isset($_GET['statustipos']) ? $_GET['statustipos'] : 'Ativo'; ?>" hidden>
                             <?php echo isset($_GET['statustipos']) ? $_GET['statustipos'] : 'Ativo'; ?>
                         </option>
-                        <option value="Ativo">Ativo</option>
-                        <option value="Inativo">Inativo</option>
+                        <option value="ATIVO">Ativo</option>
+                        <option value="INATIVO">Inativo</option>
                     </select>
 
                 </div>
@@ -180,6 +180,25 @@ if (isset($_POST['reativar'])) {
                 console.log('Erro ao buscar os dados: ' + xhr.status + ' ' + xhr.statusText);
             }
         });
+
+        var url_string = window.location.href;
+        var url_nova = new URL(url_string);
+        var data = url.searchParams.get("statustipos");
+        var textBusca = document.getElementById('textBusca2');
+        var buttonCad = document.getElementById('btnCadTipos');
+        var buttonReativar = document.getElementById('btnRCadTipos');
+        var buttonTrocar = document.getElementById('btnDesCadTipos');
+        if(data == 'ATIVO') {
+            textBusca.value = '';
+            buttonCad.style.display = 'block';
+            buttonTrocar.style.display = 'block';
+            buttonReativar.style.display = 'none'
+        } else {
+            textBusca.value = '';
+            buttonReativar.style.display = 'block';
+            buttonCad.style.display = 'none';
+            buttonTrocar.style.display = 'none'
+        }
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -190,23 +209,8 @@ if (isset($_POST['reativar'])) {
     function botaoClicado(item) {
         var select = document.getElementById('AITipos').value;
         var textBusca = document.getElementById('textBusca2');
-        var buttonCad = document.getElementById('btnCadTipos');
-        var buttonReativar = document.getElementById('btnRCadTipos');
-        var buttonTrocar = document.getElementById('btnDesCadTipos');
-
-        if (select == 'Ativo') {
-            textBusca.value = item;
-            buttonCad.style.display = 'block';
-            buttonTrocar.style.display = 'block';
-            buttonReativar.style.display = 'none'
-        } else {
-            textBusca.value = item;
-            buttonReativar.style.display = 'block';
-            buttonCad.style.display = 'none';
-            buttonTrocar.style.display = 'none'
-        }
+        textBusca.value = item;
     }
-
 
     function alert(num) {
         if (num == 1) {
@@ -226,7 +230,7 @@ if (isset($_POST['reativar'])) {
                     title: 'swal2-title'
                 }),
                 icon: "error",
-                title: "Produto já cadastrado!",
+                title: "Tipo de Bem já cadastrado!",
                 titleColor: '#ffffff',
                 background: 'red',
                 iconColor: '#ffffff'
@@ -248,7 +252,7 @@ if (isset($_POST['reativar'])) {
                     title: 'swal2-title'
                 }),
                 icon: "success",
-                title: "Novo produto cadastrado com sucesso!",
+                title: "Novo tipo de bem cadastrado com sucesso!",
                 background: 'green',
                 iconColor: '#ffffff'
             });
@@ -287,7 +291,7 @@ if (isset($_POST['reativar'])) {
                     title: 'swal2-title'
                 }),
                 icon: "success",
-                title: "Produto alterado com sucesso!",
+                title: "Tipo de bem alterado com sucesso!",
                 background: 'green',
                 iconColor: '#ffffff'
             });

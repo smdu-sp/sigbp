@@ -29,7 +29,7 @@ if (!empty($_GET['id'])) {
             $cimbpm = $user_data['cimbpm'];
         }
     } else {
-        header('Location: listaremovimentar.php');
+        header('Location: listaremovimentar.php?notificacao=1&status=TODOS');
     }
 }
 
@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
     $result = mysqli_query($conexao, "INSERT INTO transferencia(iditem, localanterior, localnovo, usuario, idusuario, servidoranterior, servidoratual, cimbpm) 
     VALUES ('$id', '$localanterior', '$localnovo','$idusuario', '$usuario', '$servidoranterior', '$servidoratual', '$cimbpm')");
 
-    header('Location: listaremovimentar.php?notificacao=1');
+    header('Location: listaremovimentar.php?notificacao=1&status=TODOS');
 }
 ?>
 <style>
@@ -116,31 +116,31 @@ if (isset($_POST['submit'])) {
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="id" class="form-label text-muted">ID:</label>
-                        <input type="text" class="form-control" id="id" name="id" value="<?php echo $id ?>" readonly>
+                        <input type="text" class="form-control" id="id" name="id" value="<?php echo strtoupper($id) ?>" readonly>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="numPatrimonio" class="form-label text-muted">Número do Patrimônio PMSP:</label>
-                        <input type="text" class="form-control" id="numPatrimonio" name="numPatrimonio" value="<?php echo $patrimonio ?>" readonly>
+                        <input type="text" class="form-control" id="numPatrimonio" name="numPatrimonio" value="<?php echo strtoupper($patrimonio) ?>" readonly>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="tipo" class="form-label text-muted">Tipo:</label>
-                        <input type="text" class="form-control" id="tipo" name="tipo" value="<?php echo $tipo ?>" readonly>
+                        <input type="text" class="form-control" id="tipo" name="tipo" value="<?php echo strtoupper($tipo) ?>" readonly>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="modelo" class="form-label text-muted">Modelo:</label>
-                        <input type="text" class="form-control" id="modelo" name="modelo" value="<?php echo $modelo ?>" readonly>
+                        <input type="text" class="form-control" id="modelo" name="modelo" value="<?php echo strtoupper($modelo) ?>" readonly>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="numSerie" class="form-label text-muted">Número de Série:</label>
-                        <input type="text" class="form-control" id="numSerie" name="numSerie" value="<?php echo $numserie ?>" readonly>
+                        <input type="text" class="form-control" id="numSerie" name="numSerie" value="<?php echo strtoupper($numserie) ?>" readonly>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="marca" class="form-label text-muted">Marca:</label>
-                        <input type="text" class="form-control" id="marca" name="marca" value="<?php echo $marca ?>" readonly>
+                        <input type="text" class="form-control" id="marca" name="marca" value="<?php echo strtoupper($marca) ?>" readonly>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -150,7 +150,7 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="localAtual" class="form-label text-muted">Localização Atual:</label>
-                        <input type="text" class="form-control" id="localanterior" name="localAnterior" value="<?php echo $localizacao ?>" readonly>
+                        <input type="text" class="form-control" id="localanterior" name="localAnterior" value="<?php echo strtoupper($localizacao) ?>" readonly>
                     </div>
                 </div>
                 <h5 class="mb-3">Dados da Transferência</h5>

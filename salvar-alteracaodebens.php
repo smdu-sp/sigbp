@@ -22,5 +22,5 @@
         $result = $conexao->query($sqlUpdate);
     }
     
-    header('Location: listaremovimentar.php?notificacao=2');
+    header('Location: listaremovimentar.php?notificacao=2&status=Ativo');
 ?>

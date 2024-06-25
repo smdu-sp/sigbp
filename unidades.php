@@ -56,7 +56,7 @@ if (isset($_GET['pesquisar']) && $_GET['pesquisar'] !== '') {
 }
 
 if (isset($_GET['status']) && $_GET['status'] !== '') {
-    if ($_GET['status'] != 'Todos') {
+    if ($_GET['status'] != 'TODOS') {
         $condicoes[] = "statusunidade = '{$_GET['status']}'";
     }
 }
@@ -282,16 +282,16 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     <div class="col-2 ml-2 mb-2">
                         <p class="mb-1 text-muted">Status:</p>
                         <select id="statusSelect" class="form-select" onchange="filtrar()" aria-label="Default select example" name="status">
-                            <option value="<?php echo empty($status) ? 'Ativo' : htmlspecialchars($status); ?>" hidden><?php echo empty($status) ? 'Ativo' : htmlspecialchars($status); ?></option>
-                            <option value="Ativo">Ativo</option>
-                            <option value="Inativo">Inativo</option>
-                            <option value="Todos">Todos</option>
+                            <option value="<?php echo empty($status) ? 'Ativo' : htmlspecialchars(strtoupper($status)); ?>" hidden><?php echo empty($status) ? 'Ativo' : htmlspecialchars(strtoupper($status)); ?></option>
+                            <option value="ATIVO">Ativo</option>
+                            <option value="INATIVO">Inativo</option>
+                            <option value="TODOS">Todos</option>
                         </select>
                     </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Sigla:</p>
                         <select id="siglaSelect" class="form-select" onchange="filtrar()" aria-label="Default select example" name="sigla">
-                            <option value="<?php echo empty($_GET['sigla']) ? '' : $_GET['sigla']; ?>" hidden><?php echo empty($_GET['sigla']) ? 'Selecionar' : $_GET['sigla']; ?></option>
+                            <option value="<?php echo empty($_GET['sigla']) ? '' : strtoupper($_GET['sigla']); ?>" hidden><?php echo empty($_GET['sigla']) ? 'Selecionar' : strtoupper($_GET['sigla']); ?></option>
                             <?php
                             include 'query-unidades.php'
                             ?>
@@ -460,4 +460,66 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
             });
         });
     });
+
+    function alert(num) {
+        if (num == 1) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Unidade alterada com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
+            });
+        } else if (num == 3) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Unidade cadastrada com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
+            });
+        } 
+    }
+
+    window.addEventListener('load', function() {
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var data = url.searchParams.get("notificacao");
+        console.log(data);
+        if (data == 'alterado') {
+            alert(1);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'unidades.php?status=ATIVO');
+        } else if (data == 'cadastrado') {
+            alert(3);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'unidades.php?&status=ATIVO');
+        }
+    })
 </script>

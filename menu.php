@@ -26,7 +26,7 @@ $permissao = $_SESSION['Perm'];
                 <a href="./cadastrarbens.php" value="/cadastrarbens.php" id="botao2" class="btn-menu botoes admin"><img id="icon-computador" src="./images/icon-computador.png" alt="Icon Computador">Cadastro de Bens</a>
                 <a href="./tiposdebens.php" value="/tiposdebens.php" id="botao7" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/icon-tipos.png" alt="Icon Usuario">Tipos de Bens</a>
                 <a href="./inventario.php?ano=2024" value="/inventario.php" id="botao8" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/icons-inventory.png" alt="Icon Usuario">Inventário</a>
-                <a href="./listaremovimentar.php?status=Ativo" value="/listaremovimentar.php" id="botao4" class="btn-menu botoes admin"><img id="icon-lista" src="./images/icon-lista.png" alt="Icon Lista">Listar/Movimentar Bens</a>
+                <a href="./listaremovimentar.php?status=TODOS" value="/listaremovimentar.php" id="botao4" class="btn-menu botoes admin"><img id="icon-lista" src="./images/icon-lista.png" alt="Icon Lista">Listar/Movimentar Bens</a>
                 <a href="./termo.php" value="/termo.php" id="botao3" class="btn-menu botoes mb-2"><img id="icon-termo" src="./images/icon-termo.png" alt="Icon Ferramentas">Termo Entrega/Retirada</a>
                 <a href="./dashboard.php" value="/dashboard.php" id="botao9" class="btn-menu botoes admin"><img id="icon-dashboard" src="./images/icon-dashboard.png" alt="Icon Usuario">Dashboard</a>
             </div>
@@ -109,6 +109,10 @@ $permissao = $_SESSION['Perm'];
 
         if (pathName == '/resultadodash.php') {
             document.getElementById('botao9').style.background = '#DDE7EE';
+        }
+
+        if (pathName == '/cadastrodeusuario.php') {
+            document.getElementById('botao5').style.background = '#DDE7EE';
         }
 
         if (pathName === valorBotao) {

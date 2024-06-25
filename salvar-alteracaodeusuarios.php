@@ -13,7 +13,7 @@ if(isset($_POST['update'])) {
     $sqlUpdate = "UPDATE usuarios SET usuario='$usuario', nome='$nomefr', email='$emailfr', permissao='$permissao', unidade='$unidade', statususer='$status' WHERE id='$id'";
 
     $result = $conexao->query($sqlUpdate);
-    header('Location: usuarios.php?notificacao=alterado');
+    header('Location: usuarios.php?notificacao=alterado&status=ATIVO&permissao=4');
 
 } else {
     header('Location: usuarios.php');

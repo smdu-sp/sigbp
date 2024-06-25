@@ -55,7 +55,7 @@ if (isset($_GET['pesquisar']) && $_GET['pesquisar'] !== '') {
 }
 
 if (isset($_GET['status']) && $_GET['status'] !== '') {
-    if ($_GET['status'] != 'Todos') {
+    if ($_GET['status'] != 'TODOS') {
         $condicoes[] = "statususer = '{$_GET['status']}'";
     }
 }
@@ -281,10 +281,10 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     <div class="col-2 ml-2 mb-2">
                         <p class="mb-1 text-muted">Status:</p>
                         <select id="statusSelect" class="form-select" onchange="filtrar()" aria-label="Default select example" name="status">
-                            <option value="<?php echo empty($_GET['status']) ? 'Ativo' : $_GET['status']; ?>" hidden><?php echo empty($_GET['status']) ? 'Ativo' : $_GET['status']; ?></option>
-                            <option value="Ativo">Ativo</option>
-                            <option value="Inativo">Inativo</option>
-                            <option value="Todos">Todos</option>
+                            <option value="<?php echo empty($_GET['status']) ? 'Ativo' : strtoupper($_GET['status']); ?>" hidden><?php echo empty($_GET['status']) ? 'Ativo' : strtoupper($_GET['status']); ?></option>
+                            <option value="ATIVO">Ativo</option>
+                            <option value="INATIVO">Inativo</option>
+                            <option value="TODOS">Todos</option>
                         </select>
                     </div>
                     <div class="col-2 mb-2">
@@ -328,21 +328,21 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                         while ($user_data = $sql_usuarios_query_exec->fetch_assoc()) {
                             echo "<tr>";
                             echo "<td hidden>" . $user_data['id'] . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['nome'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['email'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]' hidden>" . $user_data['statususer'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td class='unidade' style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['usuario'] . '<span hidden>todos</span>' . "</td>";
-                            echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['unidade'] . '<span hidden>todos</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['nome'] . '<span hidden>TODOS</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['email'] . '<span hidden>TODOS</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]' hidden>" . $user_data['statususer'] . '<span hidden>TODOS</span>' . "</td>";
+                            echo "<td class='unidade' style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['usuario'] . '<span hidden>TODOS</span>' . "</td>";
+                            echo "<td style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>" . $user_data['unidade'] . '<span hidden>TODOS</span>' . "</td>";
                             echo "<td id='permissao' style='cursor: pointer;' onclick=location.href='alteracaodeusuario.php?id=$user_data[id]'>";
 
                             if ($user_data['permissao'] == 1) {
-                                echo "<div id='dev'><p class='perm-usuario'>Administrador<span hidden>todos</span></p></div>";
+                                echo "<div id='dev'><p class='perm-usuario'>Administrador<span hidden>TODOS</span></p></div>";
                             } elseif ($user_data['permissao'] == 2) {
-                                echo "<div id='usuario'><p class='perm-usuario'>Usuário<span hidden>todos</span></p></div>";
+                                echo "<div id='usuario'><p class='perm-usuario'>Usuário<span hidden>TODOS</span></p></div>";
                             } elseif ($user_data['permissao'] == 3) {
-                                echo "<div id='semPermissao'><p class='perm-usuario'>Sem permissão<span hidden>todos</span></p></div>";
+                                echo "<div id='semPermissao'><p class='perm-usuario'>Sem permissão<span hidden>TODOS</span></p></div>";
                             } else {
-                                echo "<div id='todos'><p class='perm-usuario'>Todos<span hidden>todos</span></p></div>";
+                                echo "<div id='TODOS'><p class='perm-usuario'>TODOS<span hidden>TODOS</span></p></div>";
                             }
 
                             echo "</td>";
@@ -488,4 +488,66 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
             });
         });
     });
+
+    function alert(num) {
+        if (num == 1) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Usuário alterado com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
+            });
+        } else if (num == 3) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                customClass: ({
+                    title: 'swal2-title'
+                }),
+                icon: "success",
+                title: "Usuário cadastrado com sucesso!",
+                background: 'green',
+                iconColor: '#ffffff'
+            });
+        } 
+    }
+
+    window.addEventListener('load', function() {
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var data = url.searchParams.get("notificacao");
+        console.log(data);
+        if (data == 'alterado') {
+            alert(1);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'usuarios.php?status=ATIVO&permissao=4');
+        } else if (data == 'cadastrado') {
+            alert(3);
+            window.history.replaceState({}, document.title, window.location.pathname);
+            history.pushState({}, '', 'usuarios.php?&status=ATIVO&permissao=4');
+        }
+    })
 </script>

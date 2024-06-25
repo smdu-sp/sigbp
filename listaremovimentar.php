@@ -71,7 +71,7 @@ if (isset($_GET['tipo']) && $_GET['tipo'] !== '') {
 }
 
 if (isset($_GET['status']) && $_GET['status'] !== '') {
-    if ($_GET['status'] != 'Todos') {
+    if ($_GET['status'] != 'TODOS') {
         $condicoes[] = "statusitem = '{$_GET['status']}'";
     } else {
         $condicoes[] = "statusitem != 'Inativo'";
@@ -307,20 +307,20 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     <div class="col-2 ml-2 mb-2">
                         <p class="mb-1 text-muted">Status:</p>
                         <select id="statusSelect" onchange="filtrar()" class="form-select" aria-label="Default select example" name="status">
-                            <option value="<?php echo empty($_GET['status']) ? 'Ativo' : $_GET['status']; ?>" hidden><?php echo empty($_GET['status']) ? 'Ativo' : $_GET['status']; ?></option>
-                            <option value="Ativo">Ativo</option>
-                            <option value="Baixado">Baixado</option>
-                            <option value="Para Doação">Para Doação</option>
-                            <option value="Para Descarte">Para Descarte</option>
-                            <option value="Doado">Doado</option>
-                            <option value="Descartado">Descartado</option>
-                            <option value="Todos">Todos</option>
+                            <option value="<?php echo empty($_GET['status']) ? 'Ativo' : strtoupper($_GET['status']); ?>" hidden><?php echo empty($_GET['status']) ? 'Ativo' : strtoupper($_GET['status']); ?></option>
+                            <option value="ATIVO">Ativo</option>
+                            <option value="BAIXADO">Baixado</option>
+                            <option value="PARA DOAÇÃO">Para Doação</option>
+                            <option value="PARA DESCARTE">Para Descarte</option>
+                            <option value="DOADO">Doado</option>
+                            <option value="DESCARTADO">Descartado</option>
+                            <option value="TODOS">Todos</option>
                         </select>
                     </div>
                     <div class="col-2 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
                         <select id="unidadeSelect" onchange="filtrar()" class="form-select" name="unidade">
-                            <option value="<?php echo empty($_GET['unidade']) ? '' : $_GET['unidade']; ?>" hidden><?php echo empty($_GET['unidade']) ? 'Selecionar' : $_GET['unidade']; ?></option>
+                            <option value="<?php echo empty($_GET['unidade']) ? '' : strtoupper($_GET['unidade']); ?>" hidden><?php echo empty($_GET['unidade']) ? 'Selecionar' : strtoupper($_GET['unidade']); ?></option>
                             <?php
                             include 'query-unidades.php'
                             ?>
@@ -329,7 +329,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     <div class="col-3 ml-2 mb-2">
                         <p class="mb-1 text-muted">Tipo:</p>
                         <select class="form-select" onchange="filtrar()" name="tipo" id="tipo">
-                            <option value="<?php echo empty($_GET['tipo']) ? '' : $_GET['tipo']; ?>" hidden><?php echo empty($_GET['tipo']) ? 'Selecionar' : $_GET['tipo']; ?></option>
+                            <option value="<?php echo empty($_GET['tipo']) ? '' : strtoupper($_GET['tipo']); ?>" hidden><?php echo empty($_GET['tipo']) ? 'Selecionar' : strtoupper($_GET['tipo']); ?></option>
                             <?php
                             include 'query-tipos.php';
                             ?>
@@ -417,16 +417,12 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     $pesquisar =  isset($_GET['pesquisar']) ? $_GET['pesquisar'] : '';
                     $ano = isset($_GET['ano']) ? $_GET['ano'] : '';
                     $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : '';
+                    $status =$_GET['status'];
 
                     echo "<a href='?page=" . ($page - 1) . '&limit=' . $limit . '&status=' . $status . '&tipo=' . $tipo . '&unidade=' . $unidade . '&pesquisar=' . $pesquisar . "' class='arrow-button esquerda" . ($disabled_esquerda ? ' disabled' : '') . "' id='esquerda" . ($disabled_esquerda ? '-disabled' : '') . "' style='opacity: {$opacidade_esquerda}' {$disabled_esquerda} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoE.png' alt='#' class='arrow-icon'></a>";
                     echo "<a href='?page=" . ($page + 1) . '&limit=' . $limit . '&status=' . $status . '&tipo=' . $tipo . '&unidade=' . $unidade . '&pesquisar=' . $pesquisar . "' class='arrow-button direita" . ($disabled_direita ? ' disabled' : '') . "' id='direita" . ($disabled_direita ? '-disabled' : '') . "' style='opacity: {$opacidade_direita}' {$disabled_direita} onclick='passarValorBuscar()'><img src='./images/icon-paginacaoD.png' alt='#' class='arrow-icon'></a>";
                     ?>
                 </div>
-            </div>
-            <div class="d-flex justify-content-end mt-4 mr-2">
-                <a href="./cadastrodeusuario.php" id="btn-adc-usuario">
-                    <img src="./images/icons-adcUsuario.png" alt="">
-                </a>
             </div>
         </div>
     </div>
@@ -568,14 +564,15 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
         var url_string = window.location.href;
         var url = new URL(url_string);
         var data = url.searchParams.get("notificacao");
+        console.log(data);
         if (data == 2) {
             alert(2);
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'listaremovimentar.php');
+            history.pushState({}, '', 'listaremovimentar.php?status=TODOS');
         } else if (data == 1) {
             alert(3);
             window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'listaremovimentar.php');
+            history.pushState({}, '', 'listaremovimentar.php?status=TODOS');
         }
     })
 </script>

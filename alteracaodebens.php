@@ -31,7 +31,7 @@ if (!empty($_GET['id'])) {
             $statusitem = $user_data['statusitem'];
         }
     } else {
-        header('Location: listaremovimentar.php');
+        header('Location: listaremovimentar.php?notificacao=2&status=TODOS');
     }
 }
 ?>
@@ -89,13 +89,13 @@ if (!empty($_GET['id'])) {
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numPatrimonio" class="form-label text-muted">Número do Patrimônio PMSP:</label>
-                    <input type="text" class="form-control" id="numPatrimonio" name="numPatrimonio" value="<?php echo $patrimonio ?>">
+                    <input type="text" class="form-control" id="numPatrimonio" name="numPatrimonio" value="<?php echo strtoupper($patrimonio); ?>">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="tipo" class="form-label text-muted">Tipo:</label>
                     
                     <select class="form-select" name="tipo" id="tipo" required>
-                        <option value="<?php echo $tipo ?>" hidden="hidden"><?php echo $tipo ?></option>
+                        <option value="<?php echo $tipo ?>" hidden="hidden"><?php echo strtoupper($tipo) ?></option>
                         <?php  include 'query-tipos.php'?>
                     </select>
                 </div>
@@ -103,22 +103,22 @@ if (!empty($_GET['id'])) {
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="marca" class="form-label text-muted">Marca:</label>
-                    <input type="text" class="form-control" id="marca" name="marca" value="<?php echo $marca ?>">
+                    <input type="text" class="form-control" id="marca" name="marca" value="<?php echo strtoupper($marca) ?>">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="modelo" class="form-label text-muted">Modelo:</label>
-                    <input type="text" class="form-control" id="mmodelo" name="modelo" value="<?php echo $modelo ?>">
+                    <input type="text" class="form-control" id="mmodelo" name="modelo" value="<?php echo strtoupper($modelo) ?>">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numSerie" class="form-label text-muted">Número de Série:</label>
-                    <input type="text" class="form-control" id="numSerie" name="numSerie" value="<?php echo $numserie ?>">
+                    <input type="text" class="form-control" id="numSerie" name="numSerie" value="<?php echo strtoupper($numserie) ?>">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="localNovo" class="form-label text-muted">Setor:</label>
                     <select id="unidadeSelect" class="form-select" name="localNovo">
-                        <option value="<?php echo $localizacao ?>" hidden="hidden"><?php echo $localizacao ?></option>
+                        <option value="<?php echo $localizacao ?>" hidden="hidden"><?php echo strtoupper($localizacao) ?></option>
                         <?php include 'query-unidades.php' ?>
                     </select>
                 </div>
@@ -130,34 +130,34 @@ if (!empty($_GET['id'])) {
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="cimbpm" class="form-label text-muted">CIMBPM:</label>
-                    <input type="text" class="form-control" id="cimbpm" name="cimbpm" value="<?php echo $cimbpm ?>">
+                    <input type="text" class="form-control" id="cimbpm" name="cimbpm" value="<?php echo strtoupper($cimbpm) ?>">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="numProcesso" class="form-label text-muted">Número do Processo:</label>
-                    <input type="text" class="form-control" id="numProcesso" name="numProcesso" value="<?php echo $numprocesso ?>">
+                    <input type="text" class="form-control" id="numProcesso" name="numProcesso" value="<?php echo strtoupper($numprocesso) ?>">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="nome" class="form-label text-muted">Nome do computador:</label>
-                    <input type="text" class="form-control" id="nome" name="nome" value="<?php echo $name ?>">
+                    <input type="text" class="form-control" id="nome" name="nome" value="<?php echo strtoupper($name) ?>">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="descricaoPBPM" class="form-label text-muted">Descrição PBPM:</label>
-                    <input type="text" class="form-control" id="descricaoPBPM" name="descricaoPBPM" value="<?php echo $descsbpm ?>">
+                    <input type="text" class="form-control" id="descricaoPBPM" name="descricaoPBPM" value="<?php echo strtoupper($descsbpm) ?>">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="status" class="form-label text-muted">Status:</label>
                     <select class="form-select" id="status" required name="status" required>
-                        <option value="<?php echo $statusitem ?>" hidden="hidden"><?php echo $statusitem ?></option>
-                        <option value="Ativo">Ativo</option>
-                        <option value="Baixado">Baixado</option>
-                        <option value="Para Doação">Para Doação</option>
-                        <option value="Ativo">Para Descarte</option>
-                        <option value="Ativo">Doado</option>
-                        <option value="Descartado">Descartado</option>
+                        <option value="<?php echo $statusitem ?>" hidden="hidden"><?php echo strtoupper($statusitem) ?></option>
+                        <option value="ATIVO">Ativo</option>
+                        <option value="BAIXADO">Baixado</option>
+                        <option value="PARA DOAÇÃO">Para Doação</option>
+                        <option value="PARA DESCARTE">Para Descarte</option>
+                        <option value="DOADO">Doado</option>
+                        <option value="DESCARTADO">Descartado</option>
                     </select>
                 </div>
             </div>

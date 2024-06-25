@@ -284,7 +284,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
                         <select id="unidadeSelect" onchange="filtrar()" class="form-select" name="unidade">
-                            <option value="<?php echo empty($_GET['unidade']) ? '' : $_GET['unidade']; ?>" hidden><?php echo empty($_GET['unidade']) ? 'Selecionar' : $_GET['unidade']; ?></option>
+                            <option value="<?php echo empty($_GET['unidade']) ? '' : strtoupper($_GET['unidade']); ?>" hidden><?php echo empty($_GET['unidade']) ? 'Selecionar' : strtoupper($_GET['unidade']); ?></option>
                             <?php include 'query-unidades.php' ?>
                         </select>
                     </div>
