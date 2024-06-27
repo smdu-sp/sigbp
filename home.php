@@ -172,11 +172,7 @@ $pesquisar = isset($_GET['pesquisar']) ? $conexao->real_escape_string($_GET['pes
                     </a>
                     <div class="col-2 mb-2">
                         <p class="mb-1 text-muted">Ano:</p>
-                        <select id="anoSelect" class="form-select" onchange="filtrar()" name="ano">
-                            <option value="<?php echo empty($_GET['ano']) ? '' : strtoupper($_GET['ano']); ?>" hidden><?php echo empty($_GET['ano']) ? 'Selecionar' : strtoupper($_GET['ano']); ?></option>
-                            <option value="2023">2023</option>
-                            <option value="2024">2024</option>
-                        </select>
+                        <input type="number" id="anoSelect" class="form-control" onchange="filtrar()" name="ano" placeholder="ex: 2023" min="2023" value="<?php echo $ano ?>">
                     </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
@@ -240,7 +236,7 @@ $pesquisar = isset($_GET['pesquisar']) ? $conexao->real_escape_string($_GET['pes
                 <div class='page-info'>Página <?php echo $page; ?> de <?php echo $page_number; ?></div>
                 <?php
                 $opacidade_esquerda = ($page == 1) ? '0.5' : '1';
-                $opacidade_direita = ($page == $page_number) ? '0.5' : '1';
+                $opacidade_direita = ($page >= $page_number) ? '0.5' : '1';
                 $disabled_esquerda = ($opacidade_esquerda == '0.5') ? 'disabled' : '';
                 $disabled_direita = ($opacidade_direita == '0.5') ? 'disabled' : '';
 

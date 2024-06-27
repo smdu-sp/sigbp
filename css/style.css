@@ -460,89 +460,182 @@ hr {
 }
 
 .margin-dhis {
-    margin-left: 59px;
+    margin-left: 28px;
 }
 .margin-dps {
-    margin-left: 66px;
+    margin-left: 34px;
 }
-.margin-dcimp,
-.margin-ddu {
+.margin-dcimp {
     margin-left: 46px;
 }
-.margin-dsigp {
-    margin-left: 51px;
-}
-.margin-dsimp {
-    margin-left: 48px;
-}
-.margin-drgp {
-    margin-left: 44px;
-}
-.margin-drpm {
+.margin-ddu {
     margin-left: 41px;
 }
-.margin-dru {
-    margin-left: 55px;
+.margin-casestel{
+    margin-left: 25px;
 }
-.margin-atecc, 
-.margin-dsup{
-    margin-left: 32px;
+.margin-dsigp {
+    margin-left: 45px;
 }
-.margin-atic,
-.margin-stel {
-    margin-left: 47px;
+.margin-obs {
+    margin-left: 26px;
+}
+.margin-dsi {
+    margin-left: 30px;
+}
+.margin-dcimp {
+    margin-left: 41px;
 }
 
+.margin-dcigp {
+    margin-left: 43px;
+}
+.margin-dsimp {
+    margin-left: 43px;
+}
+.margin-drgp {
+    margin-left: 19px;
+}
+.margin-drpm {
+    margin-left: 17px;
+}
+.margin-dru {
+    margin-left: 28px;
+}
+
+.margin-drve {
+    margin-left: 22px;
+}
+.margin-atecc{
+    margin-left: 32px;
+} 
+.margin-dsup{
+    margin-left: 28px;
+}
+.margin-drv{
+    margin-left: 35px;
+}
+.margin-atic {
+    margin-left: 43px;
+}
+.margin-stel {
+    margin-left: 43px;
+}
+.margin-drg {
+    margin-left: 28px;
+}
 .margin-ataj {
     margin-left: 47px;
     margin-bottom: 15px;
 }
 
-.margin-gab,
+.margin-gab {
+    margin-left: 44px;
+}
 .margin-dacess {
-    margin-left: 49px;
+    margin-left: 20px;
 }
 .margin-dgp {
-    margin-left: 39px;
+    margin-left: 35px;
 }
 .margin-dlc {
-    margin-left: 42px;
+    margin-left: 37px;
 }
 .margin-dof {
-    margin-left: 40px;
+    margin-left: 35px;
 }
-.margin-deprot,
+.margin-deprot {
+    margin-left: 27px;
+}
 .margin-dcad {
-    margin-left: 36px;
+    margin-left: 34px;
 }
 .margin-dpci {
-    margin-left: 60px;
+    margin-left: 45px;
 }
 .margin-dpd {
-    margin-left: 64px;
+    margin-left: 48px;
 }
+.margin-capg {
+    margin-left: 35px;
+}
+
 .margin-nucleo {
-    margin-left: 33px;
+    margin-left: 25px;
 }
-.margin-dle,
+.margin-dle {
+    margin-left: 46px;
+}
 .margin-dnus {
     margin-left: 52px;
 }
 .margin-dins {
-    margin-left: 70px;
+    margin-left: 37px;
 }
 .margin-dlr {
-    margin-left: 77px;
+    margin-left: 44px;
 }
 .margin-dsus {
-    margin-left: 67px;
+    margin-left: 34px;
 }
 .margin-dmus {
     margin-left: 50px;
 }
 .margin-dsiz {
-    margin-left: 62px;
+    margin-left: 66px;
 }
+.margin-dhgp {
+    margin-left: 20px;
+}
+
+.margin-dma {
+    margin-left: 20px;
+}
+
+.margin-decpp,
+.margin-derpp {
+    margin-left: 20px;
+}
+
+.margin-despp {
+    margin-left: 21px;;
+}
+
+.margin-gab-sel{
+    margin-left: 30px;
+}
+
+.margin-licen {
+    margin-left: 40px;
+}
+
+.margin-gtec {
+    margin-left: 40px;
+}
+
+.margin-dmus {
+    margin-left: 20px;
+}
+
+.margin-dsiz {
+    margin-left: 30px;
+}
+
+.margin-dnus {
+    margin-left: 22px;
+}
+
+.margin-dvf {
+    margin-left: 30px;
+}
+.margin-dhmp {
+    margin-left: 18px;
+}
+.margin-dhpp {
+    margin-left: 24px;
+}
+
+
 
 .swal2-title {
     color: #fff;

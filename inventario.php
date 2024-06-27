@@ -275,11 +275,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
                     </a>
                     <div class="col-2 mb-2">
                         <p class="mb-1 text-muted">Ano:</p>
-                        <select id="anoSelect" onchange="filtrar()" class="form-select" name="ano">
-                            <option value="<?php echo htmlspecialchars($ano) == '' ? '' : htmlspecialchars($ano) ?>" hidden><?php echo htmlspecialchars($ano) == '' ? 'Selecionar' : htmlspecialchars($ano) ?></option>
-                            <option value="2023">2023</option>
-                            <option value="2024">2024</option>
-                        </select>
+                        <input type="number" id="anoSelect" class="form-control" onchange="filtrar()" name="ano" placeholder="ex: 2023" min="2023" value="<?php echo $ano ?>">
                     </div>
                     <div class="col-3 mb-2">
                         <p class="mb-1 text-muted">Unidade:</p>
