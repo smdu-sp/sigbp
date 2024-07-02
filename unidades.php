@@ -26,7 +26,7 @@ if (isset($_GET['nome']) && isset($_GET['inativo'])) {
 
     $result = mysqli_query($conexao, "UPDATE unidades SET statusunidade = '$inativo' WHERE sigla = '$nome'");
 
-    header("Location: unidades.php?limit=" . $limit . "&status=Ativo&permissao=4&unidade=&pesquisar=");
+    header("Location: unidades.php?limit=" . $limit . "&notificacao=alterado&status=Ativo&permissao=4&unidade=&pesquisar=");
 }
 
 if (isset($_GET['nome']) && isset($_GET['reativar'])) {
@@ -41,7 +41,7 @@ if (isset($_GET['nome']) && isset($_GET['reativar'])) {
 
     $result = mysqli_query($conexao, "UPDATE unidades SET statusunidade = '$reativar' WHERE sigla = '$nome'");
 
-    header("Location: unidades.php?limit=" . $limit . "&status=Ativo&permissao=4&unidade=&pesquisar=");
+    header("Location: unidades.php?limit=" . $limit . "&notificacao=alterado&status=Ativo&permissao=4&unidade=&pesquisar=");
 }
 
 $condicoes = [];
@@ -282,10 +282,10 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     <div class="col-2 ml-2 mb-2">
                         <p class="mb-1 text-muted">Status:</p>
                         <select id="statusSelect" class="form-select" onchange="filtrar()" aria-label="Default select example" name="status">
-                            <option value="<?php echo empty($status) ? 'Ativo' : htmlspecialchars(strtoupper($status)); ?>" hidden><?php echo empty($status) ? 'Ativo' : htmlspecialchars(strtoupper($status)); ?></option>
-                            <option value="ATIVO">Ativo</option>
-                            <option value="INATIVO">Inativo</option>
-                            <option value="TODOS">Todos</option>
+                            <option value="<?php echo empty($status) ? 'ATIVO' : htmlspecialchars(strtoupper($status)); ?>" hidden><?php echo empty($status) ? 'ATIVO' : htmlspecialchars(strtoupper($status)); ?></option>
+                            <option value="ATIVO">ATIVO</option>
+                            <option value="INATIVO">INATIVO</option>
+                            <option value="TODOS">TODOS</option>
                         </select>
                     </div>
                     <div class="col-3 mb-2">
@@ -322,7 +322,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                             echo "<td style=' cursor: pointer; background-color:hover: grey;' onclick=location.href='cadastrodeunidades.php?id=$user_data[id]'>" . $user_data['codigo'] . "</td>";
                             echo "<td style='cursor: pointer; background-color:hover: grey;' onclick=location.href='cadastrodeunidades.php?id=$user_data[id]'>" . $user_data['statusunidade'] . "</td>";
                             echo "<td>";
-                            if ($user_data['statusunidade'] == 'Inativo') {
+                            if ($user_data['statusunidade'] == 'INATIVO' || $user_data['statusunidade'] == 'Inativo') {
                                 echo "<a class='x-imageReativar' id='tooltip2' onclick='mostrarMsgReativar(\"{$user_data['sigla']}\")'><span id='tooltipText2'>Reativar</span><img class='img-reativar' src='./images/icon-reativar.png' alt='inativo'></a>";
                             } else {
                                 echo "<a class='x-image' id='tooltip2' onclick='mostrarMsgInativo(\"{$user_data['sigla']}\")'><span id='tooltipText2'>Excluir</span><img class='img-usuario' src='./images/icons-x.png' alt='x'></a>";
@@ -462,7 +462,6 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     });
 
     function alert(num) {
-        if (num == 1) {
             const Toast = Swal.mixin({
                 toast: true,
                 position: "top-end",
@@ -474,52 +473,47 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                     toast.onmouseleave = Swal.resumeTimer;
                 }
             });
-            Toast.fire({
-                customClass: ({
-                    title: 'swal2-title'
-                }),
-                icon: "success",
-                title: "Unidade alterada com sucesso!",
-                background: 'green',
-                iconColor: '#ffffff'
-            });
-        } else if (num == 3) {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                customClass: ({
-                    title: 'swal2-title'
-                }),
-                icon: "success",
-                title: "Unidade cadastrada com sucesso!",
-                background: 'green',
-                iconColor: '#ffffff'
-            });
-        } 
-    }
 
-    window.addEventListener('load', function() {
-        var url_string = window.location.href;
-        var url = new URL(url_string);
-        var data = url.searchParams.get("notificacao");
-        console.log(data);
-        if (data == 'alterado') {
-            alert(1);
-            window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'unidades.php?status=ATIVO');
-        } else if (data == 'cadastrado') {
-            alert(3);
-            window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'unidades.php?&status=ATIVO');
+            if (num == 1) {
+                Toast.fire({
+                    customClass: {
+                        title: 'swal2-title'
+                    },
+                    icon: "success",
+                    title: "Unidade alterada com sucesso!",
+                    background: 'green',
+                    iconColor: '#ffffff'
+                });
+                setTimeout(() => {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    window.location.href = 'unidades.php?status=ATIVO';
+                }, 1800); 
+            } else if (num == 3) {
+                Toast.fire({
+                    customClass: {
+                        title: 'swal2-title'
+                    },
+                    icon: "success",
+                    title: "Unidade cadastrada com sucesso!",
+                    background: 'green',
+                    iconColor: '#ffffff'
+                });
+                setTimeout(() => {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    window.location.href = 'unidades.php?status=ATIVO';
+                }, 1800); 
+            }
         }
-    })
+
+        window.addEventListener('load', function () {
+            var url_string = window.location.href;
+            var url = new URL(url_string);
+            var data = url.searchParams.get("notificacao");
+            console.log(data); 
+            if (data == 'alterado') {
+                alert(1);
+            } else if (data == 'cadastrado') {
+                alert(3);
+            }
+        });
 </script>

@@ -308,13 +308,13 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                         <p class="mb-1 text-muted">Status:</p>
                         <select id="statusSelect" onchange="filtrar()" class="form-select" aria-label="Default select example" name="status">
                             <option value="<?php echo empty($_GET['status']) ? 'Ativo' : strtoupper($_GET['status']); ?>" hidden><?php echo empty($_GET['status']) ? 'Ativo' : strtoupper($_GET['status']); ?></option>
-                            <option value="ATIVO">Ativo</option>
-                            <option value="BAIXADO">Baixado</option>
-                            <option value="PARA DOAÇÃO">Para Doação</option>
-                            <option value="PARA DESCARTE">Para Descarte</option>
-                            <option value="DOADO">Doado</option>
-                            <option value="DESCARTADO">Descartado</option>
-                            <option value="TODOS">Todos</option>
+                            <option value="ATIVO">ATIVO</option>
+                            <option value="BAIXADO">BAIXADO</option>
+                            <option value="PARA DOAÇÃO">PARA DOAÇÃO</option>
+                            <option value="PARA DESCARTE">PARA DESCARTE</option>
+                            <option value="DOADO">DOADO</option>
+                            <option value="DESCARTADO">DESCARTADO</option>
+                            <option value="TODOS">TODOS</option>
                         </select>
                     </div>
                     <div class="col-2 mb-2">

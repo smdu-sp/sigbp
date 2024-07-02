@@ -76,12 +76,12 @@ include_once('componentes/permissao.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $atic = ceil($row_pg['atic']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS gab FROM item WHERE tipo = '$item' AND (localizacao = 'GABINETE' OR localizacao = 'AUDITÓRIO/GAB' OR localizacao='GAB') AND statusitem != 'Descartado' AND excluido != 1;";
+    $buscar_produtos = "SELECT COUNT(idbem) AS gab FROM item WHERE tipo = '$item' AND (localizacao = 'GABINETE' OR localizacao = 'AUDITÓRIO/GAB' OR localizacao='GAB' OR localizacao = 'GAB/SEL' OR localizacao='GAB SEL') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $gab = ceil($row_pg['gab']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS stel FROM item WHERE tipo = '$item' AND (localizacao = 'STEL' OR localizacao = ' STEL') AND statusitem != 'Descartado' AND excluido != 1;";
+    $buscar_produtos = "SELECT COUNT(idbem) AS stel FROM item WHERE tipo = '$item' AND (localizacao = 'STEL' OR localizacao = ' STEL' OR localizacao = 'CASE STEL' OR localizacao='CASE/STEL') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $stel = ceil($row_pg['stel']);
@@ -183,12 +183,7 @@ include_once('componentes/permissao.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dle = ceil($row_pg['dle']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS caseStel FROM item WHERE tipo = '$item' AND (localizacao = 'CASE STEL' OR localizacao='CASE/STEL') AND statusitem != 'Descartado' AND excluido != 1;";
-    $query_produto = mysqli_query($conexao, $buscar_produtos);
-    $row_pg = mysqli_fetch_assoc($query_produto);
-    $caseStel = ceil($row_pg['caseStel']);
-
-    $case = $case_g + $dcad + $ddu + $dle + $caseStel;
+    $case = $case_g + $dcad + $ddu + $dle;
 
     $buscar_produtos = "SELECT COUNT(idbem) AS cepeuc FROM item WHERE tipo = '$item' AND (localizacao = 'CEPEUC' OR localizacao='CEPEUC-G') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
@@ -256,7 +251,7 @@ include_once('componentes/permissao.php');
 
     $contru = $contru_g + $dacess + $dins + $dlr + $dsus;
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS deuso_g FROM item WHERE tipo = '$item' AND (localizacao = 'DEUSO' OR localizacao='DEUSO-G') AND statusitem != 'Descartado' AND excluido != 1;";
+    $buscar_produtos = "SELECT COUNT(idbem) AS deuso_g FROM item WHERE tipo = '$item' AND (localizacao = 'DEUSO' OR localizacao='DEUSO-G' OR localizacao = 'DEUSO GABINETE' OR localizacao = 'DEUSO/GABINETE') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $deuso_g = ceil($row_pg['deuso_g']);
@@ -276,12 +271,7 @@ include_once('componentes/permissao.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dsiz = ceil($row_pg['dsiz']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS deuso_gabinete FROM item WHERE tipo = '$item' AND (localizacao = 'DEUSO GABINETE' OR localizacao = 'DEUSO/GABINETE') AND statusitem != 'Descartado' AND excluido != 1;";
-    $query_produto = mysqli_query($conexao, $buscar_produtos);
-    $row_pg = mysqli_fetch_assoc($query_produto);
-    $deuso_gabinete = ceil($row_pg['deuso_gabinete']);
-
-    $deuso = $deuso_g + $dmus + $dnus + $dsiz + $deuso_gabinete;
+    $deuso = $deuso_g + $dmus + $dnus + $dsiz;
 
     $buscar_produtos = "SELECT COUNT(idbem) AS geoinfo FROM item WHERE tipo = '$item' AND (localizacao = 'GEOINFO' OR localizacao='GEOINFO-G') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
@@ -298,17 +288,17 @@ include_once('componentes/permissao.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dag = ceil($row_pg['dag']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dsi FROM item WHERE tipo = '$item' AND (localizacao = 'DSI' OR localizacao = 'GEOINFO/DSI' OR localizacao = 'GEOINFO DSI') AND statusitem != 'Descartado' AND excluido != 1;";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dsig FROM item WHERE tipo = '$item' AND (localizacao = 'DSIG' OR localizacao = 'GEOINFO/DSIG' OR localizacao = 'GEOINFO DSIG') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
-    $dsi = ceil($row_pg['dsi']);
+    $dsig = ceil($row_pg['dsig']);
 
     $buscar_produtos = "SELECT COUNT(idbem) AS obs FROM item WHERE tipo = '$item' AND (localizacao = 'OBS' OR localizacao = 'GEOINFO/OBS' OR localizacao = 'GEOINFO OBS') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $obs = ceil($row_pg['obs']);
 
-    $geoinfo = $geoinfo_g + $dad + $dag + $dsi + $obs;
+    $geoinfo = $geoinfo_g + $dad + $dag + $dsig + $obs;
 
     $buscar_produtos = "SELECT COUNT(idbem) AS gtec FROM item WHERE tipo = '$item' AND (localizacao = 'GTEC' OR localizacao='GTEC-G') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
@@ -319,11 +309,6 @@ include_once('componentes/permissao.php');
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $parhis_g = ceil($row_pg['parhis_g']);
-
-    $buscar_produtos = "SELECT COUNT(idbem) AS dhis FROM item WHERE tipo = '$item' AND (localizacao = 'DHIS' OR localizacao='PARHIS/DHIS') AND statusitem != 'Descartado' AND excluido != 1;";
-    $query_produto = mysqli_query($conexao, $buscar_produtos);
-    $row_pg = mysqli_fetch_assoc($query_produto);
-    $dhis = ceil($row_pg['dhis']);
 
     $buscar_produtos = "SELECT COUNT(idbem) AS dhmp FROM item WHERE tipo = '$item' AND (localizacao = 'DHMP' OR localizacao='PARHIS/DHMP') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
@@ -345,17 +330,17 @@ include_once('componentes/permissao.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dhgp = ceil($row_pg['dhgp']);
 
-    $parhis = $parhis_g + $dhgp + $dhis + $dhmp + $dhpp + $dps;
+    $parhis = $parhis_g + $dhgp + $dhmp + $dhpp + $dps;
 
     $buscar_produtos = "SELECT COUNT(idbem) AS planurb_g FROM item WHERE tipo = '$item' AND (localizacao = 'PLANURB' OR localizacao='PLANURB-G') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $planurb_g = ceil($row_pg['planurb_g']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS dar FROM item WHERE tipo = '$item' AND (localizacao = 'DAR' OR localizacao='PLANURB/DAR' OR localizacao='PLANURB DAR') AND statusitem != 'Descartado' AND excluido != 1;";
+    $buscar_produtos = "SELECT COUNT(idbem) AS dart FROM item WHERE tipo = '$item' AND (localizacao = 'DART' OR localizacao='PLANURB/DART' OR localizacao='PLANURB DART') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
-    $dar = ceil($row_pg['dar']);
+    $dart = ceil($row_pg['dart']);
 
     $buscar_produtos = "SELECT COUNT(idbem) AS dma FROM item WHERE tipo = '$item' AND (localizacao = 'DMA' OR localizacao='PLANURB/DMA' OR localizacao='PLANURB DMA') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
@@ -367,7 +352,7 @@ include_once('componentes/permissao.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $dot = ceil($row_pg['dot']);
 
-    $planurb = $planurb_g + $dar + $dma + $dot;
+    $planurb = $planurb_g + $dart + $dma + $dot;
 
     $buscar_produtos = "SELECT COUNT(idbem) AS resid_g FROM item WHERE tipo = '$item' AND (localizacao = 'RESID' OR localizacao='RESID-G') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
@@ -379,27 +364,17 @@ include_once('componentes/permissao.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $drgp = ceil($row_pg['drgp']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS drpm FROM item WHERE tipo = '$item' AND (localizacao = 'DRPM' OR localizacao='RESID/DRPM') AND statusitem != 'Descartado' AND excluido != 1;";
+    $buscar_produtos = "SELECT COUNT(idbem) AS drh FROM item WHERE tipo = '$item' AND (localizacao = 'DRH' OR localizacao='RESID/DRH') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
-    $drpm = ceil($row_pg['drpm']);
-
-    $buscar_produtos = "SELECT COUNT(idbem) AS dru FROM item WHERE tipo = '$item' AND (localizacao = 'DRU' OR localizacao='RESID/DRU') AND statusitem != 'Descartado' AND excluido != 1;";
-    $query_produto = mysqli_query($conexao, $buscar_produtos);
-    $row_pg = mysqli_fetch_assoc($query_produto);
-    $dru = ceil($row_pg['dru']);
-    
-    $buscar_produtos = "SELECT COUNT(idbem) AS drg FROM item WHERE tipo = '$item' AND (localizacao = 'DRG' OR localizacao='RESID/DRG') AND statusitem != 'Descartado' AND excluido != 1;";
-    $query_produto = mysqli_query($conexao, $buscar_produtos);
-    $row_pg = mysqli_fetch_assoc($query_produto);
-    $drg = ceil($row_pg['drg']);
+    $drh = ceil($row_pg['drh']);
 
     $buscar_produtos = "SELECT COUNT(idbem) AS drve FROM item WHERE tipo = '$item' AND (localizacao = 'DRVE' OR localizacao='RESID/DRVE') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $drve = ceil($row_pg['drve']);
 
-    $resid = $resid_g + $drgp + $drpm + $dru + $drg + $drve;
+    $resid = $resid_g + $drgp + $drh + $drve;
 
     $buscar_produtos = "SELECT COUNT(idbem) AS servin_g FROM item WHERE tipo = '$item' AND (localizacao = 'SERVIN' OR localizacao='SERVIN-G') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
@@ -418,22 +393,12 @@ include_once('componentes/permissao.php');
 
     $servin = $servin_g + $dsigp + $dsimp;
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS licen FROM item WHERE tipo = '$item' AND localizacao = 'LICEN' AND statusitem != 'Descartado' AND excluido != 1;";
-    $query_produto = mysqli_query($conexao, $buscar_produtos);
-    $row_pg = mysqli_fetch_assoc($query_produto);
-    $licen = ceil($row_pg['licen']);
-
-    $buscar_produtos = "SELECT COUNT(idbem) AS gab_sel FROM item WHERE tipo = '$item' AND (localizacao = 'GAB/SEL' OR localizacao='GAB SEL') AND statusitem != 'Descartado' AND excluido != 1;";
-    $query_produto = mysqli_query($conexao, $buscar_produtos);
-    $row_pg = mysqli_fetch_assoc($query_produto);
-    $gab_sel = ceil($row_pg['gab_sel']);
-
     $buscar_produtos = "SELECT COUNT(idbem) AS semLocalizacao FROM item WHERE tipo = '$item' AND (localizacao = '' OR localizacao='?') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $semLocalizacao = ceil($row_pg['semLocalizacao']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS caepp_g FROM item WHERE tipo = '$item' AND (localizacao = 'CAEPP-G' OR localizacao='CAEPP') AND statusitem != 'Descartado' AND excluido != 1;";
+    $buscar_produtos = "SELECT COUNT(idbem) AS caepp_g FROM item WHERE tipo = '$item' AND (localizacao = 'CAEPP-G' OR localizacao='CAEPP' OR localizacao = 'LICEN') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $caepp_g = ceil($row_pg['caepp_g']);
@@ -487,7 +452,7 @@ include_once('componentes/permissao.php');
             </div>
         </div>
         <div class="text-center px-2">
-            <div class="row mb-3 w-70 d-flex flex-row align-items-stretch">
+            <div class="row mb-2 w-70 d-flex flex-row align-items-stretch">
                 <div class="col">
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-primary" aria-current="true"><strong>GABINETE (total: <?php echo $gabinete; ?>)</strong></li>
@@ -503,7 +468,7 @@ include_once('componentes/permissao.php');
                 <div class="col">
                     <ul class="list-group" style="height: 320px;">
                         <li class="list-group-item list-group-item-primary"><strong>CAF (total: <?php echo $caf; ?>)</strong></li>
-                        <li class="list-group-item d-flex justify-content-start">CAF-G: <?php echo "<span class='ml-4'>" . $caf_g . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">CAF: <?php echo "<span class='ml-4'>" . $caf_g . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DGP: <?php echo "<span class='margin-dgp'>" . $dgp . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DLC: <?php echo "<span class='margin-dlc'>" . $dlc . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DOF: <?php echo "<span class='margin-dof'>" . $dof . "</span>" ?></li>
@@ -515,7 +480,7 @@ include_once('componentes/permissao.php');
                 <div class="col">
                     <ul class="list-group d-flex justify-content-evenly">
                         <li class="list-group-item list-group-item-primary"><strong>CAP (total: <?php echo $cap; ?>)</strong></li>
-                        <li class="list-group-item d-flex justify-content-start">CAP-G: <?php echo "<span class='margin-capg'>" . $cap_g . "</span>"  ?></li>
+                        <li class="list-group-item d-flex justify-content-start">CAP: <?php echo "<span class='margin-capg'>" . $cap_g . "</span>"  ?></li>
                         <li class="list-group-item d-flex justify-content-start">DPCI: <?php echo "<span class='margin-dpci'>" . $dpci . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DPD: <?php echo "<span class='margin-dpd'>" . $dpd . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DEPROT: <?php echo "<span class='margin-deprot'>" . $deprot . "</span>" ?></li>
@@ -526,12 +491,12 @@ include_once('componentes/permissao.php');
                 </div>
                 <div class="col">
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>CASE (total: <?php echo $case; ?>)</strong></li>
-                        <li class="list-group-item d-flex justify-content-start">CASE-G: <?php echo "<span class='ml-4'>" . $case_g . "</span>" ?></li>
-                        <li class="list-group-item d-flex justify-content-start">DLE: <?php echo "<span class='margin-dle'>" . $dle . "</span>" ?></li>
-                        <li class="list-group-item d-flex justify-content-start">DDU: <?php echo "<span class='margin-ddu'>" . $ddu . "</span>" ?></li>
-                        <li class="list-group-item d-flex justify-content-start">DCAD: <?php echo "<span class='margin-dcad'>" . $dcad . "</span>" ?></li>
-                        <li class="list-group-item d-flex justify-content-start">CASE/STEL: <?php echo "<span class='margin-casestel'>" . $caseStel . "</span>" ?></li>
+                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>GEOINFO (total: <?php echo $geoinfo; ?>)</strong></li>
+                        <li class="list-group-item d-flex justify-content-start">GEOINFO: <?php echo "<span class='ml-4'>" . $geoinfo_g . "</span>"; ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DAD: <?php echo "<span class='ml-4'>" . $dad . "</span>"; ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DAG: <?php echo "<span class='ml-4'>" . $dag . "</span>"; ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DSIG: <?php echo "<span class='margin-dsi'>" . $dsig . "</span>"; ?></li>
+                        <li class="list-group-item d-flex justify-content-start">OBS: <?php echo "<span class='margin-obs'>" . $obs . "</span>"; ?></li>
                         <li class="list-group-item">ㅤ</li>
                         <li class="list-group-item">ㅤ</li>
                     </ul>
@@ -539,7 +504,7 @@ include_once('componentes/permissao.php');
                 <div class="col">
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-primary" aria-current="true"><strong>CONTRU (total: <?php echo $contru; ?>)</strong></li>
-                        <li class="list-group-item d-flex justify-content-start">CONTRU-G: <?php echo "<span class='ml-4'>" . $contru_g . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">CONTRU: <?php echo "<span class='ml-4'>" . $contru_g . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DACESS: <?php echo  "<span class='margin-dacess'>" . $dacess . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DSUS: <?php echo "<span class='margin-dsus'>" . $dsus . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DINS: <?php echo "<span class='margin-dins'>" . $dins . "</span>" ?></li>
@@ -551,62 +516,55 @@ include_once('componentes/permissao.php');
                 <div class="col">
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-primary" aria-current="true"><strong>PARHIS (total: <?php echo $parhis; ?>)</strong></li>
-                        <li class="list-group-item d-flex justify-content-start">PARHIS-G: <?php echo "<span class='ml-4'>" . $parhis_g .  "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">PARHIS: <?php echo "<span class='ml-4'>" . $parhis_g .  "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DHGP: <?php echo  "<span class='margin-dhgp'>" . $dhgp .  "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DHMP: <?php echo  "<span class='margin-dhmp'>" . $dhmp .  "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DHPP: <?php echo "<span class='margin-dhpp'>" . $dhpp .  "</span>" ?></li>
-                        <li class="list-group-item d-flex justify-content-start">DHIS: <?php echo  "<span class='margin-dhis'>" . $dhis .  "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DPS: <?php echo "<span class='margin-dps'>" . $dps .  "</span>" ?></li>
+                        <li class="list-group-item">ㅤ</li>
                         <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-primary" aria-current="true"><strong>RESID (total: <?php echo $resid; ?>)</strong></li>
-                        <li class="list-group-item d-flex justify-content-start">RESID-G: <?php echo "<span class='ml-4'>" . $resid_g . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">RESID: <?php echo "<span class='ml-4'>" . $resid_g . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DRGP: <?php echo "<span class='margin-drgp'>" . $drgp . "</span>" ?></li>
-                        <li class="list-group-item d-flex justify-content-start">DRPM: <?php echo "<span class='margin-drpm'>" . $drpm . "</span>" ?></li>
-                        <li class="list-group-item d-flex justify-content-start">DRG: <?php echo "<span class='margin-drg'>" . $drg . "</span>" ?></li>
-                        <li class="list-group-item d-flex justify-content-start">DRU: <?php echo "<span class='margin-dru'>" . $dru . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DRH: <?php echo "<span class='margin-dru'>" . $drh . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DRVE: <?php echo "<span class='margin-drve'>" . $drve . "</span>" ?></li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
                         <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
-
             </div>
         </div>
         <div class="text-center px-2">
-            <div class="row mb-3 w-80">
+            <div class="row mb-2 w-80">
                 <div class="col">
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>GEOINFO (total: <?php echo $geoinfo; ?>)</strong></li>
-                        <li class="list-group-item d-flex justify-content-start">GEOINFO: <?php echo "<span class='ml-4'>" . $geoinfo_g . "</span>"; ?></li>
-                        <li class="list-group-item d-flex justify-content-start">DAD: <?php echo "<span class='ml-4'>" . $dad . "</span>"; ?></li>
-                        <li class="list-group-item d-flex justify-content-start">DAG: <?php echo "<span class='ml-4'>" . $dag . "</span>"; ?></li>
-                        <li class="list-group-item d-flex justify-content-start">DSI: <?php echo "<span class='margin-dsi'>" . $dsi . "</span>"; ?></li>
-                        <li class="list-group-item d-flex justify-content-start">OBS: <?php echo "<span class='margin-obs'>" . $obs . "</span>"; ?></li>
-                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>CASE (total: <?php echo $case; ?>)</strong></li>
+                        <li class="list-group-item d-flex justify-content-start">CASE: <?php echo "<span class='ml-4'>" . $case_g . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DLE: <?php echo "<span class='margin-dle'>" . $dle . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DDU: <?php echo "<span class='margin-ddu'>" . $ddu . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DCAD: <?php echo "<span class='margin-dcad'>" . $dcad . "</span>" ?></li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-primary" aria-current="true"><strong>COMIN (total: <?php echo $comin; ?>)</strong></li>
-                        <li class="list-group-item d-flex justify-content-start">COMIN-G: <?php echo "<span class='ml-4'>" . $comin_g .  "</span>"  ?></li>
+                        <li class="list-group-item d-flex justify-content-start">COMIN: <?php echo "<span class='ml-4'>" . $comin_g .  "</span>"  ?></li>
                         <li class="list-group-item d-flex justify-content-start">DCIGP: <?php echo  "<span class='margin-dcigp'>" . $dcigp . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DCIMP: <?php echo "<span class='margin-dcimp'>" . $dcimp . "</span>" ?></li>
-                        <li class="list-group-item">ㅤ</li>
-                        <li class="list-group-item">ㅤ</li>
                         <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-primary" aria-current="true"><strong>SERVIN (total: <?php echo $servin; ?>)</strong></li>
-                        <li class="list-group-item d-flex justify-content-start">SERVIN-G: <?php echo "<span class='ml-4'>" . $servin_g . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">SERVIN: <?php echo "<span class='ml-4'>" . $servin_g . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DSIGP: <?php echo "<span class='margin-dsigp'>" . $dsigp . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DSIMP: <?php echo "<span class='margin-dsimp'>" . $dsimp . "</span>" ?></li>
-                        <li class="list-group-item">ㅤ</li>
-                        <li class="list-group-item">ㅤ</li>
                         <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
@@ -617,55 +575,42 @@ include_once('componentes/permissao.php');
                         <li class="list-group-item  d-flex justify-content-start">DDOC: <?php echo "<span class='ml-3'>" . $ddoc . "</span>" ?></li>
                         <li class="list-group-item  d-flex justify-content-start">DCIT: <?php echo "<span class='ml-4'>" . $dcit . "</span>" ?></li>
                         <li class="list-group-item  d-flex justify-content-start">DVF: <?php echo "<span class='margin-dvf'>" . $dvf . "</span>" ?></li>
-                        <li class="list-group-item">ㅤ</li>
-                        <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-primary" aria-current="true"><strong>DEUSO (total: <?php echo $deuso; ?>)</strong></li>
-                        <li class="list-group-item d-flex justify-content-start">DEUSO-G: <?php echo "<span class='ml-4'>" . $deuso_g . "</span>" ?></li>
-                        <li class="list-group-item d-flex justify-content-start">GABINETE: <?php echo "<span class='margin-dmus'>" . $deuso_gabinete . "</span>" ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DEUSO: <?php echo "<span class='ml-4'>" . $deuso_g . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DMUS: <?php echo "<span class='margin-dmus'>" . $dmus . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DNUS: <?php echo "<span class='margin-dnus'>" . $dnus . "</span>" ?></li>
                         <li class="list-group-item d-flex justify-content-start">DSIZ: <?php echo "<span class='margin-dsiz'>" . $dsiz . "</span>" ?></li>
-                        <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-primary" aria-current="true"><strong>PLANURB (total: <?php echo $planurb; ?>)</strong></li>
                         <li class="list-group-item d-flex justify-content-start">PLANURB: <?php echo "<span class='ml-4'>" . $planurb_g . "</span>"; ?></li>
-                        <li class="list-group-item d-flex justify-content-start">DAR: <?php echo "<span class='ml-4'>" . $dar . "</span>"; ?></li>
+                        <li class="list-group-item d-flex justify-content-start">DART: <?php echo "<span class='ml-4'>" . $dart . "</span>"; ?></li>
                         <li class="list-group-item d-flex justify-content-start">DMA: <?php echo "<span class='margin-dma'>" . $dma . "</span>"; ?></li>
                         <li class="list-group-item d-flex justify-content-start">DOT: <?php echo "<span class='ml-4'>" . $dot . "</span>"; ?></li>
-                        <li class="list-group-item">ㅤ</li>
-                        <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-primary" aria-current="true"><strong>CAEPP (total: <?php echo $caepp; ?>)</strong></li>
-                        <li class="list-group-item d-flex justify-content-start">CAEPP-G: <?php echo "<span class='ml-4'>" . $caepp_g . "</span>"; ?></li>
+                        <li class="list-group-item d-flex justify-content-start">CAEPP: <?php echo "<span class='ml-4'>" . $caepp_g . "</span>"; ?></li>
                         <li class="list-group-item d-flex justify-content-start">DECPP: <?php echo "<span class='margin-decpp'>" . $decpp . "</span>"; ?></li>
                         <li class="list-group-item d-flex justify-content-start">DERPP: <?php echo "<span class='margin-derpp'>" . $derpp . "</span>"; ?></li>
                         <li class="list-group-item d-flex justify-content-start">DESPP: <?php echo "<span class='margin-despp'>" . $despp . "</span>"; ?></li>
-                        <li class="list-group-item">ㅤ</li>
-                        <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
                 <div class="col">
                     <ul class="list-group mb-3">
                         <li class="list-group-item list-group-item-primary" aria-current="true"><strong>GTEC (total: <?php echo $gtec; ?>)</strong></li>
                         <li class="list-group-item d-flex justify-content-start">GTEC: <?php echo "<span class='margin-gtec'>" . $gtec . "</span>"; ?></li>
-                    </ul>
-                    <ul class="list-group mb-3">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>LICEN (total: <?php echo $licen; ?>)</strong></li>
-                        <li class="list-group-item d-flex justify-content-start">LICEN: <?php echo "<span class='margin-licen'>" . $licen . "</span>"; ?></li>
-                    </ul>
-                    <ul class="list-group">
-                        <li class="list-group-item list-group-item-primary" aria-current="true"><strong>GAB/SEL (total: <?php echo $gab_sel; ?>)</strong></li>
-                        <li class="list-group-item d-flex justify-content-start">GAB/SEL: <?php echo "<span class='margin-gab-sel'>" . $gab_sel . "</span>"; ?></li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
+                        <li class="list-group-item">ㅤ</li>
                     </ul>
                 </div>
             </div>

@@ -22,7 +22,7 @@ if ($id) {
 
     $result = mysqli_query($conexao, "UPDATE unidades SET unidades = '$nome', sigla = '$sigla', codigo = '$codigo', statusunidade = '$status' WHERE id = $id");
 
-    header("Location: unidades.php?notificacao=alterado");
+    header("Location: unidades.php?notificacao=alterado&status=ATIVO");
   } else {
     $buscar_unidade = "SELECT * FROM unidades WHERE id = $id;";
     $query_usuario = mysqli_query($conexao, $buscar_unidade);
@@ -41,7 +41,7 @@ if ($id) {
 
   $result = mysqli_query($conexao, "INSERT INTO unidades(unidades, sigla, codigo, statusunidade) VALUES ('$nome', '$sigla', '$codigo', '$status')");
 
-  header("Location: unidades.php?notificacao=cadastrado");
+  header("Location: unidades.php?notificacao=cadastrado&status=ATIVO");
 }
 ?>
 <style>
@@ -105,28 +105,28 @@ if ($id) {
         <div class="col-md-12 mb-4">
           <label for="usuarioCadastro" class="form-label text-muted ml-2">Nome</label>
           <div class="input-group">
-            <input value="<?php $id ? print_r($unidade) : '' ?>" type="text" name="nome" class="form-control" id="inputNome" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
+            <input value="<?php $id ? print_r($unidade) : '' ?>" type="text" name="nome" class="form-control" id="inputNome" aria-label="Recipient's username" aria-describedby="basic-addon2">
           </div>
         </div>
         <div class="col-md-12 mb-4">
           <div>
             <label for="exampleFormControlInput1" class="form-label text-muted ml-2">Código</label>
-            <input type="text" class="form-control" id="codigo" name="codigo" value="<?php $id ? strtoupper(print_r($codigo)) : '' ?>" required>
+            <input type="text" class="form-control" id="codigo" name="codigo" value="<?php echo $id ? strtoupper($codigo) : '' ?>">
           </div>
         </div>
         <div class="col-md-12 mb-4">
           <div>
             <label for="exampleFormControlInput1" class="form-label text-muted ml-2">Sigla</label>
-            <input type="text" class="form-control" id="inputSigla" name="sigla" value="<?php echo isset($id) ? strtoupper(print_r($sigla)) : ''; ?>" required style="text-transform: uppercase;">
+            <input value="<?php echo $id ? strtoupper($sigla) : ''; ?>" type="text" name="sigla" class="form-control" id="inputNome" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
           </div>
         </div>
         <div class="col-md-12 mb-4">
           <div>
             <label for="exampleFormControlInput1" class="form-label text-muted ml-2">Status</label>
             <select class="form-select" name="status" required>
-              <option value="<?php $id ? strtoupper(print_r($status)) : '' ?>" hidden><?php $id ? strtoupper(print_r($status)) : '' ?></option>
-              <option value="Ativo">Ativo</option>
-              <option value="Inativo">Inativo</option>
+              <option value="<?php echo $id ? strtoupper($status) : '' ?>" hidden><?php echo $id ? $status : '' ?></option>
+              <option value="ATIVO">Ativo</option>
+              <option value="INATIVO">Inativo</option>
             </select>
           </div>
         </div>

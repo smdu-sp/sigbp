@@ -26,7 +26,7 @@ if (isset($_GET['nome']) && isset($_GET['inativo'])) {
 
     $result = mysqli_query($conexao, "UPDATE usuarios SET statususer = '$inativo' WHERE nome = '$nome'");
 
-    header("Location: usuarios.php?limit=" . $limit . "&status=Ativo&permissao=4&unidade=&pesquisar=");
+    header("Location: usuarios.php?limit=" . $limit . "&notificacao=alterado&status=Ativo&permissao=4&unidade=&pesquisar=");
 }
 
 if (isset($_GET['nome']) && isset($_GET['reativar'])) {
@@ -40,7 +40,7 @@ if (isset($_GET['nome']) && isset($_GET['reativar'])) {
 
     $result = mysqli_query($conexao, "UPDATE usuarios SET statususer = '$reativar' WHERE nome = '$nome'");
 
-    header("Location: usuarios.php?limit=" . $limit . "&status=Ativo&permissao=4&unidade=&pesquisar=");
+    header("Location: usuarios.php?limit=" . $limit . "&notificacao=alterado&status=Ativo&permissao=4&unidade=&pesquisar=");
 }
 
 $condicoes = [];
@@ -282,9 +282,9 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                         <p class="mb-1 text-muted">Status:</p>
                         <select id="statusSelect" class="form-select" onchange="filtrar()" aria-label="Default select example" name="status">
                             <option value="<?php echo empty($_GET['status']) ? 'Ativo' : strtoupper($_GET['status']); ?>" hidden><?php echo empty($_GET['status']) ? 'Ativo' : strtoupper($_GET['status']); ?></option>
-                            <option value="ATIVO">Ativo</option>
-                            <option value="INATIVO">Inativo</option>
-                            <option value="TODOS">Todos</option>
+                            <option value="ATIVO">ATIVO</option>
+                            <option value="INATIVO">INATIVO</option>
+                            <option value="TODOS">TODOS</option>
                         </select>
                     </div>
                     <div class="col-2 mb-2">
@@ -347,7 +347,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
 
                             echo "</td>";
                             echo "<td>";
-                            if ($user_data['statususer'] == 'Inativo') {
+                            if ($user_data['statususer'] == 'INATIVO' || $user_data['statususer'] == 'Inativo') {
                                 echo "<a class='x-imageReativar' id='tooltip2' onclick='mostrarMsgReativar(\"{$user_data['nome']}\")'><span id='tooltipText2'>Reativar</span><img class='img-reativar' src='./images/icon-reativar.png' alt='inativo'></a>";
                             } else {
                                 echo "<a class='x-image' id='tooltip2' onclick='mostrarMsgInativo(\"{$user_data['nome']}\")'><span id='tooltipText2'>Excluir</span><img class='img-usuario' src='./images/icons-x.png' alt='x'></a>";
@@ -490,6 +490,17 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     });
 
     function alert(num) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
         if (num == 1) {
             const Toast = Swal.mixin({
                 toast: true,
@@ -511,6 +522,10 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                 background: 'green',
                 iconColor: '#ffffff'
             });
+            setTimeout(() => {
+                window.history.replaceState({}, document.title, window.location.pathname);
+                window.location.href = 'usuarios.php?status=ATIVO&permissao=4';
+            }, 1800);
         } else if (num == 3) {
             const Toast = Swal.mixin({
                 toast: true,
@@ -532,7 +547,11 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                 background: 'green',
                 iconColor: '#ffffff'
             });
-        } 
+            setTimeout(() => {
+                window.history.replaceState({}, document.title, window.location.pathname);
+                window.location.href = 'usuarios.php?status=ATIVO&permissao=4';
+            }, 1800);
+        }
     }
 
     window.addEventListener('load', function() {
@@ -542,12 +561,8 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
         console.log(data);
         if (data == 'alterado') {
             alert(1);
-            window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'usuarios.php?status=ATIVO&permissao=4');
         } else if (data == 'cadastrado') {
             alert(3);
-            window.history.replaceState({}, document.title, window.location.pathname);
-            history.pushState({}, '', 'usuarios.php?&status=ATIVO&permissao=4');
         }
     })
 </script>
