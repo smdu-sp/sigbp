@@ -125,8 +125,8 @@ if ($id) {
             <label for="exampleFormControlInput1" class="form-label text-muted ml-2">Status</label>
             <select class="form-select" name="status" required>
               <option value="<?php echo $id ? strtoupper($status) : '' ?>" hidden><?php echo $id ? $status : '' ?></option>
-              <option value="ATIVO">Ativo</option>
-              <option value="INATIVO">Inativo</option>
+              <option value="ATIVO">ATIVO</option>
+              <option value="INATIVO">INATIVO</option>
             </select>
           </div>
         </div>

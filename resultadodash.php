@@ -61,22 +61,22 @@ include_once('componentes/permissao.php');
     $row_pg = mysqli_fetch_assoc($query_produto);
     $totalItem = $row_pg['resultadosItem'];
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS ascom FROM item WHERE tipo = '$item' AND localizacao = 'ASCOM' AND statusitem != 'Descartado' AND excluido != 1;";
+    $buscar_produtos = "SELECT COUNT(idbem) AS ascom FROM item WHERE tipo = '$item' AND (localizacao = 'ASCOM' OR localizacao LIKE '%ASCOM%') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $ascom = ceil($row_pg['ascom']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS atecc FROM item WHERE tipo = '$item' AND localizacao = 'ATECC' AND statusitem != 'Descartado' AND excluido != 1;";
+    $buscar_produtos = "SELECT COUNT(idbem) AS atecc FROM item WHERE tipo = '$item' AND (localizacao = 'ATECC' OR localizacao LIKE '%ATECC%') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $atecc = ceil($row_pg['atecc']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS atic FROM item WHERE tipo = '$item' AND localizacao = 'ATIC' AND statusitem != 'Descartado' AND excluido != 1;";
+    $buscar_produtos = "SELECT COUNT(idbem) AS atic FROM item WHERE tipo = '$item' AND (localizacao = 'ATIC' OR localizacao LIKE '%ATIC%') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $atic = ceil($row_pg['atic']);
 
-    $buscar_produtos = "SELECT COUNT(idbem) AS gab FROM item WHERE tipo = '$item' AND (localizacao = 'GABINETE' OR localizacao = 'AUDITÓRIO/GAB' OR localizacao='GAB' OR localizacao = 'GAB/SEL' OR localizacao='GAB SEL') AND statusitem != 'Descartado' AND excluido != 1;";
+    $buscar_produtos = "SELECT COUNT(idbem) AS gab FROM item WHERE tipo = '$item' AND (localizacao = 'GABINETE' OR localizacao = 'AUDITÓRIO/GAB' OR localizacao='GAB' OR localizacao = 'GAB/SEL' OR localizacao='GAB SEL' OR localizacao LIKE '%GABINETE%' OR localizacao LIKE '%GAB%') AND statusitem != 'Descartado' AND excluido != 1;";
     $query_produto = mysqli_query($conexao, $buscar_produtos);
     $row_pg = mysqli_fetch_assoc($query_produto);
     $gab = ceil($row_pg['gab']);

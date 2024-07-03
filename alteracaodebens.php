@@ -152,12 +152,13 @@ if (!empty($_GET['id'])) {
                     <label for="status" class="form-label text-muted">Status:</label>
                     <select class="form-select" id="status" required name="status" required>
                         <option value="<?php echo $statusitem ?>" hidden="hidden"><?php echo strtoupper($statusitem) ?></option>
-                        <option value="ATIVO">Ativo</option>
-                        <option value="BAIXADO">Baixado</option>
-                        <option value="PARA DOAÇÃO">Para Doação</option>
-                        <option value="PARA DESCARTE">Para Descarte</option>
-                        <option value="DOADO">Doado</option>
-                        <option value="DESCARTADO">Descartado</option>
+                        <option value="ATIVO">ATIVO</option>
+                        <option value="BAIXADO">BAIXADO</option>
+                        <option value="PARA DOAÇÃO">PARA DOAÇÃO</option>
+                        <option value="PARA DESCARTE">PARA DESCARTE</option>
+                        <option value="DOADO">DOADO</option>
+                        <option value="ESTOQUE">ESTOQUE</option>
+                        <option value="DESCARTADO">DESCARTADO</option>
                     </select>
                 </div>
             </div>

@@ -140,8 +140,8 @@ if (isset($_POST['reativar'])) {
                         <option value="<?php echo isset($_GET['statustipos']) ? $_GET['statustipos'] : 'Ativo'; ?>" hidden>
                             <?php echo isset($_GET['statustipos']) ? $_GET['statustipos'] : 'Ativo'; ?>
                         </option>
-                        <option value="ATIVO">Ativo</option>
-                        <option value="INATIVO">Inativo</option>
+                        <option value="ATIVO">ATIVO</option>
+                        <option value="INATIVO">INATIVO</option>
                     </select>
 
                 </div>

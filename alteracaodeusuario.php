@@ -127,8 +127,8 @@ if (!empty($_GET['id'])) {
                         <div class="input-group-text" style="background-color: transparent;"><img src="./images/icon-status.png" alt="" class="imgCadastro"></div>
                         <select class="form-select" name="status" required>
                             <option value="<?php echo strtoupper($status) ?>" hidden><?php echo strtoupper($status) != null ? strtoupper($status) : '' ?></option>
-                            <option value="ATIVO">Ativo</option>
-                            <option value="INATIVO">Inativo</option>
+                            <option value="ATIVO">ATIVO</option>
+                            <option value="INATIVO">INATIVO</option>
                         </select>
                     </div>
                 </div>

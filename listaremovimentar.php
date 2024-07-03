@@ -314,6 +314,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
                             <option value="PARA DESCARTE">PARA DESCARTE</option>
                             <option value="DOADO">DOADO</option>
                             <option value="DESCARTADO">DESCARTADO</option>
+                            <option value="ESTOQUE">ESTOQUE</option>
                             <option value="TODOS">TODOS</option>
                         </select>
                     </div>
