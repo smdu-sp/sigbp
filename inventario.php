@@ -260,7 +260,7 @@ $ano = $unidade = isset($_GET['ano']) ? $conexao->real_escape_string($_GET['ano'
             <div class="carrossel">
                 <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-                <a href="./inventario.php" class="text-primary ms-1 carrossel-text">Inventário</a>
+                <a href="./inventario.php?ano=2024" class="text-primary ms-1 carrossel-text">Inventário</a>
             </div>
         </div>
         <h2 class="mb-3 mt-4">Inventário</h2>

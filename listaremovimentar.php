@@ -290,7 +290,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
             <div class="carrossel">
                 <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-                <a href="./listaremovimentar.php" class="text-primary ms-1 carrossel-text">Listar e Movimentar</a>
+                <a href="./listaremovimentar.php?status=ATIVO" class="text-primary ms-1 carrossel-text">Listar e Movimentar</a>
             </div>
         </div>
         <h2 class="mb-3 mt-4">Listar e Movimentar</h2>
@@ -495,7 +495,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
     }
 
     function limparInput() {
-        window.location.href = 'listaremovimentar.php?status=Ativo';
+        window.location.href = 'listaremovimentar.php?status=ATIVO';
     }
 
     function recarregar() {

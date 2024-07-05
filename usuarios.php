@@ -265,7 +265,7 @@ $status = isset($_GET['status']) ? $_GET['status'] : '';
             <div class="carrossel">
                 <a href="./home.php" class="mb-3 me-1"><img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt=""></a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-i" alt="icon-avancar">
-                <a href="./usuarios.php" class="text-primary ms-1 carrossel-text">Usuários</a>
+                <a href="./usuarios.php?status=Ativo&permissao=4" class="text-primary ms-1 carrossel-text">Usuários</a>
             </div>
         </div>
         <h2 class="mb-3 mt-4">Usuários</h2>

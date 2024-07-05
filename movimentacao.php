@@ -52,6 +52,11 @@ if (isset($_POST['submit'])) {
     $result = mysqli_query($conexao, "INSERT INTO transferencia(iditem, localanterior, localnovo, usuario, idusuario, servidoranterior, servidoratual, cimbpm) 
     VALUES ('$id', '$localanterior', '$localnovo','$idusuario', '$usuario', '$servidoranterior', '$servidoratual', '$cimbpm')");
 
+    
+    $sqlSelect = "SELECT * FROM item WHERE idbem=$id";
+
+    $resultado = mysqli_query($conexao, "UPDATE item SET localizacao='$localnovo' WHERE idbem='$id'");
+
     header('Location: listaremovimentar.php?notificacao=1&status=TODOS');
 }
 ?>
@@ -102,7 +107,7 @@ if (isset($_POST['submit'])) {
                     <img src="./images/icon-casa.png" class="icon-carrossel mt-3" alt="">
                 </a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-avancar" alt="icon-avancar">
-                <a href="./listaremovimentar.php" class="text-muted ms-1 carrossel-text">Listar/Movimentar Bens</a>
+                <a href="./listaremovimentar.php?status=ATIVO" class="text-muted ms-1 carrossel-text">Listar/Movimentar Bens</a>
                 <img src="./images/icon-avancar.png" class="icon-carrossel-avancar ms-1" alt="icon-avancar">
                 <a href="#" class="text-primary ms-1 carrossel-text">Movimentação</a>
             </div>
