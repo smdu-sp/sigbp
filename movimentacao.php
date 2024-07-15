@@ -48,14 +48,15 @@ if (isset($_POST['submit'])) {
     $cimbpm = $_POST['cimbpm'];
     $idusuario = $_POST['idusuario'];
     $usuario = $_POST['usuario'];
+    $nome = $_POST['nome'];
 
-    $result = mysqli_query($conexao, "INSERT INTO transferencia(iditem, localanterior, localnovo, usuario, idusuario, servidoranterior, servidoratual, cimbpm) 
-    VALUES ('$id', '$localanterior', '$localnovo','$idusuario', '$usuario', '$servidoranterior', '$servidoratual', '$cimbpm')");
+    $result = mysqli_query($conexao, "INSERT INTO transferencia(iditem, localanterior, localnovo, usuario, idusuario, servidoranterior, servidoratual, cimbpm, nome) 
+    VALUES ('$id', '$localanterior', '$localnovo','$idusuario', '$usuario', '$servidoranterior', '$servidoratual', '$cimbpm', '$nome')");
 
     
     $sqlSelect = "SELECT * FROM item WHERE idbem=$id";
 
-    $resultado = mysqli_query($conexao, "UPDATE item SET localizacao='$localnovo' WHERE idbem='$id'");
+    $resultado = mysqli_query($conexao, "UPDATE item SET localizacao='$localnovo', servidor='$servidoratual', cimbpm ='$cimbpm', nome='$nome' WHERE idbem='$id'");
 
     header('Location: listaremovimentar.php?notificacao=1&status=TODOS');
 }
@@ -177,6 +178,10 @@ if (isset($_POST['submit'])) {
                         <div class="col-md-6 mb-3">
                             <label for="cimbpm" class="form-label text-muted">CIMBPM:</label>
                             <input type="text" class="form-control" id="cimbpm" name="cimbpm">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="nome" class="form-label text-muted">Nome:</label>
+                            <input type="text" class="form-control" id="nome" name="nome">
                         </div>
                     </div>
                     <div class="row">
