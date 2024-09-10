@@ -190,6 +190,20 @@ if (isset($_POST['submit'])) {
                             <input type="text" class="form-control" id="responsavelTransferencia" name="idusuario" value="<?php echo $_SESSION['SesNome'] ?>" readonly>
                         </div>
                         <div class="col-md-6 mb-3">
+                        <p class="mb-2 text-muted">Status:</p>
+                        <select id="statusSelect" onchange="filtrar()" class="form-select" aria-label="Default select example" name="status">
+                            <option value="<?php echo empty($_GET['status']) ? 'Ativo' : strtoupper($_GET['status']); ?>" hidden><?php echo empty($_GET['status']) ? 'Ativo' : strtoupper($_GET['status']); ?></option>
+                            <option value="ATIVO">ATIVO</option>
+                            <option value="BAIXADO">BAIXADO</option>
+                            <option value="PARA DOAÇÃO">PARA DOAÇÃO</option>
+                            <option value="PARA DESCARTE">PARA DESCARTE</option>
+                            <option value="DOADO">DOADO</option>
+                            <option value="DESCARTADO">DESCARTADO</option>
+                            <option value="ESTOQUE">ESTOQUE</option>
+                            <option value="TODOS">TODOS</option>
+                        </select>
+                    </div>
+                        <div class="col-md-6 mb-3">
                             <label for="login" class="form-label text-muted">Login:</label>
                             <input type="text" class="form-control" id="login" name="usuario" value="<?php echo $_SESSION['SesID'] ?>" readonly>
                         </div>
