@@ -49,6 +49,7 @@ if (isset($_POST['submit'])) {
     $idusuario = $_POST['idusuario'];
     $usuario = $_POST['usuario'];
     $nome = $_POST['nome'];
+    $status = $_POST['status'];
 
     $result = mysqli_query($conexao, "INSERT INTO transferencia(iditem, localanterior, localnovo, usuario, idusuario, servidoranterior, servidoratual, cimbpm, nome) 
     VALUES ('$id', '$localanterior', '$localnovo','$idusuario', '$usuario', '$servidoranterior', '$servidoratual', '$cimbpm', '$nome')");
@@ -56,8 +57,8 @@ if (isset($_POST['submit'])) {
     
     $sqlSelect = "SELECT * FROM item WHERE idbem=$id";
 
-    $resultado = mysqli_query($conexao, "UPDATE item SET localizacao='$localnovo', servidor='$servidoratual', cimbpm ='$cimbpm', nome='$nome' WHERE idbem='$id'");
-
+    $resultado = mysqli_query($conexao, "UPDATE item SET localizacao='$localnovo', servidor='$servidoratual', cimbpm ='$cimbpm', nome='$nome', statusitem='$status' WHERE idbem='$id'");
+    
     header('Location: listaremovimentar.php?notificacao=1&status=TODOS');
 }
 ?>
